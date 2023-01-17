@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AddressDAO">
+	
+	<resultMap type="address" id="addressList">
+		<result property="address_no" column="ADDRESS_NO" />
+		<result property="user_no" column="USER_NO" />			
+		<result property="address_alias" column="ADDRESS_ALIAS" />			
+		<result property="address_name" column="ADDRESS_NAME" />			
+		<result property="address_tel" column="ADDRESS_TEL" />			
+		<result property="zone_code" column="ZONE_CODE" />	
+		<result property="road_add" column="ROAD_ADD" />	
+		<result property="detail_add" column="DETAIL_ADD" />	
+		<result property="default_add" column="DEFAULT_ADD" />	
+	</resultMap>	
+
+	<select id="getAddressList" parameterType="address" resultMap="addressList">
+	<![CDATA[
+		SELECT rownum, 
+			   a.address_no, 
+			   a.address_alias, 
+			   a.address_name, 
+			   a.address_tel, 
+			   a.zone_code, 
+			   a.road_add, 
+			   a.detail_add, 
+			   a.default_add
+		FROM   address a, users u 
+		where  a.user_no = 1  
+		order by a.default_add desc, a.address_no asc
+	]]>
+	</select>
+			
+	<select id="getAddress" parameterType="address" resultMap="addressList">
+	<![CDATA[
+		SELECT 
+			   address_no,
+			   address_alias, 
+			   address_name, 
+			   address_tel, 
+			   zone_code, 
+			   road_add, 
+			   detail_add 
+		FROM   address
+		where  user_no = 1 AND address_no = #{address_no} 
+
+	]]>	
+	</select>		
+			
+	<insert id="insertAddress">
+	<![CDATA[	
+		INSERT INTO address(address_no, 
+							user_no, 
+							address_alias, 
+							address_name, 
+							address_tel, 
+							zone_code, 
+							road_add, 
+							detail_add)
+							
+		VALUES ((select nvl(max(address_no), 0) + 1 from address), 
+		         1, 
+		         #{address_alias},
+		         #{address_name},
+		         #{address_tel},
+		         #{zone_code},
+		         #{road_add},
+		         #{detail_add}
+		       )
+	]]>		
+	</insert>		
+	
+	<update id="defaultAddress">
+	<![CDATA[	
+		update address
+		set    default_add = 'N'
+		WHERE  default_add = 'Y' AND user_no = 1 
+	]]>	
+	</update>
+	
+ 	<update id="defaultAddress2">
+	<![CDATA[	
+		update address
+		set    default_add = 'Y'
+		WHERE  address_no = #{address_no} AND user_no = 1 
+	]]>	
+	</update>	 
+
+	<update id="updateAddress">
+	<![CDATA[		
+		UPDATE address
+		SET	   address_alias = #{address_alias},
+			   address_name = #{address_name},
+			   address_tel = #{address_tel},
+			   zone_code = #{zone_code},
+			   road_add = #{road_add},
+			   detail_add = #{detail_add}
+		WHERE  address_no = #{address_no} AND user_no = 1
+	]]>		
+	</update>
+
+	<delete id="deleteAddress">
+		DELETE
+		FROM   address
+	    WHERE  address_no = #{address_no} AND user_no = 1
+	</delete>
+	
+
+	
+			
+</mapper>

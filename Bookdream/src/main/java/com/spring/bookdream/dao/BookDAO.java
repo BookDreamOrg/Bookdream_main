@@ -18,7 +18,7 @@ public class BookDAO {
 	public List<BookVO> getBookList(BookVO vo) {
 		
 		System.out.println("---> JDBC로 BookList() 처리");
-	
+	 
 		// selectList : select 조회 SQL문에서 결과값이 여러개의 row가 return될 때 사용
 		return mybatis.selectList("BookDAO.getBookList", vo);
 	}
