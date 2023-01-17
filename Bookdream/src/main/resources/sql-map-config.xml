@@ -16,7 +16,7 @@
 		<typeAlias alias="orderitem" type="com.spring.bookdream.vo.OrderitemVO"></typeAlias>
 		<typeAlias alias="pay" type="com.spring.bookdream.vo.PayVO"></typeAlias> 
 		<typeAlias alias="order" type="com.spring.bookdream.vo.OrderVO"></typeAlias>
-		<typeAlias alias="address" type="com.spring.bookdream.vo.AddressVO"></typeAlias>
+		<typeAlias alias="address" type="com.spring.bookdream.vo.AddressVO"></typeAlias> 
 	</typeAliases> 
 	
 
@@ -27,10 +27,10 @@
 		<mapper resource="mappings/review-mapping.xml" />
 		<mapper resource="mappings/user-mapping.xml" />
 		<mapper resource="mappings/cart-mapping.xml" />
-		<mapper resource="mappings/orderitem-mpping.xml" />
+		<mapper resource="mappings/orderitem-mapping.xml" />
 		<mapper resource="mappings/pay-mapping.xml" /> 
 		<mapper resource="mappings/order-mapping.xml" />
-		<mapper resource="mappings/address-mapping.xml" />
+		<mapper resource="mappings/address-mapping.xml" /> 
 	</mappers>
 	
 	

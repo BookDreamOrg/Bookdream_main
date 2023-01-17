@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CartDAO">
+
+	<resultMap type="cart" id="cartList">
+		<id property="cart_no" column="CART_NO" />
+		<result property="user_no" column="USER_NO" />	
+		<result property="book_no" column="BOOK_NO" />	
+		<result property="product_count" column="PRODUCT_COUNT" />	
+		<collection property="userVO" resultMap="userList"></collection>
+		<collection property="bookVO" resultMap="bookList"></collection>
+	</resultMap>	
+
+	<resultMap type="user" id="userList">
+		<id property="user_no" column="USER_NO" />
+		<result property="user_id" column="USER_ID" />
+	</resultMap>
+
+	<resultMap type="book" id="bookList">
+		<id property="book_no" column="BOOK_NO"/>
+		<result property="title" column="TITLE" />
+		<result property="book_price" column="BOOK_PRICE" />
+		<result property="book_img" column="BOOK_IMG" />		
+
+	</resultMap>
+
+	<select id="getCartList" parameterType="cart" resultMap="cartList">
+		SELECT c.cart_no, u.user_no, b.book_img, b.title, b.book_price, c.product_count
+		FROM cart c, users u, book b
+		WHERE c.book_no = b.book_no AND b.book_no = c.book_no
+		order by cart_no
+	</select>
+	
+	
+	<delete id="deleteCart">
+		DELETE
+		FROM ( select u.USER_no, CART_NO
+        	   from USERS U, BOOK B, CART C
+        	   where U.USER_NO = C.USER_NO  AND B.BOOK_NO = C.BOOK_NO)
+	    WHERE cart_no = #{cart_no} AND user_no = 1
+	</delete>	
+</mapper>
+
+
+
+ 
