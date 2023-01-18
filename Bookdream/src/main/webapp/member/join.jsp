@@ -10,10 +10,10 @@
     
 	<!-- jQuery -->
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script type="text/javascript" src="../resources/js/join.js"></script>
-	  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-	  	<link rel="stylesheet" href="../resources/css/join.css">
-	  	
+	
+	 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="../resources/css/join.css">
     <title>회원가입 페이지</title>
     
 </head>
@@ -21,21 +21,20 @@
     <body class="text-center">
         <main class="form-signin">
            <form action="insertUser.do" method="post" id="frm">
-              <img class="mb-4" src="../resources/images/bookdream_img.png" alt="" width="200" height="100">
-              <h1 class="h3 mb-3 fw-normal">회원가입</h1>
-              
-             <div class ="d-flex">
-              	<div class="form-floating">
-                 <input type="text" class="form-control" id="user_id" name="user_id" placeholder="아이디 입력">
-                 <label for="id">아이디</label>
-              	</div>
-              <button class="w-30 btn btn-sm btn-primary" id="btn" onclick="checkId()" type="button">아이디 중복 </button>
-              </div>
-              
-              <div>
-              	<span class="id_ok">멋진 아이디네요!</span>
-              	<span class="id_already">사용중인 아이디 입니다.</span>
-              </div>
+              <img class="mb-4" src="../resources/images/bookdream_img.png" alt="" width="160" height="70">
+				<div>              
+            		<div class="form-floating">
+		                <input type="text" class="form-control" id="user_id" name="user_id" placeholder="아이디 입력">
+		                <label for="id">아이디</label>
+	             	</div>
+					<div class="d-grid">
+						<button class="id_chk_btn w-20 btn btn-sm btn-info" id="btn" onclick="checkId()" type="button">
+							<span class="text"><b>아이디 중복 확인</b></span>
+						</button>
+					</div>    
+		             	<span class="id_ok">멋진 아이디네요!</span>
+		             	<span class="id_already">사용중인 아이디 입니다.</span>
+             	</div>
               
  <!-- 유효성 검사  -->
  
@@ -65,17 +64,20 @@
 		                <label for="tel">이메일</label>
               		</div>
               		<select class="form-control" name="user_email2" id="user_email2" >
-			       <option>@naver.com</option>
-			       <option>@daum.net</option>
-			       <option>@gmail.com</option>
-			       <option>@hanmail.com</option>
-			        <option>@yahoo.co.kr</option>
-		       </select>    
+				       <option>@naver.com</option>
+				       <option>@daum.net</option>
+				       <option>@gmail.com</option>
+				       <option>@hanmail.com</option>
+				        <option>@yahoo.co.kr</option>
+			       	</select>    
 		       
               	</div>
-           	<div class="input-group-addon">
-				<button type="button" class="btn btn-primary" onclick="mailCheckBtn()">본인인증</button>
+           	<div class="input-group-addon d-grid">
+				<button type="button" class="id_chk_btn w-20 btn btn-sm btn-info" id="btn_in" onclick="mailCheckBtn()">
+					<span class="text"><b>본인인증</b></span>
+				</button>
 			</div>
+			
 			<div class="mail-check-box">
 				<input class="form-control mail-check-input" placeholder="인증번호 6자리를 입력해주세요!" disabled="disabled" maxlength="6">
 			</div>
@@ -91,8 +93,7 @@
 	
         </main>
        
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-      
+      <script type="text/javascript" src="../resources/js/join.js"></script>
      </body>
 
 </html>
