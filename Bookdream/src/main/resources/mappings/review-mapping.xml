@@ -12,7 +12,6 @@
 		<result property="review_content" column="REVIEW_CONTENT" />
 		<result property="review_date" column="REVIEW_DATE" />
 		<result property="review_recommend" column="REVIEW_RECOMMEND" />
-		<result property="userVO.user_id" column="userVO.USER_ID" />
 	</resultMap>
 
 

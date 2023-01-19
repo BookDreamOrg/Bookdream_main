@@ -8,7 +8,7 @@
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<link href="/resources/css/page/getBook.css" rel="stylesheet">
+<link href="/resources/css/getBook.css" rel="stylesheet">
 <!-- Bootstrap icons-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
 <meta charset="UTF-8">
@@ -271,10 +271,9 @@ $(function(){
 		let review_json = {
 		        "review_star" : star.val(),
 		        "book_no" : ${book.book_no} , 
-		        "book_no" : ${book.book_no}, 
-		        "user_no" : 5,
+		        "user_no" : 1,
 		        "book_no" : ${book.book_no},  
-		        "userVO.user_id" : user_id,
+		        "user_id" : "test",
 		        "review_content" : $('#review_content').val(),
 		        "review_recommend" :0 
 		};
@@ -303,7 +302,7 @@ $(function(){
 				  			
 		})
 
-	});//btn_review.click end
+});//btn_review.click end
 
 	//추천 버튼 클릭
 
