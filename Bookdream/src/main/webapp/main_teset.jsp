@@ -27,10 +27,10 @@
 			<div class="header-nav-list">
 				<ul class="nav header-nav">
 					<li class="nav-item"><a class="nav-link header-nav-link"
-						aria-current="page" href="#">회원가입</a></li>
+						aria-current="page" href="member/join.jsp">회원가입</a></li>
 					<span class="nav-bar-line"></span>
 					<li class="nav-item"><a class="nav-link header-nav-link"
-						href="#">로그인</a></li>
+						href="member/login.jsp">로그인</a></li>
 					<span class="nav-bar-line"></span>
 					<li class="nav-item"><a class="nav-link header-nav-link"
 						href="#">고객센터</a></li>
@@ -64,11 +64,11 @@
 					</div>
 				</div>
 				<div class="col-lg-1 p-5 flex-grow-1 header-col-btn">
-					<a href="#">
+					<a href="cart.jsp">
 						<div class="header-btn">
 							<i class="fa-solid fa-cart-shopping"></i>
 						</div>
-					</a> <a href="#">
+					</a> <a href="orderitem.jsp">
 						<div class="header-btn btn-circle ms-3">
 							<i class="fa-solid fa-user"></i>
 						</div>
