@@ -37,6 +37,7 @@
 </head>
 
 <body class="mt-3">
+<<<<<<< Updated upstream:Bookdream/src/main/webapp/views/detail/detail.jsp
 
 <%
 		int book_no = (int) (Math.random() * 100) + 1;
@@ -138,6 +139,9 @@
 
 
 
+=======
+<%=session.getAttribute("user_id") %>
+>>>>>>> Stashed changes:Bookdream/src/main/webapp/detail.jsp
 <div>BOOK_NO : ${book.book_no }</div>
 <div class="mt-5"><h1>${book.title }</h1></div>
 
@@ -217,7 +221,7 @@
 						<div class="ms-5"> ${review.review_content} </div>
 					</div>
 					<div class="d-flex">
-						<div>${review.user_no} </div>
+						<div>${review.user_id} </div>
 						<div><fmt:formatDate value="${review.review_date}" pattern="YY-MM-DD (E)" type="date"/>  </div>
 						<div> 추천수  (${review.review_recommend}) </div>
 						
@@ -315,6 +319,8 @@
 
 <script type="text/javascript">
 
+
+
 function review_recommend(val){
 	alert("추천클릭");
 $.ajax({
@@ -351,11 +357,19 @@ $(function(){
 	
 
 	$('#btn_review').click(function(){
-		
+		let user_id = "<%=session.getAttribute("user_id")%>";
+		if(user_id === null || user_id === ""){
+			location.replace("/member/login");
+		}
 		let review_json = {
 		        "review_star" : star.val(),
+<<<<<<< Updated upstream:Bookdream/src/main/webapp/views/detail/detail.jsp
 		        "book_no" : ${book.book_no} , 
 		        "user_no" : 5,
+=======
+		        "book_no" : ${book.book_no},  
+		        "userVO.user_id" : user_id,
+>>>>>>> Stashed changes:Bookdream/src/main/webapp/detail.jsp
 		        "review_content" : $('#review_content').val(),
 		        "review_recommend" :0 
 		};
@@ -364,7 +378,7 @@ $(function(){
 			type: 'post',
 			url: '/insertReview',
 			data: JSON.stringify(review_json),
-			dataType: "text",
+			dataType: "JSON",
 			contentType:"application/json;charset=UTF-8",
 			
 			success: function (data){
