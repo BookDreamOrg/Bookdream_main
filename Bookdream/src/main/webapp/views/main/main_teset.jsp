@@ -17,9 +17,9 @@
 <link rel="stylesheet" href="/resources/css/styles.css" />
 
 <title>Insert title here</title>
-</head>
+</head> 
 <body>
-	<%
+	<% 
 		int book_no = (int) (Math.random() * 100) + 1;
 	%>
 	
