@@ -15,11 +15,7 @@
 		<result property="userVO.user_id" column="userVO.USER_ID" />
 	</resultMap>
 
-<<<<<<< Updated upstream
-	<select id="getReview" resultMap="reviewResult" resultType="review">
-		SELECT * 
-		FROM review where book_no = #{book_no}
-=======
+
 
 
 
@@ -29,14 +25,13 @@
 	ON r.USER_NO = u.USER_NO 
 	WHERE BOOK_NO = #{book_no} ORDER BY r.REVIEW_NO desc
 	]]>
->>>>>>> Stashed changes
 	</select>
 	
 	
 	<insert id="insertReview" parameterType="review" >
 		<![CDATA[ INSERT INTO review (REVIEW_NO,USER_NO,BOOK_NO,REVIEW_CONTENT,REVIEW_DATE,REVIEW_RECOMMEND,REVIEW_STAR)
 		values ( (select NVL(max(REVIEW_NO),0)+1 from review),
-				 (select USER_NO from users where USER_ID = #{userVO.user_id, jdbcType=VARCHAR}),		
+				 (select USER_NO from users where USER_ID = "test",		
 				 #{book_no}, 
                  #{review_content}, 
                  sysdate,

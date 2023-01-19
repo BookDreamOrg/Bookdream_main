@@ -43,11 +43,9 @@ public class ReviewController {
 
 			
 			reviewService.insertReview(vo);
-<<<<<<< Updated upstream
+
 			return "detail/detail";
-=======
-			
->>>>>>> Stashed changes
+
 		}
 
 		//리뷰 추천버튼 클릭
