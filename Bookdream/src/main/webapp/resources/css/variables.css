@@ -1,0 +1,23 @@
+/* Bookdream Main Color */
+
+:root {
+  --main-color: #6768ab;
+  --main-color-tint1: #7677b3;
+  --main-color-tint2: #8586bb;
+  --main-color-tint3: #9495c4;
+  --main-color-tint4: #a3a4cc;
+  --main-color-tint5: #b3b3d5;
+  --main-color-tint6: #c2c2dd;
+  --main-color-tint7: #d1d1e5;
+  --main-color-tint8: #e0e0ee;
+  --main-color-tint9: #efeff6;
+  --main-color-shadow1: #5c5d99;
+  --main-color-shadow2: #525388;
+  --main-color-shadow3: #484877;
+  --main-color-shadow4: #3d3e66;
+  --main-color-shadow5: #333455;
+  --main-color-shadow6: #292944;
+  --main-color-shadow7: #1e1f33;
+  --main-color-shadow8: #141422;
+  --main-color-shadow9: #0a0a11;
+}
