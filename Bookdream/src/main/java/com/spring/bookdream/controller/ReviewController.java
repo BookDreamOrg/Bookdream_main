@@ -40,7 +40,7 @@ public class ReviewController {
 			vo = mapper.readValue(jsonData ,new TypeReference<ReviewVO>(){});
 			
 			reviewService.insertReview(vo);
-			return "/detail";
+			return "detail/detail";
 		}
 
 		//리뷰 추천버튼 클릭

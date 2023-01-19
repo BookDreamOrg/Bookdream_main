@@ -80,11 +80,12 @@
 					<i class="fa-solid fa-bars"></i>
 				</div>
 				<ul class="nav header-menu-list">
-					<li class="nav-item">
-						<form action="/getBook" method="get">
-							<button type="submit" name="book_no" value="<%=book_no%>">베스트</button>
-						</form>
-					</li>
+					<div class="dot"></div>
+					<li class="nav-item" >
+					<form action="/getBook" method="get" id="go_detail">
+						<input type="hidden" name="book_no" value="<%=book_no%>">
+					</form>
+					<a class="nav-link menu-link" onclick="document.getElementById('go_detail').submit();" >베스트</a></li>
 					<div class="dot"></div>
 					<li class="nav-item"><a class="nav-link menu-link" href="#">신상품</a>
 					</li>
@@ -188,5 +189,12 @@
 	<!-- Script FontAwesome-->
 	<script src="https://kit.fontawesome.com/4bf42f841a.js"
 		crossorigin="anonymous"></script>
+		
+\
+
+
+
 </body>
+
+
 </html>

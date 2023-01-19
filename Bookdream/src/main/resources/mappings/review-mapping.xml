@@ -15,7 +15,7 @@
 		<result property="review_star" column="REVIEW_STAR" />
 	</resultMap>
 
-	<select id="getReview" resultMap="reviewResult" parameterType="review">
+	<select id="getReview" resultMap="reviewResult" resultType="review">
 		SELECT * 
 		FROM review where book_no = #{book_no}
 	</select>

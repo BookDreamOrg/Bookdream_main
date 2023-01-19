@@ -55,6 +55,6 @@ public class BookController {
 				model.addAttribute("review",reviewService.getReview(book_no));
 				
 				
-				return "/detail";
+				return "detail/detail";
 			}
 }
