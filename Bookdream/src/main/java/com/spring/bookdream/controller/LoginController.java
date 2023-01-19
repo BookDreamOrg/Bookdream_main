@@ -46,15 +46,11 @@ public class LoginController {
 			
 			String flatform = userService.findFlatform(vo);
 			model.addAttribute("flatform_type", flatform);
-<<<<<<< Updated upstream
 			session.setAttribute("user_id", vo.getUser_id());
 			session.setAttribute("user_no", vo.getUser_no());
-=======
 			System.out.println(vo.getUser_id()+"vo.getUser_id()");
 			session.setAttribute("user_id", vo.getUser_id());
 
-			
->>>>>>> Stashed changes
 			return "/member/main";
 		} else { //로그인 실패
 			System.out.println("로그인 실패");

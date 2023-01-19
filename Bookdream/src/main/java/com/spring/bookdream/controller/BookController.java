@@ -56,11 +56,8 @@ public class BookController {
 				model.addAttribute("review",reviewService.getReview(book_no));
 				
 				
-<<<<<<< Updated upstream
+
 				return "detail/detail";
-=======
-				
-				return "/detail";
->>>>>>> Stashed changes
+
 			}
 }

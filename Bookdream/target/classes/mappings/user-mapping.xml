@@ -35,7 +35,6 @@
 		where user_id=#{user_id} and user_password=#{user_password}
 	</select>
 	
-	
 	<!-- 카카오 정보 찾기 -->
 	<select id="findKakao" parameterType="java.util.HashMap" resultType="user">
 		select user_name, user_email from users where user_name=#{nickname} and user_email=#{email}

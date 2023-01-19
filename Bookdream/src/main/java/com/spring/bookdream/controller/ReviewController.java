@@ -2,10 +2,7 @@ package com.spring.bookdream.controller;
 
 
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-
+import java.text.SimpleDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.bookdream.service.ReviewService;
 import com.spring.bookdream.vo.ReviewVO;
+
 
 @Controller
 public class ReviewController {
@@ -27,7 +27,7 @@ public class ReviewController {
 	// 리뷰 등록
 		@RequestMapping(value="/insertReview", method = RequestMethod.POST)
 		@ResponseBody
-		public  void insertReview(@RequestBody String jsonData, Model model,ObjectMapper mapper, ReviewVO vo,Gson gson) throws Exception {
+		public  String insertReview(@RequestBody String jsonData, Model model,ObjectMapper mapper, ReviewVO vo) throws Exception {
 			
 			System.out.println("/insertReview");
 
@@ -39,15 +39,13 @@ public class ReviewController {
 			//ajax에서 가져온 json가져오기
 			System.out.println("jsonDATA : " + jsonData);
 			//json 데이터를 vo에 파싱
-			vo = gson.fromJson(jsonData, ReviewVO.class);
-
+			vo = mapper.readValue(jsonData ,new TypeReference<ReviewVO>(){});
 			
 			reviewService.insertReview(vo);
-<<<<<<< Updated upstream
-			return "detail/detail";
-=======
 			
->>>>>>> Stashed changes
+
+			return "detail/detail";
+
 		}
 
 		//리뷰 추천버튼 클릭
