@@ -1,0 +1,15 @@
+/* Bootstrap 5.2.3 local */
+@import "/resources/bootstrap/css/bootstrap.min.css";
+
+/* reset.css */
+@import "/resources/css/reset.css";
+
+/* variables.css */
+@import "/resources/css/variables.css";
+
+/* component */
+@import "/resources/css/component/header.css";
+@import "/resources/css/component/footer.css";
+
+/* screen */
+@import "/resources/css/screeen/main.css";
