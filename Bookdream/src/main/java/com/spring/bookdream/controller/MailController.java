@@ -11,7 +11,7 @@ import com.spring.bookdream.service.UserService;
 
 
 @Controller
-@RequestMapping(value="/member/*")
+@RequestMapping(value="/user/*")
 public class MailController {
 
 	@Autowired

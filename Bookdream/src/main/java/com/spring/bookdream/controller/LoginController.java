@@ -18,7 +18,7 @@ import com.spring.bookdream.vo.UserVO;
 
 
 @Controller
-@RequestMapping(value="/member/*")
+@RequestMapping(value="/views/user/*")
 public class LoginController {
 	@Autowired
 	private UserService userService;
@@ -40,22 +40,24 @@ public class LoginController {
 		
 		
 		boolean result = userService.loginCheck(vo, model);
+		UserVO user = userService.getUser(vo);
 		
 		if (result) { //로그인 성공
 			System.out.println("로그인 처리");
 			
-			String flatform = userService.findFlatform(vo);
-			model.addAttribute("flatform_type", flatform);
-			session.setAttribute("user_id", vo.getUser_id());
-			session.setAttribute("user_no", vo.getUser_no());
-			return "/member/main";
+			session.setAttribute("user_id", user.getUser_id());
+			session.setAttribute("user_no", user.getUser_no());
+			
+			session.setAttribute("flatform", user.getFlatform_type());
+			
+			return "/main/main_teset";
 		} else { //로그인 실패
 			System.out.println("로그인 실패");
 			
 			model.addAttribute("loginMsg", "로그인에 실패하였습니다. 아이디나 비밀번호를 확인해주세요");
 			model.addAttribute("loginUrl", "login.jsp");
 			
-			return "/member/login";
+			return "/user/login";
 		}
 	}
 	
@@ -74,19 +76,23 @@ public class LoginController {
 			
 //			session.invalidate();
 //			
-//			session.setAttribute("kakaoN", userInfo.getUser_name());
-//			session.setAttribute("kakaoE", userInfo.getUser_email());
+			session.setAttribute("kakaoName", userInfo.getUser_name());
+			session.setAttribute("kakaoEmail", userInfo.getUser_email());
 			
-			model.addAttribute("kakaoN", userInfo.getUser_name());
-			model.addAttribute("kakaoE", userInfo.getUser_email());
+//			model.addAttribute("kakaoN", userInfo.getUser_name());
+//			model.addAttribute("kakaoE", userInfo.getUser_email());
 			
-		return "/member/main";
+//			System.out.println(session.getAttribute("kakaoName"));
+//			System.out.println(session.getAttribute("kakaoEmail"));
+			
+		return "/main/main_teset";
 		
     	}
 	
 	@RequestMapping(value="/kakaoLogout", method=RequestMethod.GET)
 	public String kakaoLogout() {
-		return "/member/login";
+		session.invalidate();
+		return "/main/main_teset";
 	}
 
 }
