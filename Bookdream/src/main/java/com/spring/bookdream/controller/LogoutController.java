@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class LogoutController {
 
-	@RequestMapping(value="/member/logout.do")
+	@RequestMapping(value="/views/user/logout.do")
 	public String logout(HttpSession session) {
 
 		System.out.println("로그아웃 처리");
@@ -17,7 +17,7 @@ public class LogoutController {
 		session.invalidate();
 
 		// 2. 세션 종료후, 메인 화면으로 이동한다.
-		return "/member/login";
+		return "/main/main_teset";
 
 	}
 

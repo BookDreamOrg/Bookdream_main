@@ -10,6 +10,7 @@
 		<result property="user_address" column="user_address"/>
 		<result property="user_tel" column="user_tel"/>
 		<result property="user_level" column="user_level"/>
+		<result property="blacklist_yn" column="blacklist_yn"/>
 		<result property="flatform_type" column="flatform_type"/>		
 		<result property="user_email" column="user_email"/>
 	</resultMap>

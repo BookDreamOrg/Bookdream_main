@@ -18,11 +18,13 @@ public class CartController {
 	private CartService cartService;
 	
 	@RequestMapping(value="/cart")
-	public void cartList(CartVO vo, CartDAO cartDAO, Model model) {
+	public String cartList(CartVO vo, CartDAO cartDAO, Model model) {
 		
 		// 장바구니 목록 조회
 		System.out.println("---> cartController 장바구니 목록 <---");
-		model.addAttribute("cartList", cartService.getCartList(vo));	
+
+		model.addAttribute("cartList", cartService.getCartList(vo));
+		return "itemorder/cart";
 
 	}
 

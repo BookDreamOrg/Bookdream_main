@@ -10,6 +10,7 @@ public interface ReviewService {
 	//book_no 하나에 매핑된 Review
 	List<ReviewVO> getReview(int book_no);
 	
+	
 	//리뷰등록
 	void insertReview(ReviewVO vo);
 	

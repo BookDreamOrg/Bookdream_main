@@ -12,15 +12,11 @@ public class PayDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
 
+	// 결제정보 등록
 	public void insertPay(PayVO vo) {
 		
 		System.out.println("---> PayDAO inserPay 실행 <---");
 		mybatis.insert("PayDAO.insertPay", vo);		
-	}
-	
-	public void updatePay(PayVO vo) {
-		
-		mybatis.update("PayDAO.updatePay", vo);		
 	}
 	
 
