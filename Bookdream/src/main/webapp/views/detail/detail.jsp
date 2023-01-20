@@ -41,9 +41,9 @@
 			<div class="row d-flex header-row">
 				<div class="col-lg-1 p-2 header-col-home mr-2 mb-1">
 					<a href="#"> <img class="header-row-logo ms-4 mb-1"
-						src="resources/images/logo/logo_white.png" alt="logo_white" /> <img
+						src="/resources/images/logo/logo_white.png" alt="logo_white" /> <img
 						class="header-row-logo_text"
-						src="resources/images/logo/logo_text.png" alt="logo_text" />
+						src="/resources/images/logo/logo_text.png" alt="logo_text" />
 					</a>
 				</div>
 				<div class="col-lg-6 p-2 ms-5 header-col-search">
