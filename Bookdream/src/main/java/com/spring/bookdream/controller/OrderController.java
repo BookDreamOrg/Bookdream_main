@@ -1,41 +1,28 @@
 package com.spring.bookdream.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.spring.bookdream.vo.OrderVO;
 
 
 @Controller
-@RequestMapping("/cart/purchase/")
+@SessionAttributes("order")
+@RequestMapping("/detail/cart/orderitem")
 public class OrderController {
 	
-	
-//	@Autowired
-//	private OrdersService ordersService;
-//	
-//	@RequestMapping(value="/test")
-//	public String insertPay(HttpServletRequest request, Model model, OrdersVO vo) throws IOException, InterruptedException {
-//
-//    	HttpSession session = request.getSession();	
-//    	
-//    	vo.setTotal_price((int) session.getAttribute("total_price"));
-//	    vo.setOrder_comment((String) session.getAttribute("order_comment"));
-//	    vo.setOrder_receiver((String) session.getAttribute("order_receiver"));
-//	    vo.setOrder_address((String) session.getAttribute("order_address"));	    
-//	    vo.setOrder_tel((String) session.getAttribute("order_tel"));
-//	    vo.setOrder_fee((int) session.getAttribute("order_fee"));
-//
-//	    System.out.println("---> Controller insertOrders 실행 <---");
-//	   
-//	    ordersService.insertOrders(vo);
-//    	
-//
-//    	
-//		return "/success"; 	
-//						
-//		
-//	}	
-	
+	// 결제 전 유저정보 세션등록
+	@RequestMapping(value="/save")
+	@ResponseBody
+	public void saveOrder(@RequestBody OrderVO ovo, Model model) {	
+		
+		model.addAttribute("order", ovo);
 
+	}
+	
 }

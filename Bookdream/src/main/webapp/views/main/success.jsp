@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>	
 <!DOCTYPE html>
 <html>
 <head>
@@ -123,27 +124,27 @@ td {
 					<table>
 						<tr>
 							<th >상품명 :</th>
-							<td>${order_name}</td>
+							<td>${order.order_name}</td>
 						</tr>
 						<tr>
 							<th>결제금액 :</th>
-							<td>${final_price}</td>
+							<td>${order.total_price}</td>
 						</tr>
 						<tr>
 							<th>결제수단 :</th>
-							<td>${pay_method}</td>
+							<td>${order.pay_method}</td>
 						</tr>
 						<tr>
 							<th>받는사람 :</th>
-							<td>${order_receiver}</td>
+							<td>${order.order_receiver}</td>
 						</tr>
 						<tr>
 							<th>주소 :</th>
-							<td>${order_address}</td>
+							<td>${order.order_address}</td>
 						</tr>
 						<tr>
 							<th>연락처 :</th>
-							<td>${order_tel}</td>
+							<td>${order.order_tel}</td>
 						</tr>
 					</table>						
 				</div>		

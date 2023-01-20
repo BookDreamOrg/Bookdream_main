@@ -15,7 +15,7 @@ import com.spring.bookdream.vo.UserVO;
 
 
 @Controller
-@RequestMapping(value="/member/*")
+@RequestMapping(value="/user/*")
 public class UserController {
 
 	@Autowired
@@ -28,7 +28,7 @@ public class UserController {
 		
 		
 		userService.insertUser(userVO);
-		return "/member/login";
+		return "/user/login"; 
 	}
 	
 	// 회원가입 아이디 중복체크

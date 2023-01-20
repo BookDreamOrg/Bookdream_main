@@ -29,6 +29,19 @@ public class OrderitemImpl implements OrderitemService {
 		return orderitemDAO.getOrderitemCount(vo);
 	}
 
+	// 상품 구매후 재고 차감
+	@Override
+	public int updateBookStock(OrderitemVO user_no) {
+		
+		return orderitemDAO.updateBookStock(user_no);
+	}
+
+	@Override
+	public int deleteCartList(OrderitemVO user_no) {
+		
+		return orderitemDAO.deleteCartList(user_no);		
+	}
+
 
 
 

@@ -50,7 +50,7 @@
                 <a class="nav-link" href="mypage.jsp">마이 페이지</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="https://kauth.kakao.com/oauth/logout?client_id=47ad839005d8b9a94d3007b30a956894&logout_redirect_uri=http://localhost:8000/member/kakaoLogout"> 카카오 로그아웃</a>
+                <a class="nav-link" href="https://kauth.kakao.com/oauth/logout?client_id=47ad839005d8b9a94d3007b30a956894&logout_redirect_uri=http://localhost:8000/user/kakaoLogout"> 카카오 로그아웃</a>
                 
               </li>
               <li class="nav-item">
