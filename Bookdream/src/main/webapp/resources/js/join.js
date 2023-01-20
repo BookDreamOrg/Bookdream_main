@@ -2,7 +2,7 @@ const count = 0;
 function checkId(){
              var id = $('#user_id').val(); //id값이 "id"인 입력란의 값을 저장
              $.ajax({
-                 url:'/user/idCheck.do', //Controller에서 요청 받을 주소
+                 url:'/views/user/idCheck.do', //Controller에서 요청 받을 주소
                  type:'post', //POST 방식으로 전달
                  data:{id:id},
                  success:function(cnt){ //컨트롤러에서 넘어온 cnt값을 받는다 
@@ -45,7 +45,7 @@ function checkId(){
 		
 		$.ajax({
 			type : 'get',
-			url : '/user/mailCheck?email=' + email, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
+			url : '/views/user/mailCheck?email=' + email, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
 			success : function (data) {
 				console.log("data : " +  data);
 				checkInput.attr('disabled',false);
