@@ -16,8 +16,8 @@
 	</resultMap>
 
 	<insert id="insertUser">
-		insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_ADDRESS, USER_TEL, FLATFORM_TYPE, USER_EMAIL) 
-		values(user_seq.nextval,#{user_id},#{user_password},#{user_name},'','','BD',#{user_email})
+		insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
+		values(user_seq.nextval,#{user_id},#{user_password},#{user_name},'BD',#{user_email})
 	</insert>
 	
 	<select id="idCheck" resultType="int">
