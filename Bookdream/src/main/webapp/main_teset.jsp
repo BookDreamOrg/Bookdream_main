@@ -14,7 +14,7 @@
 <link rel="icon" type="image/png" sizes="16x16"
 	href="resources/images/favicon/favicon-16x16.png" />
 <link rel="manifest" href="resources/images/favicon/site.webmanifest" />
-<link rel="stylesheet" href="resources/css/styles.css" />
+<link rel="stylesheet" href="../resources/css/styles.css" />
 
 <title>Insert title here</title>
 </head>
@@ -27,10 +27,10 @@
 			<div class="header-nav-list">
 				<ul class="nav header-nav">
 					<li class="nav-item"><a class="nav-link header-nav-link"
-						aria-current="page" href="member/join.jsp">회원가입</a></li>
+						aria-current="page" href="user/join.jsp">회원가입</a></li>
 					<span class="nav-bar-line"></span>
 					<li class="nav-item"><a class="nav-link header-nav-link"
-						href="member/login.jsp">로그인</a></li>
+						href="user/login.jsp">로그인</a></li>
 					<span class="nav-bar-line"></span>
 					<li class="nav-item"><a class="nav-link header-nav-link"
 						href="#">고객센터</a></li>
@@ -182,8 +182,9 @@
 	</div>
 
 	<!-- Script Bootstrap, jqurey-3.6.3 -->
-	<script src="resources/bootstrap/js/jquery-3.6.3.min.js"></script>
-	<script src="resources/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../resources/bootstrap/js/jquery-3.6.3.min.js"></script>
+	<script src="../resources/bootstrap/js/bootstrap.min.js"></script>
+
 
 	<!-- Script FontAwesome-->
 	<script src="https://kit.fontawesome.com/4bf42f841a.js"

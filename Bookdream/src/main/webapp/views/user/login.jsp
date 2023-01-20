@@ -11,14 +11,14 @@
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-   <link rel="stylesheet" href="../resources/css/login.css">
+   <link rel="stylesheet" href="/resources/css/login.css">
     <title>북드림 로그인 페이지</title>
     
 </head>
 <body class="text-center">
     <main class="form-signin">
        <form action="login.do" method="post" onsubmit="return frm_check()">
-       <img class="mb-4" src="../resources/images/bookdream_img.png" alt="" width="160" height="70">
+       <img class="mb-4" src="/resources/images/bookdream_img.png" alt="" width="160" height="70">
           
           <div class="form-floating">
              <input type="text" class="form-control" id="user_id" name="user_id" placeholder="아이디를 입력해 주세요">
@@ -49,20 +49,20 @@
         <div class="sns_login_box">
           	<ul class="sns_login_list">          	
           		<li class="sns_login_item">
-          			<a href="https://kauth.kakao.com/oauth/authorize?client_id=47ad839005d8b9a94d3007b30a956894&redirect_uri=http://localhost:8000/member/kakaoLogin&response_type=code">
-          				<img src="../resources/images/kakao_login2.PNG" class="rounded-circle" width="50px" height="45px">
+          			<a href="https://kauth.kakao.com/oauth/authorize?client_id=47ad839005d8b9a94d3007b30a956894&redirect_uri=http://localhost:8000/views/user/kakaoLogin&response_type=code">
+          				<img src="/resources/images/kakao_login2.PNG" class="rounded-circle" width="50px" height="45px">
           			 
           			 </a>
           		</li>
           		<li class="sns_login_item">
           			<a href="">
-          				<img src="../resources/images/naver_login.png" class="rounded-circle" width="50px" height="45px">
+          				<img src="/resources/images/naver_login.png" class="rounded-circle" width="50px" height="45px">
           			 
           			 </a>
           		</li>
           		<li class="sns_login_item">
           			<a href="">
-          				<img src="../resources/images/google_login.PNG" class="rounded-circle" width="50px" height="45px">
+          				<img src="/resources/images/google_login.PNG" class="rounded-circle" width="50px" height="45px">
           			 
           			 </a>
           		</li>

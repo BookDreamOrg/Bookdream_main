@@ -38,7 +38,7 @@ public class KakaoService {
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
 			 String sb = "grant_type=authorization_code" +
 		                "&client_id=47ad839005d8b9a94d3007b30a956894" + // REST_API_KEY
-		                "&redirect_uri=http://localhost:8000/member/kakaoLogin" + // REDIRECT_URI
+		                "&redirect_uri=http://localhost:8000/views/user/kakaoLogin" + // REDIRECT_URI
 		                "&code=" + authorize_code;
 			 System.out.println("#######zz"+authorize_code);
 			bw.write(sb);
