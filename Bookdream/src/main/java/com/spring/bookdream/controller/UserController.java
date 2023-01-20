@@ -15,7 +15,7 @@ import com.spring.bookdream.vo.UserVO;
 
 
 @Controller
-@RequestMapping(value="/user/*")
+@RequestMapping(value="/views/user/*")
 public class UserController {
 
 	@Autowired
