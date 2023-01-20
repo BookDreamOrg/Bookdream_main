@@ -4,40 +4,34 @@ connect bookdream/bookdream;
 
 -- User Table
 drop table USERS;
-
 create table USERS (
-  USER_NO        number(10)    not null,
-  USER_ID        varchar2(20)  not null UNIQUE,
-  USER_PASSWORD  varchar2(20)  not null,
-  USER_NAME      varchar2(10)  not null,
-  USER_ADDRESS   varchar2(50)  not null,
-  USER_TEL       varchar2(20)  not null,
-  USER_LEVEL     number(1)     default 0    check(USER_LEVEL in(0,1)),
-  BLACKLIST_YN   varchar2(5)   default 'N'  check(BLACKLIST_YN in ('Y','N')),
-  USER_EMAIL     varchar2(50)  not null,
+  USER_NO                 number(10)    not null,
+  USER_ID                   varchar2(40)  UNIQUE,
+  USER_PASSWORD  varchar2(20),
+  USER_NAME            varchar2(50)  not null,
+  USER_ADDRESS     varchar2(50)  default '',
+  USER_TEL                varchar2(20)  default '',
+  USER_LEVEL            number(1)     default 0    check(USER_LEVEL in(0,1)),
+  BLACKLIST_YN        varchar2(5)   default 'N'   check(BLACKLIST_YN in ('Y','N')),
+  FLATFORM_TYPE varchar2(50) not null,
+  USER_EMAIL            varchar2(50)  not null,
   constraint PK_USER primary key (USER_NO)
 );
 
-alter table users add USER_EMAIL VARCHAR2(40) default '';
+desc users;
 drop sequence user_seq;
+-- 번호를 자동으로 1부터 1씩 증가하도록 만듦
 create sequence user_seq increment by 1 start with 1;
 
-select * from USERS;
+-- 카카오 로그인 insert
+insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_ADDRESS, USER_TEL, FLATFORM_TYPE, USER_EMAIL) 
+		values(user_seq.nextval,'','','이름','','','KAKAO','이메일');    
+-- BookDream 회원 로그인 insert
+insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
+	values(user_seq.nextval,'sycha','1234','이름','BD','이메일');
 
--- Kakao User Table
-drop table kakao_table;
-create table kakao_table(
-    k_number number primary key,
-    k_name varchar2(20) not null,
-    k_email varchar2(50) not null,
-    platform varchar2(40) default 'kakao'
-);
-
-alter table kakao_table add platform varchar2(40) default 'kakao';
-drop sequence seq_id;
-create sequence seq_id increment by 1 start with 1;
-
-select * from kakao_table;
+select * from users;
+commit;
 
 -- Review Table
 drop table review;
