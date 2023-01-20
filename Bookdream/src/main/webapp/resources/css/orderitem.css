@@ -1,0 +1,464 @@
+@charset "UTF-8";
+
+
+* {
+	border-radius:10px;
+	box-sizing: border-box;
+	
+}
+
+
+
+body:before {
+     content: "";
+     opacity: 0.6;
+     position: absolute;
+     top: 0px;
+     left: 0px;
+     right: 0px;
+     bottom: 0px;
+     background-color: white;
+  	 z-index: -1;	     
+}
+
+
+
+hr {
+    background:#f2f2f2;
+    height:2px;
+    border:0;
+}
+
+button {
+	cursor: pointer;	
+}
+
+
+
+.main {
+	position:relative;
+	margin: 0 auto;
+	width: 1240px;
+	height: auto;
+	min-height: 1000px;
+}
+
+/* !!!!!!!!!!!!! 상단바 !!!!!!!!!!!!! */
+
+.topbar {
+	position:relative;
+	height:150px;	
+	border: 2px solid #bdbdbd;
+	margin-top: 50px;
+	background-color: white;
+}
+
+.topbar_title{
+	position:absolute;
+	top:60px;
+	margin-left:70px;
+	font-size: 30px;
+	font-weight: bold;
+}
+
+.title {
+	position:relative;
+	width:760px;
+	font-weight:bold;
+	margin: 40px 0px 30px 70px;
+	display:inline-block;
+}
+
+/* !!!!!!!!!!!!! 사이드바 !!!!!!!!!!!!! */
+
+.sidebar {
+	position:relative;
+	width:290px;
+	height:400px;
+	float: right;
+	padding: 0px 15px;
+	margin-top:30px;		
+	border: 2px solid #bdbdbd;	
+	background-color: white;	
+}
+
+.sidebar_col {
+	height: 30px;
+	margin: 30px 0px;	
+}
+
+.sidebar_col_price {
+	float: right;
+}
+
+.sidebar_col_price.final_price {
+	font-size: 25px;
+}
+
+.sidebar_col_last {
+	position:relative;
+	height: 50px;
+	margin: 30px 0px;	
+}
+
+.sidebar_col_title {
+	position:absolute;
+	top:7px;
+}
+
+
+/* !!!!!!!!!!!!! 상품목록 !!!!!!!!!!!!! */
+
+.cart_list {
+	display:inline-block;
+	width: 900px;
+	height: auto;
+	min-height:300px;
+	margin-top:30px;	
+	border: 2px solid #bdbdbd;
+	background-color: white;	
+}
+
+.cart_list_count {
+	float: right;
+}
+
+table {
+	width: 100%;
+	font-size: 15px;
+	margin-bottom: 40px;
+}
+
+td {
+	height: 100px;
+	vertical-align : middle;
+}
+
+.col_img {
+	width: 70px;
+	height: 100px;
+	border: 1px solid black;
+}
+
+.col1 {
+	width: 100px;
+	height: 100px;
+	padding-left: 30px;
+}
+
+
+.col2 {
+	width: 300px;
+	max-width: 400px;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;    
+}
+
+.col3 {
+	width: 100px;	
+	text-align: center;
+}
+
+.col4 {
+	width: 100px;	
+	text-align: center;
+}
+
+/* !!!!!!!!!!!!! Modal !!!!!!!!!!!!! */
+
+.modal {
+	position: absolute;
+	display: flex;	
+	top:0px;
+	left:0px;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+}
+
+.modal_open {
+	all: unset;
+	background-color: blue;
+	color: white;
+	padding: 5px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.modal_overlay {
+	background-color: rgba(0, 0, 0, 0.6);
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	
+}
+
+.modal_content {
+  	position: fixed; 	
+	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+	
+	width:620px;
+	height:850px;
+	
+	padding: 50px 50px;
+	background-color:white;	
+	border: 2px solid black;
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.moadl_address_list {
+
+	overflow: scroll;
+	overflow-x: hidden;
+	min-height: 500px;
+	max-height: 500px;
+	border: 1px solid black;		
+	margin: 20px 0px;
+}
+
+.modal_address_list_col{
+	position:relative;
+	width: 500px;
+	height:auto;
+	min-height: 140px;
+
+	
+}
+
+.modal_address_list_check {
+	position:absolute;
+	top:10px;
+	left:10px;	
+	width: 50px;
+	height: 120px;
+	display: inline-block;	
+}
+
+.form-check-input {
+	vertical-align: middle;
+}
+
+.modal_address_list_main {
+	position:absolute;
+	top:10px;
+	left:60px;
+	width: 380px;
+	height: 120px;
+	display: inline-block;
+	
+	font-size: 14px;
+}
+
+.modal_address_list_update {
+	position:absolute;
+	top:10px;
+	left:440px;	
+	width: 50px;
+	height: 120px;
+	display: inline-block;
+
+	font-size: 14px;		
+}
+
+
+.modal.hidden, .modal2.hidden {
+	display: none;
+}
+
+.modal_title {
+	font-size: 25px;
+}
+
+.modal_close {
+	font-size: 20px;
+	float: right;
+	cursor: pointer;
+}
+
+.modal_address, .user_info_address{
+	display: none;
+}
+
+.modal2 {
+	position: absolute;
+	display: flex;	
+	top:0px;
+	left:0px;
+	width: 100%;
+	height: 100%;
+	z-index: 2;
+}
+
+.modal2_content {
+  	position: fixed; 	
+	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+	
+	width: 520px;
+	height: 800px;
+	
+	padding: 50px 50px;
+	background-color: white;
+	border: 2px solid black;	
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+	z-index: 2;
+}
+
+.form-check {
+	width:200px;
+	margin: 0 auto;
+	margin-bottom: 20px;
+}
+
+.modal_update {
+	float: right;
+	margin-top: -20px;
+}
+
+.address_search {
+	margin: 80px 0px 30px 0px;
+	
+}
+
+.address_save {
+	margin-top: 50px;
+}
+
+
+/* !!!!!!!!!!!!! 배송지 정보 !!!!!!!!!!!!! */
+
+.user_info {
+	position:relative;
+	width: 900px;
+	height: auto;
+	min-height:220px;
+	margin-top:30px;	
+	border: 2px solid #bdbdbd;
+	background-color: white;	
+}
+
+.user_info_button {
+	position: absolute;
+	top:-10px;
+	left: 250px;
+	width: 500px;
+	height: 40px;
+	
+	border-color: #f2f2f2;
+	background-color: white;
+	cursor: pointer;
+	
+}
+
+.user_info_button.insert {
+	position: absolute;
+	top: 10px;
+	left: 0px;
+	width: 500px;
+	height: 40px;
+	
+	border-color: #f2f2f2;
+	background-color: white;
+	cursor: pointer;	
+}
+
+.user_info_address {
+	position: absolute;
+	top: 22px;
+	left: 320px;
+	width: 500px;
+	height: 70px;
+	
+	font-size:14px;
+	display: inline-block;
+	
+}
+
+
+/* !!!!!!!!!!!!! 쿠폰할인 !!!!!!!!!!!!! */
+
+.event {
+	width: 900px;
+	height: auto;
+	min-height:300px;
+	margin-top:30px;	
+	border: 2px solid #bdbdbd;
+	background-color: white;	
+}
+
+/* !!!!!!!!!!!!! 결제수단 !!!!!!!!!!!!! */
+
+.pay {
+	width: 900px;
+	height: auto;
+	min-height:500px;
+	margin-top:30px;	
+	border: 2px solid #bdbdbd;
+	margin-bottom: 50px;	
+	background-color: white;	
+}
+
+.pay_labels {
+	width:800px;
+	margin: 0 auto;
+	text-align: center;
+	vertical-align: middle;	
+	line-height: 58px;	
+}
+
+.pay_lable {
+	display:inline-block;
+	width:180px;
+	height:60px;
+	margin: 15px 5px 10px 5px;
+	border: 1px solid #bdbdbd;
+	font-size: 14px;
+	font-weight: bold;
+	cursor: pointer;	
+}
+
+.pay_lable:hover  {
+	 background-color: #f2f2f2;
+	 opacity:0.8;
+}
+	
+[name="pay_radio"] {
+	display: none;
+}
+
+[type="radio"]:checked + .pay_lable{
+	 border: 3px solid #6b5892;
+	 background-color: #f2f2f2;
+	 opacity:0.8;	
+}
+
+.payment {
+	position: absolute;
+	top: 320px;
+	left: 20px;
+}
+
+.pay_button {
+	width: 250px;
+	height: 60px;
+	background-color: #ebe7fe;
+	border-style: none;
+	font-weight: bold;
+	font-size: 17px;
+	cursor: pointer;	
+	
+}
+
+.pay_button:hover  {
+	background-color: #b1a5c8;
+}
+
+.pay_select {
+	margin: 40px 70px 20px 70px;
+	font-size: 20px;
+}
+

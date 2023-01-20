@@ -31,6 +31,21 @@ public class OrderitemDAO {
 		return mybatis.selectList("OrderitemDAO.getOrderitemCount", vo);
 	}
 
+	// 결제 후 재고 처리
+	public int updateBookStock(OrderitemVO user_no) {
 
+		System.out.println("---> updateStock 처리 <---");
+		
+		return mybatis.update("OrderitemDAO.updateBookStock", user_no);
+		
+	}
+
+	public int deleteCartList(OrderitemVO user_no) {
+
+		System.out.println("---> deleteCardList 처리 <---");
+		
+		return mybatis.delete("OrderitemDAO.deleteCartList", user_no);
+		
+	}
 
 }
