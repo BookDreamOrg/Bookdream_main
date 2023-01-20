@@ -2,9 +2,7 @@ package com.spring.bookdream.vo;
 
 import java.util.Date;
 
-
 public class ReviewVO {
-	
 	
 	private int review_no;
 	private int user_no;
@@ -13,14 +11,8 @@ public class ReviewVO {
 	private Date review_date;
 	private int review_recommend;
 	private int review_star;
-	private UserVO userVO;
 	
-	
-
-
-
 	public ReviewVO() {
-		
 	}
 
 	public int getReview_no() {
@@ -78,7 +70,7 @@ public class ReviewVO {
 	public void setReview_star(int review_star) {
 		this.review_star = review_star;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "ReviewVO [review_no=" + review_no + ", user_no=" + user_no + ", book_no=" + book_no
@@ -88,16 +80,6 @@ public class ReviewVO {
 				+ getReview_content() + ", getReview_date()=" + getReview_date() + ", getReview_recommend()="
 				+ getReview_recommend() + ", getReview_star()=" + getReview_star() + "]";
 	}
-
-	public UserVO getUserVO() {
-		return userVO;
-	}
-
-	public void setUserVO(UserVO userVO) {
-		this.userVO = userVO;
-	}
-
-
 
 	
 }

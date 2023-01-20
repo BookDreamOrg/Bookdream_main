@@ -5,37 +5,24 @@
 
 <mapper namespace="ReviewDAO">
 
-	<resultMap type="review" id="reviewResult" >
+	<resultMap type="review" id="reviewResult">
 		<result property="review_no" column="REVIEW_NO" />
 		<result property="user_no" column="USER_NO" />
 		<result property="book_no" column="BOOK_NO" />
 		<result property="review_content" column="REVIEW_CONTENT" />
 		<result property="review_date" column="REVIEW_DATE" />
 		<result property="review_recommend" column="REVIEW_RECOMMEND" />
+		<result property="review_star" column="REVIEW_STAR" />
 	</resultMap>
 
-
-
-
-
-	<select id="getReview"  resultMap="reviewResult">
-	<![CDATA[ SELECT r.*,u.USER_ID 
-	FROM review r LEFT JOIN  users u 
-	ON r.USER_NO = u.USER_NO 
-	WHERE BOOK_NO = #{book_no} ORDER BY r.REVIEW_NO desc
-	]]>
+	<select id="getReview" resultMap="reviewResult" parameterType="review">
+		SELECT * 
+		FROM review where book_no = #{book_no}
 	</select>
 	
-	
-	<insert id="insertReview" parameterType="review" >
-		<![CDATA[ INSERT INTO review (REVIEW_NO,USER_NO,BOOK_NO,REVIEW_CONTENT,REVIEW_DATE,REVIEW_RECOMMEND,REVIEW_STAR)
-		values ( (select NVL(max(REVIEW_NO),0)+1 from review),
-				 (select USER_NO from users where USER_ID = "test",		
-				 #{book_no}, 
-                 #{review_content}, 
-                 sysdate,
-                 #{review_recommend},
-                 #{review_star}) ]]>
+	<insert id="insertReview">
+		INSERT INTO review (review_no,user_no,book_no,review_content,review_date,review_recommend,review_star)
+		values ( (select max(review_no)+1 from review) ,#{user_no}, #{book_no}, #{review_content}, sysdate ,#{review_recommend},#{review_star})
 	</insert>
 	
 	<update id="updateReviewRecommend">

@@ -20,19 +20,19 @@ import com.spring.bookdream.vo.UserVO;
 @Controller
 @RequestMapping(value="/views/user/*")
 public class LoginController {
-   @Autowired
-   private UserService userService;
-   
-   @Autowired
-   private KakaoService ms;
-   
-   @Autowired
-   private HttpSession session;
-   
-   
-   // 기존 회원 로그인
-   @RequestMapping(value="/login.do")
-   public String login(@ModelAttribute UserVO vo, UserDAO userDAO, Model model) {
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private KakaoService ms;
+	
+	@Autowired
+	private HttpSession session;
+	
+	
+	// 기존 회원 로그인
+	@RequestMapping(value="/login.do")
+	public String login(@ModelAttribute UserVO vo, UserDAO userDAO, Model model) {
 
 		System.out.println("로그인 인증 처리 ...");
 		System.out.println(vo.getUser_id());
@@ -94,6 +94,5 @@ public class LoginController {
 		session.invalidate();
 		return "/main/main_teset";
 	}
-
 
 }

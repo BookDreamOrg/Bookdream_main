@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spring.bookdream.dao.BookDAO;
-import com.spring.bookdream.dao.ReviewDAO;
 import com.spring.bookdream.service.BookService;
 import com.spring.bookdream.service.ReviewService;
 import com.spring.bookdream.vo.BookVO;
@@ -56,8 +55,6 @@ public class BookController {
 				model.addAttribute("review",reviewService.getReview(book_no));
 				
 				
-
-				return "detail/detail";
-
+				return "/detail";
 			}
 }

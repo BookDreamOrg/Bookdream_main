@@ -3,36 +3,18 @@ package com.spring.bookdream.dao;
 import java.util.List;
 import java.util.Map;
 
-import javax.print.DocFlavor.STRING;
-import javax.servlet.http.HttpSession;
-
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionManager;
-import org.json.JSONObject;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import com.fasterxml.jackson.annotation.JacksonInject.Value;
-import com.spring.bookdream.service.ReviewService;
+
 import com.spring.bookdream.vo.ReviewVO;
-import com.spring.bookdream.vo.UserVO;
 
 
 @Repository
 public class ReviewDAO {
-	
-	public ReviewDAO() {
-
-	}
 
 	@Autowired
 	private SqlSessionTemplate mybatis;
-	
-	
-	@Autowired
-	private HttpSession session;
-	
 
 	// 장바구니 목록 조회
 	public List<ReviewVO> getReview(int book_no) {
@@ -41,13 +23,10 @@ public class ReviewDAO {
 		return mybatis.selectList("ReviewDAO.getReview",book_no);
 	}
 	
-
-	
+	//리뷰등록
 	public void insertReview(ReviewVO vo) {
 		System.out.println("---> insertReviewDAO");
-		
-		vo.getUserVO().setUser_id(((String) session.getAttribute("user_id")));  
-//		return mybatis.insertReview("ReviewDAO.insertReview",map);
+		//mybatis의 insert문은 실행한 row(행)을 return 한다. 
 		mybatis.insert("ReviewDAO.insertReview",vo);
 
 	}
