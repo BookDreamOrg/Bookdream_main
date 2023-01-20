@@ -56,7 +56,8 @@ public class PayController {
 			    .header("Content-Type", "application/json")
 			    .method("POST", HttpRequest.BodyPublishers.ofString("{\"paymentKey\":\"" + paymentKey + "\",\"" + "amount" + "\":" + amount + "," + "\"" + "orderId\":" + "\"" + orderId + "\"" + "}"))
 			    .build();
-			HttpResponse<String> response = HttpClient.newHttpClient().send(result, HttpResponse.BodyHandlers.ofString());
+		
+		HttpResponse<String> response = HttpClient.newHttpClient().send(result, HttpResponse.BodyHandlers.ofString());
 
 		// 받은 json data 사용하지는 않음
 		System.out.println("---> 토스페이를 사용해서 결제가 성공하였습니다. <---");

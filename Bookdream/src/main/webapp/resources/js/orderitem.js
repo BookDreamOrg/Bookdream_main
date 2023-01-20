@@ -63,38 +63,46 @@ function address_list() {
 		
 		success : function(result) {	
 			
-			console.log(result)
 			var html = "";
 			
 			for (i=0; i < result.length; i++) {
-				html += '<div class="modal_address_list_col">' +
-						'<div class="modal_address_list_check">' +
-						
+				let checked = (i==0) ? "checked" : "";
+				let address = (i==0) ? "&nbsp;[기본배송지]" : "";
 
-							'<input class="form-check-input" type="radio" name="address_radio" '+' id=" address_radio '+ i +' " ' + 'value=' + result[i].address_no + '>' +
-							'<input type="hidden" '+' value=" '+ result[i].address_no +' ">' +
-							'<input type="hidden" '+' value=" '+ result[i].address_alias +' ">' +
-							'<input type="hidden" '+' value=" '+ result[i].address_tel +' ">' +
-							'<input type="hidden" '+' value=" '+ result[i].address_name +' ">' +
-							'<input type="hidden" '+' value=" '+ result[i].zone_code +' ">' +
-							'<input type="hidden" '+' value=" '+ result[i].road_add +' " >' +
-							'<input type="hidden" '+' value=" '+ result[i].detail_add +' ">' +
-						'</div>' +
-						
-						'<div class="modal_address_list_main">' +
-							'<div>' + result[i].address_alias + '</div>' +
-							'<span>' + result[i].address_tel + '&nbsp;/&nbsp;</span>' +
-							'<span>' + result[i].address_name + '</span>' +
-							'<br>' + '[' +
-							'<span>' + result[i].zone_code + '</span>' + ']&nbsp;' +
-							'<span>' + result[i].road_add + '</span>' + '&nbsp;' +
-							'<span>' + result[i].detail_add + '</span></div>' +
-						
-							'<div class="modal_address_list_update">' +
-								'<div><button class="btn btn-light" onclick="moadl_address_get(this)" ' + 'value=" '+ result[i].address_no +' "><i class="bi bi-pen"></i></button></div>' +
-								'<div><button class="btn btn-light" onclick="modal_address_delete(this)" ' + 'value=" '+ result[i].address_no +' "><i class="bi bi-trash"></i></button></div>' +
-							'</div>' +
-						'</div>'
+				
+				html += `<table>` +	
+							`<tr>` +
+								`<td class="address_col1">` +
+									`<input class="form-check-input" type="radio" name="address_radio" id="address_radio+i" value=${result[i].address_no} ${checked}></td>` +
+									`<input type="hidden" value=${result[i].address_no}>` +
+									`<input type="hidden" value=${result[i].address_alias}>` +
+									`<input type="hidden" value=${result[i].address_tel}>` +
+									`<input type="hidden" value=${result[i].address_name}>` +
+									`<input type="hidden" value=${result[i].zone_code}>` +
+									`<input type="hidden" value=${result[i].road_add}>` +
+									`<input type="hidden" value=${result[i].detail_add}>` +
+								
+								`<td class="address_col2">`
+								
+									if (i==0) {
+				html +=				` <div style="color: purple; font-weight: bold;"> ${result[i].address_alias}&nbsp;<i class="bi bi-geo-alt-fill"></i>${address}</div>` 										
+									} else {
+				html +=			  	` <div> ${result[i].address_alias}${address}</div>` 									
+									}
+				html +=				 `<span>${result[i].address_tel}</span>&nbsp;/&nbsp;` + 
+								     `<span>${result[i].address_name}</span>` +
+								     `<br>[` +
+								     `<span>${result[i].zone_code}</span>]&nbsp;` +
+								     `<span>${result[i].road_add}</span>&nbsp;` +
+								     `<span>${result[i].detail_add}</span>` +
+								`</td>` +
+								
+								`<td class="address_col3">` + 
+									`<div><button class="btn btn-light" onclick="moadl_address_get(this)" value=${result[i].address_no}><i class="bi bi-pen"></i></button></div>` +
+									`<div><button class="btn btn-light" onclick="modal_address_delete(this)" value=${result[i].address_no}><i class="bi bi-trash"></i></button></div>` +
+								`</td>` +
+							`</tr>` +
+						`</table>`			
 
 			}	
 
@@ -138,22 +146,28 @@ function user_address_info(num, address_no) {
 			var html = "";
 
 			if (result == "") {
-				html += '<button class="user_info_button insert" id="modal_open" onclick="modal_open()">' +
-							'<span>배송지 입력하기</span>' + 
-						'</button>' 		
+				html += `<button class="user_info_button insert" id="modal_open" onclick="modal_open()">` +
+							`<span>배송지 입력하기</span>` + 
+						`</button>` 		
 			} else {
+
 				var result =  JSON.parse(result);
-				html +=	'<div>' +
-							'<div id="user_info_alias">' + result.address_alias + '</div>' +
-							'<span id="user_info_tel">' + result.address_tel + '</span>' + '&nbsp;/&nbsp;' +
-							'<span id="user_info_name">' + result.address_name + '</span>' +
-							'<br>' + '[' +
-							'<span id="user_info_zone_code">' + result.zone_code + '</span>' + ']&nbsp;' +
-							'<span id="user_info_road_add">' + result.road_add + '&nbsp;' + '</span>' +
-							'<span id="user_info_detail_add">' + result.detail_add + '&nbsp;' + '</span>' +
-							'<span class="modal_update"><button class="btn btn-outline-dark" id="modal_open" onclick="modal_open()"><i class="bi bi-pencil-square"></i></button></span>' +
 				
-						'</div>' 							
+				html +=	`<div>`
+				
+							if(`${result.default_add}` == `Y`) {
+				html +=			`<div style="color: purple; font-weight: bold;" id="user_info_alias">${result.address_alias}&nbsp;<i class="bi bi-geo-alt-fill"></i>&nbsp;[기본배송지]</div>` 	
+							} else {
+				html +=			`<div id="user_info_alias">${result.address_alias}</div>`
+							}			
+				html +=		`<span id="user_info_tel"> ${result.address_tel}</span>&nbsp;/&nbsp;` +
+							`<span id="user_info_name">${result.address_name}</span>` +
+							`<br>[` +
+							`<span id="user_info_zone_code">${result.zone_code}</span>]&nbsp;` +
+							`<span id="user_info_road_add">${result.road_add}</span>&nbsp;` +
+							`<span id="user_info_detail_add">${result.detail_add}</span>&nbsp;` +
+							`<span class="modal_update"><button class="btn btn-outline-dark" id="modal_open" onclick="modal_open()"><i class="bi bi-pencil-square"></i></button></span>` +
+						`</div>` 							
 							
 			}
 		      document.getElementById('user_info_address').innerHTML = html;		
@@ -192,41 +206,72 @@ function address_insert() {
 	var detail_add = $('input[name="moadl2_address_detailAddress"]').val();
 	var address_no = $('input[name="modal2_address_no"]').val();
 	
-	var data = {
-					 "address_alias" : address_alias,
-					 "address_name" : address_name,
-					 "address_tel" : address_tel,
-					 "zone_code" : zone_code,
-					 "road_add" : road_add,
-					 "detail_add" : detail_add,
-					 "address_no" : address_no
-					};
-	
-	// 주소 입력시
-	if($('#modal2_address_insert').is(':visible') == true) {
 
+	// 주소 입력하기를 누르면 사용자의 주소 목록을 조회함
+	if($('#modal2_address_insert').is(':visible') == true) {
 		$.ajax({
 			type : "POST",                              
-			url : "/address/insert",         
-			data : JSON.stringify(data),   
-			dataType : "text",
+			url : "/address/allList",	
+			dataType : "json",
 			contentType : "application/json",
 			
-			success : function() {	
-				// 주소 갱신
-				address_list();
-				$('#modal2').hide();
+			success : function(result) {	
+				
+				// 등록된 주소가 없다면 생성한 주소는 기본 배송지로 설정됨		
+				var checked = (result=="") ? "Y" : "N";
 
+				var data = {
+						 "address_alias" : address_alias,
+						 "address_name" : address_name,
+						 "address_tel" : address_tel,
+						 "zone_code" : zone_code,
+						 "road_add" : road_add,
+						 "detail_add" : detail_add,
+						 "address_no" : address_no,
+						 "default_add" : checked
+					};				
+									
+					$.ajax({
+						type : "POST",                              
+						url : "/address/insert",         
+						data : JSON.stringify(data),   
+						dataType : "text",
+						contentType : "application/json",
+						
+						success : function() {	
+
+							if(checked == 'Y') {
+								alert("처음 생성한 배송지는 기본 배송지로 설정됩니다.");
+							}
+							// 주소 갱신
+							address_list();
+							$('#modal2').hide();
+
+						},
+						error: function(request, status, error) {
+					        console.log("code: " + request.status)
+					        console.log("message: " + request.responseText)
+					        console.log("error: " + error);
+						}
+					});	
+					
+				
 			},
-			error: function(request, status, error) {
-		        console.log("code: " + request.status)
-		        console.log("message: " + request.responseText)
-		        console.log("error: " + error);
-			}				
-		});	
+					
+		})		
 		
-	// 주소 수정시
+	// 주소수정	
 	} else {
+		
+		var data = {
+				 "address_alias" : address_alias,
+				 "address_name" : address_name,
+				 "address_tel" : address_tel,
+				 "zone_code" : zone_code,
+				 "road_add" : road_add,
+				 "detail_add" : detail_add,
+				 "address_no" : address_no
+			};			
 		
 		$.ajax({
 			type : "POST",                              
@@ -249,7 +294,6 @@ function address_insert() {
 		});			
 		
 	}
-
 	
 }
 
@@ -259,16 +303,43 @@ function modal_address_delete(no) {
 	 
 	var address_no = $(no).val();
 	var data = {"address_no" : address_no};
+
+	$.ajax({
+		type : "POST",                              
+		url : "/address/get",
+		data : JSON.stringify(data),  	
+		dataType : "text",
+		contentType : "application/json",
 		
-	$.ajax ({
-		type : 'POST',
-		url : '/address/delete',
-		data : JSON.stringify(data),   
-		dataType : 'text',
-		contentType : "application/json",		
-		
-		success : function() {	
-			address_list();	
+		success : function(result) {
+					
+			var result =  JSON.parse(result);
+			
+			if (result.default_add == 'Y') {
+				
+				alert("기본배송지는 삭제할 수 없습니다.");
+				
+			} else {
+				
+				$.ajax ({
+					type : 'POST',
+					url : '/address/delete',
+					data : JSON.stringify(data),   
+					dataType : 'text',
+					contentType : "application/json",		
+					
+					success : function() {	
+						address_list();	
+					},
+					
+					error: function(request, status, error) {
+				        console.log("code: " + request.status)
+				        console.log("message: " + request.responseText)
+				        console.log("error: " + error);
+					}	
+				})
+				
+			}
 		},
 		
 		error: function(request, status, error) {
@@ -276,7 +347,11 @@ function modal_address_delete(no) {
 	        console.log("message: " + request.responseText)
 	        console.log("error: " + error);
 		}	
+		
+		
 	})
+		
+	
 	
 }
 

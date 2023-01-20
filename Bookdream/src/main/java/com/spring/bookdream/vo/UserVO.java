@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class UserVO {
-	private String user_no;
+	private int user_no;
 	private String user_id;
 	private String user_password;
 	private String user_name;
@@ -14,5 +14,6 @@ public class UserVO {
 	private String blacklist_yn;
 	private String flatform_type;
 	private String user_email;  // 도메인 앞부분
-	private String user_email2; // @naver.com 도메인
+	private String user_email2; // @naver.com 도인
+
 }

@@ -72,11 +72,11 @@
 					</div>
 				</div>
 				<div class="col-lg-1 p-5 flex-grow-1 header-col-btn">
-					<a href="#">
+					<a href="/cart">
 						<div class="header-btn">
 							<i class="fa-solid fa-cart-shopping"></i>
 						</div>
-					</a> <a href="#">
+					</a> <a href="/detail/cart/orderitem">
 						<div class="header-btn btn-circle ms-3">
 							<i class="fa-solid fa-user"></i>
 						</div>
@@ -88,7 +88,7 @@
 	%>
 		<div class="wrapper">
 		<header>
-			<div class="header-nav-list">
+			<div style="" class="header-nav-list">
 				<ul class="nav header-nav">
 					<%
 						if(id != null && kakaoN == null){ //기존 로그아웃

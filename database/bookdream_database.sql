@@ -4,6 +4,7 @@ connect bookdream/bookdream;
 
 -- User Table
 drop table USERS;
+
 create table USERS (
   USER_NO                 number(10)    not null,
   USER_ID                   varchar2(40)  UNIQUE,
@@ -19,6 +20,7 @@ create table USERS (
 );
 
 desc users;
+
 drop sequence user_seq;
 -- 번호를 자동으로 1부터 1씩 증가하도록 만듦
 create sequence user_seq increment by 1 start with 1;
@@ -29,6 +31,8 @@ insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_ADDRESS, USER
 -- BookDream 회원 로그인 insert
 insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
 	values(user_seq.nextval,'sycha','1234','이름','BD','이메일');
+
+
 
 select * from users;
 commit;
@@ -112,7 +116,7 @@ create table BOOK (
 
 select * from BOOK;
 
-commit
+commit;
 
 
 --------------------------------------------------------------------
@@ -121,13 +125,14 @@ commit
 drop table cart;
 
 create table CART (
-    CART_NO       number(10) NOT NULL,
-    USER_NO       number     NOT NULL,
-    BOOK_NO       number     NOT NULL,
+    CART_NO       number(10)  NOT NULL,
+    USER_NO       number(10)  NOT NULL,
+    BOOK_NO       number(10)  NOT NULL,
     PRODUCT_COUNT  number(10) NOT NULL,
-    constraint PK_CART primary key (CART_NO),
+    constraint PK_CART primary key (CART_NO)
     constraint FK_CART_USER_NO foreign key(USER_NO) REFERENCES USERS (USER_NO),
-    constraint FK_CART_BOOK_NO foreign key(BOOK_NO) REFERENCES BOOK (BOOK_NO)
+    constraint FK_CART_BOOK_NO foreign key(BOOK_NO) REFERENCES BOOK (BOOK_NO)    
+
 );
 
 insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(1, 1, 1, 1);
@@ -136,7 +141,7 @@ insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(3, 1, 3, 2);
 insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(4, 1, 4, 1);
 insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(5, 1, 5, 1);
 
-insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(6, 2, 5, 1);
+insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(4, 2, 5, 1);
 
 select * from cart;
 
