@@ -57,9 +57,8 @@
                  		  where c.book_no = b.book_no AND u.user_no = c.user_no)
                   
 		WHERE  exists (select 1
-               from    cart c, users u
-               where   c.book_no = b.book_no 
-               and     u.user_no = c.user_no)
+              		   from    cart c, users u
+               		   where   c.book_no = b.book_no AND u.user_no = c.user_no)
 	
 	</update>
 

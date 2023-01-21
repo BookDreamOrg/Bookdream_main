@@ -9,15 +9,10 @@
 		<result property="user_no" column="USER_NO" />	
 		<result property="book_no" column="BOOK_NO" />	
 		<result property="total_count" column="ORDER_NO" />	
-		<result property="product_count" column="PRODUCT_COUNT" />	
-		<collection property="userVO" resultMap="userList"></collection>		
+		<result property="product_count" column="PRODUCT_COUNT" />		
 		<collection property="bookVO" resultMap="bookList"></collection>
 		<collection property="cartVO" resultMap="cartList"></collection>
 	</resultMap>	
-
-	<resultMap type="user" id="userList">
-		<result property="user_no" column="USER_NO" />
-	</resultMap>
 
 	<resultMap type="book" id="bookList">
 		<result property="book_no" column="BOOK_NO"/>	
@@ -37,15 +32,14 @@
 							  order_no, 
 							  product_count)
 		SELECT numplus.nextval, 
-		       u.user_no, 
+		       c.user_no, 
 		       b.book_no, 
 		       o.order_no, 
 		       c.product_count
-		FROM   users u, 
-		       book b, 
+		FROM   book b, 
 		       cart c, 
 		       orders o
-		WHERE  1 = c.user_no AND b.book_no = c.book_no AND o.order_no = #{order_no}
+		WHERE  c.user_no = 1 AND b.book_no = c.book_no AND o.order_no = #{order_no}
 	
 	</insert>
 	

@@ -195,7 +195,36 @@
 		</div>
 	</div>
 	
+	<!-- !!!!!!!!!!!!!!!!!!!!!  배송요청사항  !!!!!!!!!!!!!!!!!!!!! -->
 	
+	<div class="modal3 hidden" id="modal3">
+		<div class="modal3_overlay" id="modal3_overlay"></div>
+		<div class="modal3_content" id="modal3_content">
+			<span class="modal_title">배송요청사항</span>
+			<span class="btn-close modal_close" id="modal3_close"></span>
+			<hr>
+			<div>
+				<select class="form-select" id="message_select" onchange="select_message(this.value)">
+  					<option selected>배송요청사항을 입력해주세요.</option>
+					<option value="배송 전에 미리 연락 바랍니다.">배송 전에 미리 연락 바랍니다.</option>
+ 					<option value="부재시 경비실에 맡겨 주세요.">부재시 경비실에 맡겨 주세요.</option>
+ 					<option value="부재시 전화 주시거나 문자 남겨 주세요.">부재시 전화 주시거나 문자 남겨 주세요.</option>
+ 					<option value="message">요청사항을 직접 입력합니다.</option>
+				</select>
+				
+			<div class="mb-3">
+  				<input class="form-control message_insert" id="message" placeholder="요청사항을 직접 입력시 활성화 됩니다." disabled>
+			</div>					
+	
+			<div class="d-grid gap-2 ">
+				<button class="btn btn-light" id="message_save">저장</button>			
+			</div>		
+						
+			</div>
+			<hr>
+
+		</div>
+	</div>	
 	
 	
 	<div class="main">
@@ -286,17 +315,15 @@
 		
 		<div class="user_info"> 
 			<div class="title">배송지 정보	</div>
-			
-			<div class="user_info_address" id="user_info_address">11</div>				
-		
-			
-			
+			<div class="user_info_address" id="user_info_address"></div>				
 			<hr>			
 			
-			<div class="title">배송요청사항
-				<button class="user_info_button"><span>요청사항 메시지</span></button>				
+			<div class="title">배송요청사항</div>
+			<button class="user_info_button" id="user_info_button" onclick="modal3_open()"><span>요청사항 메시지</span></button>
+			<div class="user_info_message" id="user_info_message">
+				<div id="user_info_message_text"></div>
+				<button class="btn btn-outline-dark message_button" onclick="modal3_open()"><i class="bi bi-pencil-square"></i></button>
 			</div>
-	
 		</div>
 		
 		<!-- !!!!!!!!!!!!!!!!!!!!! 쿠폰  !!!!!!!!!!!!!!!!!!!!! -->	

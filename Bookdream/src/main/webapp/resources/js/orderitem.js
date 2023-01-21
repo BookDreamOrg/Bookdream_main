@@ -2,6 +2,7 @@
 // 페이지 로딩 
 $(function() {
 	$('#pay_labels').hide();
+	$('#user_info_message').hide();
 	user_address_info();
 })
 
@@ -50,6 +51,54 @@ $("#modal2_close").click(function() {
 	$('#modal2').fadeOut();		  
 })
 
+// 배송요청사항 열기
+
+function modal3_open() {
+	$('#modal3').fadeIn();		  
+}
+
+
+// 베송요청사항 닫기
+$('#modal3_close').click(function() {
+	$('#modal3').fadeOut();	
+}) 
+		  
+
+
+// 배송요청사항 선택
+function select_message(value) {
+	
+	if (value == 'message') {
+		$('#message').attr('disabled', false);
+	} else {
+		$('#message').attr('disabled', true);
+		$('#message').val("");
+	}
+}
+
+$('#message_save').click(function() {
+
+	var value = document.getElementById('message_select').value;
+	var html = '';
+	
+	if (value == 'message') {
+		value = document.getElementById('message').value;
+		
+		if (value == '') {
+			alert("요청사항을 입력하세요.");
+			return false;
+		}
+	} 
+	
+	html =	`${value}`
+
+	$('#user_info_button').hide();
+	$('#user_info_message').show();
+	document.getElementById('user_info_message_text').innerHTML = html;
+	$('#modal3').fadeOut();		
+	
+})
+
 
 // 주소 목록 조회 갱신 (CRUD 시)
 function address_list() {
@@ -68,12 +117,12 @@ function address_list() {
 			for (i=0; i < result.length; i++) {
 				let checked = (i==0) ? "checked" : "";
 				let address = (i==0) ? "&nbsp;[기본배송지]" : "";
-
+				let no = i;
 				
 				html += `<table>` +	
 							`<tr>` +
 								`<td class="address_col1">` +
-									`<input class="form-check-input" type="radio" name="address_radio" id="address_radio+i" value=${result[i].address_no} ${checked}></td>` +
+									`<input class="form-check-input" type="radio" name="address_radio" id="address_radio+${no}" value=${result[i].address_no} ${checked}></td>` +
 									`<input type="hidden" value=${result[i].address_no}>` +
 									`<input type="hidden" value=${result[i].address_alias}>` +
 									`<input type="hidden" value=${result[i].address_tel}>` +
@@ -85,16 +134,16 @@ function address_list() {
 								`<td class="address_col2">`
 								
 									if (i==0) {
-				html +=				` <div style="color: purple; font-weight: bold;"> ${result[i].address_alias}&nbsp;<i class="bi bi-geo-alt-fill"></i>${address}</div>` 										
+				html +=				` <label for="address_radio+${no}"><div style="color: purple; font-weight: bold;"> ${result[i].address_alias}&nbsp;<i class="bi bi-geo-alt-fill"></i>${address}</div>` 										
 									} else {
-				html +=			  	` <div> ${result[i].address_alias}${address}</div>` 									
+				html +=			  	` <label for="address_radio+${no}"><div> ${result[i].address_alias}${address}</div>` 									
 									}
 				html +=				 `<span>${result[i].address_tel}</span>&nbsp;/&nbsp;` + 
 								     `<span>${result[i].address_name}</span>` +
 								     `<br>[` +
 								     `<span>${result[i].zone_code}</span>]&nbsp;` +
 								     `<span>${result[i].road_add}</span>&nbsp;` +
-								     `<span>${result[i].detail_add}</span>` +
+								     `<span>${result[i].detail_add}</span><label>` +
 								`</td>` +
 								
 								`<td class="address_col3">` + 
@@ -194,6 +243,9 @@ $('#modal2_address_update').click(function() {
 	
 	address_insert();
 })
+
+
+
 
 function address_insert() {
 	
@@ -529,14 +581,19 @@ $('#modal_reg_check').click(function() {
 		
 		var order_receiver = document.getElementById('user_info_name').innerHTML; 
 		var order_tel = document.getElementById('user_info_tel').innerHTML;
+		
+		var order_comment = document.getElementById('user_info_message_text').innerHTML;		
+
+		
+		
 		var order_name = $('input[name="first_title"]').val();
 	    var pay_method = $('input[name="pay_radio"]:checked').val();
-		
+
 		var data = {
 					"order_name" : order_name,
 					"pay_method" : pay_method,
 					"total_price" : 500,
-					"order_comment" : '안전배송',
+					"order_comment" : order_comment,
 					"order_receiver" : order_receiver,
 					"order_address" : order_address,
 					"order_tel" : order_tel,

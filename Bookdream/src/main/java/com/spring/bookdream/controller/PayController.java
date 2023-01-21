@@ -102,6 +102,7 @@ public class PayController {
 	    System.out.println("---> 구입한 상품만 장바구니 제거 <---");
 	    orderitemService.deleteCartList(orderitem);
 	    
+	    System.out.println("주문완료");
 	    return "redirect:/detail/cart/orderitem/success";
 	}		
 	
