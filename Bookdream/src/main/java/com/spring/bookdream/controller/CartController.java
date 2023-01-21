@@ -19,17 +19,9 @@ public class CartController {
 	
 	@Autowired
 	private CartService cartService;
-	
-	@Autowired
-	private HttpSession session;	
-	
+		
 	@RequestMapping(value="/cart")
-	public String cartList(UserVO vo1, CartVO vo, Model model) {
-		
-			vo1.setUser_no(1);
-			vo.setUser_no(vo1.getUser_no());
-		
-			System.out.println(vo1.getUser_no());
+	public String cartList(CartVO vo, Model model) {
 
 		
 		// 장바구니 목록 조회
