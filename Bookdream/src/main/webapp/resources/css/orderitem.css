@@ -408,12 +408,19 @@ td {
 /* !!!!!!!!!!!!! 쿠폰할인 !!!!!!!!!!!!! */
 
 .event {
+	position:relative;
 	width: 900px;
 	height: auto;
-	min-height:300px;
+	min-height:200px;
 	margin-top:30px;	
 	border: 2px solid #bdbdbd;
 	background-color: white;	
+}
+
+.event_text {
+	position: absolute;
+	top: 40px;
+	left: 400px;
 }
 
 /* !!!!!!!!!!!!! 결제수단 !!!!!!!!!!!!! */

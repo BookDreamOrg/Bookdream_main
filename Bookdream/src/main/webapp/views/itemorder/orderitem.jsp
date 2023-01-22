@@ -256,7 +256,7 @@
 					<table>
 						<c:forEach items="${orderitemList}" var="orderitem" varStatus="i">					
 							<tr>
-								<td class="col1"><img class="col_img" alt="" src="${orderitem.bookVO.book_img }"> </td>					
+								<td class="col1"><a href="/getBook?book_no=${orderitem.bookVO.book_no}"><img class="col_img" alt="" src="${orderitem.bookVO.book_img }"></a></td>					
 								<td class="col2">${ orderitem.bookVO.title }</td>
 								<td class="col3"><b><fmt:formatNumber value="${orderitem.bookVO.book_price}" pattern="###,###"/></b> 원</td>
 								<td class="col4">${ orderitem.product_count }개</td>
@@ -330,7 +330,7 @@
 		
 		<div class="event"> 
 			<div class="title">할인쿠폰</div>
-			<hr>			
+			<div class="event_text"><i class="bi bi-exclamation-circle"></i>&nbsp;사용할 수 있는 쿠폰이 없습니다.</div>		
 		</div>
 		
 		<!-- !!!!!!!!!!!!!!!!!!!!! 결제수단  !!!!!!!!!!!!!!!!!!!!! -->	

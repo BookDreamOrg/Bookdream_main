@@ -18,13 +18,4 @@ public class OrderImpl implements OrderService {
 		
 	}
 
-	@Override
-	public OrderVO searchOrderNo(OrderVO vo) {
-		
-		return orderDAO.searchOrderNo(vo);
-		
-	}
-
-
-
 }

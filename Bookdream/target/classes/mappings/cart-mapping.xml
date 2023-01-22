@@ -29,7 +29,7 @@
 	<select id="getCartList" parameterType="cart" resultMap="cartList">
 		SELECT c.cart_no, u.user_no, b.book_img, b.title, b.book_price, c.product_count
 		FROM cart c, users u, book b
-		WHERE c.book_no = b.book_no AND u.user_no = c.user_no AND u.user_no = #{user_no}
+		WHERE c.book_no = b.book_no AND u.user_no = c.user_no AND c.user_no = 1
 		order by cart_no
 	</select>
 	

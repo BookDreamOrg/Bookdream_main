@@ -4,6 +4,10 @@
 			
 <mapper namespace="PayDAO">
 
+	<resultMap type="pay" id="payList">
+		<result property="pay_no" column="PAY_NO" />
+		<result property="pay_date" column="PAY_DATE" />
+	</resultMap>
 
 	<insert id="insertPay" >
 		INSERT INTO pay(PAY_NO, 
@@ -18,5 +22,16 @@
 				 #{save_point}
 				 )
 	</insert>
+
+	<select id="searchPay" resultMap="payList">
+	<![CDATA[	
+		SELECT pay_no, pay_date
+		FROM   (select * 
+                from pay 
+                order by pay_no desc)
+        WHERE  rownum = 1
+     ]]>
+	</select>
+
 	
 </mapper>

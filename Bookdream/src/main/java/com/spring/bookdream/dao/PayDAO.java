@@ -18,6 +18,12 @@ public class PayDAO {
 		System.out.println("---> PayDAO inserPay 실행 <---");
 		mybatis.insert("PayDAO.insertPay", vo);		
 	}
-	
+
+	public PayVO searchPay(PayVO vo) {
+		
+		System.out.println("---> PayDAO searchPay 실행 <---");
+
+		return mybatis.selectOne("PayDAO.searchPay", vo);	
+	}
 
 }
