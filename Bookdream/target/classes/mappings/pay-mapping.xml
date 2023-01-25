@@ -22,12 +22,13 @@
 				 #{final_price}, 
 				 #{save_point},
 				 #{use_point}
-				 )
+			    )
 	</insert>
 
 	<select id="searchPay" resultMap="payList">
 	<![CDATA[	
-		SELECT pay_no, pay_date
+		SELECT pay_no, 
+			   pay_date
 		FROM   (select * 
                 from pay 
                 order by pay_no desc)

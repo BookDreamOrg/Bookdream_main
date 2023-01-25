@@ -1,4 +1,4 @@
-
+	
 // 페이지 로딩 
 $(function() {
 	$('#pay_labels').hide();
@@ -535,7 +535,7 @@ function comma(id, value) {
 $('#max_point').click(function() {
 	var final_price = uncomma('#sidebar_final_price');
 	var point = uncomma('', '#max_point');	
-	var value = this.value;
+	var value = uncomma('', '#use_point	');
 
 	// 체크 누름
 	if ($('input[id="max_point"]:checked').is(":checked")) {
@@ -543,6 +543,10 @@ $('#max_point').click(function() {
 		// 이전에 입력된 포인트가 있다면 0 
 		if (value != 0){
 			$('#use_point').val(0);	
+
+			sidebar();
+			value = uncomma('', '#use_point	');		
+			final_price = uncomma('#sidebar_final_price');
 		} 
 		
 		// 포인트가 상품금액보다 많다면, 입력된 포인트가 0 일 경우에만
@@ -578,7 +582,7 @@ $('#use_point').on('keyup', function() {
 	if ((value >= point) && (final_price > point)) {
 		comma('#use_point', point);			
 		
-	} else if (((value >= point) && (final_price < point))) {
+	} else if ((value >= point) && (final_price < point)) {
 		comma('#use_point', final_price);					
 	}
 	
@@ -604,9 +608,11 @@ $('#use_point').focusout(function() {
 	if ((value >= point) && (final_price > point)) {
 		comma('#use_point', point);							
 		
-	} else if (((value >= point) && (final_price < point))) {
+	} else if ((value >= point) && (final_price < point)) {
 		comma('#use_point', final_price);			
-	}	
+	} else {
+		$('#use_point').val(value);
+	}
 	
 	sidebar();
 });
@@ -620,8 +626,11 @@ function sidebar() {
 	var delivery = uncomma('#sidebar_delivery');	
 	var use_point = uncomma('#use_point','');
 	
+
+
 	// 계산
 	var str_final_price = (total_price + delivery) - use_point
+	
 	var str_save_point = Math.round(str_final_price * 0.05);
 	
 	// , 추가 	
@@ -629,6 +638,8 @@ function sidebar() {
 	var save_point = comma(str_save_point);
 	var use_point = comma(use_point);
 
+
+	console.log("use_point : " + use_point);
 	
 	let html = '';
 	

@@ -291,7 +291,7 @@
 						<span class="sidebar_col_price">(+) <b id="sidebar_delivery">0</b> 원</span>						
 					</c:when>
 					<c:otherwise>
-						<span class="sidebar_col_price">(-) <b id="sidebar_delivery"><fmt:formatNumber value="${delivery}" pattern="###,###"/></b> 원</span>				
+						<span class="sidebar_col_price">(+) <b id="sidebar_delivery"><fmt:formatNumber value="${delivery}" pattern="###,###"/></b> 원</span>				
 					</c:otherwise>
 				</c:choose>	
 			</div>
