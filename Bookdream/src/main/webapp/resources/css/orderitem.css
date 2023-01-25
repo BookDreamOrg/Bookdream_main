@@ -7,8 +7,6 @@
 	
 }
 
-
-
 body:before {
      content: "";
      opacity: 0.6;
@@ -21,13 +19,17 @@ body:before {
   	 z-index: -1;	     
 }
 
-
-
 hr {
-    background:#f2f2f2;
-    height:2px;
-    border:0;
+    color:black;
+    height:1px;
+	margin-bottom: -1px;
 }
+
+.hr_title {
+	margin:30px 0px;
+	color: white;
+}
+
 
 button {
 	cursor: pointer;	
@@ -48,7 +50,6 @@ button {
 .topbar {
 	position:relative;
 	height:150px;	
-	border: 2px solid #bdbdbd;
 	margin-top: 50px;
 	background-color: white;
 }
@@ -71,10 +72,11 @@ button {
 
 /* !!!!!!!!!!!!! 사이드바 !!!!!!!!!!!!! */
 
+
 .sidebar {
 	position:relative;
 	width:290px;
-	height:400px;
+	height:480px;
 	float: right;
 	padding: 0px 15px;
 	margin-top:30px;		
@@ -87,7 +89,7 @@ button {
 	margin: 30px 0px;	
 }
 
-.sidebar_col_price {
+.sidebar_col_price, .sidebar_col_point {
 	float: right;
 }
 
@@ -98,12 +100,16 @@ button {
 .sidebar_col_last {
 	position:relative;
 	height: 50px;
-	margin: 30px 0px;	
+	margin: 30px 0px 0px 0px;	
 }
 
 .sidebar_col_title {
 	position:absolute;
 	top:7px;
+}
+
+.sidebar_save_point {
+	float: right;
 }
 
 
@@ -126,18 +132,19 @@ button {
 table {
 	width: 100%;
 	font-size: 15px;
-	margin-bottom: 40px;
+	margin: 40px 0px;
 }
 
 td {
 	height: 100px;
 	vertical-align : middle;
+	padding: 10px;
 }
 
 .col_img {
 	width: 70px;
 	height: 100px;
-	border: 1px solid black;
+	border: 1px solid #bdbdbd;
 }
 
 .col1 {
@@ -361,7 +368,7 @@ td {
 
 .user_info_button {
 	position: absolute;
-	top: 160px;
+	top: 145px;
 	left: 320px;
 	width: 500px;
 	height: 40px;
@@ -386,7 +393,7 @@ td {
 
 .user_info_message {
 	position: absolute;
-	top: 165px;
+	top: 155px;
 	left: 320px;
 	width: 500px;
 	height: 40px;	
@@ -411,7 +418,7 @@ td {
 	position:relative;
 	width: 900px;
 	height: auto;
-	min-height:200px;
+	min-height:220px;
 	margin-top:30px;	
 	border: 2px solid #bdbdbd;
 	background-color: white;	
@@ -421,6 +428,32 @@ td {
 	position: absolute;
 	top: 40px;
 	left: 400px;
+}
+
+
+.event_point {
+	position:absolute;
+	top: 145px;
+	left: 320px;
+	width: 300px;
+
+
+}
+
+.event_input{
+	width: 300px;
+	display: inline;
+	text-align: right;
+}
+
+.event_input_text {
+	position:absolute;
+	top:145px;
+	left:620px;
+	width:180px;
+	font-size: 12px;
+	opacity: 0.7;
+	margin-left: 10px;
 }
 
 /* !!!!!!!!!!!!! 결제수단 !!!!!!!!!!!!! */
@@ -471,7 +504,7 @@ td {
 
 .payment {
 	position: absolute;
-	top: 320px;
+	top: 400px;
 	left: 20px;
 }
 

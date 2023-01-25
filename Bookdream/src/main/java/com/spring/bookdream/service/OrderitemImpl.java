@@ -24,11 +24,19 @@ public class OrderitemImpl implements OrderitemService {
 	
 	// 결제 상품 개수 조회
 	@Override
-	public List<OrderitemVO> getOrderitemCount(OrderitemVO vo) {
+	public OrderitemVO getOrderitemCount(OrderitemVO vo) {
 
 		return orderitemDAO.getOrderitemCount(vo);
 	}
 
+	
+	@Override
+	public OrderitemVO userPoint(OrderitemVO vo) {
+
+		return orderitemDAO.userPoint(vo);
+	}
+
+	
 	// 상품 구매후 재고 차감
 	@Override
 	public int updateBookStock(OrderitemVO user_no) {
@@ -36,11 +44,19 @@ public class OrderitemImpl implements OrderitemService {
 		return orderitemDAO.updateBookStock(user_no);
 	}
 
+	// 구매 한 장바구니 품목 제거
 	@Override
 	public int deleteCartList(OrderitemVO user_no) {
 		
 		return orderitemDAO.deleteCartList(user_no);		
 	}
+
+	@Override
+	public int updateUserPoint(OrderitemVO vo) {
+
+		return orderitemDAO.updateUserPoint(vo);	
+	}
+
 
 
 

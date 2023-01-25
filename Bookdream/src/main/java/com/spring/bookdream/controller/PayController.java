@@ -6,6 +6,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,11 +79,13 @@ public class PayController {
 		int discount_price = order.getDiscount_price();
 		int final_price = order.getTotal_price();
 		int save_point = order.getSave_point();
+		int use_point = order.getUse_point();
 		
 		pay.setPay_method(pay_method);
 		pay.setDiscount_price(discount_price);
 		pay.setFinal_price(final_price);
 		pay.setSave_point(save_point);
+		pay.setUse_point(use_point);
 		
 	    System.out.println("---> 결제 DB 등록 <---");
 	    payService.insertPay(pay);		
@@ -90,15 +93,21 @@ public class PayController {
 	    // 결제번호, 결제시간 추출 -> 다른 DB 등록
 	    PayVO payData = payService.searchPay(pay);
 	    
+
 	    order.setPay_no(payData.getPay_no());
 	    order.setOrder_enroll(payData.getPay_date());
 	    purchase.setOrder_no(payData.getPay_no());	    
+	    orderitem.setPay_no(payData.getPay_no());	   
 	    
 	    System.out.println("---> 주문 DB 등록 <---");
 	    orderService.insertOrder(order);			
 
 	    System.out.println("---> 주문상세보기 DB 등록 <---");
 	    PurchaseService.insertPurchase(purchase);
+	    
+	    System.out.println("---> 사용자 포인트 갱신 <---");
+	    orderitemService.updateUserPoint(orderitem);
+	   
 	    
 	    System.out.println("---> 구입한 개수만큼 재고차감 <---");
 	    orderitemService.updateBookStock(orderitem);
@@ -115,7 +124,14 @@ public class PayController {
 	
 		// 새로고침 DB중복 방지
 		@RequestMapping(value="/success")
-		public String success() {
+		public String success(@SessionAttribute("payData") PayVO pay, PurchaseVO vo, Model model) {
+
+			vo.setOrder_no(pay.getPay_no());			
+			System.out.println(pay.getPay_no());
+			
+			model.addAttribute("purchase", PurchaseService.getPurchaseList(vo));
+			
+			System.out.println(PurchaseService.getPurchaseList(vo));
 			
 			return "main/success";
 			

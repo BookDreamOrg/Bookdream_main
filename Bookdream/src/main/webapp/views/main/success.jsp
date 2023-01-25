@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>	
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,26 +32,8 @@
 
 body {
 	 position: relative;
-	 background-image: url('/resources/image/background.jpg');
-	 background-repeat: no-repeat;
- 	 background-position: center;
-  	 background-size: cover;
-  	 z-index: -1;	
+
 }
-
-body:before {
-     content: "";
-     opacity: 0.6;
-     position: absolute;
-     top: 0px;
-     left: 0px;
-     right: 0px;
-     bottom: 0px;
-     background-color: white;
-  	 z-index: -1;	     
-}
-
-
 
 .main {
 	position:relative;
@@ -64,7 +47,6 @@ body:before {
 	position:relative;
 	height:150px;	
 	margin-top: 50px;	
-	border: 2px solid #bdbdbd;
 	background-color: white;
 }
 
@@ -76,35 +58,140 @@ body:before {
 	font-weight: bold;
 }
 
-.center {
+/* !!!!!!!!!!!!! 사이드바 !!!!!!!!!!!!! */
+
+.sidebar {
 	position:relative;
-	width: 1240px;
+	width: 290px;
+	min-height: 300px;
+	float: right;
+	padding: 0px 15px;
+	margin: 30px 0px 60px 0px;		
+	border: 2px solid #bdbdbd;	
+	background-color: white;	
+}
+
+.sidebar_item {
+	width: 260px;
 	height: auto;
-	min-height:500px;
+	min-height: 100px;
+
+}
+
+.sidebar_item_title_up, .sidebar_item_title_down {
+	margin: 10px 0px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.sidebar_item_title_up {
+	display: none;
+}
+
+
+
+.sidebar_pay_main {
+	margin: 20px 0px;
+	font-size: 20px;
+}
+
+.sidebar_pay_right {
+	float: right;
+}
+
+.sidebar_pay_left {
+	margin: 10px 0px;
+	opacity: 0.7;
+}
+
+.sidebar_item_icon {
+	font-size: 40px;
+	text-align: center;
+	opacity: 0.5;
+}
+
+
+
+.sidebar_item_table {	
+	font-size: 12px;
+	width: 100%;
+	display: none;
+}
+
+
+.sidebar_item_table_td {
+	padding:10px 20px 10px 0px;
+
+}
+
+.sidebar_item_table_td.col1 {
+	vertical-align : middle;
+	width: 80px;
+	height: 100px;	
+}
+
+.sidebar_item_table_td.col2 {
+	overflow: hidden; 
+	text-overflow: ellipsis; 
+	white-space: nowrap;
+	max-width: 100px;
+
+}
+
+.sidebar_item_table_td_img {
+	width: 80px;
+	height: 100px;
+	border: 1px solid black;
+}
+
+.sidebar_item_table_tr {
+	border: 1px solid black;
+}
+
+/* !!!!!!!!!!!!! 센터 !!!!!!!!!!!!! */
+
+.center {
+	display:inline-block;
+	width: 900px;
+	height:700px;
 	margin-top:30px;	
 	border: 2px solid #bdbdbd;
 	background-color: white;	
 }
 
-table {
-	position:absolute;
-	top:110px;
-	left:70px;
+
+.center_info {
+	margin: 60px 0px;
+	text-align:center;
+	font-size: 40px;
+	font-weight: bold;
+}
+
+.center_table {
+	margin:0 auto;
 	width:700px;	
  	text-align:justify;
 	font-size: 20px;
 	
 }
 
-th{
+.center_table_th {
 	height: 50px;
 	width: 120px;
+	font-weight: bold;
 }
 
-td {
-	width: 500px;
+.center_table_td {
+	padding: 20px 30px;
 }
 
+.center_table_th.col2 {
+	height: 200px;
+}
+
+.center_table_th.col4 {
+	height: 100px;
+}
 
 </style>
 
@@ -187,6 +274,8 @@ td {
 	
 	</header>
 	
+	
+	
 	<div class="container">
 		<div class="main">
 		
@@ -198,45 +287,75 @@ td {
 			
 			<div class="center">
 				<div class="center_info">
-
-					<table>
+					<i class="bi bi-check2-circle">&nbsp;주문이 완료 되었습니다.</i>
+				</div>	
+				<hr>
+				<br>
+					<table class="center_table">
+						<tr >
+							<th class="center_table_th">주문 번호</th>
+							<td class="center_table_td">${payData.pay_no}</td>							
+						</tr>	
+						
 						<tr>
-							<th >상품명 :</th>
-							<td>${order.order_name}</td>
-						</tr>
-						<tr>
-							<th>결제금액 :</th>
-							<td>${order.total_price}</td>
-						</tr>
-						<tr>
-							<th>결제수단 :</th>
-							<td>${order.pay_method}</td>
-						</tr>
-						<tr>
-							<th>받는사람 :</th>
-							<td>${order.order_receiver}</td>
-						</tr>
-						<tr>
-							<th>주소 :</th>
-							<td>${order.order_address}</td>
-						</tr>
-						<tr>
-							<th>연락처 :</th>
-							<td>${order.order_tel}</td>
+							<th class="center_table_th col2">배송지 정보</th>
+							<td class="center_table_td">${order.order_receiver}<br>${order.order_tel}<br>${order.order_address}</td>
 						</tr>
 						
 						<tr>
-							<th>주문번호 :</th>
-							<td>${payData.pay_no}</td>
-						</tr>	
-
+							<th class="center_table_th">포인트 적립</th>
+							<td class="center_table_td"><fmt:formatNumber value="${order.save_point}" pattern="###,###"/>P</td>							
+						</tr>						
+												
 						<tr>
-							<th>주문시간 :</th>
-							<td>${payData.pay_date}</td>
-						</tr>											
+							<th class="center_table_th col4">결제 정보</th>
+							<td class="center_table_td">결제방법 : ${order.pay_method}<br>결제시간 : ${payData.pay_date}</td>							
+						</tr>
+
+														
 					</table>						
-				</div>		
+	
 			</div>
+
+			<div class="sidebar">
+				<div class="sidebar_item">
+						<div class="sidebar_item_title_down" id="sidebar_item_title_down">주문상세열기&nbsp;<i class="bi bi-caret-down-fill" ></i></div>
+						<div class="sidebar_item_title_up" id="sidebar_item_title_up">주문상세닫기&nbsp;<i class="bi bi-caret-up-fill" ></i></div>
+					<hr>
+					<div class="sidebar_item_icon" id="sidebar_item_icon"><i class="bi bi-question"></i></div>
+					<table class="sidebar_item_table" id="sidebar_item_table">
+						<c:forEach items="${purchase}" var="pur" varStatus="i">
+						
+							<tr>
+								<td class="sidebar_item_table_td col1" rowspan="3"><img class="sidebar_item_table_td_img" alt="" src="${pur.bookVO.book_img}"></td>
+								<td class="sidebar_item_table_td col2" >${pur.bookVO.title}</td>
+							</tr>
+
+
+							<tr>
+								<td class="sidebar_item_table_td" ><fmt:formatNumber value="${pur.bookVO.book_price}" pattern="###,###"/>원</td>							
+							</tr>
+
+							<tr>
+								<td class="sidebar_item_table_td" >${pur.product_count}개</td>
+							</tr>
+					
+						</c:forEach>	
+												
+					</table>
+				</div>
+				<hr>
+				<div class="sidebar_pay">
+					<div class="sidebar_pay_main">결제금액<span class="sidebar_pay_right"><b><fmt:formatNumber value="${(order.total_price + order.order_fee + order.discount_price + order.use_point) - (order.discount_price + order.use_point) }" pattern="###,###"/></b>&nbsp;원</span></div>
+					<div class="sidebar_pay_left">ㄴ 상품금액<span class="sidebar_pay_right"><fmt:formatNumber value="${order.total_price + order.discount_price + order.use_point}" pattern="###,###"/>&nbsp;원</span></div>
+					<div class="sidebar_pay_left">ㄴ 배송비<span class="sidebar_pay_right">(+)&nbsp;<fmt:formatNumber value="${order.order_fee}" pattern="###,###"/>&nbsp;원</span></div>
+					<div class="sidebar_pay_left">ㄴ 할인금액<span class="sidebar_pay_right">(-)&nbsp;<fmt:formatNumber value="${order.discount_price}" pattern="###,###"/>&nbsp;원</span></div>					
+					<div class="sidebar_pay_left">ㄴ 포인트사용<span class="sidebar_pay_right">(-)&nbsp;<fmt:formatNumber value="${order.use_point}" pattern="###,###"/>&nbsp;원</span></div>
+				</div>
+			
+			
+			</div>	
+		
 		</div>
 	</div>
 	
@@ -315,6 +434,29 @@ td {
 
 	<!-- Script FontAwesome-->
 	<script src="https://kit.fontawesome.com/4bf42f841a.js" crossorigin="anonymous"></script>
+	
+	<script type="text/javascript">
+	
+	$("#sidebar_item_title_down").click(function() {
+		$('#sidebar_item_table').fadeIn();
+		$('#sidebar_item_title_up').show();		
+		$('#sidebar_item_title_down').hide();
+		$('#sidebar_item_icon').hide();		
+
+	
+	})
+	
+	$("#sidebar_item_title_up").click(function() {
+		$('#sidebar_item_table').hide();
+		$('#sidebar_item_title_up').hide();
+		$('#sidebar_item_title_down').show();
+		$('#sidebar_item_icon').show();
+	
+	})	
+	
+	</script>
+	
+	
 
 </body>
 </html>

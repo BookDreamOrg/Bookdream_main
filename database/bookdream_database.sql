@@ -7,15 +7,16 @@ drop table USERS;
 
 create table USERS (
   USER_NO                 number(10)    not null,
-  USER_ID                   varchar2(40)  UNIQUE,
-  USER_PASSWORD  varchar2(20),
-  USER_NAME            varchar2(50)  not null,
-  USER_ADDRESS     varchar2(50)  default '',
+  USER_ID                 varchar2(40)  UNIQUE,
+  USER_PASSWORD           varchar2(20),
+  USER_NAME               varchar2(50)  not null,
+  USER_ADDRESS            varchar2(50)  default '',
   USER_TEL                varchar2(20)  default '',
-  USER_LEVEL            number(1)     default 0    check(USER_LEVEL in(0,1)),
-  BLACKLIST_YN        varchar2(5)   default 'N'   check(BLACKLIST_YN in ('Y','N')),
-  FLATFORM_TYPE varchar2(50) not null,
-  USER_EMAIL            varchar2(50)  not null,
+  USER_LEVEL              number(1)     default 0     check(USER_LEVEL in(0,1)),
+  BLACKLIST_YN            varchar2(5)   default 'N'   check(BLACKLIST_YN in ('Y','N')),
+  FLATFORM_TYPE           varchar2(50) not null,
+  USER_EMAIL              varchar2(50)  not null,
+  USER_POINT              number(10) default '',
   constraint PK_USER primary key (USER_NO)
 );
 

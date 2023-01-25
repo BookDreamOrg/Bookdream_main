@@ -21,5 +21,6 @@ public class OrderVO {
 	// DB에는 없음 데이터전송용
 	private int discount_price;
 	private int save_point;
+	private int use_point;
 	
 }

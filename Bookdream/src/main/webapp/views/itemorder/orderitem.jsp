@@ -125,7 +125,8 @@
 		<div class="modal_content" id="modal_content">
 			<span class="modal_title">배송지 변경</span>
 			<span class="btn-close modal_close" id="modal_close"></span>
-			<hr>
+
+			<hr class="hr_title">
 			<div>
 				<div class="modal_address_insert">
 					<div class="d-grid gap-2">
@@ -155,9 +156,8 @@
 		<div class="modal2_content">
 			<span class="modal_title">주소 입력</span>
 			<span class="btn-close modal_close" id="modal2_close"></span>		
-			
-			<hr>
-			
+
+			<hr class="hr_title">
 			
 			<div class="mb-3">
   				<label for="moadl2_address_alias" class="form-label">배송지 이름</label>
@@ -202,7 +202,9 @@
 		<div class="modal3_content" id="modal3_content">
 			<span class="modal_title">배송요청사항</span>
 			<span class="btn-close modal_close" id="modal3_close"></span>
-			<hr>
+
+			<hr class="hr_title">
+			
 			<div>
 				<select class="form-select" id="message_select" onchange="select_message(this.value)">
   					<option selected>배송요청사항을 입력해주세요.</option>
@@ -221,7 +223,7 @@
 			</div>		
 						
 			</div>
-			<hr>
+	
 
 		</div>
 	</div>	
@@ -240,12 +242,11 @@
 		<div class="cart_list">
 			<div class="title">
 				<span>주문상품</span>
-				
 				<!-- 상품의 총 개수  -->
 				<span class="cart_list_count">
-					총<c:out value="${orderitemCount[0].total_count }"/>개	
+					총&nbsp;<c:out value="${orderitemCount.total_count }"/>개	
 				</span>
-			
+
 			</div>
 			
 			<hr>				
@@ -260,8 +261,10 @@
 								<td class="col2">${ orderitem.bookVO.title }</td>
 								<td class="col3"><b><fmt:formatNumber value="${orderitem.bookVO.book_price}" pattern="###,###"/></b> 원</td>
 								<td class="col4">${ orderitem.product_count }개</td>
-								<c:set var="total_price" value="${total_price + (orderitem.bookVO.book_price * orderitem.product_count) }"/>							
-							</tr>																										
+								<c:if test="${!i.last}">
+								</c:if>	
+							</tr>
+																									
 						</c:forEach>
 					</table>
 				</form>
@@ -273,49 +276,42 @@
 		
 	<!-- !!!!!!!!!!!!!!!!!!!!!  사이드바 - 결제  !!!!!!!!!!!!!!!!!!!!! -->	
 	
-		<div class="sidebar">
+		<div class="sidebar" >
 			<div class="sidebar_col">
 				<span class="">상품금액</span>
-				<span class="sidebar_col_price"><b><fmt:formatNumber value="${total_price}" pattern="###,###"/></b> 원</span>
+				<span class="sidebar_col_price"><b id="sidebar_total_price"><fmt:formatNumber value="${orderitemCount.total_price}" pattern="###,###"/></b> 원</span>
 			</div>
 			
 			<div class="sidebar_col">
 				<span>배송비</span>
 				<c:set var="delivery" value="3000" />
 				<c:choose>
-					<c:when test="${total_price ge 30000 }">
+					<c:when test="${orderitemCount.total_price ge 30000 }">
 						<c:set var="delivery" value="0" />					
-						<span class="sidebar_col_price"><b>0</b> 원</span>						
+						<span class="sidebar_col_price">(+) <b id="sidebar_delivery">0</b> 원</span>						
 					</c:when>
 					<c:otherwise>
-						<span class="sidebar_col_price"><b><fmt:formatNumber value="${delivery}" pattern="###,###"/></b> 원</span>				
+						<span class="sidebar_col_price">(-) <b id="sidebar_delivery"><fmt:formatNumber value="${delivery}" pattern="###,###"/></b> 원</span>				
 					</c:otherwise>
 				</c:choose>	
 			</div>
-				
-			<div class="sidebar_col">
-				<span>쿠폰할인</span>
-				<span class="sidebar_col_price"><b>0</b> 원</span>
+							
+			<div id="sidebar">
+
 			</div>
-			
-			<hr>
-			
-			<div class="sidebar_col_last"> 
-				<span class="sidebar_col_title">최종결제금액</span>
-				<span class="sidebar_col_price final_price"><b><fmt:formatNumber value="${total_price + delivery}" pattern="###,###"/></b> 원	</span>			
-			</div>
-			
 		
 			<div class="payment">
 				<button class="pay_button" id="pay_button">결제하기</button>
 			</div>
 		</div>		
-		
+
+	
 		<!--  !!!!!!!!!!!!!!!!!!!!! 배송지 정보 !!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 		
 		<div class="user_info"> 
 			<div class="title">배송지 정보	</div>
 			<div class="user_info_address" id="user_info_address"></div>				
+			
 			<hr>			
 			
 			<div class="title">배송요청사항</div>
@@ -326,11 +322,25 @@
 			</div>
 		</div>
 		
-		<!-- !!!!!!!!!!!!!!!!!!!!! 쿠폰  !!!!!!!!!!!!!!!!!!!!! -->	
+		<!-- !!!!!!!!!!!!!!!!!!!!! 할인  !!!!!!!!!!!!!!!!!!!!! -->	
 		
 		<div class="event"> 
-			<div class="title">할인쿠폰</div>
+			<div class="title">쿠폰할인</div>
 			<div class="event_text"><i class="bi bi-exclamation-circle"></i>&nbsp;사용할 수 있는 쿠폰이 없습니다.</div>		
+
+			<hr>
+
+			<div class="title">포인트</div>
+			
+			<span class="mb-3 event_point"><input class="form-control event_input" type="text" id="use_point" name="" value="0"></span>
+			
+			<span class="event_input_text">사용 가능한 포인트 : <fmt:formatNumber value="${userPoint.userVO.user_point}" pattern="###,###"/>P
+				<span class="form-check">  					
+					<input class="form-check-input" type="checkbox" id="max_point" value="${userPoint.userVO.user_point}">
+  					<label class="form-check-label" for="max_point">최대 포인트 사용하기</label>		
+  				</span>
+			</span>		
+			
 		</div>
 		
 		<!-- !!!!!!!!!!!!!!!!!!!!! 결제수단  !!!!!!!!!!!!!!!!!!!!! -->	
@@ -368,18 +378,20 @@
 
 	
 	<!-- JS 전송 -->	
-
 	<!-- 상품의 종류가 2개 이상일 경우 첫번째 상품이름 + 나머지 종류의 개수  -->
 	<c:choose>
 		<c:when test="${fn:length(orderitemList) != 1}">
-			<c:set var="first_title" value="${orderitemList[0].bookVO.title} 외  ${orderitemCount[0].col_count - 1} 종"></c:set>
+			<c:set var="first_title" value="${orderitemList[0].bookVO.title} 외  ${orderitemCount.col_count - 1} 종"></c:set>
 		</c:when>		
 		<c:otherwise >
 			<c:set var="first_title" value="${orderitemList[0].bookVO.title}"></c:set>
 		</c:otherwise>
 	</c:choose>	
-
 	<input type="hidden" id ="first_title" name="first_title" value="<c:out value="${first_title}"/>">
+	
+	<!--  -->
+	
+	
 	
 	<footer>
 				<div>

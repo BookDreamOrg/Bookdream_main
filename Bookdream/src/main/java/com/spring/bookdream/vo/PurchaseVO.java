@@ -13,7 +13,6 @@ public class PurchaseVO {
 	
 	private UserVO userVO;
 	private BookVO bookVO;
-	private CartVO cartVO;
 	private OrderVO orderVO;
 
 

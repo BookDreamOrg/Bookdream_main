@@ -14,12 +14,14 @@
 						PAY_METHOD, 
 						DISCOUNT_PRICE, 
 						FINAL_PRICE, 
-						SAVE_POINT) 
+						SAVE_POINT,
+						USE_POINT) 
 		VALUES ((select nvl(max(PAY_NO), 0) + 1 from pay), 
 				 #{pay_method}, 
 				 #{discount_price}, 
 				 #{final_price}, 
-				 #{save_point}
+				 #{save_point},
+				 #{use_point}
 				 )
 	</insert>
 

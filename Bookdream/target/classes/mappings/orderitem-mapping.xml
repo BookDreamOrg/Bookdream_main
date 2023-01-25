@@ -11,13 +11,14 @@
 		<result property="total_count" column="TOTAL_COUNT" />	
 		<result property="product_count" column="PRODUCT_COUNT" />	
 		<result property="col_count" column="COL_COUNT" />	
+		<result property="total_price" column="TOTAL_PRICE" />			
 		<collection property="userVO" resultMap="userList"></collection>		
 		<collection property="bookVO" resultMap="bookList"></collection>
 	</resultMap>	
 
 	<resultMap type="user" id="userList">
 		<result property="user_no" column="USER_NO" />
-		<result property="user_id" column="USER_ID" />
+		<result property="user_point" column="USER_POINT" />
 	</resultMap>
 
 	<resultMap type="book" id="bookList">
@@ -29,10 +30,12 @@
 		<result property="book_img" column="BOOK_IMG" />		
 	</resultMap>
 
+
+		
 	<!-- user_no 변경필요 -->
 	<select id="getOrderitemList" parameterType="orderitem" resultMap="orderitemList">
 	<![CDATA[
-		SELECT c.cart_no, u.user_no, b.book_no, b.book_img, b.title, b.book_price, c.product_count, c.product_count * b.book_price AS total_count
+		SELECT c.cart_no, u.user_no, b.book_no, b.book_img, b.title, b.book_price, c.product_count
 		FROM cart c, users u, book b
 		WHERE c.book_no = b.book_no AND u.user_no = c.user_no AND u.user_no = 1
 		order by cart_no
@@ -42,13 +45,22 @@
 	<!-- user_no 변경필요 -->
 	<select id="getOrderitemCount" parameterType="orderitem" resultMap="orderitemList">
 	<![CDATA[
-		SELECT sum(product_count) as total_count, count(*) as col_count
+		SELECT sum(product_count) as total_count, count(*) as col_count, sum(c.product_count * b.book_price) as total_price
 		FROM cart c, users u, book b
 		WHERE c.book_no = b.book_no 
 		AND   u.user_no = c.user_no
 	]]>
 	</select>
-
+	
+	<!-- user_no 변경필요 -->
+	<!-- 사용자의 적립금 호출 -->
+	<select id="userPoint" parameterType="orderitem" resultMap="orderitemList">
+		SELECT user_point   
+		FROM   users
+		WHERE  user_no = 1
+	</select>
+	
+	<!-- 구입한 상품 재고차감 -->
 	<!-- user_no 변경필요 -->	
 	<update id="updateBookStock">
 		UPDATE book b
@@ -62,6 +74,7 @@
 	
 	</update>
 
+	<!-- 구입한 상품 장바구니 제거 -->
 	<!-- user_no 변경필요 -->	
 	<delete id="deleteCartList">
 		DELETE
@@ -70,5 +83,17 @@
         	  where u.user_no = c.user_no  AND c.book_no = b.book_no)      
 		WHERE user_no = 1
 	</delete>
+	
+	<!-- 사용자의 포인트 계산 -->
+	<!-- user_no 변경필요 -->
+	<update id="updateUserPoint">
+		UPDATE users
+		SET    user_point = (select (user_point - (use_point - save_point)) as user_point
+                  			 from    users u, pay p
+                  			 where   user_no = 1 AND pay_no = #{pay_no})
+		WHERE  exists (select 1 
+         		       from   users u, pay p 
+             	       where  user_no = 1 AND pay_no = #{pay_no}) 	
+	</update>
 </mapper>
 

@@ -4,6 +4,7 @@ $(function() {
 	$('#pay_labels').hide();
 	$('#user_info_message').hide();
 	user_address_info();
+	sidebar();
 })
 
 //사이드바 스크롤따라 이동
@@ -52,7 +53,6 @@ $("#modal2_close").click(function() {
 })
 
 // 배송요청사항 열기
-
 function modal3_open() {
 	$('#modal3').fadeIn();		  
 }
@@ -63,7 +63,6 @@ $('#modal3_close').click(function() {
 	$('#modal3').fadeOut();	
 }) 
 		  
-
 
 // 배송요청사항 선택
 function select_message(value) {
@@ -168,19 +167,62 @@ function address_list() {
 	
 };
 
+//주소 목록 창에서 저장
+$('#modal_reg_check').click(function() {
+
+	// 선택한 주소의 address_no 저장
+	var address_no = $('input[name=address_radio]:checked').val();
+
+	// 기본 배송지 설정
+	// 기본 배송지 설정을 누르고 저장
+	if ($('input[id=default_address_check]').is(':checked')) {
+		
+		alert("기본 배송지로 설정 합니다");
+
+		var data = {"address_no" : address_no};
+		
+		$.ajax ({
+			type : 'POST',
+			url : '/address/default',
+			data : JSON.stringify(data),   
+			dataType : 'text',
+			contentType : "application/json",		
+			
+			success : function() {	
+				
+				// 기본 배송지로 갱신함
+				user_address_info(0, address_no);
+				$('#modal').fadeOut();	
+			},
+			
+			error: function(request, status, error) {
+		        console.log("code: " + request.status)
+		        console.log("message: " + request.responseText)
+		        console.log("error: " + error);
+			}	
+		})
+	
+	// 바로 저장을 한다면
+	} else {
+		
+		// 선택한 배송지로 갱신함
+		user_address_info(1, address_no);
+		$('#modal').fadeOut();	
+	}
+		
+})
 
 // 배송지 표시
-function user_address_info(num, address_no) {
-	
-	// 선택한 배송지 표시
-	if (num) {
-		url = "/address/get"
-		data = {"address_no" : address_no}
+function user_address_info(no, address_no) {
 	
 	// 기본 배송지 표시
+	if (no == 1) {
+		url = "/address/get"
+		data = {"address_no" : address_no}	
+	// 선택한 배송지 표시
 	} else {
 		url = "/address/getDefault"
-		data = {"default_add" : 'Y'}		
+		data = {"default_add" : 'Y'}			
 	}
 	
 	$.ajax({
@@ -235,19 +277,19 @@ function user_address_info(num, address_no) {
 // 주소 등록
 $('#modal2_address_insert').click(function() {
 	
-	address_insert();
+	address_insert(0);
 })
 
 // 주소 수정
 $('#modal2_address_update').click(function() {
 	
-	address_insert();
+	address_insert(1);
 })
 
 
 
 
-function address_insert() {
+function address_insert(no) {
 	
 	// INPUT VALUE 값 저장
 	var address_alias = $('input[name="moadl2_address_alias"]').val();
@@ -258,9 +300,17 @@ function address_insert() {
 	var detail_add = $('input[name="moadl2_address_detailAddress"]').val();
 	var address_no = $('input[name="modal2_address_no"]').val();
 	
-
-	// 주소 입력하기를 누르면 사용자의 주소 목록을 조회함
-	if($('#modal2_address_insert').is(':visible') == true) {
+	if (address_alias == '') {
+		alert("배송지 이름을 입력하세요.");
+	} else if (address_name == '') {
+		alert("받는사람 이름을 입력하세요.");
+	} else if (address_tel == '') {
+		alert("받는사람 전화번호를 입력하세요.");
+	} else if (zone_code == '' || road_add == '' || detail_add == '') {
+		alert("주소를 입력하세요.");
+		
+		// 주소 입력하기를 누르면 사용자의 주소 목록을 조회함
+	} else if(no == 0) {
 		$.ajax({
 			type : "POST",                              
 			url : "/address/allList",	
@@ -306,8 +356,7 @@ function address_insert() {
 					        console.log("error: " + error);
 						}
 					});	
-					
-				
+								
 			},
 					
 		})		
@@ -381,6 +430,7 @@ function modal_address_delete(no) {
 					contentType : "application/json",		
 					
 					success : function() {	
+						// 주소 갱신
 						address_list();	
 					},
 					
@@ -407,12 +457,13 @@ function modal_address_delete(no) {
 	
 }
 
-// 주소수정시 해당 주소의 값 가져옴
+// 주소 수정시 해당 주소의 값 가져옴
 function moadl_address_get(no) {
 
+	// 수정 버튼 생성
 	$('#modal2_address_update').show();
+	// 저장 버튼 숨김
 	$('#modal2_address_insert').hide();	
-
 	$('#modal2').fadeIn();
 	
 	var address_no = $(no).val();
@@ -429,6 +480,7 @@ function moadl_address_get(no) {
 			
 			var result =  JSON.parse(data)
 
+			// 해당 주소의 값 자동 입력
 			$('#moadl2_address_alias').val(result.address_alias);
 			$('#moadl2_address_name').val(result.address_name);
 			$('#moadl2_address_tel').val(result.address_tel);
@@ -447,52 +499,164 @@ function moadl_address_get(no) {
 	})
 }
 
-// 주소 목록 창에서 저장
-$('#modal_reg_check').click(function() {
 
-	// 선택한 주소의 address_no 저장
-	var address_no = $('input[name=address_radio]:checked').val();
 
-	// 기본 배송지 설정
-	// 기본 배송지 설정을 누르고 저장
-	if ($('input[id=default_address_check]').is(':checked')) {
-		
-		alert("기본 배송지로 설정 합니다");
+////////////////////////////////////////////////// 할인관련  //////////////////////////////////////////////////
 
-		var data = {"address_no" : address_no};
-		
-		$.ajax ({
-			type : 'POST',
-			url : '/address/default',
-			data : JSON.stringify(data),   
-			dataType : 'text',
-			contentType : "application/json",		
-			
-			success : function() {	
-				
-				// 기본 배송지로 갱신함
-				var no = false;
-				user_address_info(no, address_no);
-				$('#modal').fadeOut();	
-			},
-			
-			error: function(request, status, error) {
-		        console.log("code: " + request.status)
-		        console.log("message: " + request.responseText)
-		        console.log("error: " + error);
-			}	
-		})
+
+// , 제거 함수
+function uncomma(id, value) {
 	
-	// 바로 저장을 한다면
-	} else {
-		
-		// 선택한 배송지로 갱신함
-		var no = true;
-		user_address_info(no, address_no);
-		$('#modal').fadeOut();	
+	if (value == null) {
+		var uncomma = parseInt(($(id).text().replace(/,/g , '')));			
+	} else if (id == ''){
+		var uncomma = parseInt($(value).val());
+	} else if (id == '#use_point'){
+		var uncomma = parseInt($(id).val().replace(/,/g , ''));	
 	}
+	return uncomma;
+	
+}
+
+// , 추가 함수
+function comma(id, value) {
+	
+	if (value == null) {
+		var comma = id.toLocaleString();	
+	} else {
+		var comma = $(id).val(value.toLocaleString());		
+	}
+
+	return comma;
+}
+
+
+// 최대 포인트 사용
+$('#max_point').click(function() {
+	var final_price = uncomma('#sidebar_final_price');
+	var point = uncomma('', '#max_point');	
+	var value = this.value;
+
+	// 체크 누름
+	if ($('input[id="max_point"]:checked').is(":checked")) {
 		
+		// 이전에 입력된 포인트가 있다면 0 
+		if (value != 0){
+			$('#use_point').val(0);	
+		} 
+		
+		// 포인트가 상품금액보다 많다면, 입력된 포인트가 0 일 경우에만
+		if ((final_price < point) && (value == 0)) {
+			comma('#use_point', final_price);	
+		} else {
+			comma('#use_point', point);			
+		}
+		
+	} else {
+		$('#use_point').val(0);
+	}
+	
+	sidebar();
 })
+
+// 포인트 수동 입력
+$('#use_point').on('keyup', function() {
+
+    // 최대 사용가능한 포인트
+	var final_price = uncomma('#sidebar_final_price');	
+	var point = uncomma('', '#max_point');			
+	var value = this.value;
+	
+	// 직접 입력하면 최대 사용 포인트 체크박스 해제
+	$("input[id=max_point]").prop("checked", false);
+	
+	// 숫자만 기입함
+    this.value = value.replace(/\D/g, '');	
+
+    // 사용할 포인트보다 많이 입력되면 최대 포인트로 변경
+
+	if ((value >= point) && (final_price > point)) {
+		comma('#use_point', point);			
+		
+	} else if (((value >= point) && (final_price < point))) {
+		comma('#use_point', final_price);					
+	}
+	
+})
+
+// 다시 입력하려고 할 경우 0으로 됨
+$('#use_point').click(function() {
+	$('#use_point').val(0);
+	sidebar();
+})
+
+// 공백이면 0으로 변경됨, 사용할 수 있는 포인트만큼 계산되어 적용
+$('#use_point').focusout(function() {
+
+	var final_price = uncomma('#sidebar_final_price');	
+	var point =  uncomma('', '#max_point');		
+	var value = this.value;
+	
+	if (value == '') {
+		$('#use_point').val(0);	
+	} 
+	
+	if ((value >= point) && (final_price > point)) {
+		comma('#use_point', point);							
+		
+	} else if (((value >= point) && (final_price < point))) {
+		comma('#use_point', final_price);			
+	}	
+	
+	sidebar();
+});
+
+
+
+function sidebar() {
+
+	// , 제거
+	var total_price = uncomma('#sidebar_total_price');	
+	var delivery = uncomma('#sidebar_delivery');	
+	var use_point = uncomma('#use_point','');
+	
+	// 계산
+	var str_final_price = (total_price + delivery) - use_point
+	var str_save_point = Math.round(str_final_price * 0.05);
+	
+	// , 추가 	
+	var final_price = comma(str_final_price);
+	var save_point = comma(str_save_point);
+	var use_point = comma(use_point);
+
+	
+	let html = '';
+	
+	html = `<div class="sidebar_col">` +
+			 `<span>쿠폰할인</span>` +
+			 `<span class="sidebar_col_price">(-) <b id="sidebar_discount">0</b> 원</span>` +
+			`</div>` +
+
+			`<div class="sidebar_col">` +
+				`<span>포인트사용</span>` +
+				`<span class="sidebar_col_point">(-) <b id="sidebar_use_point">${use_point}</b> 원</span>` +
+			`</div>` +
+									
+			`<hr>` +
+			
+			`<div class="sidebar_col_last" id="sidebar_col_last">` +
+				`<span class="sidebar_col_title">최종결제금액</span>` +
+				`<span class="sidebar_col_price final_price"><b id="sidebar_final_price">${final_price}</b> 원</span>` +
+	
+			`</div>` +
+			
+			`<div class="sidebar_save_point">(포인트 적립 : <b id="sidebar_save_point">${save_point}</b> 원)</div>`
+			
+			 document.getElementById('sidebar').innerHTML = html;
+			
+}
+
+
 
 ////////////////////////////////////////////////// 다음 우편번호 API //////////////////////////////////////////////////
 
@@ -573,36 +737,56 @@ $('#modal_reg_check').click(function() {
 
 //드림페이 = Iamport // 그 외 결제 = Tosspay 
 	
+function innerHTML(id, int) {
+	
+	if (id == '') {
+		var html = parseInt(document.getElementById(int).innerHTML.replace(/,/g , ''));
+	} else {
+		var html = document.getElementById(id).innerHTML;		
+	}
+
+	return html;
+}	
+	
+
 	$("#pay_button").click(function() {
-		
-		var order_address = 	  document.getElementById('user_info_zone_code').innerHTML
-						  + " " + document.getElementById('user_info_road_add').innerHTML
-		  				  + " " + document.getElementById('user_info_detail_add').innerHTML;
-		
-		var order_receiver = document.getElementById('user_info_name').innerHTML; 
-		var order_tel = document.getElementById('user_info_tel').innerHTML;
-		
-		var order_comment = document.getElementById('user_info_message_text').innerHTML;		
 
-		
-		
 		var order_name = $('input[name="first_title"]').val();
-	    var pay_method = $('input[name="pay_radio"]:checked').val();
+		var pay_method = $('input[name="pay_radio"]:checked').val();		
 
+		var order_comment = innerHTML('user_info_message_text');			
+		var order_receiver = innerHTML('user_info_name');			
+		var order_address = innerHTML('user_info_zone_code') + " " + 
+							innerHTML('user_info_road_add')  + " " + 
+							innerHTML('user_info_detail_add');
+		
+		var order_tel = innerHTML('user_info_tel');
+		var order_fee = innerHTML('', 'sidebar_delivery');
+		var discount_price = 0;
+		
+		var save_point = innerHTML('', 'sidebar_save_point');
+		var use_point = innerHTML('', 'sidebar_use_point');
+		var total_price = innerHTML('', 'sidebar_final_price');
+
+		if ((order_name == '') || (order_receiver == '') || (order_address == '') || (order_tel == '')	) {
+			alert("배송인 정보를 입력하세요.");
+			return false;
+		}
+		
 		var data = {
 					"order_name" : order_name,
 					"pay_method" : pay_method,
-					"total_price" : 500,
+					"total_price" : total_price,
 					"order_comment" : order_comment,
 					"order_receiver" : order_receiver,
 					"order_address" : order_address,
 					"order_tel" : order_tel,
-					"order_fee" : 0,
-					"discount_price" : 0,
-					"save_point" : 0
+					"order_fee" : order_fee,
+					"discount_price" : discount_price,
+					"save_point" : save_point,
+					"use_point" : use_point,
 					};
-			
-		
+
 		$.ajax({
 			
 			type : 'POST',
@@ -661,8 +845,8 @@ $('#modal_reg_check').click(function() {
 					tossPayments.requestPayment(pay_method, {
 						  amount: 500,
 						  orderId: random,
-						  orderName: "1",
-						  customerName: "1",
+						  orderName: order_name,
+						  customerName: order_receiver,
 						  successUrl: 'http://localhost:8000/detail/cart/orderitem/pay',
 						  failUrl: 'http://localhost:8000/main',
 					})
