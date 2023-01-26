@@ -2,7 +2,9 @@ create user bookdream identified by bookdream;
 grant connect, resource, create view to bookdream;
 connect bookdream/bookdream;
 
--- User Table
+-- Users Table
+--------------------------------------------------------------------
+-------------------------- USERS ------------------------------------
 drop table USERS;
 
 create table USERS (
@@ -39,6 +41,8 @@ select * from users;
 commit;
 
 -- Review Table
+--------------------------------------------------------------------
+-------------------------- REVIEW ------------------------------------
 drop table review;
 
 create table review(

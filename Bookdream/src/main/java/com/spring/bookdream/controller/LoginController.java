@@ -44,6 +44,7 @@ public class LoginController {
 		
 		if (result) { //로그인 성공
 			System.out.println("로그인 처리");
+			session.setAttribute("authUser", user);
 			
 			session.setAttribute("user_id", user.getUser_id());
 			session.setAttribute("user_no", user.getUser_no());
