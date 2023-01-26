@@ -31,5 +31,14 @@ public class BookDAO {
 		return mybatis.selectOne("BookDAO.getBook", book_no);
 	}
 	
+	//키워드 조회
+	public List<BookVO> getBookList(String keyword) {
+		
+		System.out.println("---> JDBC로 BookList() 처리");
+	 
+		// selectList : select 조회 SQL문에서 결과값이 여러개의 row가 return될 때 사용
+		return mybatis.selectList("BookDAO.getBookKeyword", keyword);
+	}
+	
 	
 }
