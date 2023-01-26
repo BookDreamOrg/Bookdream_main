@@ -1,3 +1,4 @@
+<%@page import="com.spring.bookdream.vo.UserVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -27,6 +28,9 @@
 		String id = (String)session.getAttribute("user_id");
 		String kakaoN = (String)session.getAttribute("kakaoName");
 		String flatform = (String)session.getAttribute("flatform");
+		
+		UserVO user = (UserVO)session.getAttribute("authUser");
+	
 		if(id == null && kakaoN == null){		
 	%>
 		<div class="wrapper">
