@@ -3,6 +3,8 @@
 <%@page import="java.net.URLEncoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,10 +31,10 @@
 	<!-- 구글 로그인 화면으로 이동 시키는 URL -->
 	<!-- 구글 로그인 화면에서 ID, PW를 올바르게 입력하면 oauth2callback 메소드 실행 요청-->
 	<div id="google_id_login" style="text-align:center">
-		<a href="${ google_url }">
+		<a href="https://accounts.google.com/o/oauth2/v2/auth?scope=profile&response_type=code&client_id=759629996127-2168hvg19ogj7kah4thgo16a2seoc50q.apps.googleusercontent.com&redirect_uri=http://localhost:8000/auth/google/callback">
 			<img width="300px" src="/resources/images/google_login.PNG" alt="google_login">
 		</a>
-		<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=0328Vi7efumpXAgBjKZA&state=STATE_STRING&redirect_uri=https://localhost:8000/auth/naver/callback">
+		<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=0328Vi7efumpXAgBjKZA&state=STATE_STRING&redirect_uri=http://localhost:8000/auth/naver/callback">
 			<img width="300px" src="/resources/images/naver_login.png" alt="naver_login">
 		</a>
 	</div>
