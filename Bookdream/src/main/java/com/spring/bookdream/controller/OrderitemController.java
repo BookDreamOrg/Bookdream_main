@@ -21,7 +21,7 @@ public class OrderitemController {
 	@RequestMapping(value="/orderitem")
 	public String orderitemList(OrderitemVO vo, Model model) {
 	
-		// 주문된 상품 목록 조회
+		// (장바구니)주문된 상품 목록 조회
 		model.addAttribute("orderitemList", orderitemService.getOrderitemList(vo));	
 		
 		// 주문된 상품의 개수, 종류, 상품금액 조회
