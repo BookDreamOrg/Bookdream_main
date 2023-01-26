@@ -27,6 +27,11 @@ public class BookServiceImpl implements BookService {
 		return bookDAO.getBook(book_no);
 	}
 
+	@Override
+	public List<BookVO> getBookList(String keyword) {
+		return bookDAO.getBookList(keyword);
+	}
+
 
 
 }
