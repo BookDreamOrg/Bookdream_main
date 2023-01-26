@@ -63,6 +63,6 @@ main {
 
 .book-section {
   width: 100%;
-  height: 60rem;
+  height: auto;
   background-color: #ececec;
 }
