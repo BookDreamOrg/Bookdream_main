@@ -16,13 +16,10 @@
 		<result property="default_add" column="DEFAULT_ADD" />		
 	</resultMap>	
 
-
-
 	<!-- user_no 변경필요 -->
 	<select id="getAddressList" parameterType="address" resultMap="addressList">
 	<![CDATA[
-		SELECT rownum, 
-			   a.address_no, 
+		SELECT a.address_no, 
 			   a.address_alias, 
 			   a.address_name, 
 			   a.address_tel, 
@@ -46,7 +43,8 @@
 			   address_tel, 
 			   zone_code, 
 			   road_add, 
-			   detail_add 
+			   detail_add, 
+			   default_add
 		FROM   address
 		where  user_no = 1 AND address_no = #{address_no} 
 
@@ -61,7 +59,8 @@
 			   address_tel, 
 			   zone_code, 
 			   road_add, 
-			   detail_add
+			   detail_add,
+			   default_add
 		FROM   address
 		where  user_no = 1 AND default_add = #{default_add}
 
@@ -78,7 +77,9 @@
 							address_tel, 
 							zone_code, 
 							road_add, 
-							detail_add)
+							detail_add,
+							default_add
+							)
 							
 		VALUES ((select nvl(max(address_no), 0) + 1 from address), 
 		         1, 
@@ -87,7 +88,8 @@
 		         #{address_tel},
 		         #{zone_code},
 		         #{road_add},
-		         #{detail_add}
+		         #{detail_add},
+		         #{default_add}
 		       )
 	]]>		
 	</insert>		

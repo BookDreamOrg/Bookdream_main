@@ -3,10 +3,6 @@
 			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 			
 <mapper namespace="OrderDAO">
-
-	<resultMap type="order" id="orderList">
-		<result property="order_no" column="ORDER_NO" />
-	</resultMap>
 	
 	<!-- user_no 변경필요 -->
 	<insert id="insertOrder" >
@@ -16,29 +12,22 @@
 						   ORDER_NAME, 
 						   TOTAL_PRICE, 
 						   ORDER_COMMENT, 
+						   ORDER_ENROLL,
 						   ORDER_RECEIVER, 
 						   ORDER_ADDRESS, 
 						   ORDER_TEL, 
-						   ORDER_FEE) 
-		VALUES ((select nvl(max(order_no), 0) + 1 from orders), 
+						   ORDER_FEE)
+		VALUES  (#{pay_no}, 
 		         1, 
-		        (select nvl(max(pay_no), 0) + 1 from orders), 
+		         #{pay_no}, 
 		         #{order_name}, 
 		         #{total_price}, 
 		         #{order_comment}, 
+		         #{order_enroll},
 		         #{order_receiver}, 
 		         #{order_address}, 
 		         #{order_tel}, 
 		         #{order_fee})
 	</insert>
-	
-	<select id="searchOrderNo" resultMap="orderList">
-	<![CDATA[	
-		SELECT order_no
-		FROM   orders
-        WHERE  rownum = 1
-        order by order_no desc
-     ]]>
-	</select>
-	
+		
 </mapper>
