@@ -24,6 +24,10 @@
 		FROM book where book_no = #{book_no}
 	</select>
 	
+	<select id="getBookKeyword" resultMap="bookResult">
+		select * from book where title like '%' ||  #{keyword} || '%'
+	</select>
+	
 </mapper>
 
 <!-- 		<result property="isbn_no" column="ISBN_NO" /> -->

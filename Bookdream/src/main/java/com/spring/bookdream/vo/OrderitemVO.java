@@ -12,6 +12,7 @@ public class OrderitemVO {
 	private int product_count;
 	private int total_count;
 	private int col_count;
+	private String buy_now;
 	
 	// JOIN TABLE
 	private UserVO userVO;
