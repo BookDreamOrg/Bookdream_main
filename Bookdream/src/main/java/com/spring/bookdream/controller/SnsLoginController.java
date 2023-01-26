@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.google.api.services.people.v1.PeopleService;
 import com.google.api.services.people.v1.model.Person;
 import com.spring.bookdream.auth.SNSLogin;
-import com.spring.bookdream.auth.SnsUser;
 import com.spring.bookdream.auth.SnsValue;
+import com.spring.bookdream.vo.UserVO;
 
 @Controller
 public class SnsLoginController {
@@ -53,9 +53,9 @@ public class SnsLoginController {
 			// 1. code를 이용해서 access_token 받기
 			// 2. access_token을 이용해서 사용자 profile 정보 가져오기
 			SNSLogin snsLogin = new SNSLogin(sns);
-			SnsUser snsUser = snsLogin.getUserProfile(code);
+			UserVO userVo = snsLogin.getUserProfile(code);
 			System.out.println("Service>>" + service);
-			System.out.println("Profile>>" + snsUser);
+			System.out.println("Profile>>" + userVo);
 			
 			// 3. DB 해당 유저가 존재하는지 Check (googleid, naverid 컬럼 추가)
 			// 4. 존재 시 강제 로그인, 미존재 시 가입페이지

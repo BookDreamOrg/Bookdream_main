@@ -1,7 +1,6 @@
 package com.spring.bookdream.auth;
 
 import java.io.IOException;
-import java.util.Iterator;
 
 import org.springframework.util.StringUtils;
 
@@ -13,6 +12,8 @@ import com.github.scribejava.core.model.OAuthRequest;
 import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth20Service;
+import com.spring.bookdream.dao.UserDAO;
+import com.spring.bookdream.vo.UserVO;
 
 public class SNSLogin {
 	private OAuth20Service oauthService;
@@ -31,7 +32,7 @@ public class SNSLogin {
 		return this.oauthService.getAuthorizationUrl();
 	}
 
-	public SnsUser getUserProfile(String code) throws Exception {
+	public UserVO getUserProfile(String code) throws Exception {
 		OAuth2AccessToken accessToken = oauthService.getAccessToken(code);
 		
 		OAuthRequest request = new OAuthRequest(Verb.GET, this.sns.getProfileUrl());
@@ -41,26 +42,31 @@ public class SNSLogin {
 		return parseJson(response.getBody());
 	}
 
-	private SnsUser parseJson(String body) throws Exception {
+	private UserVO parseJson(String body) throws Exception {
 		System.out.println(body);
-		SnsUser snsuser = new SnsUser();
+		UserVO userVo = new UserVO();
+		
 		
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode rootNode = mapper.readTree(body);
 		
 		
 		if (this.sns.isGoogle()) {
-			snsuser.setGoogleid(rootNode.get("email").asText());
-			snsuser.setName(rootNode.get("given_name").asText());
+			userVo.setUser_email(rootNode.get("email").asText());
+			userVo.setUser_name(rootNode.get("given_name").asText());
+			userVo.setFlatform_type("google");
+			UserDAO userDao = new UserDAO();	
+			userDao.insertUser(userVo);
 			
 		} else if (this.sns.isNaver()) {
 			JsonNode resNode = rootNode.get("response");
-			snsuser.setNaverid(resNode.get("email").asText());
-			snsuser.setName(resNode.get("name").asText());
-			snsuser.setMobile(resNode.get("mobile").asText());
+			userVo.setUser_email(resNode.get("email").asText());
+			userVo.setUser_name(resNode.get("name").asText());
+			userVo.setUser_tel(resNode.get("mobile").asText());
+			userVo.setFlatform_type("naver");
 		}
 		
-		return null;
+		return userVo;
 	}
 	
 	
