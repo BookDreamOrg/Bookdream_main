@@ -72,4 +72,18 @@ public class UserDAO {
 			return cnt;
 		}
 	
+		//이름, 이메일로 아이디 찾기
+		public String idFind(UserVO vo) {
+			System.out.println(vo.getUser_name());
+			System.out.println(vo.getUser_email());
+			String id = mybatis.selectOne("UserDAO.idFind", vo);
+			System.out.println(id);
+			return id;
+		}
+		
+		//아이디, 이름, 이메일로 비밀번호 찾기
+		public String pwFind(UserVO vo) {
+			String pw = mybatis.selectOne("UserDAO.pwFind", vo);
+			return pw;
+		}
 }

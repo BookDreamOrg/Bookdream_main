@@ -7,11 +7,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    	<!-- jQuery -->
+    <!-- jQuery -->
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-   <link rel="stylesheet" href="/resources/css/login.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/resources/css/login.css">
     <title>북드림 로그인 페이지</title>
     
 </head>
@@ -40,7 +40,7 @@
           			<input type="checkbox" value="remember-me" id="saveId"> <a href="" class="btn_text_link">아이디 저장</a>
           		</label>
           	</span>
-          	<a href="" class="btn_text_link">아이디 비밀번호 찾기</a>
+          	<a href="idfind.jsp" class="btn_text_link">아이디 비밀번호 찾기</a>
           </div>
           
         
@@ -55,13 +55,13 @@
           			 </a>
           		</li>
           		<li class="sns_login_item">
-          			<a href="">
+          			<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=0328Vi7efumpXAgBjKZA&state=STATE_STRING&redirect_uri=http://localhost:8000/auth/naver/callback">
           				<img src="/resources/images/naver_login.png" class="rounded-circle" width="50px" height="45px">
           			 
           			 </a>
           		</li>
           		<li class="sns_login_item">
-          			<a href="">
+          			<a href="https://accounts.google.com/o/oauth2/v2/auth?scope=profile+email&response_type=code&client_id=759629996127-2168hvg19ogj7kah4thgo16a2seoc50q.apps.googleusercontent.com&redirect_uri=http://localhost:8000/auth/google/callback">
           				<img src="/resources/images/google_login.PNG" class="rounded-circle" width="50px" height="45px">
           			 
           			 </a>

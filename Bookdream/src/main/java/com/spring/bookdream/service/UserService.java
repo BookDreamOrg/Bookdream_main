@@ -20,4 +20,10 @@ public interface UserService {
 	
 	// 회원가입 아이디 중복체크
 	public int idCheck(String id);
+	
+	//이메일로 아이디 찾기
+	public String idFind(UserVO vo);
+	
+	//아이디로 비밀번호 찾기
+	public String pwFind(UserVO vo);
 }
