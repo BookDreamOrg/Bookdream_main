@@ -1,5 +1,7 @@
 package com.spring.bookdream.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,4 +21,12 @@ public class PurchaseDAO {
 		return mybatis.insert("PurchaseDAO.insertPurchase", user_no);
 	}
 	
+	
+
+	public List<PurchaseVO> getPurchaseList(PurchaseVO vo) {
+
+		System.out.println("---> 구매목록 조회 <---");
+		
+		return mybatis.selectList("PurchaseDAO.getPurchaseList", vo);
+	}
 }

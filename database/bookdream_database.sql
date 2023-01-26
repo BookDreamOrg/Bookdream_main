@@ -6,21 +6,24 @@ connect bookdream/bookdream;
 --------------------------------------------------------------------
 -------------------------- USERS ------------------------------------
 drop table USERS;
+
 create table USERS (
   USER_NO                 number(10)    not null,
-  USER_ID                   varchar2(40)  UNIQUE,
-  USER_PASSWORD  varchar2(20),
-  USER_NAME            varchar2(50)  not null,
-  USER_ADDRESS     varchar2(50)  default '',
+  USER_ID                 varchar2(40)  UNIQUE,
+  USER_PASSWORD           varchar2(20),
+  USER_NAME               varchar2(50)  not null,
+  USER_ADDRESS            varchar2(50)  default '',
   USER_TEL                varchar2(20)  default '',
-  USER_LEVEL            number(1)     default 0    check(USER_LEVEL in(0,1)),
-  BLACKLIST_YN        varchar2(5)   default 'N'   check(BLACKLIST_YN in ('Y','N')),
-  FLATFORM_TYPE varchar2(50) not null,
-  USER_EMAIL            varchar2(50)  not null,
+  USER_LEVEL              number(1)     default 0     check(USER_LEVEL in(0,1)),
+  BLACKLIST_YN            varchar2(5)   default 'N'   check(BLACKLIST_YN in ('Y','N')),
+  FLATFORM_TYPE           varchar2(50) not null,
+  USER_EMAIL              varchar2(50)  not null,
+  USER_POINT              number(10) default '',
   constraint PK_USER primary key (USER_NO)
 );
 
 desc users;
+
 drop sequence user_seq;
 -- 번호를 자동으로 1부터 1씩 증가하도록 만듦
 create sequence user_seq increment by 1 start with 1;
@@ -31,6 +34,8 @@ insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_ADDRESS, USER
 -- BookDream 회원 로그인 insert
 insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
 	values(user_seq.nextval,'sycha','1234','이름','BD','이메일');
+
+
 
 select * from users;
 commit;
@@ -53,28 +58,29 @@ constraint pk_riview PRIMARY KEY (review_no)
 
 select * from review;
 
--- Pay Table
---------------------------------------------------------------------
--------------------------- PAY ------------------------------------
+--------------------------------------------------------------------------------
+------------------------------------ PAY ---------------------------------------
+--------------------------------------------------------------------------------
 drop table pay;
 
 CREATE TABLE PAY (
     PAY_NO         number(10) not null,
 	PAY_METHOD     varchar2(20)not null,
-    PAY_DATE       date DEFAULT SYSDATE not null,
+    PAY_DATE       varchar(20) default to_char(SYSDATE, 'YY/MM/DD HH24:MI:SS') ,
     DISCOUNT_PRICE number(10) DEFAULT 0 not null,
     FINAL_PRICE    number(10) not null,
-    SAVE_POINT     number(10) not null,
+    SAVE_POINT     number(10) DEFAULT 0 not null,
+    USE_POINT      number(10) DEFAULT 0,
     constraint PK_PAY primary key(PAY_NO)  
 );
 
-
 select * from pay;  
-
 commit;
 
---------------------------------------------------------------------
--------------------------- ORDERS ------------------------------------
+
+-----------------------------------------------------------------------------
+---------------------------------- ORDERS -----------------------------------
+-----------------------------------------------------------------------------
 drop table orders;
 
 CREATE TABLE orders(
@@ -84,17 +90,21 @@ CREATE TABLE orders(
     order_name          varchar2(500) not null,  
     total_price         number not null,
     order_comment       varchar2(400),
-    order_enroll        date default sysdate ,
+    order_enroll        varchar(20) default to_char(SYSDATE, 'YY/MM/DD HH24:MI:SS') ,
     order_receiver      varchar2(20) not null,
     order_address       varchar2(100) not null,
     order_tel           varchar2(40) not null,
     order_fee           number not null
 );
 
+
 select * from orders;
 
 commit;
 
+-----------------------------------------------------------------------------
+---------------------------------- BOOK -----------------------------------
+-----------------------------------------------------------------------------
 -- Book Table(xlsx 삽입 노션 확인)
 
 drop table BOOK;
@@ -116,7 +126,7 @@ create table BOOK (
 
 select * from BOOK;
 
-commit
+commit;
 
 
 --------------------------------------------------------------------
@@ -140,15 +150,16 @@ insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(3, 1, 3, 2);
 insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(4, 1, 4, 1);
 insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(5, 1, 5, 1);
 
-insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(6, 2, 5, 1);
+insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(4, 2, 5, 1);
 
 select * from cart;
 
 commit; 
 
 
----------------------------------------------------------------
---------------------------- purchase --------------------------
+-------------------------------------------------------------------------------
+---------------------------------- PARCHASE -----------------------------------
+-------------------------------------------------------------------------------
 drop table PURCHASE;
 
 CREATE TABLE purchase (
@@ -163,23 +174,20 @@ CREATE TABLE purchase (
     constraint FK_PURCHASE_ORDER_NO foreign key(ORDER_NO) REFERENCES ORDERS (ORDER_NO)     
 );
 
+----------------------------- purchase_no 자동증번 ------------------------------
 drop sequence numplus;
 
 Create sequence numplus  
 increment by 1        -- 증가값(1씩증가)
-start with 1             -- 시작값(1부터 시작)
+start with 1          -- 시작값(1부터 시작)
 nomaxvalue            -- 최대값 재한 없음
 nocycle
 nocache;
+--------------------------------------------------------------------------------
 
-
-
-select  * from purchase;
-
-commit;
-
---------------------------------------------------------------------
--------------------------- ADDRESS ---------------------------------
+--------------------------------------------------------------------------------
+--------------------------------- ADDRESS --------------------------------------
+--------------------------------------------------------------------------------
 DROP TABLE ADDRESS;
 
 CREATE TABLE ADDRESS (
@@ -195,10 +203,6 @@ CREATE TABLE ADDRESS (
     constraint PK_ADDRESS primary key(ADDRESS_NO),
     constraint FK_ADDRESS_USER_NO foreign key(USER_NO) REFERENCES USERS (USER_NO)
 );
-
-INSERT INTO ADDRESS (ADDRESS_NO, USER_NO, ADDRESS_ALIAS, ADDRESS_NAME, ADDRESS_TEL, ZONE_CODE, ROAD_ADD, DETAIL_ADD, DEFAULT_ADD) VALUES(1, 1, '학원', '배고파', '010-1111-2222','123456', '서울 강남구 역삼동 KH정보교육원', '2층 C반', 'Y');
-INSERT INTO ADDRESS (ADDRESS_NO, USER_NO, ADDRESS_ALIAS, ADDRESS_NAME, ADDRESS_TEL, ZONE_CODE, ROAD_ADD, DETAIL_ADD) VALUES(2, 1, '직장', '졸리네', '010-2222-3333','123456', '서울 강남구 역삼동 KH정보교육원', '2층 A반');
-
 
 SELECT * FROM ADDRESS;
 
