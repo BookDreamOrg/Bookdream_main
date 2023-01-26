@@ -26,4 +26,10 @@ public interface UserService {
 	
 	//아이디로 비밀번호 찾기
 	public String pwFind(UserVO vo);
+	
+	// 구글 정보 저장
+	public void googleInsert(UserVO vo);
+	
+	// 네이버 정보 저장
+	public void naverInsert(UserVO vo);
 }
