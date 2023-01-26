@@ -54,4 +54,12 @@ public class UserServiceImpl implements UserService {
 		
 		return cnt;
 	}
+	
+	public String idFind(UserVO vo) {
+		return userDAO.idFind(vo);
+	}
+	
+	public String pwFind(UserVO vo) {
+		return userDAO.pwFind(vo);
+	}
 }

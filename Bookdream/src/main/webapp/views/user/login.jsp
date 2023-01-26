@@ -40,7 +40,7 @@
           			<input type="checkbox" value="remember-me" id="saveId"> <a href="" class="btn_text_link">아이디 저장</a>
           		</label>
           	</span>
-          	<a href="" class="btn_text_link">아이디 비밀번호 찾기</a>
+          	<a href="idfind.jsp" class="btn_text_link">아이디 비밀번호 찾기</a>
           </div>
           
         
