@@ -53,10 +53,10 @@ public class SNSLogin {
 		
 		if (this.sns.isGoogle()) {
 			userVo.setUser_email(rootNode.get("email").asText());
-			userVo.setUser_name(rootNode.get("given_name").asText());
+			userVo.setUser_name(rootNode.get("name").asText());
 			userVo.setFlatform_type("google");
-			UserDAO userDao = new UserDAO();	
-			userDao.insertUser(userVo);
+			// UserDAO userDao = new UserDAO();	
+			// userDao.insertUser(userVo);
 			
 		} else if (this.sns.isNaver()) {
 			JsonNode resNode = rootNode.get("response");
