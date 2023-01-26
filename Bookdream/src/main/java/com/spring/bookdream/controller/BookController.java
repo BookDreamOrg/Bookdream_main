@@ -31,11 +31,11 @@ public class BookController {
 	private ReviewService reviewService;
 	
 	// 글 목록 검색
-	@RequestMapping(value="/bookList")
-	public String bookList(BookVO vo, BookDAO bookDAO, Model model) {
+	@RequestMapping(value="/bookKeywordList")
+	public String bookList(String keyword, BookDAO bookDAO, Model model) {
 		// Model 정보 저장
-		model.addAttribute("bookList", bookService.getBookList(vo));	// Model 정보 저장
-		return "/book.jsp";
+		model.addAttribute("book", bookService.getBookList(keyword));	// Model 정보 저장		
+		return "booklist/bookKeywordList"; //조회된 책 뿌리기
 	}
 
 	

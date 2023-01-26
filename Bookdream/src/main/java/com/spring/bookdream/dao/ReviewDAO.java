@@ -45,11 +45,10 @@ public class ReviewDAO {
 	
 	public void insertReview(ReviewVO vo) {
 		System.out.println("---> insertReviewDAO");
+//		vo.setUser_id((String)session.getAttribute("user_id"));
 		
-		vo.getUserVO().setUser_id(((String) session.getAttribute("user_id")));  
 //		return mybatis.insertReview("ReviewDAO.insertReview",map);
 		mybatis.insert("ReviewDAO.insertReview",vo);
-
 	}
 	
 	//리뷰 추천수 업데이트
