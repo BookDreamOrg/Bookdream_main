@@ -19,11 +19,4 @@ public class OrderDAO {
 		mybatis.insert("OrderDAO.insertOrder", vo);		
 	}
 
-	// 주문번호 호출
-	public OrderVO searchOrderNo(OrderVO vo) {
-		
-		System.out.println("---> OrderDAO searchOrderNo 실행 <---");
-		
-		return mybatis.selectOne("OrderDAO.searchOrderNo", vo);	
-	}
 }

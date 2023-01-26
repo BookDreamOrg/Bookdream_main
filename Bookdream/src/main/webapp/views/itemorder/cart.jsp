@@ -168,12 +168,7 @@ button {
 							<tr>
 								<td class="cart_list_table_checkbox"><input type="checkbox" id="box" name="box" checked="checked" ></td>
 								<td><img alt="" src="${cart.bookVO.book_img }"> </td>					
-								<td class="cart_list_table_title">${ cart.bookVO.title }</td>
-								<td class="cart_list_table_price"><fmt:formatNumber value="${cart.bookVO.book_price}" pattern="###,###"/>원</td>
-								<td class="cart_list_table_count">${ cart.product_count }</td>
-								<td class="cart_list_table_delete"><button value="${cart.cart_no}" onclick="cart_delete(this);">삭제</button></td>
-							</tr>
-						<c:set var="totalprice" value="${totalprice + (cart.bookVO.book_price * cart.product_count) }"/>
+
 					</c:forEach>
 					</table>				
 				
