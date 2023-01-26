@@ -44,7 +44,20 @@ public class UserDAO {
 		public void kakaoinsert(HashMap<String, Object> userInfo) {
 			System.out.println("카카오 insert완료");
 			mybatis.insert("UserDAO.kakaoInsert",userInfo);
+		} 
+		
+		// 구글 정보 저장
+		public void googleinsert(UserVO vo) {
+			System.out.println("google inesrt완료");
+			mybatis.insert("UserDAO.googleInsert", vo);
 		}
+		
+		// 네이버 정보저장
+		public void naverinsert(UserVO vo) {
+			System.out.println("naver insert완료");
+			mybatis.insert("UserDAO.naverInsert", vo);
+		}
+		
 
 		// 카카오 정보 확인
 		public UserVO findkakao(HashMap<String, Object> userInfo) {
