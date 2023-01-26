@@ -7,8 +7,6 @@
 	
 }
 
-
-
 body:before {
      content: "";
      opacity: 0.6;
@@ -21,13 +19,17 @@ body:before {
   	 z-index: -1;	     
 }
 
-
-
 hr {
-    background:#f2f2f2;
-    height:2px;
-    border:0;
+    color:black;
+    height:1px;
+	margin-bottom: -1px;
 }
+
+.hr_title {
+	margin:30px 0px;
+	color: white;
+}
+
 
 button {
 	cursor: pointer;	
@@ -48,7 +50,6 @@ button {
 .topbar {
 	position:relative;
 	height:150px;	
-	border: 2px solid #bdbdbd;
 	margin-top: 50px;
 	background-color: white;
 }
@@ -71,10 +72,11 @@ button {
 
 /* !!!!!!!!!!!!! 사이드바 !!!!!!!!!!!!! */
 
+
 .sidebar {
 	position:relative;
 	width:290px;
-	height:400px;
+	height:480px;
 	float: right;
 	padding: 0px 15px;
 	margin-top:30px;		
@@ -87,7 +89,7 @@ button {
 	margin: 30px 0px;	
 }
 
-.sidebar_col_price {
+.sidebar_col_price, .sidebar_col_point {
 	float: right;
 }
 
@@ -98,12 +100,16 @@ button {
 .sidebar_col_last {
 	position:relative;
 	height: 50px;
-	margin: 30px 0px;	
+	margin: 30px 0px 0px 0px;	
 }
 
 .sidebar_col_title {
 	position:absolute;
 	top:7px;
+}
+
+.sidebar_save_point {
+	float: right;
 }
 
 
@@ -126,18 +132,19 @@ button {
 table {
 	width: 100%;
 	font-size: 15px;
-	margin-bottom: 40px;
+	margin: 40px 0px;
 }
 
 td {
 	height: 100px;
 	vertical-align : middle;
+	padding: 10px;
 }
 
 .col_img {
 	width: 70px;
 	height: 100px;
-	border: 1px solid black;
+	border: 1px solid #bdbdbd;
 }
 
 .col1 {
@@ -228,43 +235,7 @@ td {
 	
 }
 
-.modal_address_list_check {
-	position:absolute;
-	top:10px;
-	left:10px;	
-	width: 50px;
-	height: 120px;
-	display: inline-block;	
-}
-
-.form-check-input {
-	vertical-align: middle;
-}
-
-.modal_address_list_main {
-	position:absolute;
-	top:10px;
-	left:60px;
-	width: 380px;
-	height: 120px;
-	display: inline-block;
-	
-	font-size: 14px;
-}
-
-.modal_address_list_update {
-	position:absolute;
-	top:10px;
-	left:440px;	
-	width: 50px;
-	height: 120px;
-	display: inline-block;
-
-	font-size: 14px;		
-}
-
-
-.modal.hidden, .modal2.hidden {
+.modal.hidden, .modal2.hidden, .modal3.hidden {
 	display: none;
 }
 
@@ -309,7 +280,7 @@ td {
 }
 
 .form-check {
-	width:200px;
+	text-align:center;
 	margin: 0 auto;
 	margin-bottom: 20px;
 }
@@ -328,7 +299,61 @@ td {
 	margin-top: 50px;
 }
 
+.address_col1, .address_col3 {
+	
+	width: 70px;
+	vertical-align:middle;
+	text-align: center;
+	
+}
 
+.address_col2 {
+	vertical-align:middle;
+}
+
+/* !!!!!!!!!!!!! 배송요청사항 !!!!!!!!!!!!! */
+
+.modal3 {
+	position: absolute;
+	display: flex;	
+	top:0px;
+	left:0px;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+}
+
+.modal3_overlay {
+	background-color: rgba(0, 0, 0, 0.6);
+	width: 100%;
+	height: 100%;
+	position: fixed;	
+}
+
+.modal3_content {
+  	position: fixed; 	
+	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+	
+	width:600px;
+	height:400px;
+	
+	padding: 50px 50px;
+	background-color:white;	
+	border: 2px solid black;
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+
+.message_button {
+	float: right;
+	margin-top: -30px;
+}
+
+.message_insert {
+	margin: 20px 0px 100px 0px;
+}
 /* !!!!!!!!!!!!! 배송지 정보 !!!!!!!!!!!!! */
 
 .user_info {
@@ -343,8 +368,8 @@ td {
 
 .user_info_button {
 	position: absolute;
-	top:-10px;
-	left: 250px;
+	top: 145px;
+	left: 320px;
 	width: 500px;
 	height: 40px;
 	
@@ -366,6 +391,14 @@ td {
 	cursor: pointer;	
 }
 
+.user_info_message {
+	position: absolute;
+	top: 155px;
+	left: 320px;
+	width: 500px;
+	height: 40px;	
+}
+
 .user_info_address {
 	position: absolute;
 	top: 22px;
@@ -382,12 +415,45 @@ td {
 /* !!!!!!!!!!!!! 쿠폰할인 !!!!!!!!!!!!! */
 
 .event {
+	position:relative;
 	width: 900px;
 	height: auto;
-	min-height:300px;
+	min-height:220px;
 	margin-top:30px;	
 	border: 2px solid #bdbdbd;
 	background-color: white;	
+}
+
+.event_text {
+	position: absolute;
+	top: 40px;
+	left: 400px;
+}
+
+
+.event_point {
+	position:absolute;
+	top: 145px;
+	left: 320px;
+	width: 300px;
+
+
+}
+
+.event_input{
+	width: 300px;
+	display: inline;
+	text-align: right;
+}
+
+.event_input_text {
+	position:absolute;
+	top:145px;
+	left:620px;
+	width:180px;
+	font-size: 12px;
+	opacity: 0.7;
+	margin-left: 10px;
 }
 
 /* !!!!!!!!!!!!! 결제수단 !!!!!!!!!!!!! */
@@ -438,7 +504,7 @@ td {
 
 .payment {
 	position: absolute;
-	top: 320px;
+	top: 400px;
 	left: 20px;
 }
 
