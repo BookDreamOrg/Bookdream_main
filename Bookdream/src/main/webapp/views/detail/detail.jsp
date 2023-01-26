@@ -355,7 +355,7 @@ $(function(){
 	$('#btn_review').click(function(){
 		let user_id = '<%=session.getAttribute("user_id")%>';
 		
-		if(<%=session.getAttribute("user_id")%>=== null ||<%=session.getAttribute("user_id")%> === ""){
+		if(user_id === null ||user_id === ""){
 			alert('로그인 페이지로 이동합니다.');
 			location.replace("views/user/login.jsp");
 		}
