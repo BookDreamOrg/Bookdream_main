@@ -25,11 +25,6 @@ h3 {
 </script>
 </head>
 <body>
-	<div style="background-color: #15a181; width: 100%; height: 50px; text-align: center; color: white;">
-		<h3>SIST Google_Login Success</h3>
-	</div>
-	<br>
-	<h2 style="text-align: center" id="name"></h2>
-	<h4 style="text-align: center" id="email"></h4>
+	${ result }
 </body>
 </html>

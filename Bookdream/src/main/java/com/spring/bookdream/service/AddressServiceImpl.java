@@ -46,7 +46,7 @@ public class AddressServiceImpl implements AddressService {
 	@Override
 	public AddressVO getAddress(AddressVO vo) {
 		
-		System.out.println("---> getAddress 33<---");
+		System.out.println("---> getAddress <---");
 		
 		return addressDAO.getAddress(vo);
 		
@@ -57,6 +57,14 @@ public class AddressServiceImpl implements AddressService {
 		
 		System.out.println("---> updateAddress <---");
 		addressDAO.updateAddress(vo);				
+	}
+
+	@Override
+	public AddressVO getDefaultAddress(AddressVO vo) {
+		
+		System.out.println("---> getDefaultAddress <---");
+		
+		return addressDAO.getDefaultAddress(vo);
 	}
 	
 

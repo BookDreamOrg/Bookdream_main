@@ -13,9 +13,12 @@
 		<result property="zone_code" column="ZONE_CODE" />	
 		<result property="road_add" column="ROAD_ADD" />	
 		<result property="detail_add" column="DETAIL_ADD" />	
-		<result property="default_add" column="DEFAULT_ADD" />	
+		<result property="default_add" column="DEFAULT_ADD" />		
 	</resultMap>	
 
+
+
+	<!-- user_no 변경필요 -->
 	<select id="getAddressList" parameterType="address" resultMap="addressList">
 	<![CDATA[
 		SELECT rownum, 
@@ -27,12 +30,13 @@
 			   a.road_add, 
 			   a.detail_add, 
 			   a.default_add
-		FROM   address a, users u 
+		FROM   address a
 		where  a.user_no = 1  
 		order by a.default_add desc, a.address_no asc
 	]]>
 	</select>
 			
+	<!-- user_no 변경필요 -->			
 	<select id="getAddress" parameterType="address" resultMap="addressList">
 	<![CDATA[
 		SELECT 
@@ -48,7 +52,23 @@
 
 	]]>	
 	</select>		
-			
+	
+	<!-- user_no 변경필요 -->	
+	<select id="getDefaultAddress" parameterType="address" resultMap="addressList">
+	<![CDATA[
+		SELECT address_alias, 
+			   address_name, 
+			   address_tel, 
+			   zone_code, 
+			   road_add, 
+			   detail_add
+		FROM   address
+		where  user_no = 1 AND default_add = #{default_add}
+
+	]]>	
+	</select>	
+	
+	<!-- user_no 변경필요 -->			
 	<insert id="insertAddress">
 	<![CDATA[	
 		INSERT INTO address(address_no, 
@@ -72,6 +92,7 @@
 	]]>		
 	</insert>		
 	
+	<!-- user_no 변경필요 -->	
 	<update id="defaultAddress">
 	<![CDATA[	
 		update address
@@ -80,6 +101,7 @@
 	]]>	
 	</update>
 	
+	<!-- user_no 변경필요 -->	
  	<update id="defaultAddress2">
 	<![CDATA[	
 		update address
@@ -88,6 +110,7 @@
 	]]>	
 	</update>	 
 
+	<!-- user_no 변경필요 -->
 	<update id="updateAddress">
 	<![CDATA[		
 		UPDATE address
@@ -101,6 +124,7 @@
 	]]>		
 	</update>
 
+	<!-- user_no 변경필요 -->
 	<delete id="deleteAddress">
 		DELETE
 		FROM   address
