@@ -20,7 +20,7 @@
 
 body {
 	 position: relative;
-	 background-image: url('/resources/image/background.jpg');
+	 background-image: url('/resources/images/background.jpg');
 	 background-repeat: no-repeat;
  	 background-position: center;
   	 background-size: cover;
@@ -148,7 +148,7 @@ button {
 			<div class="topbar">
 				 <div>
 				 	<span class="topbar_title">장바구니</span>
-				 	<a  class="topbar_title_a" href="/cart/orderitem">결제하기</a>
+				 	<a  class="topbar_title_a" href="detail/cart/orderitem">결제하기</a>
 				 </div>
 			</div>
 			

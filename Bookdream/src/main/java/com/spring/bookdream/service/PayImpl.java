@@ -20,10 +20,4 @@ public class PayImpl implements PayService {
 		payDAO.insertPay(vo);
 	}
 
-	@Override
-	public void updatePay(PayVO vo) {
-		payDAO.updatePay(vo);
-		
-	}
-
 }

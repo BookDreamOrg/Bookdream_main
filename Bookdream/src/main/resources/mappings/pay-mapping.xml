@@ -4,9 +4,19 @@
 			
 <mapper namespace="PayDAO">
 
+
 	<insert id="insertPay" >
-		INSERT INTO pay(PAY_NO, PAY_METHOD, DISCOUNT_PRICE, FINAL_PRICE, SAVE_POINT) 
-		VALUES ((select nvl(max(PAY_NO), 0) + 1 from pay), #{pay_method}, #{discount_price}, #{final_price}, #{save_point})
+		INSERT INTO pay(PAY_NO, 
+						PAY_METHOD, 
+						DISCOUNT_PRICE, 
+						FINAL_PRICE, 
+						SAVE_POINT) 
+		VALUES ((select nvl(max(PAY_NO), 0) + 1 from pay), 
+				 #{pay_method}, 
+				 #{discount_price}, 
+				 #{final_price}, 
+				 #{save_point}
+				 )
 	</insert>
 	
 </mapper>

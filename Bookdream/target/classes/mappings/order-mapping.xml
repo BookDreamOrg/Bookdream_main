@@ -4,9 +4,41 @@
 			
 <mapper namespace="OrderDAO">
 
+	<resultMap type="order" id="orderList">
+		<result property="order_no" column="ORDER_NO" />
+	</resultMap>
+	
+	<!-- user_no 변경필요 -->
 	<insert id="insertOrder" >
-		INSERT INTO orders(ORDER_NO, USER_NO, PAY_NO, ORDER_NAME, TOTAL_PRICE, ORDER_COMMENT, ORDER_RECEIVER, ORDER_ADDRESS, ORDER_TEL, ORDER_FEE) 
-		VALUES ((select nvl(max(order_no), 0) + 1 from orders), 1, (select nvl(max(pay_no), 0) + 1 from orders), #{order_name}, #{total_price}, #{order_comment}, #{order_receiver}, #{order_address}, #{order_tel}, #{order_fee})
+		INSERT INTO orders(ORDER_NO, 
+						   USER_NO, 
+						   PAY_NO, 
+						   ORDER_NAME, 
+						   TOTAL_PRICE, 
+						   ORDER_COMMENT, 
+						   ORDER_RECEIVER, 
+						   ORDER_ADDRESS, 
+						   ORDER_TEL, 
+						   ORDER_FEE) 
+		VALUES ((select nvl(max(order_no), 0) + 1 from orders), 
+		         1, 
+		        (select nvl(max(pay_no), 0) + 1 from orders), 
+		         #{order_name}, 
+		         #{total_price}, 
+		         #{order_comment}, 
+		         #{order_receiver}, 
+		         #{order_address}, 
+		         #{order_tel}, 
+		         #{order_fee})
 	</insert>
+	
+	<select id="searchOrderNo" resultMap="orderList">
+	<![CDATA[	
+		SELECT order_no
+		FROM   orders
+        WHERE  rownum = 1
+        order by order_no desc
+     ]]>
+	</select>
 	
 </mapper>
