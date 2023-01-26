@@ -278,7 +278,7 @@ function selectAll(selectAll)  {
 											value="${ cart.bookVO.book_price }" /> <label
 											class="form-check-label" for="book_price" />
 											<p class="lh-lg">${ cart.bookVO.book_price }원</p>
-											<p>재고 : ${cart.bookVO.stock } 권</p>
+											<p class="dark-subtle">재고 : ${cart.bookVO.stock } 권</p>
 										</td>
 										
 										<td class="border border-start-0">
