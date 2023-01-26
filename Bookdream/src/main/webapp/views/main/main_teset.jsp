@@ -26,7 +26,6 @@
 	<%
 		String id = (String)session.getAttribute("user_id");
 		String kakaoN = (String)session.getAttribute("kakaoName");
-		String user_no = (String)session.getAttribute("user_no");
 		String flatform = (String)session.getAttribute("flatform");
 		if(id == null && kakaoN == null){		
 	%>
