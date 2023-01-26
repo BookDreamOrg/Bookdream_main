@@ -44,7 +44,20 @@ public class UserDAO {
 		public void kakaoinsert(HashMap<String, Object> userInfo) {
 			System.out.println("카카오 insert완료");
 			mybatis.insert("UserDAO.kakaoInsert",userInfo);
+		} 
+		
+		// 구글 정보 저장
+		public void googleinsert(UserVO vo) {
+			System.out.println("google inesrt완료");
+			mybatis.insert("UserDAO.googleInsert", vo);
 		}
+		
+		// 네이버 정보저장
+		public void naverinsert(UserVO vo) {
+			System.out.println("naver insert완료");
+			mybatis.insert("UserDAO.naverInsert", vo);
+		}
+		
 
 		// 카카오 정보 확인
 		public UserVO findkakao(HashMap<String, Object> userInfo) {
@@ -72,4 +85,18 @@ public class UserDAO {
 			return cnt;
 		}
 	
+		//이름, 이메일로 아이디 찾기
+		public String idFind(UserVO vo) {
+			System.out.println(vo.getUser_name());
+			System.out.println(vo.getUser_email());
+			String id = mybatis.selectOne("UserDAO.idFind", vo);
+			System.out.println(id);
+			return id;
+		}
+		
+		//아이디, 이름, 이메일로 비밀번호 찾기
+		public String pwFind(UserVO vo) {
+			String pw = mybatis.selectOne("UserDAO.pwFind", vo);
+			return pw;
+		}
 }

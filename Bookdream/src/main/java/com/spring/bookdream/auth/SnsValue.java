@@ -14,17 +14,26 @@ public class SnsValue implements SnsUrls {
 	private String clientSecert;
 	private String redirectUrl;
 	private DefaultApi20 api20Instance;
+	private String profileUrl; 
 	
+	private boolean isNaver;
+	private boolean isGoogle;
 	
 	public SnsValue(String service, String clientId, String clientSecret, String redirectUrl) {
 		this.service = service;
 		this.clientId = clientId;
 		this.clientSecert = clientSecret;
 		this.redirectUrl = redirectUrl;
-		if(StringUtils.equalsIgnoreCase(service, "naver")) {
+		
+		this.isNaver = StringUtils.equals("naver", this.service);
+		this.isGoogle = StringUtils.equals("google", this.service);
+		
+		if(isNaver) {
 			this.api20Instance = NaverAPI20.instance();
-		} else if (StringUtils.equalsIgnoreCase(service, "google")) {
+			this.profileUrl = NAVER_PROFILE_URL;
+		} else if (isGoogle) {
 			this.api20Instance = GoogleApi20.instance();
+			this.profileUrl = GOOGLE_PROFILE_URL;
 		}
 	}
 }

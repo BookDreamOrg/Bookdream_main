@@ -1,6 +1,8 @@
 package com.spring.bookdream.service;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,12 @@ public class PurchaseServiceImpl implements PurchaseService {
 		
 		return purchaseDAO.insertPurchase(user_no);
 			
+	}
+
+	@Override
+	public List<PurchaseVO> getPurchaseList(PurchaseVO vo) {
+
+		return purchaseDAO.getPurchaseList(vo);
 	}
 
 	

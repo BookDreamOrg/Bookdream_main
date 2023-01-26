@@ -7,4 +7,8 @@ public interface PayService {
 	// 주문성공 -> payDB 등록
 	void insertPay(PayVO vo);
 	
+	PayVO searchPay(PayVO vo);
+
+
+	
 }

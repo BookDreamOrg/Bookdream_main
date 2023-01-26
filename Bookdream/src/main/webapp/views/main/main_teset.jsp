@@ -1,3 +1,4 @@
+<%@page import="com.spring.bookdream.vo.UserVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -26,8 +27,10 @@
 	<%
 		String id = (String)session.getAttribute("user_id");
 		String kakaoN = (String)session.getAttribute("kakaoName");
-		String user_no = (String)session.getAttribute("user_no");
 		String flatform = (String)session.getAttribute("flatform");
+		
+		UserVO user = (UserVO)session.getAttribute("authUser");
+	
 		if(id == null && kakaoN == null){		
 	%>
 		<div class="wrapper">
@@ -72,11 +75,11 @@
 					</div>
 				</div>
 				<div class="col-lg-1 p-5 flex-grow-1 header-col-btn">
-					<a href="#">
+					<a href="/cart">
 						<div class="header-btn">
 							<i class="fa-solid fa-cart-shopping"></i>
 						</div>
-					</a> <a href="#">
+					</a> <a href="/detail/cart/orderitem">
 						<div class="header-btn btn-circle ms-3">
 							<i class="fa-solid fa-user"></i>
 						</div>
@@ -88,7 +91,7 @@
 	%>
 		<div class="wrapper">
 		<header>
-			<div class="header-nav-list">
+			<div style="" class="header-nav-list">
 				<ul class="nav header-nav">
 					<%
 						if(id != null && kakaoN == null){ //기존 로그아웃
