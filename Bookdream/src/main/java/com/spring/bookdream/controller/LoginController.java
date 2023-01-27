@@ -37,8 +37,7 @@ public class LoginController {
 		System.out.println("로그인 인증 처리 ...");
 		System.out.println(vo.getUser_id());
 		System.out.println(vo.getUser_password());
-		
-		
+			
 		boolean result = userService.loginCheck(vo, model);
 		UserVO user = userService.getUser(vo);
 		

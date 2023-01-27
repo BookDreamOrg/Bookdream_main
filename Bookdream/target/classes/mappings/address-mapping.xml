@@ -28,7 +28,7 @@
 			   a.detail_add, 
 			   a.default_add
 		FROM   address a
-		where  a.user_no = 1  
+		where  a.user_no = #{user_no}
 		order by a.default_add desc, a.address_no asc
 	]]>
 	</select>
@@ -46,7 +46,7 @@
 			   detail_add, 
 			   default_add
 		FROM   address
-		where  user_no = 1 AND address_no = #{address_no} 
+		where  user_no = #{user_no} AND address_no = #{address_no} 
 
 	]]>	
 	</select>		
@@ -62,7 +62,7 @@
 			   detail_add,
 			   default_add
 		FROM   address
-		where  user_no = 1 AND default_add = #{default_add}
+		where  user_no = #{user_no} AND default_add = #{default_add}
 
 	]]>	
 	</select>	
@@ -82,7 +82,7 @@
 							)
 							
 		VALUES ((select nvl(max(address_no), 0) + 1 from address), 
-		         1, 
+		         #{user_no}, 
 		         #{address_alias},
 		         #{address_name},
 		         #{address_tel},
@@ -99,7 +99,7 @@
 	<![CDATA[	
 		update address
 		set    default_add = 'N'
-		WHERE  default_add = 'Y' AND user_no = 1 
+		WHERE  default_add = 'Y' AND user_no = #{user_no} 
 	]]>	
 	</update>
 	
@@ -108,7 +108,7 @@
 	<![CDATA[	
 		update address
 		set    default_add = 'Y'
-		WHERE  address_no = #{address_no} AND user_no = 1 
+		WHERE  address_no = #{address_no} AND user_no = #{user_no} 
 	]]>	
 	</update>	 
 
@@ -122,7 +122,7 @@
 			   zone_code = #{zone_code},
 			   road_add = #{road_add},
 			   detail_add = #{detail_add}
-		WHERE  address_no = #{address_no} AND user_no = 1
+		WHERE  address_no = #{address_no} AND user_no = #{user_no}
 	]]>		
 	</update>
 
@@ -130,7 +130,7 @@
 	<delete id="deleteAddress">
 		DELETE
 		FROM   address
-	    WHERE  address_no = #{address_no} AND user_no = 1
+	    WHERE  address_no = #{address_no} AND user_no = #{user_no}
 	</delete>
 	
 

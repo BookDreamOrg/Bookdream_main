@@ -15,21 +15,30 @@ public class OrderitemImpl implements OrderitemService {
 	@Autowired
 	private OrderitemDAO orderitemDAO;
 
-	// 결제 상품 목록 조회
+	// 장바구니 상품 목록 조회
 	@Override
 	public List<OrderitemVO> getOrderitemList(OrderitemVO vo) {
 
 		return orderitemDAO.getOrderitemList(vo);
 	}
 	
-	// 결제 상품 개수 조회
+	// 장바구니 상품 개수 조회
 	@Override
 	public OrderitemVO getOrderitemCount(OrderitemVO vo) {
 
 		return orderitemDAO.getOrderitemCount(vo);
 	}
 
+	// 바로구매 상품 조회
+	@Override
+	public OrderitemVO getBuyNow(OrderitemVO vo) {
+
+		return orderitemDAO.getBuyNow(vo);
+
+	}
 	
+	
+	// 사용자의 포인트 조회
 	@Override
 	public OrderitemVO userPoint(OrderitemVO vo) {
 
@@ -56,6 +65,8 @@ public class OrderitemImpl implements OrderitemService {
 
 		return orderitemDAO.updateUserPoint(vo);	
 	}
+
+
 
 
 
