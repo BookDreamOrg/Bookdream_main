@@ -44,7 +44,7 @@ drop table review;
 
 create table review(
 review_no number(10) not null,
-USER_NO number(10) not null,
+USER_ID  varchar2(20)  not null,
 book_no number(10) not null,
 REVIEW_CONTENT varchar2(1000) not null,
 REVIEW_DATE date default sysdate,
