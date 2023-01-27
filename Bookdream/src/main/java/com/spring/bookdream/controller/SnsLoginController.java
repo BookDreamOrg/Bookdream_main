@@ -74,7 +74,7 @@ public class SnsLoginController {
 			// 3. DB 해당 유저가 존재하는지 Check (googleid, naverid 컬럼 추가)
 			// 4. 존재 시 강제 로그인, 미존재 시 가입페이지
 			
-			return "user/main_test";
+			return "main/main_teset";
 		}
 		
 }
