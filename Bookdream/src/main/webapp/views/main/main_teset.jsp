@@ -145,7 +145,7 @@
 						<div class="header-btn">
 							<i class="fa-solid fa-cart-shopping"></i>
 						</div>
-					</a> <a href="#">
+					</a> <a href="/detail/cart/orderitem">
 						<div class="header-btn btn-circle ms-3">
 							<i class="fa-solid fa-user"></i>
 						</div>

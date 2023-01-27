@@ -255,17 +255,27 @@
 
 				<form action="">
 					<table>
+					<c:choose>
+						<c:when test="${orderitem.buy_now == 'Y'}">
+							<tr>
+								<td class="col1"><a href="/getBook?book_no=${orderitem.bookVO.book_no}"><img class="col_img" alt="" src="${orderitem.bookVO.book_img }"></a></td>					
+								<td class="col2">${ orderitem.bookVO.title }</td>
+								<td class="col3"><b><fmt:formatNumber value="${orderitem.bookVO.book_price}" pattern="###,###"/></b> 원</td>
+								<td class="col4">${ orderitem.product_count }개</td>
+							</tr>					
+						</c:when>
+						
+						<c:otherwise>
 						<c:forEach items="${orderitemList}" var="orderitem" varStatus="i">					
 							<tr>
 								<td class="col1"><a href="/getBook?book_no=${orderitem.bookVO.book_no}"><img class="col_img" alt="" src="${orderitem.bookVO.book_img }"></a></td>					
 								<td class="col2">${ orderitem.bookVO.title }</td>
 								<td class="col3"><b><fmt:formatNumber value="${orderitem.bookVO.book_price}" pattern="###,###"/></b> 원</td>
 								<td class="col4">${ orderitem.product_count }개</td>
-								<c:if test="${!i.last}">
-								</c:if>	
-							</tr>
-																									
-						</c:forEach>
+							</tr>																
+						</c:forEach>						
+						</c:otherwise>
+					</c:choose>
 					</table>
 				</form>
 				
@@ -380,11 +390,18 @@
 	<!-- JS 전송 -->	
 	<!-- 상품의 종류가 2개 이상일 경우 첫번째 상품이름 + 나머지 종류의 개수  -->
 	<c:choose>
-		<c:when test="${fn:length(orderitemList) != 1}">
-			<c:set var="first_title" value="${orderitemList[0].bookVO.title} 외  ${orderitemCount.col_count - 1} 종"></c:set>
-		</c:when>		
+		<c:when test="${orderitem.buy_now == 'Y'}">
+			<c:set var="first_title" value="${orderitem.bookVO.title}"></c:set>
+		</c:when>
 		<c:otherwise >
-			<c:set var="first_title" value="${orderitemList[0].bookVO.title}"></c:set>
+			<c:choose>
+				<c:when test="${fn:length(orderitemList) != 1}">
+					<c:set var="first_title" value="${orderitemList[0].bookVO.title} 외  ${orderitemCount.col_count - 1} 종"></c:set>
+				</c:when>	
+				<c:otherwise>
+					<c:set var="first_title" value="${orderitemList[0].bookVO.title}"></c:set>
+				</c:otherwise>
+			</c:choose>
 		</c:otherwise>
 	</c:choose>	
 	<input type="hidden" id ="first_title" name="first_title" value="<c:out value="${first_title}"/>">

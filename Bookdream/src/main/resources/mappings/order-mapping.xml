@@ -18,7 +18,7 @@
 						   ORDER_TEL, 
 						   ORDER_FEE)
 		VALUES  (#{pay_no}, 
-		         1, 
+		         #{user_no}, 
 		         #{pay_no}, 
 		         #{order_name}, 
 		         #{total_price}, 

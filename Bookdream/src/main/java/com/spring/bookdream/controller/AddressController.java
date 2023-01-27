@@ -2,6 +2,8 @@ package com.spring.bookdream.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -18,11 +20,17 @@ public class AddressController {
 	
 	@Autowired
 	private AddressService addressService;
+
+	@Autowired
+	private HttpSession session;	
 	
 	// 주소등록
 	@RequestMapping(value="/insert")
 	@ResponseBody
 	public void insertAddress(@RequestBody AddressVO vo) {
+		
+		int user_no = (int) session.getAttribute("user_no");
+		vo.setUser_no(user_no);
 		
 		addressService.insertAddress(vo);
 
@@ -32,6 +40,9 @@ public class AddressController {
 	@RequestMapping(value="/allList")
 	@ResponseBody	
 	public List<AddressVO> getAddressList(AddressVO vo) {
+		
+		int user_no = (int) session.getAttribute("user_no");
+		vo.setUser_no(user_no);
 		
 		List<AddressVO> list  = addressService.getAddressList(vo);
 		
@@ -43,6 +54,9 @@ public class AddressController {
 	@ResponseBody	
 	public AddressVO getAddress(@RequestBody AddressVO vo) {
 
+		int user_no = (int) session.getAttribute("user_no");
+		vo.setUser_no(user_no);
+		
 		return addressService.getAddress(vo);
 	}
 	
@@ -51,6 +65,9 @@ public class AddressController {
 	@ResponseBody	
 	public AddressVO getDefaultAddress(@RequestBody AddressVO vo) {
 
+		int user_no = (int) session.getAttribute("user_no");
+		vo.setUser_no(user_no);
+		
 		return addressService.getDefaultAddress(vo);
 	}
 	
@@ -59,21 +76,30 @@ public class AddressController {
 	@ResponseBody
 	public void defaultAddress(@RequestBody AddressVO vo) {
 		
+		int user_no = (int) session.getAttribute("user_no");
+		vo.setUser_no(user_no);
+		
 		addressService.defaultAddress(vo);
 	}	
 	
 	// 주소 삭제
 	@RequestMapping(value="/delete")
 	@ResponseBody
-	public void deleteAddress(@RequestBody AddressVO address_no) {
+	public void deleteAddress(@RequestBody AddressVO vo) {
 		
-		addressService.deleteAddress(address_no);
+		int user_no = (int) session.getAttribute("user_no");
+		vo.setUser_no(user_no);
+		
+		addressService.deleteAddress(vo);
 	}		
 	
 	// 주소 수정
 	@RequestMapping(value="/update")
 	@ResponseBody
 	public void updateAddress(@RequestBody AddressVO vo) {
+		
+		int user_no = (int) session.getAttribute("user_no");
+		vo.setUser_no(user_no);
 		
 		addressService.updateAddress(vo);
 

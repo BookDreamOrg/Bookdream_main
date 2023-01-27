@@ -15,7 +15,7 @@ public class OrderitemDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
 
-	// 결제 상품 목록조회
+	// 장바구니 -> 결제 상품 목록조회
 	public List<OrderitemVO> getOrderitemList(OrderitemVO vo) {
 		
 		System.out.println("---> getOrderitemList 처리 <---");
@@ -23,7 +23,7 @@ public class OrderitemDAO {
 		return mybatis.selectList("OrderitemDAO.getOrderitemList", vo);
 	}
 	
-	// 결제 상품 갯수 조회
+	// 장바구니 -> 결제 상품 갯수 조회
 	public OrderitemVO getOrderitemCount(OrderitemVO vo) {
 		
 		System.out.println("---> getOrderitemCount 처리 <---");
@@ -31,6 +31,15 @@ public class OrderitemDAO {
 		return mybatis.selectOne("OrderitemDAO.getOrderitemCount", vo);
 	}
 
+	
+	// 바로구매 -> 결제 상품 조회
+	public OrderitemVO getBuyNow(OrderitemVO vo) {
+		
+		System.out.println("---> getBuyNow 처리 <---");
+	
+		return mybatis.selectOne("OrderitemDAO.getBuyNow", vo);
+	}
+	
 	// 사용자 포인트 조회
 	public OrderitemVO userPoint(OrderitemVO vo) {
 		
