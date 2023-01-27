@@ -74,16 +74,10 @@ public class LoginController {
 			System.out.println("###nickname#### : " + userInfo.getUser_name());
 			System.out.println("###email#### : " + userInfo.getUser_email());
 			
-//			session.invalidate();
-//			
 			session.setAttribute("kakaoName", userInfo.getUser_name());
 			session.setAttribute("kakaoEmail", userInfo.getUser_email());
 			
-//			model.addAttribute("kakaoN", userInfo.getUser_name());
-//			model.addAttribute("kakaoE", userInfo.getUser_email());
-			
-//			System.out.println(session.getAttribute("kakaoName"));
-//			System.out.println(session.getAttribute("kakaoEmail"));
+			session.setAttribute("authUser", userInfo);
 			
 		return "/main/main_teset";
 		
