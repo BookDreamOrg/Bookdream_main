@@ -32,4 +32,6 @@ public interface UserService {
 	
 	// 네이버 정보 저장
 	public void naverInsert(UserVO vo);
+
+	public UserVO getBySns(UserVO snsUser);
 }
