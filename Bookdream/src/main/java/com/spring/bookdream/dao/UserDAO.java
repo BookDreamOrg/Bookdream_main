@@ -60,11 +60,8 @@ public class UserDAO {
 		
 
 		// 카카오 정보 확인
-		public UserVO findkakao(HashMap<String, Object> userInfo) {
-			System.out.println("RN:"+userInfo.get("nickname"));
-			System.out.println("RE:"+userInfo.get("email"));
-			
-			return mybatis.selectOne("UserDAO.findKakao", userInfo);	
+		public UserVO findkakao(UserVO vo) {
+			return mybatis.selectOne("UserDAO.findKakao", vo);	
 		}
 		
 		// 플랫폼 정보 가져오기
