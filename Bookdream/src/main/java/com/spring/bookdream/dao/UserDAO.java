@@ -2,6 +2,7 @@ package com.spring.bookdream.dao;
 
 import java.util.HashMap;
 
+import org.apache.commons.lang.StringUtils;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -98,5 +99,14 @@ public class UserDAO {
 		public String pwFind(UserVO vo) {
 			String pw = mybatis.selectOne("UserDAO.pwFind", vo);
 			return pw;
+		}
+		
+		// naver, google 소셜로그인 정보 확인
+		public UserVO getBySns(UserVO snsUser) {
+			if(StringUtils.equals(snsUser.getFlatform_type(), "naver")) {
+				return mybatis.selectOne("UserDAO.findNaver", snsUser.getUser_email());
+			} else {
+				return mybatis.selectOne("UserDAO.findGoogle", snsUser.getUser_email());
+			}
 		}
 }
