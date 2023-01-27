@@ -7,7 +7,6 @@
 		<result property="user_id" column="user_id"/>
 		<result property="user_password" column="user_password"/>
 		<result property="user_name" column="user_name"/>
-		<result property="user_address" column="user_address"/>
 		<result property="user_tel" column="user_tel"/>
 		<result property="user_level" column="user_level"/>
 		<result property="blacklist_yn" column="blacklist_yn"/>
@@ -58,22 +57,22 @@
 
 	<!--카카오 정보 저장 -->
 	<insert id="kakaoInsert" parameterType="java.util.HashMap">
-		insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_ADDRESS, USER_TEL, FLATFORM_TYPE, USER_EMAIL) 
-		values(user_seq.nextval,'','',#{nickname},'','','KAKAO',#{email})
+		insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_TEL, FLATFORM_TYPE, USER_EMAIL) 
+		values(user_seq.nextval,'','',#{nickname},'','KAKAO',#{email})
 	</insert>
 	
 		
 	<!-- 구글 정보 저장 --> 
 	<insert id="googleInsert">
-		insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_ADDRESS, USER_TEL, FLATFORM_TYPE, USER_EMAIL)
-		values(user_seq.nextval,'','',#{user_name}, '','',#{flatform_type}, #{user_email})
+		insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_TEL, FLATFORM_TYPE, USER_EMAIL)
+		values(user_seq.nextval,'','',#{user_name},'',#{flatform_type}, #{user_email})
 	</insert>
 
 	
 	<!-- 네이버 정보 저장 --> 
 	<insert id="naverInsert">
-		insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_ADDRESS, USER_TEL, FLATFORM_TYPE, USER_EMAIL)
-		values(user_seq.nextval,'','',#{user_name}, '',#{user_tel}, #{flatform_type}, #{user_email})
+		insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_TEL, FLATFORM_TYPE, USER_EMAIL)
+		values(user_seq.nextval,'','',#{user_name}, #{user_tel}, #{flatform_type}, #{user_email})
 	</insert>
 	
 	

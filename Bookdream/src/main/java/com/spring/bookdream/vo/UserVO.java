@@ -8,7 +8,6 @@ public class UserVO {
 	private String user_id;
 	private String user_password;
 	private String user_name;
-	private String user_address;
 	private String user_tel;
 	private int user_level;
 	private String blacklist_yn;

@@ -39,7 +39,8 @@ insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USE
 insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
    values(user_seq.nextval,'test','test','test','BD','test@test.com');
 
-
+-- BookDream User_ADDRESS 제거
+alter table users drop column USER_ADDRESS;
 
 select * from users;
 commit;
