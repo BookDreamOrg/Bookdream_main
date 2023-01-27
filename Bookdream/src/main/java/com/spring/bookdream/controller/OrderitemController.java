@@ -1,5 +1,8 @@
 package com.spring.bookdream.controller;
 
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,17 +27,28 @@ public class OrderitemController {
 	private HttpSession session;	
 	
 	@RequestMapping(value="/orderitem")
-	public String orderitemList(OrderitemVO vo, Model model) {
+	public String orderitemList(OrderitemVO vo, Model model, HttpServletResponse response, String msg, String url) {
 	
-		int user_no = (int) session.getAttribute("user_no");
+		// 로그인해야 진입됨
+		if (session.getAttribute("user_no") == null) {
+			msg = "로그인 후 이용해주세요";
+			url ="/user/login.jsp";	
+		    try {
+		        response.setContentType("text/html; charset=utf-8");
+		        PrintWriter w = response.getWriter();
+		        w.write("<script>alert('"+msg+"');location.href='"+url+"';</script>");
+		        w.flush();
+		        w.close();
+		    } catch(Exception e) {
+		        e.printStackTrace();
+		    }
+					
+		}
+		
+		int user_no = (int) session.getAttribute("user_no");		
 		vo.setUser_no(user_no);
-<<<<<<< Updated upstream
 		
-		// (장바구니)주문된 상품 목록 조회
-		model.addAttribute("orderitemList", orderitemService.getOrderitemList(vo));	
-=======
->>>>>>> Stashed changes
-		
+		//test
 //		vo.setUser_no(1);
 //		vo.setBook_no(1);		
 //		vo.setBuy_now("Y");

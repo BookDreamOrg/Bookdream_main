@@ -13,11 +13,7 @@
 
 	<h1><a href="/detail/cart/orderitem">결제/주문</a></h1>
 	<h1><a href="/detail/cart/orderitem/success">테스트</a></h1>
-	
-	
-	
-	
-	
+
 
 </body>
 </html>

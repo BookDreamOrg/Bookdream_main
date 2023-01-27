@@ -16,11 +16,12 @@ create table USERS (
   USER_TEL                varchar2(20)  default '',
   USER_LEVEL              number(1)     default 0     check(USER_LEVEL in(0,1)),
   BLACKLIST_YN            varchar2(5)   default 'N'   check(BLACKLIST_YN in ('Y','N')),
-  FLATFORM_TYPE           varchar2(50) not null,
+  FLATFORM_TYPE           varchar2(50)  not null,
   USER_EMAIL              varchar2(50)  not null,
-  USER_POINT              number(10) default '',
+  USER_POINT              number(10)    default 10000,
   constraint PK_USER primary key (USER_NO)
 );
+
 
 desc users;
 
@@ -37,8 +38,7 @@ insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USE
 
 
 
-select 
-* from users;
+select * from users;
 commit;
 
 -- Review Table
@@ -47,13 +47,13 @@ commit;
 drop table review;
 
 create table review(
-review_no number(10) not null,
-USER_NO number(10) not null,
-book_no number(10) not null,
-REVIEW_CONTENT varchar2(1000) not null,
-REVIEW_DATE date default sysdate,
-REVIEW_RECOMMEND number(20),
-REVIEW_STAR number(1) not null,
+review_no         number(10) not null,
+user_id           varchar2(20) not null,
+book_no           number(10) not null,
+REVIEW_CONTENT    varchar2(1000) not null,
+REVIEW_DATE       date default sysdate,
+REVIEW_RECOMMEND  number(20),
+REVIEW_STAR       number(1) not null,
 constraint pk_riview PRIMARY KEY (review_no)
 );
 
@@ -116,7 +116,7 @@ create table BOOK (
     TITLE        varchar2(500) ,
     AUTHOR       varchar2(500) not null,
     PUBLISHER    varchar2(500) not null,
-    book_CONTENT    varchar2(3000),
+    book_CONTENT varchar2(3000),
     STOCK        number(20),
     BOOK_PRICE   number(10),
     BOOK_IMG     varchar(500) not null,
