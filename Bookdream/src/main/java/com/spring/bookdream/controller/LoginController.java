@@ -80,6 +80,8 @@ public class LoginController {
 			session.setAttribute("kakaoName", userInfo.getUser_name());
 			session.setAttribute("kakaoEmail", userInfo.getUser_email());
 			
+			session.setAttribute("authUser", userInfo);
+			
 //			model.addAttribute("kakaoN", userInfo.getUser_name());
 //			model.addAttribute("kakaoE", userInfo.getUser_email());
 			

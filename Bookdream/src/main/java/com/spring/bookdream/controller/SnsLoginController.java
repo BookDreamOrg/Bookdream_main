@@ -60,8 +60,12 @@ public class SnsLoginController {
 			UserVO userVo = snsLogin.getUserProfile(code);
 			
 			if (service.equals("naver")) {
+				session.setAttribute("authUser", userVo);
+				System.out.println(userVo.getUser_name());
 				userDao.naverinsert(userVo);
 			} else if (service.equals("google")) {
+				session.setAttribute("authUser", userVo);
+				System.out.println(userVo.getUser_name());
 				userDao.googleinsert(userVo);
 			}
 			System.out.println("Service>>" + service);
