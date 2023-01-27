@@ -46,7 +46,7 @@
 		FROM   book b, 
 		       cart c, 
 		       orders o
-		WHERE  c.user_no = 1 AND 
+		WHERE  c.user_no = #{user_no} AND 
 			   b.book_no = c.book_no AND 
 			   o.order_no = #{order_no}
 	</insert>
@@ -65,7 +65,7 @@
 		WHERE  b.book_no = p.book_no AND 
       		   o.order_no = p.order_no AND 
                o.order_no = #{order_no} AND 
-     		   u.user_no = 1 	
+     		   u.user_no = #{user_no} 	
 	</select>
 	
 	
