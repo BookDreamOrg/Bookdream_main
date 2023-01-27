@@ -47,7 +47,7 @@
 			   book b
 		WHERE  c.book_no = b.book_no AND 
 			   u.user_no = c.user_no AND 
-			   u.user_no = 1
+			   u.user_no = #{user_no}
 		order by cart_no
 	]]>
 	</select>

@@ -1,5 +1,7 @@
 package com.spring.bookdream.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,9 +20,15 @@ public class OrderitemController {
 	@Autowired
 	private OrderitemService orderitemService;
 	
+	@Autowired
+	private HttpSession session;	
+	
 	@RequestMapping(value="/orderitem")
 	public String orderitemList(OrderitemVO vo, Model model) {
 	
+		int user_no = (int) session.getAttribute("user_no");
+		vo.setUser_no(user_no);
+		
 		// (장바구니)주문된 상품 목록 조회
 		model.addAttribute("orderitemList", orderitemService.getOrderitemList(vo));	
 		
