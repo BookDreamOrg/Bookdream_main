@@ -7,6 +7,7 @@ connect bookdream/bookdream;
 -------------------------- USERS ------------------------------------
 drop table USERS;
 
+
 create table USERS (
   USER_NO                 number(10)    not null,
   USER_ID                 varchar2(40)  UNIQUE,
@@ -18,7 +19,7 @@ create table USERS (
   BLACKLIST_YN            varchar2(5)   default 'N'   check(BLACKLIST_YN in ('Y','N')),
   FLATFORM_TYPE           varchar2(50) not null,
   USER_EMAIL              varchar2(50)  not null,
-  USER_POINT              number(10) default '',
+  USER_POINT              number(10) default '10000',
   constraint PK_USER primary key (USER_NO)
 );
 
@@ -34,7 +35,8 @@ insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_ADDRESS, USER
 -- BookDream 회원 로그인 insert
 insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
 	values(user_seq.nextval,'sycha','1234','이름','BD','이메일');
-
+insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
+	values(user_seq.nextval,'test','test','test','BD','test@test.com');
 
 
 select * from users;
