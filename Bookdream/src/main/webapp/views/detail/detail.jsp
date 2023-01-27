@@ -231,7 +231,7 @@
 	<button class="text-center btn btn-outline-dark flex-shrink-0" name="btn_review" id="btn_review">등록</button>
 </div>
 
-
+<div id="reviewList">
 <c:if test="${empty review}"  >
 		<div class="text-center mt-5"> 작성된 리뷰가 없습니다. </div>
 	</c:if>
@@ -274,7 +274,7 @@
 
 </c:forEach>
 	</div>
-	
+	</div>
 
 
 
@@ -296,7 +296,7 @@ function now_buy(){
 	}
 		$.ajax({
 			type:'get',
-			url:"/detail/cart/orderitem?book_no="+book_no+"&user_id="+user_id+"&product_cnt="+product_cnt,
+			url:"/detail/cart/orderitem?book_no="+book_no+"&user_id="+user_id+"&product_count="+product_cnt+"&buy_now='Y'",
 			data : "text",
 			contentType: "application/x-www-urlencoded;charset=UTF-8", 
 			processData: false, 
@@ -355,7 +355,7 @@ $(function(){
 	$('#btn_review').click(function(){
 		let user_id = '<%=session.getAttribute("user_id")%>';
 		
-		if(if(user_id === null ||user_id === ""){
+		if(user_id === 'null' ||user_id === "" || user_id === null){
 			alert('로그인 페이지로 이동합니다.');
 			location.replace("views/user/login.jsp");
 		}

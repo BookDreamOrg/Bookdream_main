@@ -35,8 +35,7 @@ insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_ADDRESS, USER
 insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
 	values(user_seq.nextval,'sycha','1234','이름','BD','이메일');
 
-insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_ADDRESS, USER_TEL, FLATFORM_TYPE, USER_EMAIL) 
-        values(user_seq.nextval, 'test','test', 'test','test','test','BD','test');
+
 
 select * from users;
 commit;
@@ -48,7 +47,7 @@ drop table review;
 
 create table review(
 review_no number(10) not null,
-USER_ID        varchar2(20)  not null,
+USER_ID   varchar2(20)  not null,
 book_no number(10) not null,
 REVIEW_CONTENT varchar2(1000) not null,
 REVIEW_DATE date default sysdate,
