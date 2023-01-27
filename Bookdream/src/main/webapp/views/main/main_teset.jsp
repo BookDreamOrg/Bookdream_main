@@ -31,7 +31,7 @@
 		
 		UserVO user = (UserVO)session.getAttribute("authUser");
 	
-		if(id == null && kakaoN == null){		
+		if(user == null){		
 	%>
 		<div class="wrapper">
 		<header>
@@ -94,16 +94,16 @@
 			<div class="header-nav-list">
 				<ul class="nav header-nav">
 					<%
-						if(id != null && kakaoN == null){ //기존 로그아웃
-					%>
-						<li class="nav-item"><a class="nav-link header-nav-link"
-						href="/views/user/logout.do">로그아웃</a></li>
-					<span class="nav-bar-line"></span>
-					<% 
-						} else if(kakaoN != null && id == null){ // 카카오 로그아웃
+						if(user.getFlatform_type().equals("KAKAO")){ //기존 로그아웃
 					%>
 						<li class="nav-item"><a class="nav-link header-nav-link"
 						href="https://kauth.kakao.com/oauth/logout?client_id=47ad839005d8b9a94d3007b30a956894&logout_redirect_uri=http://localhost:8000/views/user/kakaoLogout">로그아웃</a></li>
+					<span class="nav-bar-line"></span>
+					<% 
+						} else { // 카카오 로그아웃
+					%>
+						<li class="nav-item"><a class="nav-link header-nav-link"
+						href="/views/user/logout.do">로그아웃</a></li>
 					<span class="nav-bar-line"></span>
 					<% 
 						}

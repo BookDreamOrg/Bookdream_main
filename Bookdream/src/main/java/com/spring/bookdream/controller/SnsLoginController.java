@@ -67,6 +67,7 @@ public class SnsLoginController {
 			System.out.println("Profile>>" + snsUser);
 			
 			// 3. DB 해당 유저가 존재하는지 Check (googleid, naverid 컬럼 추가)
+			// 4. 존재 시 강제 로그인, 미존재 시 가입페이지
 			UserVO user = userService.getBySns(snsUser);
 			if(user == null) {
 				model.addAttribute("result", "존재하지 않는 사용자입니다. 가입해주세요");
@@ -76,8 +77,9 @@ public class SnsLoginController {
 					userDao.googleinsert(snsUser);
 				}
 			} else {
+				System.out.println(user.getUser_name() + " 님 반갑습니다.");
 				model.addAttribute("result", user.getUser_name() + " 님 반갑습니다.");
-				// 4. 존재 시 강제 로그인, 미존재 시 가입페이지
+				session.setAttribute("authUser", user);
 			}
 			
 			return "main/main_teset";
