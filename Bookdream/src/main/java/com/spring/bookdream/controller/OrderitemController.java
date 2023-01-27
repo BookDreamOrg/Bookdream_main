@@ -56,7 +56,7 @@ public class OrderitemController {
 
 		
 		// 바로 가기 구매시
-		if (vo.getBuy_now() == "Y") {
+		if (vo.getBuy_now().equals("Y")) {
 
 			OrderitemVO buy_now = orderitemService.getBuyNow(vo);
 			
