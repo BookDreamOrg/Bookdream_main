@@ -9,6 +9,8 @@ import java.net.http.HttpResponse;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +44,9 @@ public class PayController {
 
 	@Autowired
 	private PurchaseService PurchaseService;		
+	
+	@Autowired
+	private HttpSession session;	
 	
 	// 결제 후 처리
 	@RequestMapping(value="/pay")
@@ -87,6 +92,13 @@ public class PayController {
 		pay.setSave_point(save_point);
 		pay.setUse_point(use_point);
 		
+		int user_no = (int) session.getAttribute("user_no");
+		
+		order.setUser_no(user_no);
+		purchase.setUser_no(user_no);
+		orderitem.setUser_no(user_no);
+		
+
 	    System.out.println("---> 결제 DB 등록 <---");
 	    payService.insertPay(pay);		
 
@@ -126,12 +138,13 @@ public class PayController {
 		@RequestMapping(value="/success")
 		public String success(@SessionAttribute("payData") PayVO pay, PurchaseVO vo, Model model) {
 
+			int user_no = (int) session.getAttribute("user_no");
+			
+			vo.setUser_no(user_no);
 			vo.setOrder_no(pay.getPay_no());			
-			System.out.println(pay.getPay_no());
+
 			
 			model.addAttribute("purchase", PurchaseService.getPurchaseList(vo));
-			
-			System.out.println(PurchaseService.getPurchaseList(vo));
 			
 			return "main/success";
 			

@@ -20,7 +20,7 @@ public class CartController {
 	@Autowired
 	private CartService cartService;
 		
-	@RequestMapping(value="/cart")
+	@RequestMapping(value="/itemorder/cart/list")
 	public String cartList(CartVO vo, Model model) {
 
 		
@@ -28,7 +28,7 @@ public class CartController {
 		System.out.println("---> cartController 장바구니 목록 <---");
 
 		model.addAttribute("cartList", cartService.getCartList(vo));
-		return "itemorder/cart";
+		return "/itemorder/cart/list";
 
 	}
 

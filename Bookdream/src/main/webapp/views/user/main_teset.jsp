@@ -64,11 +64,11 @@
 					</div>
 				</div>
 				<div class="col-lg-1 p-5 flex-grow-1 header-col-btn">
-					<a href="cart.jsp">
+					<a href="/cart">
 						<div class="header-btn">
 							<i class="fa-solid fa-cart-shopping"></i>
 						</div>
-					</a> <a href="orderitem.jsp">
+					</a> <a href="detail/cart/orderitem">
 						<div class="header-btn btn-circle ms-3">
 							<i class="fa-solid fa-user"></i>
 						</div>

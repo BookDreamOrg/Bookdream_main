@@ -21,6 +21,8 @@ public class OrderController {
 	@ResponseBody
 	public void saveOrder(@RequestBody OrderVO ovo, Model model) {	
 		
+		
+		
 		model.addAttribute("order", ovo);
 
 	}

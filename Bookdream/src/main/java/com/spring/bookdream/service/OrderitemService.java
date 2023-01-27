@@ -12,6 +12,9 @@ public interface OrderitemService {
 	// 결제 품목 갯수 조회 (장바구니 -> 결제)
 	OrderitemVO getOrderitemCount(OrderitemVO vo);
 	
+	// 결제 상품 조회 (바로구매 -> 결제)
+	OrderitemVO getBuyNow(OrderitemVO vo);
+	
 	// 사용자 포인트 조회
 	OrderitemVO userPoint(OrderitemVO vo);
 	
