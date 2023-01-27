@@ -62,4 +62,14 @@ public class UserServiceImpl implements UserService {
 	public String pwFind(UserVO vo) {
 		return userDAO.pwFind(vo);
 	}
+	
+	@Override
+	public void googleInsert(UserVO vo) {
+		userDAO.googleinsert(vo);
+	}
+
+	@Override
+	public void naverInsert(UserVO vo) {
+		userDAO.naverinsert(vo);
+	}
 }

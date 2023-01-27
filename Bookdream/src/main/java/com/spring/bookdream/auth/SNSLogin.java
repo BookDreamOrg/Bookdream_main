@@ -2,6 +2,7 @@ package com.spring.bookdream.auth;
 
 import java.io.IOException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -52,12 +53,13 @@ public class SNSLogin {
 		
 		
 		if (this.sns.isGoogle()) {
+			if(rootNode.has("family_name")) {
+				userVo.setUser_name(rootNode.get("family_name").asText() + rootNode.get("given_name").asText());
+			} else {
+				userVo.setUser_name(rootNode.get("given_name").asText());
+			}
 			userVo.setUser_email(rootNode.get("email").asText());
-			userVo.setUser_name(rootNode.get("given_name").asText());
 			userVo.setFlatform_type("google");
-			UserDAO userDao = new UserDAO();	
-			userDao.insertUser(userVo);
-			
 		} else if (this.sns.isNaver()) {
 			JsonNode resNode = rootNode.get("response");
 			userVo.setUser_email(resNode.get("email").asText());

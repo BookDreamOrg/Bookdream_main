@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<link href="/resources/css/bookList.css" rel="stylesheet">
 
 <!-- Bootstrap 5.0.2 -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -67,7 +71,7 @@
 							<li><a class="dropdown-item" href="#">신상품</a></li>
 						</ul>
 						<form action="/bookKeywordList" method="get">
-						<input type="text" name="keyword" class="form-control search-input"
+						<input type="text" class="form-control search-input"
 							aria-label="Text input with dropdown button"
 							placeholder="성공적인 프로젝트를 위하여!!👍" />
 						<button type="submit">검색</button>
@@ -125,9 +129,39 @@
 				aria-current="page" href="#">베스트</a></li>
 			<li class="nav-item"><a class="nav-link" href="#">신상품</a></li>
 		</ul>
-		<div class="book-section"></div>
-		</main>
-
+		<div class="book-section">
+			<c:if test="${empty book}"  >
+				<div class="text-center mt-5"> 검색된 책이 없습니다. </div>
+			</c:if>
+	<c:forEach var="book" items="${book}">
+			
+			<div class="container-fluid mt-3">
+				<div class="row">
+					<div class="col-md-3">
+						<img alt="${book.title }" src="${book.book_img }" />
+					</div>
+					<div class="col-md-6 mt-5 pt-2">
+						<span  id="detail-badge" class="badge bg-primary rounded-pill">${book.book_category }</span>
+						<span id="book_title">${book.title }</span>
+				<div class="row">
+					<div class="col-md-4 mt-2">${book.author }</div>
+					<div class="col-md-8 mt-2">
+					<fmt:formatDate pattern="yyyy년 MM월 dd일" value="${book.public_date }"/></div>
+					<div id="book_content">${book.book_content }</div>
+				</div>
+				</div>
+				<div class="col-md-3  mt-5 pt-5">
+					<button type="button" class="btn btn-success">Cart</button> 
+					<button type="button" class="btn btn-success">Buy</button>
+				</div>
+			</div>
+			</div>	
+	</c:forEach>
+</div>
+</main>
+		
+		
+		
 		<footer>
 			<div>
 				<a class="footer-logo" href="#"> <img class="footer-logo-img"
@@ -191,7 +225,8 @@
 				</div>
 			</div>
 		</footer>
-	</div>
+		
+	
 
 	<!-- Script Bootstrap, jqurey-3.6.3 -->
 	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
