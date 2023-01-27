@@ -40,7 +40,17 @@
 	<select id="findKakao" resultType="user">
 		select * from users where flatform_type='KAKAO' and user_email=#{user_email}
 	</select>
-
+	
+	<!-- 네이버 정보 찾기 -->
+	<select id="findNaver" parameterType="user" resultType="user">
+		select * from users where flatform_type='naver' and user_email=#{user_email}
+	</select>
+	
+	<!-- 구글 정보 찾기 -->
+	<select id="findGoogle" parameterType="user" resultType="user">
+		select * from users where flatform_type='google' and user_email=#{user_email}
+	</select>
+	
 	<!-- 플랫폼 정보 가져오기ㅡ -->
 	<select id="findFlatform" resultType="String">
 		select flatform_type from users where user_id=#{user_id} and user_password=#{user_password}

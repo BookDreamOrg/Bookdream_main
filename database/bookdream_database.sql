@@ -35,6 +35,9 @@ insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_ADDRESS, USER
 -- BookDream 회원 로그인 insert
 insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
 	values(user_seq.nextval,'sycha','1234','이름','BD','이메일');
+-- BookDream test 로그인 insert
+insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
+   values(user_seq.nextval,'test','test','test','BD','test@test.com');
 
 
 
