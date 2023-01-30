@@ -133,16 +133,16 @@
 			<c:if test="${empty book}"  >
 				<div class="text-center mt-5"> 검색된 책이 없습니다. </div>
 			</c:if>
-	<c:forEach var="book" items="${book}">
+	<c:forEach var="book" items="${book}" varStatus="vs">
 			
 			<div class="container-fluid mt-3">
-				<div class="row">
+				<div class="row" >
 					<div class="col-md-3">
 						<img alt="${book.title }" src="${book.book_img }" />
 					</div>
-					<div class="col-md-6 mt-5 pt-2">
-						<span  id="detail-badge" class="badge bg-primary rounded-pill">${book.book_category }</span>
-						<span id="book_title">${book.title }</span>
+				<div class="col-md-6 mt-5 pt-2" onclick="location.href='/getBook?book_no=${book.book_no}'">
+					<span  id="detail-badge" class="badge bg-primary rounded-pill">${book.book_category }</span>
+					<span id="book_title">${book.title }</span>
 				<div class="row">
 					<div class="col-md-4 mt-2">${book.author }</div>
 					<div class="col-md-8 mt-2">
@@ -151,16 +151,14 @@
 				</div>
 				</div>
 				<div class="col-md-3  mt-5 pt-5">
-					<button type="button" class="btn btn-success">Cart</button> 
-					<button type="button" class="btn btn-success">Buy</button>
+					<button type="button" class="btn btn-success" onclick="bookList_cart(this.value)" value="${book.book_no}" >Cart</button> 
+					<button type="button" class="btn btn-success" onclick="bookList_buy(this.value)" value="${book.book_no}">Buy</button>
 				</div>
 			</div>
 			</div>	
 	</c:forEach>
 </div>
 </main>
-		
-		
 		
 		<footer>
 			<div>
@@ -225,7 +223,40 @@
 				</div>
 			</div>
 		</footer>
-		
+		</div>
+	
+
+<script type="text/javascript" >
+
+function bookList_buy(val){
+	let user_id = '<%=session.getAttribute("user_id")%>';
+	console.log("book_no : " + val + "user_id :  " + user_id)
+	if(user_id === null ||user_id === "" || user_id === "null"){
+		alert('로그인 페이지로 이동합니다.');
+		location.replace("views/user/login.jsp");
+	
+	}else{
+		alert('바로구매');
+		location.replace("/detail/cart/orderitem?book_no="+val+"&user_id="+user_id+"&product_count=1&buy_now=Y");
+	}
+}
+
+function bookList_cart(val){
+	alert('장바구니');
+	let user_no = '<%=session.getAttribute("user_no")%>';
+	console.log("book_no : " + book_no + "user_no :  " + user_no )
+	if(user_no === null ||user_no === "" || user_no === "null"){
+		alert('user_no = null');
+		location.replace("/itemorder/cart/list?book_no="+val+"&user_no=0"+"&product_count=1");
+	}else{
+		alert('장바구니');
+		location.replace("/itemorder/cart/list?book_no="+val+"&user_no="+user_no+"&product_count=1");
+	}
+}
+
+
+
+</script>
 	
 
 	<!-- Script Bootstrap, jqurey-3.6.3 -->
@@ -237,5 +268,7 @@
 		crossorigin="anonymous"></script>
 		
 
+</body>
+</html>
 
 
