@@ -27,14 +27,14 @@ public class OrderitemController {
 	private HttpSession session;	
 	
 	@RequestMapping(value="/orderitem")
-	public String orderitemList(OrderitemVO vo, Model model, HttpServletResponse response, String msg, String url) {
+	public String orderitemList(OrderitemVO vo, Model model, HttpServletResponse response) {
 	
 		// 로그인해야 진입됨
 		if (session.getAttribute("user_no") == null) {
-			msg = "로그인 후 이용해주세요";
-			url ="/user/login.jsp";	
+			String msg = "로그인 후 이용해주세요";
+			String url ="/views/user/login.jsp";	
 		    try {
-		        response.setContentType("text/html; charset=utf-8");
+		    	response.setContentType("text/html; charset=utf-8");
 		        PrintWriter w = response.getWriter();
 		        w.write("<script>alert('"+msg+"');location.href='"+url+"';</script>");
 		        w.flush();
@@ -44,19 +44,14 @@ public class OrderitemController {
 		    }
 					
 		}
+
 		
 		int user_no = (int) session.getAttribute("user_no");		
 		vo.setUser_no(user_no);
-		
-		//test
-//		vo.setUser_no(1);
-//		vo.setBook_no(1);		
-//		vo.setBuy_now("Y");
-//		vo.setProduct_count(3);
-
-		
+			
+			
 		// 바로 가기 구매시
-		if (vo.getBuy_now() == "Y") {
+		if ("Y".equals(vo.getBuy_now())) {
 
 			OrderitemVO buy_now = orderitemService.getBuyNow(vo);
 			

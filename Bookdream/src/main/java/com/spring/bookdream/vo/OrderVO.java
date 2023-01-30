@@ -18,6 +18,10 @@ public class OrderVO {
 	private String order_tel;	
 	private int order_fee;
 	
+	//
+	private PurchaseVO purchaseVO;
+	private BookVO bookVO;
+	
 	// DB에는 없음 데이터전송용
 	private int discount_price;
 	private int save_point;

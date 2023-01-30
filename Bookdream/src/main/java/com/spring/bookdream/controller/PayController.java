@@ -135,6 +135,7 @@ public class PayController {
 	}		
 	
 		// 새로고침 DB중복 방지
+		// 방금 구매한 상품을 조회함
 		@RequestMapping(value="/success")
 		public String success(@SessionAttribute("payData") PayVO pay, PurchaseVO vo, Model model) {
 
@@ -143,7 +144,6 @@ public class PayController {
 			vo.setUser_no(user_no);
 			vo.setOrder_no(pay.getPay_no());			
 
-			
 			model.addAttribute("purchase", PurchaseService.getPurchaseList(vo));
 			
 			return "main/success";

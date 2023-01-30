@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+
 import com.spring.bookdream.vo.OrderVO;
+
 
 
 @Controller
@@ -21,10 +23,10 @@ public class OrderController {
 	@ResponseBody
 	public void saveOrder(@RequestBody OrderVO ovo, Model model) {	
 		
-		
-		
 		model.addAttribute("order", ovo);
 
 	}
+
+	
 	
 }

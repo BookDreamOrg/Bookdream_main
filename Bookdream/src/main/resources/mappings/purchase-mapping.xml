@@ -28,6 +28,7 @@
 
 	<resultMap type="order" id="orderList">
 		<result property="order_no" column="ORDER_NO"/>
+		<result property="order_enroll" column="ORDER_ENROLL"/>
 	</resultMap>	
 	
 	
@@ -57,15 +58,21 @@
 			   b.title, 
 			   b.book_price, 
 			   p.product_count,
-			   p.purchase_no
+			   p.purchase_no,
+			   o.order_no,
+			   TO_CHAR(SYSDATE, 'YYYY.MM.DD') as order_enroll
 		FROM   users u, 
 			   book b, 
 			   orders o, 
 			   purchase p
 		WHERE  b.book_no = p.book_no AND 
       		   o.order_no = p.order_no AND 
+      		   <if test="order_no > 0">
                o.order_no = #{order_no} AND 
+     		   </if>
      		   u.user_no = #{user_no} 	
+     		   
+		order by o.order_no desc, b.book_no      		   
 	</select>
 	
 	

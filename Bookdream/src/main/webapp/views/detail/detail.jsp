@@ -201,7 +201,7 @@
 					<button id="btn_buy_now" class="text-center btn btn-outline-dark flex-shrink-0 btn-lg" onclick="now_buy()">
 						<i class="bi bi-basket2"></i> 바로구매
 					</button>
-						<button class="text-center btn btn-outline-dark flex-shrink-0  btn-lg me-3">
+						<button class="text-center btn btn-outline-dark flex-shrink-0  btn-lg me-3" onclick="cart()">
 						<i class="bi-cart-fill me-1"></i>장바구니
 					</button>
 				</div>
@@ -289,32 +289,33 @@ function now_buy(){
 	let user_id = '<%=session.getAttribute("user_id")%>';
 	let product_cnt  = document.getElementById("product_cnt").value;
 	console.log("book_no : " + book_no + "user_id :  " + user_id + "product : " + product_cnt )
-	if(user_id === null ||user_id === ""){
+	if(user_id === null ||user_id === "" || user_id === "null"){
 		alert('로그인 페이지로 이동합니다.');
 		location.replace("views/user/login.jsp");
 	
+	}else{
+		alert('바로구매');
+		location.replace("/detail/cart/orderitem?book_no="+book_no+"&user_id="+user_id+"&product_count="+product_cnt+"&buy_now=Y");
 	}
-		$.ajax({
-			type:'get',
-			url:"/detail/cart/orderitem?book_no="+book_no+"&user_id="+user_id+"&product_count="+product_cnt+"&buy_now='Y'",
-			data : "text",
-			contentType: "application/x-www-urlencoded;charset=UTF-8", 
-			processData: false, 
-			cache : false,
-			success: function (data){
-				
-			},
-			error:function(request, status, error){
-				alert('에러');
-				console.log("code: " + request.status)
-	        	console.log("message: " + request.responseText)
-	        	console.log("error: " + error);
-				
-			}		
-			
-		});
-	
+
 }
+
+
+function cart(){
+	let book_no = ${book.book_no};
+	let user_no = '<%=session.getAttribute("user_no")%>';
+	let product_cnt  = document.getElementById("product_cnt").value;
+	console.log("book_no : " + book_no + "user_no :  " + user_no + "product : " + product_cnt )
+	if(user_no === null ||user_no === "" || user_no === "null"){
+		alert('user_no = null');
+		location.replace("/itemorder/cart/list?book_no="+book_no+"&user_no=0"+"&product_count="+product_cnt);
+	}else{
+		alert('장바구니');
+		location.replace("/itemorder/cart/list?book_no="+book_no+"&user_no="+user_no+"&product_count="+product_cnt);
+	}
+}
+
+
 
 
 function review_recommend(val){

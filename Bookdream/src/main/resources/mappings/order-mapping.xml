@@ -3,6 +3,30 @@
 			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 			
 <mapper namespace="OrderDAO">
+
+	<resultMap type="order" id="orderList">
+		<result property="order_no" column="ORDER_NO" />
+		<result property="order_name" column="ORDER_NAME" />	
+		<result property="user_no" column="USER_NO" />	
+		<result property="total_price" column="TOTAL_PRICE" />	
+		<result property="order_enroll" column="ORDER_ENROLL" />	
+		<collection property="purchaseVO" resultMap="purchaseList"></collection>		
+		<collection property="bookVO" resultMap="bookList"></collection>
+	</resultMap>	
+
+	<resultMap type="purchase" id="purchaseList">
+		<result property="book_no" column="BOOK_NO"/>
+		<result property="order_no" column="ORDER_NO" />		
+	</resultMap>
+
+	<resultMap type="book" id="bookList">
+		<result property="book_no" column="BOOK_NO"/>
+		<result property="title" column="TITLE" />
+		<result property="book_img" column="BOOK_IMG" />		
+	</resultMap>
+
+
+
 	
 	<!-- user_no 변경필요 -->
 	<insert id="insertOrder" >
@@ -29,5 +53,29 @@
 		         #{order_tel}, 
 		         #{order_fee})
 	</insert>
+		
+	<!-- 마이페이지 주문조회 (간단) -->
+	<select id="searchOrder" parameterType="order" resultMap="orderList">
+		SELECT order_no, 
+			   order_name, 
+			   book_img, 
+			   total_price, 
+			   to_char(SYSDATE, 'YYYY.MM.DD') as order_enroll
+		FROM   (select o.order_no, 
+                	   o.order_name, 
+                       b.book_img, 
+                       o.total_price,
+                       o.order_enroll,
+                       ROW_NUMBER() OVER(PARTITION BY o.order_no ORDER BY o.order_name DESC) AS rn
+	 			from   orders o, 
+	 			       purchase p, 
+	 			       book b
+	 			where  p.book_no = b.book_no   and
+                       p.order_no = o.order_no and
+                       o.user_no = #{user_no}
+                )
+		WHERE          rn = 1
+		order by order_no desc
+	</select>	
 		
 </mapper>
