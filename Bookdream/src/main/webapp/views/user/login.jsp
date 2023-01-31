@@ -42,29 +42,24 @@
           	</span>
           	<a href="idfind.jsp" class="btn_text_link">아이디 비밀번호 찾기</a>
           </div>
-          
-        
         </div>
-        
+       </form>
         <div class="sns_login_box">
           	<ul class="sns_login_list">          	
           		<li class="sns_login_item">
-          			<a href="https://kauth.kakao.com/oauth/authorize?client_id=47ad839005d8b9a94d3007b30a956894&redirect_uri=http://localhost:8000/views/user/kakaoLogin&response_type=code">
-          				<img src="/resources/images/kakao_login2.PNG" class="rounded-circle" width="50px" height="45px">
-          			 
-          			 </a>
+          			<button onclick="kakaoLogin()">
+                   		<img src="/resources/images/kakao_login2.PNG" class="rounded-circle" width="50px" height="45px">
+                	</button>
           		</li>
           		<li class="sns_login_item">
-          			<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=0328Vi7efumpXAgBjKZA&state=STATE_STRING&redirect_uri=http://localhost:8000/auth/naver/callback">
+          			<button onclick="onClickNaverLogin()">
           				<img src="/resources/images/naver_login.png" class="rounded-circle" width="50px" height="45px">
-          			 
-          			 </a>
+          			</button>
           		</li>
           		<li class="sns_login_item">
-          			<a href="https://accounts.google.com/o/oauth2/v2/auth?scope=profile+email&response_type=code&client_id=759629996127-2168hvg19ogj7kah4thgo16a2seoc50q.apps.googleusercontent.com&redirect_uri=http://localhost:8000/auth/google/callback">
-          				<img src="/resources/images/google_login.PNG" class="rounded-circle" width="50px" height="45px">
-          			 
-          			 </a>
+          			<button onclick="onClickgoogleLogin()">
+       					<img src="/resources/images/google_login.PNG" class="rounded-circle" width="50px" height="45px">
+       			</button>
           		</li>
           	</ul>
           </div>
@@ -74,9 +69,11 @@
           	 	<span class="text"><b>회원가입</b></span>
           	 </button>
           </div>
-       </form>
+     			
+          		
     </main>
      
+    <script type="text/javascript" src="/resources/js/socialLogin.js"></script>
     <!-- 로그인 실패시  -->
     <script type="text/javascript"> 
     
@@ -154,7 +151,6 @@
 		} 
 		
 		document.location.href = url; 
-		
 		
 	</script>
  </body>

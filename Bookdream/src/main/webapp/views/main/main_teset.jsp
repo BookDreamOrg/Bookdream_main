@@ -94,13 +94,25 @@
 			<div class="header-nav-list">
 				<ul class="nav header-nav">
 					<%
-						if(user.getFlatform_type().equals("KAKAO")){ //기존 로그아웃
+						if(user.getFlatform_type().equals("KAKAO")){ // 카카오 로그아웃
 					%>
 						<li class="nav-item"><a class="nav-link header-nav-link"
 						href="https://kauth.kakao.com/oauth/logout?client_id=47ad839005d8b9a94d3007b30a956894&logout_redirect_uri=http://localhost:8000/views/user/kakaoLogout">로그아웃</a></li>
 					<span class="nav-bar-line"></span>
 					<% 
-						} else { // 카카오 로그아웃
+						} else if(user.getFlatform_type().equals("google")) { // google 로그아웃
+					%>
+						<li class="nav-item"><a class="nav-link header-nav-link"
+						href="/views/user/logout.do">로그아웃</a></li>
+					<span class="nav-bar-line"></span>
+					<% 
+						} else if(user.getFlatform_type().equals("naver")) { // naver 로그아웃
+					%>
+						<li class="nav-item"><a class="nav-link header-nav-link"
+						href="/views/user/logout.do">로그아웃</a></li>
+					<span class="nav-bar-line"></span>
+					<% 
+						} else { // 기존 로그아웃
 					%>
 						<li class="nav-item"><a class="nav-link header-nav-link"
 						href="/views/user/logout.do">로그아웃</a></li>
@@ -269,5 +281,6 @@
 	<!-- Script FontAwesome-->
 	<script src="https://kit.fontawesome.com/4bf42f841a.js"
 		crossorigin="anonymous"></script>
+		
 </body>
 </html>
