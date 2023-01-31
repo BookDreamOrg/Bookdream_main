@@ -1,7 +1,14 @@
-function onClickgoogleLogin() {
-	document.location.href = "https://accounts.google.com/o/oauth2/v2/auth?scope=profile+email&response_type=code&client_id=759629996127-2168hvg19ogj7kah4thgo16a2seoc50q.apps.googleusercontent.com&redirect_uri=http://localhost:8000/auth/google/callback"
-}
+function kakaoLogin(){
+	var url = "https://kauth.kakao.com/oauth/authorize?";
+	var client_id = "47ad839005d8b9a94d3007b30a956894";
+	var redirect_uri = "http://localhost:8000/views/user/kakaoLogin";
+		
+	var kakaoUrl = url + 
+				  "client_id=" + client_id + 
+				  "&redirect_uri=" + redirect_uri + 
+				  "&response_type=code";
+	document.location.href = kakaoUrl;
+	
+//	"https://kauth.kakao.com/oauth/authorize?client_id=47ad839005d8b9a94d3007b30a956894&redirect_uri=http://localhost:8000/views/user/kakaoLogin&response_type=code"
 
-function onClickNaverLogin() {
-	document.location.href = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=0328Vi7efumpXAgBjKZA&state=STATE_STRING&redirect_uri=http://localhost:8000/auth/naver/callback";
 }

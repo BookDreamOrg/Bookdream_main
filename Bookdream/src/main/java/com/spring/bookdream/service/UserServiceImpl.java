@@ -77,4 +77,10 @@ public class UserServiceImpl implements UserService {
 	public UserVO getBySns(UserVO snsUser) {
 		return userDAO.getBySns(snsUser);
 	}
+	
+	@Override
+	public void updateUser(UserVO vo) {
+		userDAO.updateUser(vo);
+	}
+
 }

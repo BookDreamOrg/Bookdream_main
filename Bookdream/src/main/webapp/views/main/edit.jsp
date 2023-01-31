@@ -17,7 +17,7 @@
 <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
 <link rel="stylesheet" href="/resources/css/styles.css" />
 
-<title>Insert title here</title>
+<title>회원정보 수정</title>
 </head> 
 <body>
 	<% 
@@ -25,10 +25,6 @@
 	%>
 	
 	<%
-		String id = (String)session.getAttribute("user_id");
-		String kakaoN = (String)session.getAttribute("kakaoName");
-		String flatform = (String)session.getAttribute("flatform");
-		
 		UserVO user = (UserVO)session.getAttribute("authUser");
 	
 		if(user == null){		
@@ -94,25 +90,13 @@
 			<div class="header-nav-list">
 				<ul class="nav header-nav">
 					<%
-						if(user.getFlatform_type().equals("KAKAO")){ // 카카오 로그아웃
+						if(user.getFlatform_type().equals("KAKAO")){ //기존 로그아웃
 					%>
 						<li class="nav-item"><a class="nav-link header-nav-link"
 						href="https://kauth.kakao.com/oauth/logout?client_id=47ad839005d8b9a94d3007b30a956894&logout_redirect_uri=http://localhost:8000/views/user/kakaoLogout">로그아웃</a></li>
 					<span class="nav-bar-line"></span>
 					<% 
-						} else if(user.getFlatform_type().equals("google")) { // google 로그아웃
-					%>
-						<li class="nav-item"><a class="nav-link header-nav-link"
-						href="/views/user/logout.do">로그아웃</a></li>
-					<span class="nav-bar-line"></span>
-					<% 
-						} else if(user.getFlatform_type().equals("naver")) { // naver 로그아웃
-					%>
-						<li class="nav-item"><a class="nav-link header-nav-link"
-						href="/views/user/logout.do">로그아웃</a></li>
-					<span class="nav-bar-line"></span>
-					<% 
-						} else { // 기존 로그아웃
+						} else { // 카카오 로그아웃
 					%>
 						<li class="nav-item"><a class="nav-link header-nav-link"
 						href="/views/user/logout.do">로그아웃</a></li>
@@ -122,14 +106,16 @@
 					%>
 					
 					<li class="nav-item"><a class="nav-link header-nav-link"
-						href="#">고객센터</a></li>
+						href="#">고객센터</a>
+					</li>
 					<span class="nav-bar-line"></span>
 					<li class="nav-item"><a class="nav-link header-nav-link"
 						href="/views/main/mypage.jsp">마이페이지</a></li>
 					<span class="nav-bar-line"></span>
 					<li class="nav-item"><a
 						class="nav-link header-nav-link disabled" href="#" tabindex="-1"
-						aria-disabled="true"> 관리자 </a></li>
+						aria-disabled="true"> 관리자 </a>
+					</li>
 				</ul>
 			</div>
 			<div class="row d-flex header-row">
@@ -171,46 +157,66 @@
 		}
 	%>
 	
-			<div class="header-menu mb-1">
-				<div class="btn-circle btn-circle-tint">
-					<i class="fa-solid fa-bars"></i>
-				</div>
-				<ul class="nav header-menu-list">
-					<li class="nav-item">
-						<form action="/getBook" method="get">
-							<button type="submit" name="book_no" value="<%=book_no%>">베스트</button>
-						</form>
-					</li>
-					<div class="dot"></div>
-					<li class="nav-item"><a class="nav-link menu-link" href="#">신상품</a>
-					</li>
-					<div class="dot"></div>
-					<li class="nav-item"><a class="nav-link menu-link" href="#">이벤트</a>
-					</li>
-					<div class="dot"></div>
-					<li class="nav-item"><a class="nav-link menu-link disabled"
-						href="#" tabindex="-1" aria-disabled="true">Disabled</a></li>
-				</ul>
-			</div>
 		</header>
 
-		<main>
-		<div class="banner">
-			<div class="banner-text">Banner Title Text</div>
-			<div class="banner-img"></div>
-			<div class="banner-books">
-				<div class="banner-book"></div>
-				<div class="banner-book banner-book-lg"></div>
-				<div class="banner-book banner-book-xl"></div>
+			
+			<div class="container">
+				<h1><b>회원정보 수정</b></h1>
+				<br>
+				<form action="updateUser.do" method="post">
+					<table class="table table-board">
+					<tr>
+						<td>아이디</td>
+						<td><input type="text" class="form-control" id="user_id" name="user_id" value="<%= user.getUser_id() %>"></td>
+					<tr>
+					<tr>
+						<td>새 비밀번호</td>
+						<td><input type="password" class="form-control" id="user_password" name="user_password"></td>
+					<tr>
+					<tr>
+						<td>새 비밀번호 확인</td>
+						<td><input type="password" class="form-control" id="user_passwordcheck" name="user_passwordcheck"></td>
+					<tr>
+					<tr>
+						<td>이름</td>
+						<td><input type="input" class="form-control" id="user_name" name="user_name" value="<%= user.getUser_name() %>"></td>
+					<tr>
+					<tr>
+						<td>이메일</td>
+						<td><input type="input" class="form-control" id="user_email" name="user_email" value="<%= user.getUser_email() %>"></td>
+					<tr>
+					<tr>
+						<td rowspan="2"><button class="btn btn-primary" type="button" onclick="updateUser()">회원정보 수정</button></td>
+					<tr>
+				</table>
+				</form>
 			</div>
-		</div>
-		<ul class="nav nav-tabs book-section-nav">
-			<li class="nav-item"><a class="nav-link active"
-				aria-current="page" href="#">베스트</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">신상품</a></li>
-		</ul>
-		<div class="book-section"></div>
-		</main>
+
+			<script>
+				function updateUser(){
+					var id = $('#user_id').val();
+					var password = $('#user_password').val();
+					var name = $('#user_name').val();
+					var email = $('#user_email').val();
+					
+					$.ajax({
+						url : '/views/main/updateUser.do',
+						type : 'post',
+						data : {id:id,
+								password:password,
+								name:name,
+								email:email},
+						success:function(data){
+							console.log(data);
+							location.href('/views/main/mypage.jsp');
+						}, 
+						error:function(){
+							alert('서버 에러입니다.');
+						}		
+					});
+					
+				}		
+			</script>
 
 		<footer>
 			<div>
@@ -285,5 +291,6 @@
 	<script src="https://kit.fontawesome.com/4bf42f841a.js"
 		crossorigin="anonymous"></script>
 		
+	
 </body>
 </html>
