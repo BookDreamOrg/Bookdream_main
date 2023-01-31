@@ -57,16 +57,14 @@
           		</button>	 
           		</li>
           		<li class="sns_login_item">
-          			<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=0328Vi7efumpXAgBjKZA&state=STATE_STRING&redirect_uri=http://localhost:8000/auth/naver/callback">
+	          		<button onclick="naverLogin()">
           				<img src="/resources/images/naver_login.png" class="rounded-circle" width="50px" height="45px">
-          			 
-          			 </a>
+          			 </button>
           		</li>
-          		<li class="sns_login_item">
-          			<a href="https://accounts.google.com/o/oauth2/v2/auth?scope=profile+email&response_type=code&client_id=759629996127-2168hvg19ogj7kah4thgo16a2seoc50q.apps.googleusercontent.com&redirect_uri=http://localhost:8000/auth/google/callback">
+          		<li class="sns_login_item">	
+          			<button onclick="googleLogin()">
           				<img src="/resources/images/google_login.PNG" class="rounded-circle" width="50px" height="45px">
-          			 
-          			 </a>
+          			</button>
           		</li>
           	</ul>
           </div>
