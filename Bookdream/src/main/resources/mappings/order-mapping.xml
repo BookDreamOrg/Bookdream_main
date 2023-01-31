@@ -8,10 +8,11 @@
 		<result property="order_no" column="ORDER_NO" />
 		<result property="order_name" column="ORDER_NAME" />	
 		<result property="user_no" column="USER_NO" />	
-		<result property="total_price" column="TOTAL_PRICE" />	
-		<result property="order_enroll" column="ORDER_ENROLL" />	
+		<result property="order_date" column="ORDER_DATE" />	
+		<result property="final_price" column="FINAL_PRICE" />	
 		<collection property="purchaseVO" resultMap="purchaseList"></collection>		
 		<collection property="bookVO" resultMap="bookList"></collection>
+		<collection property="payVO" resultMap="payList"></collection>
 	</resultMap>	
 
 	<resultMap type="purchase" id="purchaseList">
@@ -25,33 +26,32 @@
 		<result property="book_img" column="BOOK_IMG" />		
 	</resultMap>
 
+	<resultMap type="pay" id="payList">
+		<result property="final_price" column="FINAL_PRICE"/>
 
-
+	</resultMap>
 	
-	<!-- user_no 변경필요 -->
 	<insert id="insertOrder" >
 		INSERT INTO orders(ORDER_NO, 
 						   USER_NO, 
 						   PAY_NO, 
 						   ORDER_NAME, 
-						   TOTAL_PRICE, 
 						   ORDER_COMMENT, 
-						   ORDER_ENROLL,
+						   ORDER_DATE,
 						   ORDER_RECEIVER, 
 						   ORDER_ADDRESS, 
-						   ORDER_TEL, 
-						   ORDER_FEE)
+						   ORDER_TEL 
+						   )
 		VALUES  (#{pay_no}, 
 		         #{user_no}, 
 		         #{pay_no}, 
 		         #{order_name}, 
-		         #{total_price}, 
 		         #{order_comment}, 
-		         #{order_enroll},
+		         #{order_date},
 		         #{order_receiver}, 
 		         #{order_address}, 
-		         #{order_tel}, 
-		         #{order_fee})
+		         #{order_tel} 
+		         )
 	</insert>
 		
 	<!-- 마이페이지 주문조회 (간단) -->
@@ -59,17 +59,18 @@
 		SELECT order_no, 
 			   order_name, 
 			   book_img, 
-			   total_price, 
-			   to_char(SYSDATE, 'YYYY.MM.DD') as order_enroll
+			   to_char(SYSDATE, 'YYYY.MM.DD') as order_date,
+			   final_price
 		FROM   (select o.order_no, 
                 	   o.order_name, 
                        b.book_img, 
-                       o.total_price,
-                       o.order_enroll,
+                       o.order_date,
+                       y.final_price,
                        ROW_NUMBER() OVER(PARTITION BY o.order_no ORDER BY o.order_name DESC) AS rn
 	 			from   orders o, 
 	 			       purchase p, 
-	 			       book b
+	 			       book b,
+	 			       pay y
 	 			where  p.book_no = b.book_no   and
                        p.order_no = o.order_no and
                        o.user_no = #{user_no}

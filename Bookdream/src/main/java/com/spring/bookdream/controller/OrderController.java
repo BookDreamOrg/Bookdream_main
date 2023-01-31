@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.spring.bookdream.vo.OrderVO;
 
-
-
 @Controller
 @SessionAttributes("order")
 @RequestMapping("/detail/cart/orderitem")
@@ -21,9 +19,9 @@ public class OrderController {
 	// 결제 전 유저정보 세션등록
 	@RequestMapping(value="/save")
 	@ResponseBody
-	public void saveOrder(@RequestBody OrderVO ovo, Model model) {	
+	public void saveOrder(@RequestBody OrderVO order, Model model) {	
 		
-		model.addAttribute("order", ovo);
+		model.addAttribute("order", order);
 
 	}
 

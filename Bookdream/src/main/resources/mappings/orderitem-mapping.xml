@@ -119,10 +119,11 @@
 		DELETE
 		FROM (select u.user_no, 
 					 c.cart_no
-	    FROM  users u, 
-	    	  book b, cart c
-        	  where u.user_no = c.user_no AND 
-        	  c.book_no = b.book_no
+	    	  from   users u, 
+	    	         book b, 
+	    	         cart c
+        	  where  u.user_no = c.user_no AND 
+        	         c.book_no = b.book_no
         	 )      
 		WHERE user_no = #{user_no}
 	</delete>

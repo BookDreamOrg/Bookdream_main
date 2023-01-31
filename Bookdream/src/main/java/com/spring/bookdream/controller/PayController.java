@@ -81,17 +81,26 @@ public class PayController {
 			
 		// 세션 호출 - 결제 후 DB에 넣는 목적
 		String pay_method = order.getPay_method();
+		int total_price = order.getTotal_price();
+		int final_price = order.getFinal_price();
 		int discount_price = order.getDiscount_price();
-		int final_price = order.getTotal_price();
-		int save_point = order.getSave_point();
+		int pay_fee = order.getPay_fee();
 		int use_point = order.getUse_point();
+		int save_point = order.getSave_point();
+		
+		String order_receiver = order.getOrder_receiver();
 		
 		pay.setPay_method(pay_method);
-		pay.setDiscount_price(discount_price);
-		pay.setFinal_price(final_price);
-		pay.setSave_point(save_point);
+		pay.setTotal_price(total_price);
+		pay.setFinal_price(final_price);		
+		pay.setDiscount_price(discount_price);	
+		pay.setPay_fee(pay_fee);
 		pay.setUse_point(use_point);
+		pay.setSave_point(save_point);
+
+		purchase.setOrder_receiver(order_receiver);
 		
+		// 유저번호 호출
 		int user_no = (int) session.getAttribute("user_no");
 		
 		order.setUser_no(user_no);
@@ -105,9 +114,8 @@ public class PayController {
 	    // 결제번호, 결제시간 추출 -> 다른 DB 등록
 	    PayVO payData = payService.searchPay(pay);
 	    
-
 	    order.setPay_no(payData.getPay_no());
-	    order.setOrder_enroll(payData.getPay_date());
+	    order.setOrder_date(payData.getPay_date());
 	    purchase.setOrder_no(payData.getPay_no());	    
 	    orderitem.setPay_no(payData.getPay_no());	   
 	    

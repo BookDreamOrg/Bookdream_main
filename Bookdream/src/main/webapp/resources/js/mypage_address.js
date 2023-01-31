@@ -271,7 +271,8 @@ function modal_address_delete(no) {
 	 
 	var address_no = $(no).val();
 	var data = {"address_no" : address_no};
-
+	console.log(data);
+	
 	$.ajax({
 		type : "POST",                              
 		url : "/address/get",
@@ -286,7 +287,7 @@ function modal_address_delete(no) {
 			if (result.default_add == 'Y') {
 				
 				alert("기본배송지는 삭제할 수 없습니다.");
-				
+
 			} else {
 				
 				$.ajax ({

@@ -34,14 +34,12 @@
 	width: 1240px;
 	height: auto;
 	min-height: 1000px;
-	border: 1px solid black;	
 }
 
 .side {
 	position:relative;
 	width: 200px;
-	height: 500px;
-	border: 1px solid black;
+	height: 100vh;
 	float: left;
 }
 
@@ -56,16 +54,19 @@
 	position: relative;
 	width: 950px;
 	height: 200px;
+
 }
 
 .tracking_title {
+	padding: 30px;
+	vertical-align: middle;
 	height: 100px;
-	border: 1px solid black;
+	font-size: 20px;
 }
 
 .tracking_main {
-	height: 100px;
-	border: 1px solid black;
+	vertical-align:middle;
+	height: 200px;
 }
 
 
@@ -82,20 +83,21 @@
 }
 
 .trackinglist_table {
+	margin-top:50px;
 	width: 100%;
+	font-size: 14px;
 }
 
 .trackinglist_table_main {
-	height: 100px;
 	padding-left: 35px;	
-	border-bottom: 1px solid black;
-	border-top: 1px solid black;
 	vertical-align: middle;	
 }
 
 .trackinglist_table_main_button {
-	margin-right: 25px;
-	float: right;
+	font-size: 12px;
+	color:black;
+	text-decoration-line: none;
+	
 }
 
 .trackinglist_table_img {
@@ -121,10 +123,90 @@
 	vertical-align: middle;
 }
 
+.trackinglist_table_hr {
+	margin: 30px 0px 30px 20px;
+}
+
 .tracking_detail {
+	padding:20px;
 	height: 800px;
 }
 
+.tracking_detail_table {
+	width: 100%;
+	margin-top: 30px;
+	font-size: 12px;	
+}
+
+.tracking_detail_table_col1, .tracking_detail_table_col3, .tracking_detail_table_col4 {
+	width: 100px;
+	height: 100px;
+	padding: 10px 0px;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.tracking_detail_table_img {
+	width: 60px;
+	height: 80px;
+	border: 1px solid black;
+}
+
+.tracking_detail_table_col2 {
+
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap; 
+	width: 450px;
+	max-width: 400px;
+	padding: 20px 10px 10px 10px;
+
+	vertical-align: middle;	
+}
+
+.tracking_detail_title {
+	font-weight:bold;
+	margin-top: 80px;
+}
+
+.tracking_detail_address {
+	margin-left: 3px;
+	font-size: 12px;
+	
+}
+
+.tracking_detail_price_col1, .tracking_detail_price_col4 {
+	display:inline-block;
+	width: 220px;
+	height: 20px;
+	margin-left: 3px;
+	font-size:12px;
+ 	border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.tracking_detail_price_col2 {
+	display:inline-block;
+	width: 220px;
+	height: 20px;
+	margin-left:10px;
+	font-size:12px;
+ 	border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.tracking_detail_price_col3 {
+	display:inline-block;
+	width: 220px;
+	height:20px;
+	margin-left:10px;
+	font-size:12px;
+}
+
+.tracking_detail_price_right {
+	margin-right:10px;
+	float: right;
+}
+
+. 
 </style>
 
 
@@ -220,8 +302,9 @@
 		<div class="main_tracking">
 			
 			<div class="tracking">
-				<div class="tracking_title">주문/배송 목록</div>
+
 				<div class="tracking_main">
+					<div class="tracking_title"><b>주문/배송 목록</b></div>
 					<table class="tracking_main_table">
 						<tr>
 							<td class="tracking_main_table_col1">주문내역</td>
@@ -251,10 +334,10 @@
    			<div class="modal-content tracking_detail">
       			<div class="modal-header">
        		 		<h5 class="modal-title" id="exampleModalLabel">	상세 조회</h5>
-       		 		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+       		 		<button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close"></button>
      		 	</div>
       		
-      			<div class="modal-body">
+      			<div class="modal-body" id="tracking_detail_list">
  					
       			</div>
 	    

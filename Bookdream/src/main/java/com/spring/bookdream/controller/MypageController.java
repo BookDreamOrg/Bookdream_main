@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -70,13 +71,18 @@ public class MypageController {
 	// 주문목록 조회 (상세)
 	@RequestMapping(value="/orderDetail")
 	@ResponseBody	
-	public List<PurchaseVO> getPurchaseList(PurchaseVO purchase) {
+	public List<PurchaseVO> getPurchaseList(@RequestBody PurchaseVO purchase) {
 		
 		int user_no = (int) session.getAttribute("user_no");
 		purchase.setUser_no(user_no);
-			
+		
+		System.out.println(purchase.getOrder_no());	
+		System.out.println(purchase.getUser_no());	
+		
+		
 		List<PurchaseVO> list  = purchaseService.getPurchaseList(purchase);
-			
+		
+		System.out.println(list);
 		return list;
 	}	
 	

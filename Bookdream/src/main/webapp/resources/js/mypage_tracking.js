@@ -1,6 +1,13 @@
 $(function() {
-		order_list();
+	order_list();
 })
+
+function tracking_detail(no) {
+	var no = $(no).val();
+	order_detail(no);	
+}
+
+
 
 function order_list() {
 	
@@ -11,31 +18,29 @@ function order_list() {
 		contentType : "application/json",
 		
 		success : function(result) {	
-			console.log(result);
 			
 			var html = "";
 
 			for (i=0; i < result.length; i++) {
 
-				// 결제금액에 , 추가
-				var total_price = result[i].total_price.toLocaleString();	
-				
 				html += `<table class="trackinglist_table">` +	
 							`<tr>` +
 								`<td class="trackinglist_table_main" colspan="4">` +
-									`${result[i].order_enroll} (${result[i].order_no})` +
-									`<button type="button" class="btn btn-light trackinglist_table_main_button" data-bs-toggle="modal" data-bs-target="#exampleModal">상세 조회</button>` +
+									`<b>${result[i].order_date} (${result[i].order_no})</b><br>` +
+									`<input type="hidden" name="trackinglist_order_no" value="${result[i].order_no}">` +
+									`<button type="button" class="btn btn-link trackinglist_table_main_button" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="tracking_detail(this)" value="${result[i].order_no}">상세 조회<i class="bi bi-chevron-right"></i></button>` +
 								`</td>` +
 							`</tr>` +	
 							
 							`<tr>` +
 								`<td class="trackinglist_table_col1"><img class="trackinglist_table_img" alt="" src="${result[i].bookVO.book_img}"></td>` +
 								`<td class="trackinglist_table_col2">${result[i].order_name}</td>` +
-								`<td class="trackinglist_table_col3">${total_price}</td>` +
-								`<td class="trackinglist_table_col4">배송상태</td>` +
+								`<td class="trackinglist_table_col3"><b>${result[i].payVO.final_price.toLocaleString()}</b>원</td>` +
+								`<td class="trackinglist_table_col4">결제완료</td>` +
 							`</tr>` +									
-						`</table>`
-			}
+						`</table>` +
+						`<hr class="trackinglist_table_hr">` 
+			}			
 			
 			 document.getElementById('trackinglist').innerHTML = html;
 		},
@@ -49,42 +54,58 @@ function order_list() {
 							
 }
 
-function order_detail() {
+function order_detail(no) {
+	
+	var data = {"order_no" : no}
+	console.log(data)
 	
 	$.ajax({
 		type : "POST",                              
 		url : "/mypage/orderDetail",	
-		dataType : "json",
+		data : JSON.stringify(data),   
+		dataType : "text",
 		contentType : "application/json",
 		
 		success : function(result) {	
-			console.log(result);
-			
+			var result =  JSON.parse(result);
 			var html = "";
-
+			
+			html += `<div class="tracking_detail_main"><b>${result[0].orderVO.order_date} | 주문번호 (${result[0].orderVO.order_no})</b></div>` +
+					`<hr>`
 			for (i=0; i < result.length; i++) {
-
-				// 결제금액에 , 추가
-				var total_price = result[i].total_price.toLocaleString();	
-				
-				html += `<table class="trackinglist_table">` +	
+			
+				html += `<table class="tracking_detail_table">` +
 							`<tr>` +
-								`<td class="trackinglist_table_main" colspan="4">` +
-									`${result[i].order_enroll} (${result[i].order_no})` +
-									`<button type="button" class="btn btn-light trackinglist_table_main_button" data-bs-toggle="modal" data-bs-target="#exampleModal">상세 조회</button>` +
-								`</td>` +
-							`</tr>` +	
-							
-							`<tr>` +
-								`<td class="trackinglist_table_col1"><img class="trackinglist_table_img" alt="" src="${result[i].bookVO.book_img}"></td>` +
-								`<td class="trackinglist_table_col2">${result[i].order_name}</td>` +
-								`<td class="trackinglist_table_col3">${total_price}</td>` +
-								`<td class="trackinglist_table_col4">배송상태</td>` +
-							`</tr>` +									
+								`<td class="tracking_detail_table_col1"><a href="/getBook?book_no=${result[i].bookVO.book_no}" target='_blank'><img class="tracking_detail_table_img" alt="" src="${result[i].bookVO.book_img}"><a/></td>`+
+								`<td class="tracking_detail_table_col2">${result[i].bookVO.title} <br> ${result[i].product_count}개</td>`+
+								`<td class="tracking_detail_table_col3"><b>${result[i].bookVO.book_price.toLocaleString()}</b>원</td>`+
+								`<td class="tracking_detail_table_col4">배송중</td>`+
+							`</tr>` +
 						`</table>`
 			}
 			
-			 document.getElementById('trackinglist').innerHTML = html;
+			html += `<div class="tracking_detail_title">배송정보</div>` +
+					`<hr>` +
+					`<div class="tracking_detail_address">` +
+						`<div>${result[0].orderVO.order_receiver} / ${result[0].orderVO.order_tel} <br><br> ${result[0].orderVO.order_address}</div>` +
+					`</div>` +
+					`<div class="tracking_detail_title">결제정보</div>` +
+					`<hr>` +					
+					`<div class="tracking_detail_price_col1">` +
+						`주문금액 <span class="tracking_detail_price_right"><b>${result[0].payVO.total_price.toLocaleString()}</b>원</span>` +
+					`</div>` +			
+					`<div class="tracking_detail_price_col2">` +
+						`할인/포인트 <span class="tracking_detail_price_right"><b>${result[0].payVO.use_point.toLocaleString()}</b>원</span>` +
+					`</div>` +
+					`<div class="tracking_detail_price_col3">` +
+						`결제금액 <span class="tracking_detail_price_right"><b>${result[0].payVO.final_price.toLocaleString()}</b>원</span>` +
+					`</div>` +
+					`<div class="tracking_detail_title">적립정보</div>` +
+					`<hr>` +					
+					`<div class="tracking_detail_price_col4">` +
+						`포인트적립 <div class="tracking_detail_price_right"><b>${result[0].payVO.save_point.toLocaleString()}</b>P</div>` +
+					`</div>` 
+			 document.getElementById('tracking_detail_list').innerHTML = html;
 		},
 		
 		error: function(request, status, error) {
