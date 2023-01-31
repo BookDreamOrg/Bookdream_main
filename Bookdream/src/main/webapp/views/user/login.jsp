@@ -46,13 +46,15 @@
         
         </div>
         
-        <div class="sns_login_box">
+   
+       </form>
+       
+ 		<div class="sns_login_box">
           	<ul class="sns_login_list">          	
           		<li class="sns_login_item">
-          			<a href="https://kauth.kakao.com/oauth/authorize?client_id=47ad839005d8b9a94d3007b30a956894&redirect_uri=http://localhost:8000/views/user/kakaoLogin&response_type=code">
-          				<img src="/resources/images/kakao_login2.PNG" class="rounded-circle" width="50px" height="45px">
-          			 
-          			 </a>
+          		<button onclick="kakaoLogin()">
+          			<img src="/resources/images/kakao_login2.PNG" class="rounded-circle" width="50px" height="45px">
+          		</button>	 
           		</li>
           		<li class="sns_login_item">
           			<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=0328Vi7efumpXAgBjKZA&state=STATE_STRING&redirect_uri=http://localhost:8000/auth/naver/callback">
@@ -74,8 +76,10 @@
           	 	<span class="text"><b>회원가입</b></span>
           	 </button>
           </div>
-       </form>
     </main>
+    
+    <script src="/resources/js/socialLogin.js"></script>
+     
      
     <!-- 로그인 실패시  -->
     <script type="text/javascript"> 
@@ -85,7 +89,7 @@
 	        fnInit();
 	  	});
     
-    	function frm_check(){l
+    	function frm_check(){
     			saveid();	
    	 		}
     

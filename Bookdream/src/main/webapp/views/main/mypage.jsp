@@ -25,10 +25,6 @@
 	%>
 	
 	<%
-		String id = (String)session.getAttribute("user_id");
-		String kakaoN = (String)session.getAttribute("kakaoName");
-		String flatform = (String)session.getAttribute("flatform");
-		
 		UserVO user = (UserVO)session.getAttribute("authUser");
 	
 		if(user == null){		
@@ -110,14 +106,16 @@
 					%>
 					
 					<li class="nav-item"><a class="nav-link header-nav-link"
-						href="#">고객센터</a></li>
+						href="#">고객센터</a>
+					</li>
 					<span class="nav-bar-line"></span>
 					<li class="nav-item"><a class="nav-link header-nav-link"
 						href="/views/main/mypage.jsp">마이페이지</a></li>
 					<span class="nav-bar-line"></span>
 					<li class="nav-item"><a
 						class="nav-link header-nav-link disabled" href="#" tabindex="-1"
-						aria-disabled="true"> 관리자 </a></li>
+						aria-disabled="true"> 관리자 </a>
+					</li>
 				</ul>
 			</div>
 			<div class="row d-flex header-row">
@@ -159,47 +157,13 @@
 		}
 	%>
 	
-			<div class="header-menu mb-1">
-				<div class="btn-circle btn-circle-tint">
-					<i class="fa-solid fa-bars"></i>
-				</div>
-				<ul class="nav header-menu-list">
-					<li class="nav-item">
-						<form action="/getBook" method="get">
-							<button type="submit" name="book_no" value="<%=book_no%>">베스트</button>
-						</form>
-					</li>
-					<div class="dot"></div>
-					<li class="nav-item"><a class="nav-link menu-link" href="#">신상품</a>
-					</li>
-					<div class="dot"></div>
-					<li class="nav-item"><a class="nav-link menu-link" href="#">이벤트</a>
-					</li>
-					<div class="dot"></div>
-					<li class="nav-item"><a class="nav-link menu-link disabled"
-						href="#" tabindex="-1" aria-disabled="true">Disabled</a></li>
-				</ul>
-			</div>
 		</header>
 
-		<main>
-		<div class="banner">
-			<div class="banner-text">Banner Title Text</div>
-			<div class="banner-img"></div>
-			<div class="banner-books">
-				<div class="banner-book"></div>
-				<div class="banner-book banner-book-lg"></div>
-				<div class="banner-book banner-book-xl"></div>
+			
+			<div class="container">
+				<h1><a href="/views/main/edit.jsp">회원정보 수정</a></h1>
 			</div>
-		</div>
-		<ul class="nav nav-tabs book-section-nav">
-			<li class="nav-item"><a class="nav-link active"
-				aria-current="page" href="#">베스트</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">신상품</a></li>
-		</ul>
-		<div class="book-section"></div>
-		</main>
-
+		
 		<footer>
 			<div>
 				<a class="footer-logo" href="#"> <img class="footer-logo-img"
