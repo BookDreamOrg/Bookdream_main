@@ -86,4 +86,8 @@
 		select user_password from users where user_id=#{user_id} and user_name=#{user_name} and user_email=#{user_email} 
 	</select>
 	
+	<!-- 회원정보 수정 -->
+	<update id="updateUser">
+		update users set user_password=#{user_password}, user_name=#{user_name}, user_email=#{user_email} where user_id = #{user_id}
+	</update>
 </mapper>

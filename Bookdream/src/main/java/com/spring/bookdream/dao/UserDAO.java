@@ -106,4 +106,12 @@ public class UserDAO {
 				return mybatis.selectOne("UserDAO.findGoogle", snsUser.getUser_email());
 			}
 		}
+		
+		//회원정보 수정
+		public void updateUser(UserVO vo) {
+			System.out.println("userDAO : " + vo.getUser_id());
+			System.out.println("userDAO : " + vo.getUser_password());
+			mybatis.update("UserDAO.updateUser", vo);
+		}
+
 }

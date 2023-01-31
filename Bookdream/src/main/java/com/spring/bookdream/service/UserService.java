@@ -34,4 +34,7 @@ public interface UserService {
 	public void naverInsert(UserVO vo);
 
 	public UserVO getBySns(UserVO snsUser);
+	
+	//회원정보 수정
+	public void updateUser(UserVO vo);
 }

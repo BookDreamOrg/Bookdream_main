@@ -16,6 +16,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.spring.bookdream.dao.UserDAO;
+import com.spring.bookdream.vo.KakaoLoginVO;
 import com.spring.bookdream.vo.UserVO;
 @Service
 public class KakaoService {
@@ -33,12 +34,12 @@ public class KakaoService {
             
 			conn.setRequestMethod("POST");
 			conn.setDoOutput(true);
-			// POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
-            
+			
+			
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
 			 String sb = "grant_type=authorization_code" +
-		                "&client_id=47ad839005d8b9a94d3007b30a956894" + // REST_API_KEY
-		                "&redirect_uri=http://localhost:8000/views/user/kakaoLogin" + // REDIRECT_URI
+		                "&client_id=" + KakaoLoginVO.client_id + // REST_API_KEY
+		                "&redirect_uri=" + KakaoLoginVO.redirect_uri + // REDIRECT_URI
 		                "&code=" + authorize_code;
 			 System.out.println("#######zz"+authorize_code);
 			bw.write(sb);
@@ -114,7 +115,9 @@ public class KakaoService {
 
 			String nickname = properties.getAsJsonObject().get("nickname").getAsString();
 			String email = kakao_account.getAsJsonObject().get("email").getAsString();
+			String birthday = kakao_account.getAsJsonObject().get("birthday").getAsString();
 
+			System.out.println("내 생일 : "+birthday);
 			userInfo.put("nickname", nickname);
 			userInfo.put("email", email);
 			
