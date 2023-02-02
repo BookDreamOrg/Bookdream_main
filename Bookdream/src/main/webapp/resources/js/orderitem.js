@@ -1,4 +1,4 @@
-	
+
 // 페이지 로딩 
 $(function() {
 	$('#pay_labels').hide();
@@ -286,8 +286,6 @@ $('#modal2_address_update').click(function() {
 	
 	address_insert(1);
 })
-
-
 
 
 function address_insert(no) {
@@ -779,7 +777,7 @@ function innerHTML(id, int) {
 		var save_point = innerHTML('', 'sidebar_save_point');
 		var use_point = innerHTML('', 'sidebar_use_point');
 		var final_price = innerHTML('', 'sidebar_final_price');
-		var total_price = final_price + pay_fee + discount_price + use_point;
+		var total_price = innerHTML('', 'sidebar_total_price');
 		
 		if ((order_name == '') || (order_receiver == '') || (order_address == '') || (order_tel == '')	) {
 			alert("배송인 정보를 입력하세요.");

@@ -22,193 +22,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
 
-<style type="text/css">
-
-.wrapper {
-	height: auto;
-}
-
-.main {
-	position:relative;
-	margin: 0 auto;
-	width: 1240px;
-	height: auto;
-	min-height: 1000px;
-}
-
-.side {
-	position:relative;
-	width: 200px;
-	height: 100vh;
-	float: left;
-}
-
-.main_tracking {
-	height: auto;
-	min-height: 1000px;
-	width: 950px;
-	float: right;	
-}
-
-.tracking {
-	position: relative;
-	width: 950px;
-	height: 200px;
-
-}
-
-.tracking_title {
-	padding: 30px;
-	vertical-align: middle;
-	height: 100px;
-	font-size: 20px;
-}
-
-.tracking_main {
-	vertical-align:middle;
-	height: 200px;
-}
-
-
-.tracking_main_table {
-	width:100%;
-	height:100px;
-}
-
-.tracking_main_table_col1, .tracking_main_table_col2, .tracking_main_table_col3, .tracking_main_table_col4 {
-	width: 310px;
-	border: 1px solid black;
-	text-align: center;
-	vertical-align: middle;
-}
-
-.trackinglist_table {
-	margin-top:50px;
-	width: 100%;
-	font-size: 14px;
-}
-
-.trackinglist_table_main {
-	padding-left: 35px;	
-	vertical-align: middle;	
-}
-
-.trackinglist_table_main_button {
-	font-size: 12px;
-	color:black;
-	text-decoration-line: none;
-	
-}
-
-.trackinglist_table_img {
-	width: 80px;
-	height: 120px;
-	border: 1px solid black;
-}
-
-.trackinglist_table_col1, .trackinglist_table_col3, .trackinglist_table_col4 {
-	width: 150px;
-	height: 150px;
-	vertical-align: middle;
-	text-align: center;
-}
-
-.trackinglist_table_col2 {
-    overflow: hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap; 
-	width: 500px;
-	max-width:500px;
-	height: 150px;
-	vertical-align: middle;
-}
-
-.trackinglist_table_hr {
-	margin: 30px 0px 30px 20px;
-}
-
-.tracking_detail {
-	padding:20px;
-	height: 800px;
-}
-
-.tracking_detail_table {
-	width: 100%;
-	margin-top: 30px;
-	font-size: 12px;	
-}
-
-.tracking_detail_table_col1, .tracking_detail_table_col3, .tracking_detail_table_col4 {
-	width: 100px;
-	height: 100px;
-	padding: 10px 0px;
-	vertical-align: middle;
-	text-align: center;
-}
-
-.tracking_detail_table_img {
-	width: 60px;
-	height: 80px;
-	border: 1px solid black;
-}
-
-.tracking_detail_table_col2 {
-
-    overflow: hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap; 
-	width: 450px;
-	max-width: 400px;
-	padding: 20px 10px 10px 10px;
-
-	vertical-align: middle;	
-}
-
-.tracking_detail_title {
-	font-weight:bold;
-	margin-top: 80px;
-}
-
-.tracking_detail_address {
-	margin-left: 3px;
-	font-size: 12px;
-	
-}
-
-.tracking_detail_price_col1, .tracking_detail_price_col4 {
-	display:inline-block;
-	width: 220px;
-	height: 20px;
-	margin-left: 3px;
-	font-size:12px;
- 	border-right: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.tracking_detail_price_col2 {
-	display:inline-block;
-	width: 220px;
-	height: 20px;
-	margin-left:10px;
-	font-size:12px;
- 	border-right: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.tracking_detail_price_col3 {
-	display:inline-block;
-	width: 220px;
-	height:20px;
-	margin-left:10px;
-	font-size:12px;
-}
-
-.tracking_detail_price_right {
-	margin-right:10px;
-	float: right;
-}
-
-. 
-</style>
-
+<!-- CSS -->
+<link rel="stylesheet" type="text/css" href="/resources/css/mypage_tracking.css">
 
 <!-- jQuery -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -308,9 +123,10 @@
 					<table class="tracking_main_table">
 						<tr>
 							<td class="tracking_main_table_col1">주문내역</td>
-							<td class="tracking_main_table_col2">결제완료<br>0</td>
-							<td class="tracking_main_table_col3">배송중<br>0</td>
-							<td class="tracking_main_table_col4">배송완료<br>0</td>
+							<td class="tracking_main_table_col2">결제완료<br><span id="tracking_main_table_col2"></span></td>
+							<td class="tracking_main_table_col3">배송중<br><span id="tracking_main_table_col3"></span></td>
+							<td class="tracking_main_table_col4">배송완료<br><span id="tracking_main_table_col4"></span></td>
+							<td class="tracking_main_table_col5">반품/취소<br><span id="tracking_main_table_col5"></span></td>
 						</tr>
 					</table>
 				</div>
@@ -327,6 +143,45 @@
 
 
 
+ 
+<!----------------------------------------- 결제취소 -------------------------------------->
+	<div class="modal fade" id="pay_cencel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  		<div class="modal-dialog modal-sm modal-dialog-centered">
+   			<div class="modal-content modal_pay_cencel">
+      			<div class="modal-header">
+       		 		<h5 class="modal-title" id="exampleModalLabel">결제 취소</h5>
+       		 		<button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close"></button>
+     		 	</div>
+      		
+      			<div class="modal-body">
+ 					결제취소를 하시겠습니까?
+      			</div>
+      			<input type="hidden" id="pay_cencel_order_no">
+      			<button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="modal_pay_cencel">결제취소</button>         			
+	       		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+    		</div>
+  		</div>
+	</div>
+
+<!----------------------------------------- 반품요청 -------------------------------------->
+	<div class="modal fade" id="return_reqeust" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  		<div class="modal-dialog modal-sm modal-dialog-centered">
+   			<div class="modal-content modal_pay_cencel">
+      			<div class="modal-header">
+       		 		<h5 class="modal-title" id="exampleModalLabel">반품 요청</h5>
+       		 		<button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close"></button>
+     		 	</div>
+      		
+      			<div class="modal-body">
+ 					반품요청을 하시겠습니까?
+      			</div>
+      			<input type="hidden" id="return_request_order_no">
+      			<button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="modal_return_request">반품신청</button>         			
+	       		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+    		</div>
+  		</div>
+	</div>
+
 
 <!----------------------------------------- Modal -------------------------------------->
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -340,7 +195,7 @@
       			<div class="modal-body" id="tracking_detail_list">
  					
       			</div>
-	    
+
     		</div>
   		</div>
 	</div>

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 import com.spring.bookdream.service.OrderitemService;
 
 import com.spring.bookdream.vo.OrderitemVO;
@@ -53,6 +52,10 @@ public class OrderitemController {
 		// 바로 가기 구매시
 		if ("Y".equals(vo.getBuy_now())) {
 
+			session.setAttribute("buy_now", "Y");
+			session.setAttribute("product_count", vo.getProduct_count());
+			session.setAttribute("book_no", vo.getBook_no());
+			
 			OrderitemVO buy_now = orderitemService.getBuyNow(vo);
 			
 			// 구매할 개수
@@ -69,6 +72,7 @@ public class OrderitemController {
 			
 		} else {
 
+			session.setAttribute("buy_now", "N");
 			// (장바구니)주문된 상품 목록 조회
 			model.addAttribute("orderitemList", orderitemService.getOrderitemList(vo));	
 

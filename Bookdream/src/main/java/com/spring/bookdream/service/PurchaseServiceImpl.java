@@ -24,10 +24,18 @@ public class PurchaseServiceImpl implements PurchaseService {
 	}
 
 	@Override
+	public int insertPurchase_now(PurchaseVO vo) {
+		
+		return purchaseDAO.insertPurchase_now(vo);
+	}	
+	
+	@Override
 	public List<PurchaseVO> getPurchaseList(PurchaseVO vo) {
 
 		return purchaseDAO.getPurchaseList(vo);
 	}
+
+
 
 	
 

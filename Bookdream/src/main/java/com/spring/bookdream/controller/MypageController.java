@@ -31,9 +31,9 @@ public class MypageController {
 	@Autowired
 	private HttpSession session;	
 	
-	// 마이페이지(일단 여기다 둬볼까)
+	// 마이페이지 (배송조회)
 	@RequestMapping(value="/tracking")
-	public String success(OrderVO order, PurchaseVO purchase, Model model, HttpServletResponse response) {
+	public String mypageTracking(HttpServletResponse response) {
 
 		// 로그인해야 진입됨
 		if (session.getAttribute("user_no") == null) {
@@ -54,7 +54,31 @@ public class MypageController {
 		return "mypage/mypage_tracking";
 			
 	}
-		
+
+	// 마이페이지(배송지관리)
+	@RequestMapping(value="/address")
+	public String myPageAddress(HttpServletResponse response) {
+
+		// 로그인해야 진입됨
+		if (session.getAttribute("user_no") == null) {
+			String msg = "로그인 후 이용해주세요";
+			String url ="/views/user/login.jsp";	
+		    try {
+		        response.setContentType("text/html; charset=utf-8");
+		        PrintWriter w = response.getWriter();
+		        w.write("<script>alert('"+msg+"');location.href='"+url+"';</script>");
+		        w.flush();
+		        w.close();
+		    } catch(Exception e) {
+		        e.printStackTrace();
+		    }
+					
+		}
+					
+		return "mypage/mypage_address";
+			
+	}
+	
 	// 주문목록 조회 (간단)
 	@RequestMapping(value="/orderList")
 	@ResponseBody	
@@ -62,9 +86,12 @@ public class MypageController {
 		
 		int user_no = (int) session.getAttribute("user_no");
 		order.setUser_no(user_no);
-			
+		
+		// 배송상태 업데이트
+		// 결제 1일뒤 = 배송중, 2일뒤 = 배송완료
+		orderService.trackingUpdate(order);
+		
 		List<OrderVO> list  = orderService.searchOrder(order);
-			
 		return list;
 	}
 	
@@ -75,14 +102,9 @@ public class MypageController {
 		
 		int user_no = (int) session.getAttribute("user_no");
 		purchase.setUser_no(user_no);
-		
-		System.out.println(purchase.getOrder_no());	
-		System.out.println(purchase.getUser_no());	
-		
-		
+				
 		List<PurchaseVO> list  = purchaseService.getPurchaseList(purchase);
 		
-		System.out.println(list);
 		return list;
 	}	
 	

@@ -16,13 +16,19 @@ public class PurchaseDAO {
 
 	public int insertPurchase(PurchaseVO user_no) {
 
-		System.out.println("---> 구매목록 저장 <---");
+		System.out.println("---> 구매목록 저장(장바구니) <---");
 		
 		return mybatis.insert("PurchaseDAO.insertPurchase", user_no);
 	}
 	
 	
+	public int insertPurchase_now(PurchaseVO vo) {
 
+		System.out.println("---> 구매목록 저장(바로구매) <---");
+		
+		return mybatis.insert("PurchaseDAO.insertPurchase_now", vo);
+	}
+	
 	public List<PurchaseVO> getPurchaseList(PurchaseVO vo) {
 
 		System.out.println("---> 구매목록 조회 <---");

@@ -9,7 +9,7 @@
 		<result property="order_name" column="ORDER_NAME" />	
 		<result property="user_no" column="USER_NO" />	
 		<result property="order_date" column="ORDER_DATE" />	
-		<result property="final_price" column="FINAL_PRICE" />	
+		<result property="order_status" column="ORDER_STATUS" />	
 		<collection property="purchaseVO" resultMap="purchaseList"></collection>		
 		<collection property="bookVO" resultMap="bookList"></collection>
 		<collection property="payVO" resultMap="payList"></collection>
@@ -59,24 +59,101 @@
 		SELECT order_no, 
 			   order_name, 
 			   book_img, 
-			   to_char(SYSDATE, 'YYYY.MM.DD') as order_date,
-			   final_price
+      		   order_date,
+			   final_price,
+			   order_status
 		FROM   (select o.order_no, 
                 	   o.order_name, 
                        b.book_img, 
                        o.order_date,
                        y.final_price,
-                       ROW_NUMBER() OVER(PARTITION BY o.order_no ORDER BY o.order_name DESC) AS rn
+                       o.order_status,
+	 			       ROW_NUMBER() OVER(PARTITION BY o.order_no ORDER BY o.order_name DESC) AS rn                       
 	 			from   orders o, 
 	 			       purchase p, 
 	 			       book b,
 	 			       pay y
-	 			where  p.book_no = b.book_no   and
-                       p.order_no = o.order_no and
+	 			where  p.book_no = b.book_no   AND
+                       p.order_no = o.order_no AND
+                       y.pay_no = o.order_no   AND
                        o.user_no = #{user_no}
                 )
-		WHERE          rn = 1
+        where rn = 1         
 		order by order_no desc
 	</select>	
 		
+		
+	<!-- 결제취소 -->
+	<update id="cencelOrder">
+		UPDATE orders
+		SET	   order_status = 10
+		WHERE  order_no = #{order_no} AND
+			   order_status = 0
+	</update>	
+
+	<!-- 반품신청 -->
+	<update id="cencelOrder2">
+		UPDATE orders
+		SET	   order_status = 11
+		WHERE  order_no = #{order_no} AND
+		       order_status = 2
+	</update>	
+			
+	<!-- 도서반환 -->	
+	<update id="updateBookStock">	
+		UPDATE book b
+		SET    b.stock = (select (b.stock + p.product_count) as stock
+                 		  from  purchase p,
+                 		  		orders o
+                 		  where p.book_no = b.book_no AND
+                  	            p.order_no = o.order_no AND                   		   
+                 		  		o.order_no = #{order_no}
+                 		  )
+                  
+		WHERE  exists (select 1
+                 	   from    purchase p,
+                 		  	   orders o
+                  	   where   p.book_no = b.book_no AND 
+                  	           p.order_no = o.order_no AND      
+                 		  	   o.order_no = #{order_no}
+               		   ) 
+		
+	</update>	
+	<!-- 포인트 반환 -->	
+	<update id="updateUserPoint">
+		UPDATE users u
+		SET    user_point = (select (user_point + (use_point - save_point)) as user_point
+                  			 from    
+                  			 		 pay p
+                  			 where   u.user_no = #{user_no} AND 
+                  			 		 p.pay_no = #{order_no}
+                  			 )
+                  			 
+		WHERE  exists (select 1 
+         		       from   
+         		       		  pay p 
+             	       where  u.user_no = #{user_no} AND           	       
+             	       		  p.pay_no = #{order_no}
+             	      ) 
+	
+	</update>	
+
+	<update id="trackingUpdate">		
+		<![CDATA[	
+		UPDATE orders
+		SET order_status = 1
+		WHERE order_date + 1 < sysdate AND
+      		  order_status = 0
+      	]]>	  
+	</update>
+		
+	<update id="trackingUpdate2">		
+		<![CDATA[	
+		UPDATE orders
+		SET order_status = 2
+		WHERE order_date + 2 < sysdate AND
+      		  order_status = 1
+      	]]>	  
+	</update>
+			
 </mapper>

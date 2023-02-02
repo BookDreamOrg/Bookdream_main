@@ -166,10 +166,10 @@ function load_default() {
 
 						var result =  JSON.parse(result);
 
-						html +=	`<div>`
+						html +=	`<div class="address_main_default">`
 						
 									if(`${result.default_add}` == `Y`) {
-						html +=			`<div style="color: purple; font-weight: bold;">${result.address_alias}&nbsp;<i class="bi bi-geo-alt-fill"></i>&nbsp;[기본배송지]</div>` 	
+						html +=			`<div style="color: purple; font-weight: bold;"><i class="bi bi-geo-alt-fill"></i>&nbsp;${result.address_alias}&nbsp;[기본배송지]</div>` 	
 									} else {
 						html +=			`<div>${result.address_alias}</div>`
 									}			
@@ -232,7 +232,7 @@ function address_list() {
 								`<td class="addresslist_table_col2">`
 								
 									if (i==0) {
-				html +=				` <label for="address_radio+${no}"><div style="color: purple; font-weight: bold;"> ${result[i].address_alias}&nbsp;<i class="bi bi-geo-alt-fill"></i>${address}</div>` 										
+				html +=				` <label for="address_radio+${no}"><div style="color: purple; font-weight: bold;"><i class="bi bi-geo-alt-fill"></i> ${result[i].address_alias}&nbsp;${address}</div>` 										
 									} else {
 				html +=			  	` <label for="address_radio+${no}"><div> ${result[i].address_alias}${address}</div>` 									
 									}

@@ -17,6 +17,7 @@ public class OrderImpl implements OrderService {
 	// 
 	@Override
 	public void insertOrder(OrderVO vo) {
+		
 		orderDAO.insertOrder(vo);		
 	}
 
@@ -25,6 +26,31 @@ public class OrderImpl implements OrderService {
 	public List<OrderVO> searchOrder(OrderVO vo) {
 
 		return orderDAO.searchOrder(vo);
+	}
+
+	@Override
+	public void cencelOrder(OrderVO vo) {
+
+		orderDAO.cencelOrder(vo);
+	}
+
+	@Override
+	public int updateBookStock(OrderVO vo) {
+
+		return orderDAO.updateBookStock(vo);
+	}
+
+	@Override
+	public int updateUserPoint(OrderVO vo) {
+		
+		return orderDAO.updateUserPoint(vo);
+	}
+
+	@Override
+	public void trackingUpdate(OrderVO vo) {
+		
+		orderDAO.trackingUpdate(vo);
+		
 	}
 	
 	

@@ -1,5 +1,7 @@
 package com.spring.bookdream.vo;
 
+import java.util.Date;
+
 import lombok.Data;
 
 @Data
@@ -10,11 +12,11 @@ public class OrderVO {
 	private int pay_no;
 	private String order_name;
 	private String order_comment;	
-	private String order_date;
+	private Date order_date;
 	private String order_receiver;	
 	private String order_address;
 	private String order_tel;	
-	private String order_status;
+	private int order_status;
 	
 	//
 	private PurchaseVO purchaseVO;
