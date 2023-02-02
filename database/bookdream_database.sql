@@ -237,4 +237,15 @@ alter table address add constraint fk_address_user_no foreign key (user_no) refe
 
 SELECT * FROM ADDRESS;
 
+--------------------------------------------------------------------------------
+--------------------------------- KEYWORD_HISTORY --------------------------------------
+--------------------------------------------------------------------------------
+
+create table KEYWORD_HISTORY(
+    USER_ID         varchar2(20),
+    KEYWORD         varchar2(500),
+    SEARCH_DATE     date default sysdate,
+    LOGIN_YN        varchar2(5) not null
+);
+
 commit; 
