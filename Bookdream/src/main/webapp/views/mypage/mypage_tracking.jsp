@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>	
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+    pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,8 +15,7 @@
 <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
 <link rel="stylesheet" href="/resources/css/styles.css" />
 
-
-<title>주문완료 페이지</title>
+<title>마이페이지 - 배송조회</title>
 
 <!-- bootstrap -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -25,22 +23,22 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
 
 <!-- CSS -->
-<link rel="stylesheet" type="text/css" href="/resources/css/success.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/mypage_tracking.css">
 
+<!-- jQuery -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 </head>
-
 <body>
-
 	<div class="wrapper">
-		<header>	
+		<header>
 			<div class="header-nav-list">
 				<ul class="nav header-nav">
 					<li class="nav-item"><a class="nav-link header-nav-link"
 						aria-current="page" href="member/join.jsp">회원가입</a></li>
 					<span class="nav-bar-line"></span>
 					<li class="nav-item"><a class="nav-link header-nav-link"
-						href="member/login.jsp">로그인</a></li>
+						href="/views/user/login.jsp">로그인</a></li>
 					<span class="nav-bar-line"></span>
 					<li class="nav-item"><a class="nav-link header-nav-link"
 						href="#">고객센터</a></li>
@@ -103,105 +101,113 @@
 						href="#" tabindex="-1" aria-disabled="true">Disabled</a></li>
 				</ul>
 			</div>	
-	
 	</header>
 	
 	
 	
-	<div class="container">
-		<div class="main">
-		
-			<div class="topbar">
-				 <div>
-				 	<span class="topbar_title">주문&nbsp;완료</span>
-				 </div>
-			</div>
-			
-			<div class="center">
-				<div class="center_info">
-					<i class="bi bi-check2-circle">&nbsp;주문이 완료 되었습니다.</i>
-				</div>	
-				<hr>
-				<br>
-					<table class="center_table">
-						<tr >
-							<th class="center_table_th">주문 번호</th>
-							<td class="center_table_td">${payData.pay_no}</td>							
-						</tr>	
-						
-						<tr>
-							<th class="center_table_th col2">배송지 정보</th>
-							<td class="center_table_td">${order.order_receiver}<br>${order.order_tel}<br>${order.order_address}</td>
-						</tr>
-						
-						<tr>
-							<th class="center_table_th">포인트 적립</th>
-							<td class="center_table_td"><fmt:formatNumber value="${order.save_point}" pattern="###,###"/>P</td>							
-						</tr>						
-												
-						<tr>
-							<th class="center_table_th col4">결제 정보</th>
-							<td class="center_table_td">결제방법 : ${order.pay_method}<br>결제시간 : ${payData.pay_date}</td>							
-						</tr>
-
-														
-					</table>						
 	
-			</div>
+	
+	
+	
+	
+	
+	<div class="main">
+		<div class="side"></div>
+	
+		<div class="main_tracking">
+			
+			<div class="tracking">
 
-			<div class="sidebar">
-				<div class="sidebar_item">
-						<div class="sidebar_item_title_down" id="sidebar_item_title_down">주문상세열기&nbsp;<i class="bi bi-caret-down-fill" ></i></div>
-						<div class="sidebar_item_title_up" id="sidebar_item_title_up">주문상세닫기&nbsp;<i class="bi bi-caret-up-fill" ></i></div>
-					<hr>
-					<div class="sidebar_item_icon" id="sidebar_item_icon"><i class="bi bi-question"></i></div>
-					<table class="sidebar_item_table" id="sidebar_item_table">
-						<c:forEach items="${purchase}" var="pur" varStatus="i">
-						
-							<tr>
-								<td class="sidebar_item_table_td col1" rowspan="3"><img class="sidebar_item_table_td_img" alt="" src="${pur.bookVO.book_img}"></td>
-								<td class="sidebar_item_table_td col2" >${pur.bookVO.title}</td>
-							</tr>
-
-
-							<tr>
-								<td class="sidebar_item_table_td" ><fmt:formatNumber value="${pur.bookVO.book_price}" pattern="###,###"/>원</td>							
-							</tr>
-
-							<tr>
-								<td class="sidebar_item_table_td" >${pur.product_count}개</td>
-							</tr>
-					
-						</c:forEach>	
-												
+				<div class="tracking_main">
+					<div class="tracking_title"><b>주문/배송 목록</b></div>
+					<table class="tracking_main_table">
+						<tr>
+							<td class="tracking_main_table_col1">주문내역</td>
+							<td class="tracking_main_table_col2">결제완료<br><span id="tracking_main_table_col2"></span></td>
+							<td class="tracking_main_table_col3">배송중<br><span id="tracking_main_table_col3"></span></td>
+							<td class="tracking_main_table_col4">배송완료<br><span id="tracking_main_table_col4"></span></td>
+							<td class="tracking_main_table_col5">반품/취소<br><span id="tracking_main_table_col5"></span></td>
+						</tr>
 					</table>
 				</div>
-				<hr>
-				<div class="sidebar_pay">
-					<div class="sidebar_pay_main">결제금액<span class="sidebar_pay_right"><b><fmt:formatNumber value="${order.final_price}" pattern="###,###"/></b>&nbsp;원</span></div>
-					<div class="sidebar_pay_left">ㄴ 상품금액<span class="sidebar_pay_right"><fmt:formatNumber value="${order.total_price}" pattern="###,###"/>&nbsp;원</span></div>
-					<div class="sidebar_pay_left">ㄴ 배송비<span class="sidebar_pay_right">(+)&nbsp;<fmt:formatNumber value="${order.pay_fee}" pattern="###,###"/>&nbsp;원</span></div>
-					<div class="sidebar_pay_left">ㄴ 할인금액<span class="sidebar_pay_right">(-)&nbsp;<fmt:formatNumber value="${order.discount_price}" pattern="###,###"/>&nbsp;원</span></div>					
-					<div class="sidebar_pay_left">ㄴ 포인트사용<span class="sidebar_pay_right">(-)&nbsp;<fmt:formatNumber value="${order.use_point}" pattern="###,###"/>&nbsp;원</span></div>
-				</div>
-			
-			
-			</div>	
-		
-		</div>
-	</div>
-	
-	
-	<footer>
-	
-				<div>
-				<a class="footer-logo" href="#"> <img class="footer-logo-img"
-					src="/resources/images/logo/logo_white.png" alt="logo_white" /> <img
-					class="footer-logo-text"
-					src="/resources/images/logo/logo_text--white.png"
-					alt="logo_text--white" />
-				</a>
 			</div>
+
+
+			
+			<div class="trackinglist" id="trackinglist">
+
+			</div>
+					
+		</div>	
+	</div>
+
+
+
+ 
+<!----------------------------------------- 결제취소 -------------------------------------->
+	<div class="modal fade" id="pay_cencel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  		<div class="modal-dialog modal-sm modal-dialog-centered">
+   			<div class="modal-content modal_pay_cencel">
+      			<div class="modal-header">
+       		 		<h5 class="modal-title" id="exampleModalLabel">결제 취소</h5>
+       		 		<button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close"></button>
+     		 	</div>
+      		
+      			<div class="modal-body">
+ 					결제취소를 하시겠습니까?
+      			</div>
+      			<input type="hidden" id="pay_cencel_order_no">
+      			<button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="modal_pay_cencel">결제취소</button>         			
+	       		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+    		</div>
+  		</div>
+	</div>
+
+<!----------------------------------------- 반품요청 -------------------------------------->
+	<div class="modal fade" id="return_reqeust" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  		<div class="modal-dialog modal-sm modal-dialog-centered">
+   			<div class="modal-content modal_pay_cencel">
+      			<div class="modal-header">
+       		 		<h5 class="modal-title" id="exampleModalLabel">반품 요청</h5>
+       		 		<button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close"></button>
+     		 	</div>
+      		
+      			<div class="modal-body">
+ 					반품요청을 하시겠습니까?
+      			</div>
+      			<input type="hidden" id="return_request_order_no">
+      			<button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="modal_return_request">반품신청</button>         			
+	       		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+    		</div>
+  		</div>
+	</div>
+
+
+<!----------------------------------------- Modal -------------------------------------->
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  		<div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
+   			<div class="modal-content tracking_detail">
+      			<div class="modal-header">
+       		 		<h5 class="modal-title" id="exampleModalLabel">	상세 조회</h5>
+       		 		<button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close"></button>
+     		 	</div>
+      		
+      			<div class="modal-body" id="tracking_detail_list">
+ 					
+      			</div>
+
+    		</div>
+  		</div>
+	</div>
+
+			
+	<footer>
+		<div>
+			<a class="footer-logo" href="#"> 
+				<img class="footer-logo-img" src="/resources/images/logo/logo_white.png" alt="logo_white" /> 
+				<img class="footer-logo-text" src="/resources/images/logo/logo_text--white.png" alt="logo_text--white" />
+			</a>
+		</div>
 			<div class="footer-section">
 				<div class="footer-profile-box">
 					<div class="footer-profile">
@@ -254,41 +260,19 @@
 					<div class="doucumnet-text">Project 설명이 포함되어 있습니다.</div>
 					<span>© BOOKDREAM BUKDACK-BUCKDACK</span>
 				</div>
-			</div>	
-	
-	</footer>	
-		
+			</div>
+		</footer>
 	</div>
-
+	
+	<script type="text/javascript" src="/resources/js/mypage_tracking.js"></script>
+	
 	<!-- Script Bootstrap, jqurey-3.6.3 -->
 	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
 	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 
 	<!-- Script FontAwesome-->
-	<script src="https://kit.fontawesome.com/4bf42f841a.js" crossorigin="anonymous"></script>
-	
-	<script type="text/javascript">
-	
-	$("#sidebar_item_title_down").click(function() {
-		$('#sidebar_item_table').fadeIn();
-		$('#sidebar_item_title_up').show();		
-		$('#sidebar_item_title_down').hide();
-		$('#sidebar_item_icon').hide();		
+	<script src="https://kit.fontawesome.com/4bf42f841a.js" crossorigin="anonymous"></script>	
 
-	
-	})
-	
-	$("#sidebar_item_title_up").click(function() {
-		$('#sidebar_item_table').hide();
-		$('#sidebar_item_title_up').hide();
-		$('#sidebar_item_title_down').show();
-		$('#sidebar_item_icon').show();
-	
-	})	
-	
-	</script>
-	
-	
 
 </body>
 </html>

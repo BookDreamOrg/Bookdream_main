@@ -54,7 +54,8 @@
 	<!-- user_no 변경필요 -->	
 	<select id="getDefaultAddress" parameterType="address" resultMap="addressList">
 	<![CDATA[
-		SELECT address_alias, 
+		SELECT address_no,
+			   address_alias, 
 			   address_name, 
 			   address_tel, 
 			   zone_code, 

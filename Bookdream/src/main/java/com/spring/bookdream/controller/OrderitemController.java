@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 import com.spring.bookdream.service.OrderitemService;
 
 import com.spring.bookdream.vo.OrderitemVO;
@@ -27,14 +26,14 @@ public class OrderitemController {
 	private HttpSession session;	
 	
 	@RequestMapping(value="/orderitem")
-	public String orderitemList(OrderitemVO vo, Model model, HttpServletResponse response, String msg, String url) {
+	public String orderitemList(OrderitemVO vo, Model model, HttpServletResponse response) {
 	
 		// 로그인해야 진입됨
 		if (session.getAttribute("user_no") == null) {
-			msg = "로그인 후 이용해주세요";
-			url ="/user/login.jsp";	
+			String msg = "로그인 후 이용해주세요";
+			String url ="/views/user/login.jsp";	
 		    try {
-		        response.setContentType("text/html; charset=utf-8");
+		    	response.setContentType("text/html; charset=utf-8");
 		        PrintWriter w = response.getWriter();
 		        w.write("<script>alert('"+msg+"');location.href='"+url+"';</script>");
 		        w.flush();
@@ -44,20 +43,19 @@ public class OrderitemController {
 		    }
 					
 		}
+
 		
 		int user_no = (int) session.getAttribute("user_no");		
 		vo.setUser_no(user_no);
-		
-		//test
-//		vo.setUser_no(1);
-//		vo.setBook_no(1);		
-//		vo.setBuy_now("Y");
-//		vo.setProduct_count(3);
-
-		
+			
+			
 		// 바로 가기 구매시
-		if (vo.getBuy_now().equals("Y")) {
+		if ("Y".equals(vo.getBuy_now())) {
 
+			session.setAttribute("buy_now", "Y");
+			session.setAttribute("product_count", vo.getProduct_count());
+			session.setAttribute("book_no", vo.getBook_no());
+			
 			OrderitemVO buy_now = orderitemService.getBuyNow(vo);
 			
 			// 구매할 개수
@@ -74,6 +72,7 @@ public class OrderitemController {
 			
 		} else {
 
+			session.setAttribute("buy_now", "N");
 			// (장바구니)주문된 상품 목록 조회
 			model.addAttribute("orderitemList", orderitemService.getOrderitemList(vo));	
 

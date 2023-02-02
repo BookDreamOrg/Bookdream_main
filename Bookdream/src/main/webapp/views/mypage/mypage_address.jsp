@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>	
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+    pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,31 +15,33 @@
 <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
 <link rel="stylesheet" href="/resources/css/styles.css" />
 
+<title>마이페이지 - 주소록</title>
 
-<title>주문완료 페이지</title>
+<!-- 주소찾기 api-->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <!-- bootstrap -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
 
-<!-- CSS -->
-<link rel="stylesheet" type="text/css" href="/resources/css/success.css">
+<!--  CSS --> -->
+<link rel="stylesheet" type="text/css" href="/resources/css/mypage_address.css">
 
+<!-- jQuery -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 </head>
-
 <body>
-
 	<div class="wrapper">
-		<header>	
+		<header>
 			<div class="header-nav-list">
 				<ul class="nav header-nav">
 					<li class="nav-item"><a class="nav-link header-nav-link"
 						aria-current="page" href="member/join.jsp">회원가입</a></li>
 					<span class="nav-bar-line"></span>
 					<li class="nav-item"><a class="nav-link header-nav-link"
-						href="member/login.jsp">로그인</a></li>
+						href="/views/user/login.jsp">로그인</a></li>
 					<span class="nav-bar-line"></span>
 					<li class="nav-item"><a class="nav-link header-nav-link"
 						href="#">고객센터</a></li>
@@ -103,105 +104,93 @@
 						href="#" tabindex="-1" aria-disabled="true">Disabled</a></li>
 				</ul>
 			</div>	
-	
 	</header>
 	
+	<div class="main">
+		<div class="side"></div>
 	
-	
-	<div class="container">
-		<div class="main">
-		
-			<div class="topbar">
-				 <div>
-				 	<span class="topbar_title">주문&nbsp;완료</span>
-				 </div>
+		<div class="main_address">
+			
+			<div class="address">
+				<div class="address_title">배송주소록</div>
+				<div class="address_main" id="address_main"></div>
+				<div class="address_sub">기본 배송지는 삭제 불가합니다.</div>
+			</div>
+
+			<div class="addresslist">
+				<span class="addresslist_title"><button type="button" class="btn btn-primary" id="modal_open" data-bs-toggle="modal" data-bs-target="#exampleModal">배송지 입력하기</button></span>	
+				<div class="addresslist_main" id="addresslist_main">배송지 들어갈것.</div>
 			</div>
 			
-			<div class="center">
-				<div class="center_info">
-					<i class="bi bi-check2-circle">&nbsp;주문이 완료 되었습니다.</i>
-				</div>	
-				<hr>
-				<br>
-					<table class="center_table">
-						<tr >
-							<th class="center_table_th">주문 번호</th>
-							<td class="center_table_td">${payData.pay_no}</td>							
-						</tr>	
-						
-						<tr>
-							<th class="center_table_th col2">배송지 정보</th>
-							<td class="center_table_td">${order.order_receiver}<br>${order.order_tel}<br>${order.order_address}</td>
-						</tr>
-						
-						<tr>
-							<th class="center_table_th">포인트 적립</th>
-							<td class="center_table_td"><fmt:formatNumber value="${order.save_point}" pattern="###,###"/>P</td>							
-						</tr>						
-												
-						<tr>
-							<th class="center_table_th col4">결제 정보</th>
-							<td class="center_table_td">결제방법 : ${order.pay_method}<br>결제시간 : ${payData.pay_date}</td>							
-						</tr>
-
-														
-					</table>						
-	
+			<div class="address_default">
+				<input type="checkbox" id="address_default_check">
+				<label class="" for="address_default_check">기본 배송지로 설정</label>
 			</div>
-
-			<div class="sidebar">
-				<div class="sidebar_item">
-						<div class="sidebar_item_title_down" id="sidebar_item_title_down">주문상세열기&nbsp;<i class="bi bi-caret-down-fill" ></i></div>
-						<div class="sidebar_item_title_up" id="sidebar_item_title_up">주문상세닫기&nbsp;<i class="bi bi-caret-up-fill" ></i></div>
-					<hr>
-					<div class="sidebar_item_icon" id="sidebar_item_icon"><i class="bi bi-question"></i></div>
-					<table class="sidebar_item_table" id="sidebar_item_table">
-						<c:forEach items="${purchase}" var="pur" varStatus="i">
-						
-							<tr>
-								<td class="sidebar_item_table_td col1" rowspan="3"><img class="sidebar_item_table_td_img" alt="" src="${pur.bookVO.book_img}"></td>
-								<td class="sidebar_item_table_td col2" >${pur.bookVO.title}</td>
-							</tr>
-
-
-							<tr>
-								<td class="sidebar_item_table_td" ><fmt:formatNumber value="${pur.bookVO.book_price}" pattern="###,###"/>원</td>							
-							</tr>
-
-							<tr>
-								<td class="sidebar_item_table_td" >${pur.product_count}개</td>
-							</tr>
+			
+			<div class="address_change">
+				<button id="address_change_button" disabled="disabled">기본 배송지 변경하기</button>
+			</div>
 					
-						</c:forEach>	
-												
-					</table>
-				</div>
-				<hr>
-				<div class="sidebar_pay">
-					<div class="sidebar_pay_main">결제금액<span class="sidebar_pay_right"><b><fmt:formatNumber value="${order.final_price}" pattern="###,###"/></b>&nbsp;원</span></div>
-					<div class="sidebar_pay_left">ㄴ 상품금액<span class="sidebar_pay_right"><fmt:formatNumber value="${order.total_price}" pattern="###,###"/>&nbsp;원</span></div>
-					<div class="sidebar_pay_left">ㄴ 배송비<span class="sidebar_pay_right">(+)&nbsp;<fmt:formatNumber value="${order.pay_fee}" pattern="###,###"/>&nbsp;원</span></div>
-					<div class="sidebar_pay_left">ㄴ 할인금액<span class="sidebar_pay_right">(-)&nbsp;<fmt:formatNumber value="${order.discount_price}" pattern="###,###"/>&nbsp;원</span></div>					
-					<div class="sidebar_pay_left">ㄴ 포인트사용<span class="sidebar_pay_right">(-)&nbsp;<fmt:formatNumber value="${order.use_point}" pattern="###,###"/>&nbsp;원</span></div>
-				</div>
-			
-			
-			</div>	
-		
-		</div>
+		</div>	
 	</div>
 	
 	
-	<footer>
+	<!----------------------------------------- Modal -------------------------------------->
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  		<div class="modal-dialog  modal-dialog-centered">
+   			<div class="modal-content address_insert_content" id="modal-backdrop">
+      			<div class="modal-header">
+       		 		<h5 class="modal-title" id="exampleModalLabel">배송지 입력하기</h5>
+       		 		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+     		 	</div>
+      		
+      			<div class="modal-body">
+ 					<div class="mb-3">
+  						<label for="address_alias" class="form-label">배송지 이름</label>
+  						<input class="form-control" id="address_alias" name="address_alias" placeholder="배송지 이름을 입력해주세요.">
+					</div>		
+
+					<div class="mb-3">
+  						<label for="address_name" class="form-label">받는 사람</label>
+  						<input class="form-control" id="address_name" name="address_name" placeholder="이름을 입력해주세요.">
+  						<br>
+  						<input class="form-control" id="address_tel" name="address_tel" placeholder="휴대번호를 -없이 입력해주세요.">
+					</div>				
+
+					<div class="d-grid gap-2 address_search">
+						<button class="btn btn-outline-dark" onclick="execDaumPostcode()"><i class="bi bi-search"></i>&nbsp;&nbsp;주소찾기</button>
+					</div>
+
+					<div class="mb-3">
+  						<input class="form-control" id="zonecode" name="address_zonecode" placeholder="우편번호" readonly>
+  						<br>
+  						<input class="form-control" id="roadAddr" name="address_roadAddr" placeholder="도로명주소" readonly>
+  						<span  id="guide" style="color: #999; display: none"></span>
+  						<br>
+  						<input class="form-control" id="detailAddress" name="address_detailAddress" placeholder="상세주소" >
+						<input type="hidden" id="extraAddress" placeholder="참고항목" readonly="readonly">			
+						<input type="hidden" id="address_no" name="address_no">	
+					</div>      
+      			</div>
+
+     		    <div class="d-grid gap-2 address_save">
+					<button class="btn btn-light" data-bs-dismiss="modal" id="modal_address_insert">저장</button>
+					<button class="btn btn-light" data-bs-dismiss="modal" id="modal_address_update">수정</button>				
+				</div>	
+     		    
+     		    
+    		</div>
+  		</div>
+	</div>
 	
-				<div>
-				<a class="footer-logo" href="#"> <img class="footer-logo-img"
-					src="/resources/images/logo/logo_white.png" alt="logo_white" /> <img
-					class="footer-logo-text"
-					src="/resources/images/logo/logo_text--white.png"
-					alt="logo_text--white" />
-				</a>
-			</div>
+		
+	<footer>
+		<div>
+			<a class="footer-logo" href="#"> 
+				<img class="footer-logo-img" src="/resources/images/logo/logo_white.png" alt="logo_white" /> 
+				<img class="footer-logo-text" src="/resources/images/logo/logo_text--white.png" alt="logo_text--white" />
+			</a>
+		</div>
 			<div class="footer-section">
 				<div class="footer-profile-box">
 					<div class="footer-profile">
@@ -254,41 +243,24 @@
 					<div class="doucumnet-text">Project 설명이 포함되어 있습니다.</div>
 					<span>© BOOKDREAM BUKDACK-BUCKDACK</span>
 				</div>
-			</div>	
-	
-	</footer>	
-		
+			</div>
+		</footer>
 	</div>
-
+	
+	
+	<script type="text/javascript" src="/resources/js/mypage_address.js"></script>
+	
 	<!-- Script Bootstrap, jqurey-3.6.3 -->
 	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
 	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 
 	<!-- Script FontAwesome-->
-	<script src="https://kit.fontawesome.com/4bf42f841a.js" crossorigin="anonymous"></script>
-	
-	<script type="text/javascript">
-	
-	$("#sidebar_item_title_down").click(function() {
-		$('#sidebar_item_table').fadeIn();
-		$('#sidebar_item_title_up').show();		
-		$('#sidebar_item_title_down').hide();
-		$('#sidebar_item_icon').hide();		
+	<script src="https://kit.fontawesome.com/4bf42f841a.js" crossorigin="anonymous"></script>	
 
 	
-	})
-	
-	$("#sidebar_item_title_up").click(function() {
-		$('#sidebar_item_table').hide();
-		$('#sidebar_item_title_up').hide();
-		$('#sidebar_item_title_down').show();
-		$('#sidebar_item_icon').show();
-	
-	})	
-	
-	</script>
-	
-	
+
+
+
 
 </body>
 </html>

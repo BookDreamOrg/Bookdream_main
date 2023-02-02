@@ -18,8 +18,11 @@ public interface OrderitemService {
 	// 사용자 포인트 조회
 	OrderitemVO userPoint(OrderitemVO vo);
 	
-	// 결제 후 재고 처리
+	// 결제 후 재고 처리 (장바구니)
 	int updateBookStock(OrderitemVO user_no);
+
+	// 결제 후 재고 처리 (바로구매)
+	int updateBookStock_now(OrderitemVO vo);	
 	
 	// 결제 후 결제한 상품 장바구니 제거
 	int deleteCartList(OrderitemVO user_no);
