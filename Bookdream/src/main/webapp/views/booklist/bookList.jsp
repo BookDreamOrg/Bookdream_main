@@ -108,7 +108,7 @@
 						href="#" tabindex="-1" aria-disabled="true">Disabled</a></li>
 				</ul>
 			</div>
-		</header>
+		</header>	
 
 		<main>
 		<div class="banner">
