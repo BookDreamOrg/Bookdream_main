@@ -115,7 +115,7 @@ public class MypageController {
 	}	
 
 	//회원정보 수정
-	@PostMapping(value="/updateUser.do")
+	@PostMapping(value="/updateUser")
 	@ResponseBody
 	public String updateUser(@RequestParam(value="id") String id,
 							 @RequestParam(value="password") String password,
@@ -144,7 +144,7 @@ public class MypageController {
 		System.out.println(name);
 		userService.updateUser(userVO);
 		
-		return "/views/main/mypage.jsp";
+		return "/main/mypage";
 	}
 	
 }

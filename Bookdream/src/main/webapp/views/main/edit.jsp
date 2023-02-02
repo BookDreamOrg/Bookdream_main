@@ -279,6 +279,8 @@
 				</div>
 			</div>	
 			</div>
+			
+			
 	</div>
 			
 			<script>
@@ -300,7 +302,7 @@
 				var email = $('#user_email').val();
 				
 				$.ajax({
-					url : '/views/main/updateUser.do',
+					url : '/mypage/updateUser',
 					type : 'post',
 					data : {id:id,
 							password:password,
