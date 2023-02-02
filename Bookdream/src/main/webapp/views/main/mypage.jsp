@@ -162,8 +162,34 @@
 			
 			<div class="container">
 				<h1><a href="/views/main/edit.jsp">회원정보 수정</a></h1>
+				<!-- Button trigger modal -->
+				<button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+				  회원탈퇴
+				</button>
+				
+				<!-- Modal -->
+				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">회원탈퇴</h5>
+				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				      </div>
+				      <div class="modal-body">
+				        <div>
+				        	회원탈퇴 시 개인정보 및 BookDream에서 제공되는 서비스가 중단됩니다....
+				        	@@ 비밀번호 재확인 로직 추가
+				        </div>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+				        <button type="button" class="btn btn-primary">회원탈퇴</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
 			</div>
-		
+			
 		<footer>
 			<div>
 				<a class="footer-logo" href="#"> <img class="footer-logo-img"

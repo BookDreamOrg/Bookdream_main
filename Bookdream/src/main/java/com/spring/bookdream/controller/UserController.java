@@ -110,4 +110,11 @@ public class UserController {
 		
 	}
 	
+	public String unregister(UserVO vo,UserDAO dao) throws Exception {
+		System.out.println("회원탈퇴 중...");
+		userService.deleteUser(vo);
+		
+		return "/user/login";
+	}
+ 	
 }

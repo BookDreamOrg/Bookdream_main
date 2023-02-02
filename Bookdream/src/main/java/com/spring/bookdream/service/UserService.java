@@ -37,4 +37,7 @@ public interface UserService {
 	
 	//회원정보 수정
 	public void updateUser(UserVO vo);
+	
+	// 회원 탈퇴
+	public void deleteUser(UserVO vo);
 }
