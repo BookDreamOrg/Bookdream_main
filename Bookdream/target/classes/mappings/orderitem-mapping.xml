@@ -83,7 +83,6 @@
 	
 	
 
-	<!-- user_no 변경필요 -->
 	<!-- 사용자의 적립금 호출 -->
 	<select id="userPoint" parameterType="orderitem" resultMap="orderitemList">
 		SELECT user_point   
@@ -92,7 +91,6 @@
 	</select>
 	
 	<!-- 구입한 상품 재고차감 -->
-	<!-- user_no 변경필요 -->	
 	<update id="updateBookStock">
 		UPDATE book b
 		SET    b.stock = (select (b.stock - c.product_count) as stock
@@ -113,32 +111,39 @@
 	
 	</update>
 
+	<!-- 구입한 상품 재고차감 (바로구매)-->
+	<update id="updateBookStock_now">
+		UPDATE book 
+		SET    stock = stock - #{product_count}
+		WHERE  book_no = #{book_no}
+	
+	</update>
+
 	<!-- 구입한 상품 장바구니 제거 -->
-	<!-- user_no 변경필요 -->	
 	<delete id="deleteCartList">
 		DELETE
 		FROM (select u.user_no, 
 					 c.cart_no
-	    FROM  users u, 
-	    	  book b, cart c
-        	  where u.user_no = c.user_no AND 
-        	  c.book_no = b.book_no
+	    	  from   users u, 
+	    	         book b, 
+	    	         cart c
+        	  where  u.user_no = c.user_no AND 
+        	         c.book_no = b.book_no
         	 )      
 		WHERE user_no = #{user_no}
 	</delete>
 	
 	<!-- 사용자의 포인트 계산 -->
-	<!-- user_no 변경필요 -->
 	<update id="updateUserPoint">
-		UPDATE users
+		UPDATE users u
 		SET    user_point = (select (user_point - (use_point - save_point)) as user_point
-                  			 from    users u, 
+                  			 from    
                   			 		 pay p
                   			 where   user_no = #{user_no} AND 
                   			 		 pay_no = #{pay_no}
                   			 )
 		WHERE  exists (select 1 
-         		       from   users u, 
+         		       from  
          		       		  pay p 
              	       where  user_no = #{user_no} AND 
              	       		  pay_no = #{pay_no}

@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 
 <html>
@@ -137,7 +138,7 @@
 				<div class="col-md-6 pt-4">
 				<span id="detail-badge" class="badge bg-primary rounded-pill">Author</span>
 				</div>
-				<div class="col-md-6 pt-4">
+				<div class="col-md-6 pt-4 h5">
 					${book.author }
 				</div>
 			</div>
@@ -145,7 +146,7 @@
 				<div class="col-md-6 pt-4">
 					<span  id="detail-badge" class="badge bg-primary rounded-pill">Publisher</span>
 				</div>
-				<div class="col-md-6 pt-4">
+				<div class="col-md-6 pt-4 h5" >
 				${book.publisher}
 				</div>
 			</div>
@@ -153,12 +154,12 @@
 				<div class="col-md-6 pt-4">
 					 <span id="detail-badge" class="badge bg-primary rounded-pill"> publication date</span>
 				</div>
-				<div class="col-md-6 pt-4">
+				<div class="col-md-6 pt-4 h5">
 				${strdate}
 				</div>
 			</div>
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-4 text-center ">
 			<h3 class="text-center">
 			</h3><img id="detail-img" alt="${book.title }" src="${book.book_img }" class="rounded" />
 		</div>
@@ -167,9 +168,16 @@
 				<div class="col-md-4">
 				</div>
 				<div class="col-md-5" id="detail-price">
-				  <input class=" form-control text-center border-0 "
-                                    type="number" id="product_cnt" min="1" max="${book.stock}" value="1" >
-				<fmt:formatNumber value="${book.book_price}" pattern="#,###"/>원
+				<c:choose>
+					<c:when test="${book.stock > 0 }">
+						<input class=" form-control text-center border-0 " type="number" id="product_cnt" min="1" max="${book.stock}" value="1" >
+						<div class="mt-3 text-center"><fmt:formatNumber value="${book.book_price}" pattern="#,###" />원</div>
+					</c:when>
+					<c:otherwise>
+						<div class="h1"> 품절  </div>					
+					</c:otherwise>
+				</c:choose>
+				  
 				</div>
 				<div class="col-md-3">
 				</div>
@@ -197,14 +205,16 @@
 				<div class="col-md-6">
 				
 				</div>
-				<div class="col-md-6">
-					<button id="btn_buy_now" class="text-center btn btn-outline-dark flex-shrink-0 btn-lg" onclick="now_buy()">
+				<c:if test="${book.stock > 0 }">
+				<div class="col-md-6 text-end">
+					<button id="btn_buy_now" class="text-center btn btn-outline-dark flex-shrink-0 btn-lg btn-info" onclick="now_buy()">
 						<i class="bi bi-basket2"></i> 바로구매
 					</button>
-						<button class="text-center btn btn-outline-dark flex-shrink-0  btn-lg me-3">
+						<button class="text-center btn btn-outline-dark flex-shrink-0  btn-lg me-3 btn-info" onclick="cart()">
 						<i class="bi-cart-fill me-1"></i>장바구니
 					</button>
 				</div>
+				</c:if>
 				</div>
 				</div>
 					
@@ -213,7 +223,6 @@
 				</div>
 		
 </main>
-
 
 <div id="detail-review">
 
@@ -252,20 +261,26 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-4">
 				<!-- 별점 -->
 					<c:forEach begin="1" end="${review.review_star}">
 						⭐
 					</c:forEach>
 					<div> 추천수  (${review.review_recommend}) </div>
 				</div>
+				<div class="col-md-2">
+				<c:if test="${review.user_id eq sessionScope.user_id }">
+				<button id="review_update" class="btn btn-warning" onclick="review_upd(this.value)"  value="${review.review_no }"   >수정</button>
+				<button id="review_delete" class="btn btn-warning" onclick="review_dlt(this.value)" value="${review.review_no }">삭제</button>	
+				</c:if>
+				</div>	
 			</div>
 			<div class="row">
 				<div class="col-md-12">
 				 ${review.review_content} 
 				</div>
 			</div>
-			<div class="mt-2">
+			<div class="mt-2 mb-5">
 						<input type="hidden" value="" name="review_no" >
 						<button id="btn_recommend" value="${review.review_no }"  onclick="review_recommend(this.value)" class="text-center btn btn-outline-dark flex-shrink-0 btn-xs" > <i class="bi bi-hand-thumbs-up"> </i> 추천하기 </button>
 					
@@ -276,6 +291,90 @@
 	</div>
 	</div>
 
+<!--------------------------------- 리뷰 수정 모달  -------------------------------->	
+<div class="modal" tabindex="-1" id="my-modal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalVerticallyCenteredLabel">리뷰 수정</h5>
+        <button type="button" class="btn-close" aria-label="Close" onclick="modal_close()"></button>
+      </div>
+      <div class="modal-body">
+      <textarea id="modal-text" cols="55" rows="5" > </textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="modal_close()">닫기</button>
+        <button type="button" class="btn btn-primary" id="btn_modal_upd">수정</button>
+      </div>
+    </div>
+  </div>
+</div>
+	
+<!-- ---------------------------------- 푸터  --------------------------------- -->	
+	<footer>
+			<div>
+				<a class="footer-logo" href="#"> <img class="footer-logo-img"
+					src="/resources/images/logo/logo_white.png" alt="logo_white" /> <img
+					class="footer-logo-text"
+					src="/resources/images/logo/logo_text--white.png"
+					alt="logo_text--white" />
+				</a>
+			</div>
+			<div class="footer-section">
+				<div class="footer-profile-box">
+					<div class="footer-profile">
+						<div class="profile-github">
+							<a href="#"> <i class="fa-brands fa-github fa-xl"></i>
+							</a>
+						</div>
+						<div class="profile-text">
+							<a href="#">윤동환</a>
+						</div>
+					</div>
+					<div class="footer-profile">
+						<div class="profile-github">
+							<a href="#"> <i class="fa-brands fa-github fa-xl"></i>
+							</a>
+						</div>
+						<div class="profile-text">
+							<a href="#">양현정</a>
+						</div>
+					</div>
+					<div class="footer-profile">
+						<div class="profile-github">
+							<a href="#"> <i class="fa-brands fa-github fa-xl"></i>
+							</a>
+						</div>
+						<div class="profile-text">
+							<a href="#">백기렬</a>
+						</div>
+					</div>
+					<div class="footer-profile">
+						<div class="profile-github">
+							<a href="#"> <i class="fa-brands fa-github fa-xl"></i>
+							</a>
+						</div>
+						<div class="profile-text">
+							<a href="#">차승윤</a>
+						</div>
+					</div>
+					<div class="footer-profile">
+						<div class="profile-github">
+							<a href="#"> <i class="fa-brands fa-github fa-xl"></i>
+							</a>
+						</div>
+						<div class="profile-text">
+							<a href="#">안성연</a>
+						</div>
+					</div>
+				</div>
+				<div class="footer-document">
+					<div class="doucumnet-text">Project 설명이 포함되어 있습니다.</div>
+					<span>© BOOKDREAM BUKDACK-BUCKDACK</span>
+				</div>
+			</div>
+		</footer>
+
 
 
 
@@ -283,40 +382,41 @@
 
 <script type="text/javascript">
 
-
+/* ------------------------바로구매 버튼 클릭  ----------------------------*/
 function now_buy(){
 	let book_no = ${book.book_no};
 	let user_id = '<%=session.getAttribute("user_id")%>';
 	let product_cnt  = document.getElementById("product_cnt").value;
 	console.log("book_no : " + book_no + "user_id :  " + user_id + "product : " + product_cnt )
-	if(user_id === null ||user_id === ""){
+	if(user_id === null ||user_id === "" || user_id === "null"){
 		alert('로그인 페이지로 이동합니다.');
 		location.replace("views/user/login.jsp");
 	
+	}else{
+		alert('바로구매');
+		location.replace("/detail/cart/orderitem?book_no="+book_no+"&user_id="+user_id+"&product_count="+product_cnt+"&buy_now=Y");
 	}
-		$.ajax({
-			type:'get',
-			url:"/detail/cart/orderitem?book_no="+book_no+"&user_id="+user_id+"&product_count="+product_cnt+"&buy_now='Y'",
-			data : "text",
-			contentType: "application/x-www-urlencoded;charset=UTF-8", 
-			processData: false, 
-			cache : false,
-			success: function (data){
-				
-			},
-			error:function(request, status, error){
-				alert('에러');
-				console.log("code: " + request.status)
-	        	console.log("message: " + request.responseText)
-	        	console.log("error: " + error);
-				
-			}		
-			
-		});
-	
+
+}
+
+/* ------------------------장바구니 버튼 클릭 ----------------------------*/
+function cart(){
+	let book_no = ${book.book_no};
+	let user_no = '<%=session.getAttribute("user_no")%>';
+	let product_cnt  = document.getElementById("product_cnt").value;
+	console.log("book_no : " + book_no + "user_no :  " + user_no + "product : " + product_cnt )
+	if(user_no === null ||user_no === "" || user_no === "null"){
+		alert('user_no = null');
+		location.replace("/itemorder/cart/list?book_no="+book_no+"&user_no=0"+"&product_count="+product_cnt);
+	}else{
+		alert('장바구니');
+		location.replace("/itemorder/cart/list?book_no="+book_no+"&user_no="+user_no+"&product_count="+product_cnt);
+	}
 }
 
 
+
+/* ------------------------ 추천 버튼 클릭  ----------------------------*/
 function review_recommend(val){
 	alert("추천클릭");
 $.ajax({
@@ -343,6 +443,8 @@ $.ajax({
 }	
 
 
+/* ------------------------항상 실행----------------------------*/
+/* ------------------------변수에 별점 가져오기 ----------------------------*/
 $(function(){
 	let star = 
 	$('#REVIEW_STAR').change(function(){
@@ -351,7 +453,7 @@ $(function(){
 	});
 	
 	
-
+/* ------------------------ 리뷰 등록 버튼 클릭  ----------------------------*/
 	$('#btn_review').click(function(){
 		let user_id = '<%=session.getAttribute("user_id")%>';
 		
@@ -361,7 +463,7 @@ $(function(){
 			location.replace("views/user/login.jsp");
 		}
 		
-		
+		//리뷰 버튼 클릭 시 가져오는 리뷰 정보  		
 		let review_json = {
 		        "review_star" : star.val(),
 		        "book_no" : ${book.book_no}, 
@@ -369,42 +471,63 @@ $(function(){
 		        "review_content" : $('#review_content').val(),
 		        "review_recommend" :0 
 		};
-		$.ajax({
-			type: 'post',
-			url: '/insertReview',
-			data: JSON.stringify(review_json),
-			dataType: "text",
-			contentType:"application/json;charset=UTF-8",
-			
-			success: function (data){
-				alert('리뷰가 등록되었습니다.');
-				//리뷰 업데이트를 위해 getbook실행
-				getReview();
-			},
-			error:function(request, status, error){
-				alert('에러');
-				console.log("code: " + request.status)
-	        	console.log("message: " + request.responseText)
-	        	console.log("error: " + error);
-				if(star.val() ==='별점 선택'){
-					alert('별점 선택은 필수입니다.');
+		
+		exist_review();
+		
+		//리뷰 존재 여부 확인 
+		function exist_review(){
+				$.ajax({
+				type: 'get',
+				url: '/existReview?book_no='+${book.book_no}+'&user_id='+user_id, 
+				data: "text",
+				dataType: "text",
+				contentType:"application/x-www-urlencoded;charset=UTF-8",
+				async: false,
+				success: function (data){
+					if(data > 0){
+						alert('등록한 리뷰가 있습니다. ');
+					}else{
+						//리뷰가 존재하지 않으면 실행
+						review_insert();	
+					}					
 				}
-			}		
-				  			
-		})
+						
+				});
+		}
+		
+		//리뷰 등록
+		function review_insert(){
+					$.ajax({
+					type: 'post',
+					url: '/review',
+					data: JSON.stringify(review_json),
+					dataType: "text",
+					contentType:"application/json;charset=UTF-8",
+					success: function (data){
+						alert('리뷰를 등록하였습니다.');
+						getReview();
+					},
+					
+					error:function(request, status, error){
+						console.log("code: " + request.status)
+			        	console.log("message: " + request.responseText)
+			        	console.log("error: " + error);
+						if(star.val() ==='별점 선택'){
+							alert('별점 선택은 필수입니다.');
+						}
+						if($('#review_content').val() === null || $('#review_content').val() === "" ){
+							alert('내용을 입력하세요. ');
+						}
+					}		
+						  			
+			});
 
-});//btn_review.click end
-
-	//추천 버튼 클릭
-
-
-
-
-//review 업데이트를 하기 위한 getbook실행
-
-
+		}
+	
+	});
 });
 
+/* ------------------------ 리뷰 새로고침  ----------------------------*/
 function getReview(){
 	$.ajax({
 		type : "get",
@@ -425,12 +548,75 @@ function getReview(){
 }
 
 
+/* ------------------------ [모달] 리뷰 수정  ----------------------------*/
+function review_upd(val){
+	$('#my-modal').modal('show');
+	$('#btn_modal_upd').click(function(){
+		$.ajax({
+			type: 'post',
+			url: '/updateReview',
+			data : {
+				review_no : val,
+				review_content : $('#modal-text').val()	
+			},
+			
+			success: function (data){
+				alert('리뷰가 수정되었습니다.');
+				getReview();
+				$('#my-modal').modal('hide');
+			},
+			error:function(request, status, error){
+				console.log("code: " + request.status)
+	        	console.log("message: " + request.responseText)
+	        	console.log("error: " + error);
+			}
+		});
+			
+	});
+	
+}	
+
+/* ------------------------ 리뷰 삭제  ----------------------------*/
+ function review_dlt(val){
+	 $.ajax({
+			type: 'post',
+			url: '/deleteReview',
+			data : {
+				review_no : val,
+			},
+			
+			success: function (data){
+				alert('리뷰가 삭제되었습니다.');
+				getReview();
+			},
+			error:function(request, status, error){
+				console.log("code: " + request.status)
+	        	console.log("message: " + request.responseText)
+	        	console.log("error: " + error);
+			}
+		});	
+}
+ 
+/* ------------------------ [모달] 닫기  ----------------------------*/
+function modal_close(){
+	$('#my-modal').modal('hide');
+	
+}
+
+
 
 </script>
 
+<!-- Script Bootstrap, jqurey-3.6.3 -->
+	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
+	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+
+	<!-- Script FontAwesome-->
+	<script src="https://kit.fontawesome.com/4bf42f841a.js"
+		crossorigin="anonymous"></script>
+
 
 </body>
-
 </html>
 
 

@@ -9,15 +9,11 @@
 		<result property="user_no" column="USER_NO" />
 		<result property="book_no" column="BOOK_NO" />
 		<result property="order_no" column="ORDER_NO" />
-		<result property="product_count" column="PRODUCT_COUNT" />
-		<collection property="userVO" resultMap="userList"></collection>		
+		<result property="product_count" column="PRODUCT_COUNT" />	
 		<collection property="bookVO" resultMap="bookList"></collection>
 		<collection property="orderVO" resultMap="orderList"></collection>
+		<collection property="payVO" resultMap="payList"></collection>
 	</resultMap>	
-
-	<resultMap type="user" id="userList">
-		<result property="user_no" column="USER_NO" />
-	</resultMap>
 
 	<resultMap type="book" id="bookList">
 		<result property="book_no" column="BOOK_NO"/>
@@ -28,21 +24,35 @@
 
 	<resultMap type="order" id="orderList">
 		<result property="order_no" column="ORDER_NO"/>
+		<result property="order_date" column="ORDER_DATE"/>
+		<result property="order_receiver" column="ORDER_RECEIVER"/>
+		<result property="order_tel" column="ORDER_TEL"/>
+		<result property="order_address" column="ORDER_ADDRESS"/>
 	</resultMap>	
-	
-	
-	<!-- user_no 수정필요 -->
+
+	<resultMap type="pay" id="payList">
+		<result property="total_price" column="TOTAL_PRICE"/>
+		<result property="final_price" column="FINAL_PRICE"/>
+		<result property="pay_fee" column="PAY_FEE"/>
+		<result property="discount_price" column="DISCOUNT_PRICE"/>
+		<result property="use_point" column="USE_POINT" />
+		<result property="save_point" column="SAVE_POINT" />
+	</resultMap>
+     	
+    <!-- 구매목록저장 (장바구니) -->	   	
 	<insert id="insertPurchase">
 		INSERT INTO PURCHASE (purchase_no, 
 							  user_no, 
 							  book_no, 
 							  order_no, 
-							  product_count)
+							  product_count,
+							  order_address)
 		SELECT numplus.nextval, 
 		       c.user_no, 
 		       b.book_no, 
 		       o.order_no, 
-		       c.product_count
+		       c.product_count,
+		       o.order_address
 		FROM   book b, 
 		       cart c, 
 		       orders o
@@ -50,23 +60,76 @@
 			   b.book_no = c.book_no AND 
 			   o.order_no = #{order_no}
 	</insert>
-	
-	<!-- user_no 수정필요 -->	
+
+    <!-- 구매목록저장 (바로구매) -->	   	
+	<insert id="insertPurchase_now">
+		INSERT INTO PURCHASE (purchase_no, 
+							  user_no, 
+							  book_no, 
+							  order_no, 
+							  product_count,
+							  order_address)
+					VALUES   (numplus.nextval,
+							  #{user_no},
+							  #{book_no},
+							  #{order_no},
+							  #{product_count},
+							  #{order_address})
+	</insert>
+
+<!-- 	
 	<select id="getPurchaseList" parameterType="purchase" resultMap="purchaseList">
 		SELECT b.book_img, 
 			   b.title, 
 			   b.book_price, 
 			   p.product_count,
-			   p.purchase_no
-		FROM   users u, 
+			   p.purchase_no,
+			   o.order_no,
+			   TO_CHAR(SYSDATE, 'YYYY.MM.DD') as order_enroll
+		FROM   
 			   book b, 
 			   orders o, 
 			   purchase p
 		WHERE  b.book_no = p.book_no AND 
       		   o.order_no = p.order_no AND 
                o.order_no = #{order_no} AND 
-     		   u.user_no = #{user_no} 	
+     		   p.user_no = #{user_no} 	
+     		   
+		order by o.order_no desc, b.book_no      		   
+	</select> -->
+
+
+	<!-- 마이페이지에서 확인하는 제품 상세 표기 -->	
+	<select id="getPurchaseList" parameterType="purchase" resultMap="purchaseList">
+		SELECT b.book_img, 
+    		   b.title, 
+    		   b.book_no,
+               b.book_price,
+       		   p.product_count,
+       		   p.purchase_no,                 
+      		   o.order_no,
+      		   o.order_date,
+      		   o.order_receiver, 
+     		   o.order_tel, 
+     		   o.order_address,
+     		   y.total_price,
+     		   y.final_price,
+     		   y.pay_fee,
+    		   y.discount_price,
+     		   y.use_point,
+     		   y.save_point
+		FROM   purchase p, 
+		       orders o, 
+		       book b, 
+		       pay y
+ 		WHERE  p.order_no = o.order_no AND 
+       		   p.order_no = y.pay_no AND
+         	   p.book_no = b.book_no AND
+			   p.user_no = #{user_no} AND
+      		   p.order_no = #{order_no}      		   	   
 	</select>
+
+
 	
 	
 </mapper>

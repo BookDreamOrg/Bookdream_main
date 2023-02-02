@@ -1,0 +1,86 @@
+@charset "UTF-8";
+
+.wrapper {
+	height: auto;
+}
+
+.main {
+	position:relative;
+	margin: 0 auto;
+	width: 1240px;
+	height: auto;
+	min-height: 1000px;
+}
+
+.side {
+	position:relative;
+	width: 200px;
+	height: 500px;
+	float: left;
+}
+
+.address {
+	position: relative;
+	width: 950px;
+	height: 400px;
+}
+
+.address_title {
+    padding: 30px;
+    vertical-align: middle;
+    height: 100px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.address_main {
+	height: 200px;
+	font-size: 20px;
+}
+
+.address_main_default {
+	margin: 55px 0px 0px 55px;
+	
+}
+
+
+.main_address {
+	height: auto;
+	min-height: 1000px;
+	float: right;
+	
+}
+
+.addresslist {
+	height:auto;
+	min-height: 500px;
+	border: 1px solid black;		
+}
+
+.addresslist_table {
+	width: 100%;
+	height: 150px;
+}
+
+.addresslist_table_col1 {
+	vertical-align:middle;
+	text-align:center;
+	width: 100px;
+}
+
+.addresslist_table_col2 {
+	vertical-align:middle;
+}
+
+.addresslist_table_col3 {
+	vertical-align:middle;
+	text-align:center;
+	width: 100px;
+
+}
+
+.address_insert_content {
+	height: 700px;
+}
+
+

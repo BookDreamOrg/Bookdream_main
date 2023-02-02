@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SearchKeywordHistoryDAO">
+
+	<resultMap type="keywordHistory" id="keywordHistoryResult" >
+		<result property="user_id" column="USER_ID" />
+		<result property="keyword" column="KEYWORD" />
+		<result property="search_date" column="SEARCH_DATE" />
+		<result property="login_yn" column="LOGIN_YN" />
+	</resultMap>
+
+
+	<insert id="insertSearchKeyword">
+		<![CDATA[ 
+			INSERT INTO KEYWORD_HISTORY (USER_ID,KEYWORD,SEARCH_DATE,LOGIN_YN) 
+			VALUES (#{user_id,jdbcType=VARCHAR},
+					#{keyword},
+					sysdate,
+					#{login_yn})
+		]]>
+	</insert>
+
+
+
+
+</mapper>

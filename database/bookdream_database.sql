@@ -14,7 +14,7 @@ WHERE uc.constraint_name = ucc.constraint_name;
 -------------------------- USERS ------------------------------------
 drop table USERS;
 
-create table USERS (
+create table USERS (    
   USER_NO                 number(10)    not null,
   USER_ID                 varchar2(40)  UNIQUE,
   USER_PASSWORD           varchar2(20),
@@ -79,13 +79,15 @@ select * from review;
 drop table pay;
 
 CREATE TABLE PAY (
-    PAY_NO         number(10) not null,
-	PAY_METHOD     varchar2(20)not null,
-    PAY_DATE       varchar(20) default to_char(SYSDATE, 'YY/MM/DD HH24:MI:SS') ,
-    DISCOUNT_PRICE number(10) DEFAULT 0 not null,
-    FINAL_PRICE    number(10) not null,
-    SAVE_POINT     number(10) DEFAULT 0 not null,
-    USE_POINT      number(10) DEFAULT 0,
+    PAY_NO         number(10)   not null,
+	PAY_METHOD     varchar2(20) not null,
+    PAY_DATE       date         DEFAULT sysdate,
+    DISCOUNT_PRICE number(10)   DEFAULT 0 not null,
+    PAY_FEE        number(10)   not null,
+    FINAL_PRICE    number(10)   not null,
+    TOTAL_PRICE    number(10)   not null,
+    SAVE_POINT     number(10)   DEFAULT 0 not null,
+    USE_POINT      number(10)   DEFAULT 0,
     constraint PK_PAY primary key(PAY_NO)  
 );
 
@@ -102,14 +104,13 @@ CREATE TABLE orders(
     order_no            number primary key,
     user_no             number references users (user_no) not null,
     pay_no              number references pay (pay_no) not null,
-    order_name          varchar2(500) not null,  
-    total_price         number not null,
+    order_name          varchar2(500)  not null,  
     order_comment       varchar2(400),
-    order_enroll        varchar(20) default to_char(SYSDATE, 'YY/MM/DD HH24:MI:SS') ,
-    order_receiver      varchar2(20) not null,
-    order_address       varchar2(100) not null,
-    order_tel           varchar2(40) not null,
-    order_fee           number not null
+    order_date          date           DEFAULT sysdate,
+    order_receiver      varchar2(20)   not null,
+    order_address       varchar2(100)  not null,
+    order_tel           varchar2(40)   not null,
+    order_status        number(10)     default 0 not null
 );
 
 -- orders table fk user_no casecade
@@ -189,11 +190,12 @@ CREATE TABLE purchase (
     USER_NO number(10),
     BOOK_NO number(10),
     ORDER_NO number(10),
+    ORDER_ADDRESS varchar2(100),
     PRODUCT_COUNT number(10),
     constraint FK_PURCHASE primary key(PURCHASE_NO), 
     constraint FK_PURCHASE_USER_NO foreign key(USER_NO) REFERENCES USERS (USER_NO),
     constraint FK_PURCHASE_BOOK_NO foreign key(BOOK_NO) REFERENCES BOOK (BOOK_NO), 
-    constraint FK_PURCHASE_ORDER_NO foreign key(ORDER_NO) REFERENCES ORDERS (ORDER_NO)     
+    constraint FK_PURCHASE_ORDER_NO foreign key(ORDER_NO) REFERENCES ORDERS (ORDER_NO) 
 );
 
 -- pusrchase table fk user_no casecade

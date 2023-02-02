@@ -12,13 +12,17 @@
 	<insert id="insertPay" >
 		INSERT INTO pay(PAY_NO, 
 						PAY_METHOD, 
+						PAY_FEE,
 						DISCOUNT_PRICE, 
+						TOTAL_PRICE,
 						FINAL_PRICE, 
 						SAVE_POINT,
 						USE_POINT) 
 		VALUES ((select nvl(max(PAY_NO), 0) + 1 from pay), 
 				 #{pay_method}, 
+				 #{pay_fee},				 
 				 #{discount_price}, 
+				 #{total_price}, 
 				 #{final_price}, 
 				 #{save_point},
 				 #{use_point}
@@ -29,9 +33,10 @@
 	<![CDATA[	
 		SELECT pay_no, 
 			   pay_date
-		FROM   (select * 
-                from pay 
-                order by pay_no desc)
+		FROM   ( select * 
+                 from pay 
+                 order by pay_no desc
+               )
         WHERE  rownum = 1
      ]]>
 	</select>

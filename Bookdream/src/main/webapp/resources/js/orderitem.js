@@ -1,4 +1,4 @@
-	
+
 // 페이지 로딩 
 $(function() {
 	$('#pay_labels').hide();
@@ -233,6 +233,7 @@ function user_address_info(no, address_no) {
 		contentType : "application/json",		
 		
 		success : function(result) {
+			console.log(result);
 			
 			var html = "";
 
@@ -285,8 +286,6 @@ $('#modal2_address_update').click(function() {
 	
 	address_insert(1);
 })
-
-
 
 
 function address_insert(no) {
@@ -762,23 +761,24 @@ function innerHTML(id, int) {
 
 	$("#pay_button").click(function() {
 
+		// 주문 부문
 		var order_name = $('input[name="first_title"]').val();
-		var pay_method = $('input[name="pay_radio"]:checked').val();		
-
 		var order_comment = innerHTML('user_info_message_text');			
 		var order_receiver = innerHTML('user_info_name');			
-		var order_address = innerHTML('user_info_zone_code') + " " + 
+		var order_address = "[" + innerHTML('user_info_zone_code') + "]"+ " " + 
 							innerHTML('user_info_road_add')  + " " + 
 							innerHTML('user_info_detail_add');
-		
 		var order_tel = innerHTML('user_info_tel');
-		var order_fee = innerHTML('', 'sidebar_delivery');
-		var discount_price = 0;
 		
+		// 결제 부문
+		var pay_method = $('input[name="pay_radio"]:checked').val();			
+		var pay_fee = innerHTML('', 'sidebar_delivery');
+		var discount_price = 0;
 		var save_point = innerHTML('', 'sidebar_save_point');
 		var use_point = innerHTML('', 'sidebar_use_point');
-		var total_price = innerHTML('', 'sidebar_final_price');
-
+		var final_price = innerHTML('', 'sidebar_final_price');
+		var total_price = innerHTML('', 'sidebar_total_price');
+		
 		if ((order_name == '') || (order_receiver == '') || (order_address == '') || (order_tel == '')	) {
 			alert("배송인 정보를 입력하세요.");
 			return false;
@@ -787,17 +787,20 @@ function innerHTML(id, int) {
 		var data = {
 					"order_name" : order_name,
 					"pay_method" : pay_method,
-					"total_price" : total_price,
 					"order_comment" : order_comment,
 					"order_receiver" : order_receiver,
 					"order_address" : order_address,
 					"order_tel" : order_tel,
-					"order_fee" : order_fee,
-					"discount_price" : discount_price,
-					"save_point" : save_point,
+					"final_price" : final_price,					
+					"total_price" : total_price,	
+					"discount_price" : discount_price,					
+					"pay_fee" : pay_fee,					
 					"use_point" : use_point,
+					"save_point" : save_point					
 					};
 
+		console.log(data);
+		
 		$.ajax({
 			
 			type : 'POST',

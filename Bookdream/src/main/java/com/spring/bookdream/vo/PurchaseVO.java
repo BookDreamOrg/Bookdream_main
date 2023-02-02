@@ -9,11 +9,11 @@ public class PurchaseVO {
 	private int user_no;
 	private int book_no;
 	private int order_no;
+	private String order_address;
 	private int product_count;
 	
-	private UserVO userVO;
 	private BookVO bookVO;
 	private OrderVO orderVO;
-
+	private PayVO payVO;
 
 }
