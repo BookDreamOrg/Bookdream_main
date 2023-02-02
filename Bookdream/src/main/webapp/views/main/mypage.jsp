@@ -188,6 +188,10 @@
 				    </div>
 				  </div>
 				</div>
+				
+				<div><a href="/mypage/address">배송지 관리</a></div>
+				<div><a href="/mypage/tracking">배송 조회</a></div>
+				
 			</div>
 			
 		<footer>
