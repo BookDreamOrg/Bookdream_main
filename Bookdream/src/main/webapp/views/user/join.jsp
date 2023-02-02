@@ -39,7 +39,7 @@
  <!-- 유효성 검사  -->
  
               <div class="form-floating" id="pswd1Img">
-                <input type="password" class="form-control" id="user_password" name="user_password" placeholder="비밀번호" class="int" title="비밀번호 입력" aria-describedby="pswd1Msg" maxlength="20">
+                <input type="password" class="form-control" id="user_password" name="user_password" onchange="PasswordCheck()" placeholder="비밀번호" class="int" title="비밀번호 입력" aria-describedby="pswd1Msg" maxlength="20">
                 <label for="pswd1">비밀번호</label>
              </div>
            
