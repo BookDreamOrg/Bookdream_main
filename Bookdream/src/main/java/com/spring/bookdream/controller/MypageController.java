@@ -144,7 +144,7 @@ public class MypageController {
 		System.out.println(name);
 		userService.updateUser(userVO);
 		
-		return "/main/mypage";
+		return "/mypage/mypage";
 	}
 	
 }
