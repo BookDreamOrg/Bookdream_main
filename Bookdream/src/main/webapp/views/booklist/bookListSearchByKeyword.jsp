@@ -133,30 +133,40 @@
 			<c:if test="${empty book}"  >
 				<div class="text-center mt-5"> 검색된 책이 없습니다. </div>
 			</c:if>
-	<c:forEach var="book" items="${book}" varStatus="vs">
-			
-			<div class="container-fluid mt-3">
-				<div class="row" >
-					<div class="col-md-3">
-						<img alt="${book.title }" src="${book.book_img }" />
+			<c:choose>
+			<c:when test="${empty search_keyword}">
+				<script type="text/javascript">
+				alert('키워드를 입력하세요. ');
+				</script>
+
+			</c:when>
+			<c:otherwise>
+				<c:forEach var="book" items="${book}" varStatus="vs">
+					<div class="container-fluid mt-3">
+						<div class="row" >
+							<div class="col-md-3">
+								<img alt="${book.title }" src="${book.book_img }" />
+							</div>
+						<div class="col-md-6 mt-5 pt-2" onclick="location.href='/getBook?book_no=${book.book_no}'">
+							<span  id="detail-badge" class="badge bg-primary rounded-pill">${book.book_category }</span>
+							<span id="book_title">${book.title }</span>
+						<div class="row">
+							<div class="col-md-4 mt-2">${book.author }</div>
+							<div class="col-md-8 mt-2">
+							<fmt:formatDate pattern="yyyy년 MM월 dd일" value="${book.public_date }"/></div>
+							<div id="book_content">${book.book_content }</div>
+						</div>
+						</div>
+						<div class="col-md-3  mt-5 pt-5">
+							<button type="button" class="btn btn-success" onclick="bookList_cart(this.value)" value="${book.book_no}" >Cart</button> 
+							<button type="button" class="btn btn-success" onclick="bookList_buy(this.value)" value="${book.book_no}">Buy</button>
+						</div>
 					</div>
-				<div class="col-md-6 mt-5 pt-2" onclick="location.href='/getBook?book_no=${book.book_no}'">
-					<span  id="detail-badge" class="badge bg-primary rounded-pill">${book.book_category }</span>
-					<span id="book_title">${book.title }</span>
-				<div class="row">
-					<div class="col-md-4 mt-2">${book.author }</div>
-					<div class="col-md-8 mt-2">
-					<fmt:formatDate pattern="yyyy년 MM월 dd일" value="${book.public_date }"/></div>
-					<div id="book_content">${book.book_content }</div>
-				</div>
-				</div>
-				<div class="col-md-3  mt-5 pt-5">
-					<button type="button" class="btn btn-success" onclick="bookList_cart(this.value)" value="${book.book_no}" >Cart</button> 
-					<button type="button" class="btn btn-success" onclick="bookList_buy(this.value)" value="${book.book_no}">Buy</button>
-				</div>
-			</div>
-			</div>	
-	</c:forEach>
+					</div>	
+				</c:forEach>
+			</c:otherwise>
+			</c:choose>
+		
 </div>
 </main>
 		

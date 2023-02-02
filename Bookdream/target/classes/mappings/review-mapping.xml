@@ -15,9 +15,6 @@
 	</resultMap>
 
 
-
-
-
 	<select id="getReview"  resultMap="reviewResult">
 	<![CDATA[ SELECT * From review
 	WHERE BOOK_NO = #{book_no} ORDER BY REVIEW_NO desc
@@ -37,12 +34,33 @@
 	</insert>
 	
 	
-	
-	
 	<update id="updateReviewRecommend">
 		UPDATE review 
 		SET review_recommend = (SELECT (review_recommend + 1) FROM review WHERE review_no = #{review_no}) 
 		WHERE review_no = #{review_no}
 	</update>
+	
+	<update id="updateReview">
+		UPDATE review 
+		SET review_content = #{review_content}
+		WHERE review_no = #{review_no}
+	</update>
+	
+	
+	<delete id="deleteReview">
+		DELETE from review 
+		where review_no=#{review_no}
+	</delete>
+	
+	<select id="existReview" resultType="integer">
+	SELECT count(*) 
+	FROM review 
+	WHERE book_no=#{book_no} and user_id=#{user_id}
+	</select>
+	
+	
+	
+	
+	
 	
 </mapper>

@@ -34,29 +34,41 @@ public class ReviewDAO {
 	private HttpSession session;
 	
 
-	// 장바구니 목록 조회
+/*************************** 리뷰 리스트 가져오기  ***************************************/
 	public List<ReviewVO> getReview(int book_no) {
 		System.out.println("---> getReviewDAO");
 		// selectList : select 조회 SQL문에서 결과값이 여러개의 row가 return될 때 사용
 		return mybatis.selectList("ReviewDAO.getReview",book_no);
 	}
 	
-
-	
+/*************************** 리뷰 등록 ***********************************************/
 	public void insertReview(ReviewVO vo) {
 		System.out.println("---> insertReviewDAO");
-//		vo.setUser_id((String)session.getAttribute("user_id"));
-		
-//		return mybatis.insertReview("ReviewDAO.insertReview",map);
 		mybatis.insert("ReviewDAO.insertReview",vo);
 	}
 	
-	//리뷰 추천수 업데이트
+/*************************** 리뷰 추천 (+1) *****************************************/
 	public int updateReviewRecommend(int review_no) {
-		System.out.println("------> updateReviewDAO");
+		System.out.println("------> updateReviewRecommendDAO");
 		return mybatis.update("ReviewDAO.updateReviewRecommend",review_no);
 	}
 	
+/*************************** 리뷰 내용 수정  *****************************************/
+	public void updateReview(ReviewVO vo) {
+		System.out.println("------> updateReviewDAO");
+		mybatis.update("ReviewDAO.updateReview",vo);
+	}
 	
+/*************************** 리뷰 삭제 ********************************************/
+	public void deleteReview(int review_no) {
+		System.out.println("------> deleteReviewDAO");
+		mybatis.delete("ReviewDAO.deleteReview",review_no);
+	}
+	
+/*************************** 리뷰 존재 여부 ********************************************/
+	public int existReview(ReviewVO vo) {
+		System.out.println("------> existReviewDAO");
+		return mybatis.selectOne("ReviewDAO.existReview",vo);
+	}
 	
 }
