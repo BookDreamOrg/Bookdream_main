@@ -95,7 +95,7 @@
 				<div class="col-md-4">
 				</div>
 				<div class="col-md-5" id="detail-price">
-<<<<<<< Updated upstream
+
 				<c:choose>
 					<c:when test="${book.stock > 0 }">
 						<input class=" form-control text-center border-0 " type="number" id="product_cnt" min="1" max="${book.stock}" value="1" >
@@ -106,11 +106,10 @@
 					</c:otherwise>
 				</c:choose>
 				  
-=======
 				  <input class=" form-control text-center border-0 "
                                     type="number" id="product_count" min="1" max="${book.stock}" value="1" >
 				<fmt:formatNumber  value="${book.book_price}" pattern="#,###"/>원
->>>>>>> Stashed changes
+
 				</div>
 				<div class="col-md-3">
 				</div>
@@ -143,11 +142,9 @@
 					<button id="btn_buy_now" class="text-center btn btn-outline-dark flex-shrink-0 btn-lg btn-info" onclick="now_buy()">
 						<i class="bi bi-basket2"></i> 바로구매
 					</button>
-<<<<<<< Updated upstream
+
 						<button class="text-center btn btn-outline-dark flex-shrink-0  btn-lg me-3 btn-info" onclick="cart()">
-=======
 					<button id="addCart" class="text-center btn btn-outline-dark flex-shrink-0  btn-lg me-3" >
->>>>>>> Stashed changes
 						<i class="bi-cart-fill me-1"></i>장바구니
 					</button>
 					<input id="book_no" type="hidden" value="${book.book_no}">
@@ -321,7 +318,7 @@
 
 <script type="text/javascript">
 
-<<<<<<< Updated upstream
+
 /* ------------------------바로구매 버튼 클릭  ----------------------------*/
 function now_buy(){
 	let book_no = ${book.book_no};
@@ -353,7 +350,7 @@ function cart(){
 		location.replace("/itemorder/cart/list?book_no="+book_no+"&user_no="+user_no+"&product_count="+product_cnt);
 	}
 }
-=======
+
 $("#addCart").click(function(){	
 	
 	var data = {
@@ -382,7 +379,7 @@ $("#addCart").click(function(){
 		    }		
 	 });
 });
->>>>>>> Stashed changes
+
 
 <%-- function cart(){
 	let book_no = document.getElementById("book_no").value;
@@ -425,13 +422,12 @@ $.ajax({
 		
 	});
 }	
-<<<<<<< Updated upstream
+
 
 
 /* ------------------------항상 실행----------------------------*/
 /* ------------------------변수에 별점 가져오기 ----------------------------*/
-=======
->>>>>>> Stashed changes
+
 $(function(){
 	let star = 
 	$('#REVIEW_STAR').change(function(){
@@ -440,10 +436,9 @@ $(function(){
 	});
 	
 	
-<<<<<<< Updated upstream
+
 /* ------------------------ 리뷰 등록 버튼 클릭  ----------------------------*/
-=======
->>>>>>> Stashed changes
+
 	$('#btn_review').click(function(){
 		let user_id = '<%=session.getAttribute("user_id")%>';
 		
@@ -484,8 +479,7 @@ $(function(){
 						review_insert();	
 					}					
 				}
-<<<<<<< Updated upstream
-						
+
 				});
 		}
 		
@@ -522,7 +516,7 @@ $(function(){
 });
 
 /* ------------------------ 리뷰 새로고침  ----------------------------*/
-=======
+
 			}		
 				  			
 		})
@@ -530,7 +524,7 @@ $(function(){
 	//추천 버튼 클릭
 //review 업데이트를 하기 위한 getbook실행
 });
->>>>>>> Stashed changes
+
 function getReview(){
 	$.ajax({
 		type : "get",
@@ -549,13 +543,7 @@ function getReview(){
 		}
 	});
 }
-</script>
 
-<!-- Script Bootstrap, jqurey-3.6.3 -->
-	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
-	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
-
-<<<<<<< Updated upstream
 /* ------------------------ [모달] 리뷰 수정  ----------------------------*/
 function review_upd(val){
 	$('#my-modal').modal('show');
@@ -614,11 +602,17 @@ function modal_close(){
 
 
 </script>
-=======
+
+<!-- Script Bootstrap, jqurey-3.6.3 -->
+	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
+	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+
+
+
 	<!-- Script FontAwesome-->
 	<script src="https://kit.fontawesome.com/4bf42f841a.js"
 		crossorigin="anonymous"></script>
->>>>>>> Stashed changes
+
 
 <!-- Script Bootstrap, jqurey-3.6.3 -->
 	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
@@ -628,10 +622,7 @@ function modal_close(){
 	<script src="https://kit.fontawesome.com/4bf42f841a.js"
 		crossorigin="anonymous"></script>
 
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
 </body>
 </html>
 

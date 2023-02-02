@@ -65,19 +65,19 @@
 					</div>
 				</div>
 				<div class="col-lg-1 p-5 flex-grow-1 header-col-btn">
-<<<<<<< Updated upstream
+
 					<a href="/cart">
 						<div class="header-btn">
 							<i class="fa-solid fa-cart-shopping"></i>
 						</div>
 					</a> <a href="detail/cart/orderitem">
-=======
+
 					<a href="/itemorder/cart/list">
 						<div class="header-btn">
 							<i class="fa-solid fa-cart-shopping"></i>
 						</div>
 					</a> <a href="/itemorder/cart/list">
->>>>>>> Stashed changes
+
 						<div class="header-btn btn-circle ms-3">
 							<i class="fa-solid fa-user"></i>
 						</div>
