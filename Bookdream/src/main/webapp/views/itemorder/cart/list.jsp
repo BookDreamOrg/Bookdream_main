@@ -27,84 +27,25 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
 	rel="stylesheet" />
 
+<!-- jQuery -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+
 <!-- CSS file -->
 <link rel="stylesheet" href="/resources/css/styles.css" />
-
 <style type="text/css">
-input[type='number']::-webkit-outer-spin-button, input[type='number']::-webkit-inner-spin-button
+input[type='number']::-webkit-outer-spin-button, 
+input[type='number']::-webkit-inner-spin-button
 	{
 	-webkit-appearance: none;
 	margin: 0;
 }
 
-.cartList>thead>tr>th, .cartList>tbody>tr>th, .cartList>tfoot>tr>th,
-	.cartList>thead>tr>td, .cartList>tbody>tr>td, .cartList>tfoot>tr>td {
-	padding: 20px 0px 20px 20px
-}
-
-/* 
-.side{
-float: right;
-} 
-
-*/
 </style>
 
 <meta charset="UTF-8">
 <title>장바구니</title>
 
-<!-- jQuery -->
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script type="text/javascript">
-
-function myFunction(){
-    let cnt = document.getElementById('product_cnt').value;
-    let price = document.getElementById('book_price').value;
-
-    
-    console.log(cnt * price);
-    
-    /* document.getElementByClass("inner").innerHTML= cnt*price; */
-    document.getElementsByClassName("inner").innerHTML= cnt*price;
-   
-};	
-
-/* function selectAll(select)  {
-	  var checkboxes = document.getElementsByName('checkbox');
-	   
-	  checkboxes.forEach((checkbox) => {
-	    checkbox.checked = selectAll.checked;
-	  })
-};
- */
-<!-- 		
-
-function cart_delete(arg) {
-	  var cart_no = $(arg).val();
-	  $('#cart_delete_cart_no').val(cart_no);
-	   alert(cart_no);
-	  $('#cart_delete_form').submit();
-
-
-	}
-
-
-/* $('#cart_delete').on("click", function(e){
-	e.preventDefault();
-	var cart_no = $(this).val();
-	alert(cart_no);
-});  */
- 
-function selectAll(selectAll)  {
-	  var checkboxes = document.getElementsByName('box');
-	   
-	  checkboxes.forEach((checkbox) => {
-	    checkbox.checked = selectAll.checked;
-	  })
-	}
-	
--->
-</script>
 </head>
 
 <body>
@@ -192,14 +133,101 @@ function selectAll(selectAll)  {
 
 		<main>
 		
+		<!-- dummy -->
+		<div class="my-5 "><!-- dummy --></div>
+		
+		<!-- ------------------top box---------------------- -->
 		<div class="py-5 text-center">
-			<h2>장바구니</h2>
+			<h2></h2>
 		</div>
 
 		<div class="row g-4 justify-content-md-center">
+			
+			<!-- ------------------cartList---------------------- -->
+			<div class="col-md-6 col-lg-6 order-md-first">
+				<form class="needs-validation" novalidate="">
+					<div class="row g-3">
 
+						<table class="table">
+							<thead>
+								<th scope="col" colspan="5" class="">
+									<input
+									class="col form-check-input" type="checkbox" id="allcheckbox"
+									checked="checked" onclick='selectAll(this)'></th>
+								<th scope="col"></th>
+							</thead>
+
+
+							<c:forEach items="${cartList}" var="cart" varStatus="status">
+								<tr class="border border-2 border-start-0 border-end-0">
+	
+										<!-- -----------------------체크박스----------------------- -->
+										<td class="align-middle">
+											<div class="form-check">
+												<input id="check_cart_no" class="form-check-input"
+													type="checkbox" name="check_cart_no" value="" checked=""> <label
+													class="form-check-label" for="check_cart_no"></label>
+											</div>
+											<input class="cart_no" value="${cart.cart_no }" type="hidden">
+											<input class="book_no" value="${cart.bookVO.book_no }" type="hidden">
+											<input class="user_no" value="${cart.userVO.user_no }" type="hidden">
+											<input class="product_count" value="${cart.cart_no }" type="hidden">
+										</td>
+	
+										<!-- -----------------------책 이미지----------------------- -->
+										<td class="align-middle"><a
+											href="/getBook?book_no=${ cart.bookVO.book_no }"> <img
+												class="img-thumbnail" alt="${ cart.bookVO.title }"
+												src="${cart.bookVO.book_img }">
+										</a></td>
+	
+										<!-- -----------------------책제목, 가격----------------------- -->
+										<td class=" align-middle"
+											align="left"><a class="text-decoration-none "
+											href="/getBook?book_no=${ cart.bookVO.book_no }">
+												<p class="fw-bold lh-sm">${ cart.bookVO.title }</p>
+										</a> <input type="hidden" id="book_price"
+											value="${ cart.bookVO.book_price }" /> <label
+											class="form-check-label" for="book_price" />
+											<p class="lh-lg">${ cart.bookVO.book_price }원</p>
+											<p class="dark-subtle">재고 : ${cart.bookVO.stock } 권</p>
+										</td>
+										
+										<td class="border border-start-0">
+											<!-- -------장바구니 삭제------ -->
+											<button class="deleteCart mt-1 close 
+															btn btn-light rounded-circle "
+												type="button" aria-label="Close" onclick="deleteCart()">
+												<span class="" aria-hidden="true">&times;</span>
+											</button>
+										</td>
+										
+										<!-- -----------------------금액 , 수량----------------------- -->
+										<td class="align-middle text-center">
+											<div class="justify-content-md-center">
+												<p class="fs-5 lh-base fw-800">${ (cart.bookVO.book_price * cart.product_count)}원</p>
+												<div class="input-group input-group-sm w-75 m-auto
+															border border-dark-subtle rounded-3 border-2">
+													<button id="minus" class="btn fw-bold" type="button">-</button>
+													<input class="form-control text-center border-0 "
+														type="number" name="product_cnt" min="1"
+														max="${cart.bookVO.stock}" value="${ cart.product_count }">
+													<label  class="form-label" for="product_cnt"></label>
+													<button id="plus" class="btn fw-bold" type="button">+</button>
+												</div>
+											</div>
+										</td>
+										
+									</tr>
+							</c:forEach>
+							
+						</table>
+					</div>
+				</form>
+			</div>
+		
 			<!-- ------------------slide box---------------------- -->
-			<div class="slideBox col-md-3 col-lg-3 order-md-last">
+			<div class="slideBox col-md-3 col-lg-3 ">
 				<h4 class="d-flex justify-content-between align-items-center mb-3">
 					<span class="text-primary">Total</span> 
 					<span class="badge bg-primary rounded-pill">3<!-- 장바구니sum --></span>
@@ -234,88 +262,11 @@ function selectAll(selectAll)  {
 				</form>
 			</div>
 
-			<!-- ------------------cartList---------------------- -->
-			<div class="col-md-6 col-lg-6">
-				<form class="needs-validation" novalidate="">
-					<div class="row g-3">
-
-						<table class="table">
-							<thead>
-								<th scope="col" colspan="5" class="">
-									<input
-									class="col form-check-input" type="checkbox" id="allcheckbox"
-									checked="checked" onclick='selectAll(this)'></th>
-								<th scope="col"></th>
-							</thead>
-
-
-							<c:forEach items="${cartList}" var="cart" varStatus="status">
-								<tr class="border border-2 border-start-0 border-end-0">
-	
-										<!-- -----------------------체크박스----------------------- -->
-										<td class="align-middle">
-											<div class="form-check">
-												<input id="check_cart_no" class="form-check-input"
-													type="checkbox" name="check_cart_no"
-													value="${ cart.cart_no }" checked=""> <label
-													class="form-check-label" for="check_cart_no"></label>
-											</div>
-										</td>
-	
-										<!-- -----------------------책 이미지----------------------- -->
-										<td class="align-middle"><a
-											href="/getBook?book_no=${ cart.bookVO.book_no }"> <img
-												class="img-thumbnail" alt="${ cart.bookVO.title }"
-												src="${cart.bookVO.book_img }">
-										</a></td>
-	
-										<!-- -----------------------책제목, 가격----------------------- -->
-										<td class=" align-middle"
-											align="left"><a class="text-decoration-none "
-											href="/getBook?book_no=${ cart.bookVO.book_no }">
-												<p class="fw-bold lh-sm">${ cart.bookVO.title }</p>
-										</a> <input type="hidden" id="book_price"
-											value="${ cart.bookVO.book_price }" /> <label
-											class="form-check-label" for="book_price" />
-											<p class="lh-lg">${ cart.bookVO.book_price }원</p>
-											<p class="dark-subtle">재고 : ${cart.bookVO.stock } 권</p>
-										</td>
-										
-										<td class="border border-start-0">
-											<!-- -------장바구니 삭제------ -->
-											<button class="mt-1 close 
-															btn btn-light rounded-circle "
-												type="button" aria-label="Close">
-												<span class="" aria-hidden="true">&times;</span>
-											</button>
-										</td>
-										
-										<!-- -----------------------금액 , 수량----------------------- -->
-										<td class="align-middle text-center">
-											<div class="justify-content-md-center">
-												<p class="fs-5 lh-base fw-800">${ (cart.bookVO.book_price * cart.product_count)}원</p>
-												<div class="input-group input-group-sm w-75 m-auto
-															border border-dark-subtle rounded-3 border-2">
-													<button id="minus" class="btn fw-bold" type="button">-</button>
-													<input class="form-control text-center border-0 "
-														type="number" name="product_cnt" min="1"
-														max="${cart.bookVO.stock}" value="${ cart.product_count }">
-													<label  class="form-label" for="product_cnt"></label>
-													<button id="plus" class="btn fw-bold" type="button">+</button>
-												</div>
-											</div>
-										</td>
-										
-									</tr>
-							</c:forEach>
-							
-						</table>
-					</div>
-				</form>
-			</div>
 		</div>
-		
+
+		<!-- dummy -->
 		<div class="my-5 "><!-- dummy --></div>
+		
 		</main>
 		
 	</div>
@@ -383,6 +334,14 @@ function selectAll(selectAll)  {
 			</div>
 		</div>
 	</footer>
+	
+	<!-- ---------------------------script--------------------------- -->
+	<script>
+		function deleteCart(){
+			var cart_no = $(this)
+			
+		}
+	</script>
 
 
 	<!-- Script Bootstrap, jqurey-3.6.3 -->

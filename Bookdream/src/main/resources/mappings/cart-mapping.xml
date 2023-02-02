@@ -9,6 +9,9 @@
 		<result property="user_no" column="USER_NO" />	
 		<result property="book_no" column="BOOK_NO" />	
 		<result property="product_count" column="PRODUCT_COUNT" />	
+		
+	<!-- 	<result property="listCnt" column="listCnt" />	 -->
+		
 		<collection property="userVO" resultMap="userList"></collection>
 		<collection property="bookVO" resultMap="bookList"></collection>
 	</resultMap>	
