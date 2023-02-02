@@ -2,6 +2,13 @@ create user bookdream identified by bookdream;
 grant connect, resource, create view to bookdream;
 connect bookdream/bookdream;
 
+-- Table KEY 확인하기
+SELECT uc.constraint_name, uc.table_name, ucc.column_name, uc.constraint_type, uc.r_constraint_name
+
+FROM user_constraints uc, user_cons_columns ucc
+
+WHERE uc.constraint_name = ucc.constraint_name;
+
 -- Users Table
 --------------------------------------------------------------------
 -------------------------- USERS ------------------------------------
@@ -106,7 +113,7 @@ CREATE TABLE orders(
 );
 
 -- orders table fk user_no casecade
-alter table orders drop constraint fk_orders_user_no;
+alter table orders drop constraint SYS_C007481;
 alter table orders add constraint fk_orders_user_no foreign key (user_no) references users (user_no) on delete cascade;
 
 select * from orders;
