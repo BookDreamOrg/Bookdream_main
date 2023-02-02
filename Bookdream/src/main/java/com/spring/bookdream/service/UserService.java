@@ -32,4 +32,12 @@ public interface UserService {
 	
 	// 네이버 정보 저장
 	public void naverInsert(UserVO vo);
+
+	public UserVO getBySns(UserVO snsUser);
+	
+	//회원정보 수정
+	public void updateUser(UserVO vo);
+	
+	// 회원 탈퇴
+	public void deleteUser(UserVO vo);
 }

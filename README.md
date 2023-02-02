@@ -20,4 +20,4 @@ KH Team Project_BookDream
 
 ## 💻개발환경
 
-- Java11
+- java11

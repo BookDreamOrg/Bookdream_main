@@ -80,7 +80,7 @@ public class UserController {
 			return id;
 		}
 		
-	}
+	} 
 	
 	//아이디, 이름, 이메일로 비밀번호 찾기
 	@PostMapping("/pwfindUser.do")
@@ -109,4 +109,12 @@ public class UserController {
 		}
 		
 	}
+	
+	public String unregister(UserVO vo,UserDAO dao) throws Exception {
+		System.out.println("회원탈퇴 중...");
+		userService.deleteUser(vo);
+		
+		return "/user/login";
+	}
+ 	
 }
