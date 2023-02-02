@@ -15,6 +15,7 @@ import com.spring.bookdream.dao.BookDAO;
 import com.spring.bookdream.dao.ReviewDAO;
 import com.spring.bookdream.service.BookService;
 import com.spring.bookdream.service.ReviewService;
+import com.spring.bookdream.service.SearchKeywordHistoryService;
 import com.spring.bookdream.vo.BookVO;
 import com.spring.bookdream.vo.ReviewVO;
 
@@ -30,15 +31,19 @@ public class BookController {
 	@Autowired
 	private ReviewService reviewService;
 	
+	@Autowired
+	private SearchKeywordHistoryService searchKeywordService;
+	
 	// 글 목록 검색
-	@RequestMapping(value="/bookKeywordList")
+	@RequestMapping(value="/bookListSearchByKeyword")
 	public String bookList(String keyword, BookDAO bookDAO, Model model) {
 		// Model 정보 저장
-		model.addAttribute("book", bookService.getBookList(keyword));	// Model 정보 저장		
-		return "booklist/bookKeywordList"; //조회된 책 뿌리기
+		model.addAttribute("book", bookService.getBookList(keyword));// Model 정보 저장
+		model.addAttribute("search_keyword",keyword);		
+		searchKeywordService.searchingKeyword(keyword);		
+		
+		return "booklist/bookListSearchByKeyword"; //조회된 책 뿌리기
 	}
-
-	
 	
 	// 글 상세 조회
 			@RequestMapping(value="/getBook", method = RequestMethod.GET)

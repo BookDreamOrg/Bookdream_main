@@ -40,6 +40,7 @@
 
 <!-- CSS -->
 <link rel="stylesheet" type="text/css" href="/resources/css/orderitem.css">
+
 </head>
 
 <body>
@@ -83,7 +84,7 @@
 					</div>
 				</div>
 				<div class="col-lg-1 p-5 flex-grow-1 header-col-btn">
-					<a href="/cart">
+					<a href="/itemorder/cart/list">
 						<div class="header-btn">
 							<i class="fa-solid fa-cart-shopping"></i>
 						</div>

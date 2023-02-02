@@ -16,6 +16,7 @@
 <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
 <link rel="stylesheet" href="/resources/css/styles.css" />
 
+
 <title>주문완료 페이지</title>
 
 <!-- bootstrap -->
@@ -23,177 +24,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
 
-<style type="text/css">
-
-* {
-	border-radius:10px;
-	box-sizing: border-box;
-}
-
-body {
-	 position: relative;
-
-}
-
-.main {
-	position:relative;
-	margin: 0 auto;
-	width: 1240px;
-	height: auto;
-	min-height: 1000px;
-}
-
-.topbar {
-	position:relative;
-	height:150px;	
-	margin-top: 50px;	
-	background-color: white;
-}
-
-.topbar_title{
-	position:absolute;
-	top:60px;
-	margin-left:70px;
-	font-size: 30px;
-	font-weight: bold;
-}
-
-/* !!!!!!!!!!!!! 사이드바 !!!!!!!!!!!!! */
-
-.sidebar {
-	position:relative;
-	width: 290px;
-	min-height: 300px;
-	float: right;
-	padding: 0px 15px;
-	margin: 30px 0px 60px 0px;		
-	border: 2px solid #bdbdbd;	
-	background-color: white;	
-}
-
-.sidebar_item {
-	width: 260px;
-	height: auto;
-	min-height: 100px;
-
-}
-
-.sidebar_item_title_up, .sidebar_item_title_down {
-	margin: 10px 0px;
-	text-align: center;
-	cursor: pointer;
-}
-
-.sidebar_item_title_up {
-	display: none;
-}
-
-
-
-.sidebar_pay_main {
-	margin: 20px 0px;
-	font-size: 20px;
-}
-
-.sidebar_pay_right {
-	float: right;
-}
-
-.sidebar_pay_left {
-	margin: 10px 0px;
-	opacity: 0.7;
-}
-
-.sidebar_item_icon {
-	font-size: 40px;
-	text-align: center;
-	opacity: 0.5;
-}
-
-
-
-.sidebar_item_table {	
-	font-size: 12px;
-	width: 100%;
-	display: none;
-}
-
-
-.sidebar_item_table_td {
-	padding:10px 20px 10px 0px;
-
-}
-
-.sidebar_item_table_td.col1 {
-	vertical-align : middle;
-	width: 80px;
-	height: 100px;	
-}
-
-.sidebar_item_table_td.col2 {
-	overflow: hidden; 
-	text-overflow: ellipsis; 
-	white-space: nowrap;
-	max-width: 100px;
-
-}
-
-.sidebar_item_table_td_img {
-	width: 80px;
-	height: 100px;
-	border: 1px solid black;
-}
-
-.sidebar_item_table_tr {
-	border: 1px solid black;
-}
-
-/* !!!!!!!!!!!!! 센터 !!!!!!!!!!!!! */
-
-.center {
-	display:inline-block;
-	width: 900px;
-	height:700px;
-	margin-top:30px;	
-	border: 2px solid #bdbdbd;
-	background-color: white;	
-}
-
-
-.center_info {
-	margin: 60px 0px;
-	text-align:center;
-	font-size: 40px;
-	font-weight: bold;
-}
-
-.center_table {
-	margin:0 auto;
-	width:700px;	
- 	text-align:justify;
-	font-size: 20px;
-	
-}
-
-.center_table_th {
-	height: 50px;
-	width: 120px;
-	font-weight: bold;
-}
-
-.center_table_td {
-	padding: 20px 30px;
-}
-
-.center_table_th.col2 {
-	height: 200px;
-}
-
-.center_table_th.col4 {
-	height: 100px;
-}
-
-</style>
+<!-- CSS -->
+<link rel="stylesheet" type="text/css" href="/resources/css/success.css">
 
 
 </head>
@@ -346,9 +178,9 @@ body {
 				</div>
 				<hr>
 				<div class="sidebar_pay">
-					<div class="sidebar_pay_main">결제금액<span class="sidebar_pay_right"><b><fmt:formatNumber value="${(order.total_price + order.order_fee + order.discount_price + order.use_point) - (order.discount_price + order.use_point) }" pattern="###,###"/></b>&nbsp;원</span></div>
-					<div class="sidebar_pay_left">ㄴ 상품금액<span class="sidebar_pay_right"><fmt:formatNumber value="${order.total_price + order.discount_price + order.use_point}" pattern="###,###"/>&nbsp;원</span></div>
-					<div class="sidebar_pay_left">ㄴ 배송비<span class="sidebar_pay_right">(+)&nbsp;<fmt:formatNumber value="${order.order_fee}" pattern="###,###"/>&nbsp;원</span></div>
+					<div class="sidebar_pay_main">결제금액<span class="sidebar_pay_right"><b><fmt:formatNumber value="${order.final_price}" pattern="###,###"/></b>&nbsp;원</span></div>
+					<div class="sidebar_pay_left">ㄴ 상품금액<span class="sidebar_pay_right"><fmt:formatNumber value="${order.total_price}" pattern="###,###"/>&nbsp;원</span></div>
+					<div class="sidebar_pay_left">ㄴ 배송비<span class="sidebar_pay_right">(+)&nbsp;<fmt:formatNumber value="${order.pay_fee}" pattern="###,###"/>&nbsp;원</span></div>
 					<div class="sidebar_pay_left">ㄴ 할인금액<span class="sidebar_pay_right">(-)&nbsp;<fmt:formatNumber value="${order.discount_price}" pattern="###,###"/>&nbsp;원</span></div>					
 					<div class="sidebar_pay_left">ㄴ 포인트사용<span class="sidebar_pay_right">(-)&nbsp;<fmt:formatNumber value="${order.use_point}" pattern="###,###"/>&nbsp;원</span></div>
 				</div>

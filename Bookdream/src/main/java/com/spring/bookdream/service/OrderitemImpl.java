@@ -53,6 +53,13 @@ public class OrderitemImpl implements OrderitemService {
 		return orderitemDAO.updateBookStock(user_no);
 	}
 
+	@Override
+	public int updateBookStock_now(OrderitemVO vo) {
+		// TODO Auto-generated method stub
+		return orderitemDAO.updateBookStock_now(vo);
+	}
+	
+	
 	// 구매 한 장바구니 품목 제거
 	@Override
 	public int deleteCartList(OrderitemVO user_no) {
@@ -65,6 +72,7 @@ public class OrderitemImpl implements OrderitemService {
 
 		return orderitemDAO.updateUserPoint(vo);	
 	}
+
 
 
 
