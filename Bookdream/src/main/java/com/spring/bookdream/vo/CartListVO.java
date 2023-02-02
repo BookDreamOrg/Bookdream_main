@@ -3,7 +3,7 @@ package com.spring.bookdream.vo;
 import lombok.Data;
 
 @Data
-public class CartVO {
+public class CartListVO {
 /*
     CART_NO       number(10) NOT NULL,
     USER_NO       number     NOT NULL,
@@ -18,15 +18,12 @@ public class CartVO {
 	private int listCount;
 	
 	private int num;
-	/*
 	private String title;
 	private String book_img;
 	private int book_price;
 	private int stock;
-	 */
 	
 	private UserVO userVO;
 	private BookVO bookVO;
-	
 
 }

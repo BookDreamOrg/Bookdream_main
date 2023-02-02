@@ -95,6 +95,7 @@
 				<div class="col-md-4">
 				</div>
 				<div class="col-md-5" id="detail-price">
+<<<<<<< Updated upstream
 				<c:choose>
 					<c:when test="${book.stock > 0 }">
 						<input class=" form-control text-center border-0 " type="number" id="product_cnt" min="1" max="${book.stock}" value="1" >
@@ -105,6 +106,11 @@
 					</c:otherwise>
 				</c:choose>
 				  
+=======
+				  <input class=" form-control text-center border-0 "
+                                    type="number" id="product_count" min="1" max="${book.stock}" value="1" >
+				<fmt:formatNumber  value="${book.book_price}" pattern="#,###"/>원
+>>>>>>> Stashed changes
 				</div>
 				<div class="col-md-3">
 				</div>
@@ -137,9 +143,14 @@
 					<button id="btn_buy_now" class="text-center btn btn-outline-dark flex-shrink-0 btn-lg btn-info" onclick="now_buy()">
 						<i class="bi bi-basket2"></i> 바로구매
 					</button>
+<<<<<<< Updated upstream
 						<button class="text-center btn btn-outline-dark flex-shrink-0  btn-lg me-3 btn-info" onclick="cart()">
+=======
+					<button id="addCart" class="text-center btn btn-outline-dark flex-shrink-0  btn-lg me-3" >
+>>>>>>> Stashed changes
 						<i class="bi-cart-fill me-1"></i>장바구니
 					</button>
+					<input id="book_no" type="hidden" value="${book.book_no}">
 				</div>
 				</c:if>
 				</div>
@@ -218,6 +229,70 @@
 </c:forEach>
 	</div>
 	</div>
+	
+	<footer>
+			<div>
+				<a class="footer-logo" href="#"> <img class="footer-logo-img"
+					src="/resources/images/logo/logo_white.png" alt="logo_white" /> <img
+					class="footer-logo-text"
+					src="/resources/images/logo/logo_text--white.png"
+					alt="logo_text--white" />
+				</a>
+			</div>
+			<div class="footer-section">
+				<div class="footer-profile-box">
+					<div class="footer-profile">
+						<div class="profile-github">
+							<a href="#"> <i class="fa-brands fa-github fa-xl"></i>
+							</a>
+						</div>
+						<div class="profile-text">
+							<a href="#">윤동환</a>
+						</div>
+					</div>
+					<div class="footer-profile">
+						<div class="profile-github">
+							<a href="#"> <i class="fa-brands fa-github fa-xl"></i>
+							</a>
+						</div>
+						<div class="profile-text">
+							<a href="#">양현정</a>
+						</div>
+					</div>
+					<div class="footer-profile">
+						<div class="profile-github">
+							<a href="#"> <i class="fa-brands fa-github fa-xl"></i>
+							</a>
+						</div>
+						<div class="profile-text">
+							<a href="#">백기렬</a>
+						</div>
+					</div>
+					<div class="footer-profile">
+						<div class="profile-github">
+							<a href="#"> <i class="fa-brands fa-github fa-xl"></i>
+							</a>
+						</div>
+						<div class="profile-text">
+							<a href="#">차승윤</a>
+						</div>
+					</div>
+					<div class="footer-profile">
+						<div class="profile-github">
+							<a href="#"> <i class="fa-brands fa-github fa-xl"></i>
+							</a>
+						</div>
+						<div class="profile-text">
+							<a href="#">안성연</a>
+						</div>
+					</div>
+				</div>
+				<div class="footer-document">
+					<div class="doucumnet-text">Project 설명이 포함되어 있습니다.</div>
+					<span>© BOOKDREAM BUKDACK-BUCKDACK</span>
+				</div>
+			</div>
+		</footer>
 
 <!--------------------------------- 리뷰 수정 모달  -------------------------------->	
 <div class="modal" tabindex="-1" id="my-modal">
@@ -246,6 +321,7 @@
 
 <script type="text/javascript">
 
+<<<<<<< Updated upstream
 /* ------------------------바로구매 버튼 클릭  ----------------------------*/
 function now_buy(){
 	let book_no = ${book.book_no};
@@ -277,7 +353,51 @@ function cart(){
 		location.replace("/itemorder/cart/list?book_no="+book_no+"&user_no="+user_no+"&product_count="+product_cnt);
 	}
 }
+=======
+$("#addCart").click(function(){	
+	
+	var data = {
+			  book_no :  $("#book_no").val(),
+			  product_count : $("#product_count").val()
+			};
+	
+	console.log(data);
+	  
+	$.ajax({
+	   url : "/itemorder/cart/add",
+	   type : "POST",
+	   data : data,
+	   success : function(result){
+			
+		   if(result == 1) { // 1 : 장바구니 추가 성공, 0 : 장바구니 추가 실패
+				alert("카트 담기 성공");
+				$("#product_cnt").val("1");
+			} else {
+				alert("회원만 사용할 수 있습니다.")
+				$("#product_cnt").val("1");
+			}
+		   
+		}, error : function(){
+		     alert("error : 카트 담기 실패");
+		    }		
+	 });
+});
+>>>>>>> Stashed changes
 
+<%-- function cart(){
+	let book_no = document.getElementById("book_no").value;
+	let user_no = '<%=session.getAttribute("user_no")%>';
+	let product_cnt  = document.getElementById("product_cnt").value;
+	console.log("book_no : " + book_no + "user_no :  " + user_no + "product : " + product_cnt )
+	if(user_no === null ||user_no === "" || user_no === "null"){
+		alert('user_no = null');
+		location.replace("/itemorder/cart/list?book_no="+book_no+"&user_no=0"+"&product_count="+product_cnt);
+	}else{ 
+		location.replace("/itemorder/cart/add");
+		alert("카트 담기 성공");
+		//location.replace("/itemorder/cart/list?book_no="+book_no+"&user_no="+user_no+"&product_count="+product_cnt);
+	}
+} --%>
 
 
 /* ------------------------ 추천 버튼 클릭  ----------------------------*/
@@ -305,10 +425,13 @@ $.ajax({
 		
 	});
 }	
+<<<<<<< Updated upstream
 
 
 /* ------------------------항상 실행----------------------------*/
 /* ------------------------변수에 별점 가져오기 ----------------------------*/
+=======
+>>>>>>> Stashed changes
 $(function(){
 	let star = 
 	$('#REVIEW_STAR').change(function(){
@@ -317,7 +440,10 @@ $(function(){
 	});
 	
 	
+<<<<<<< Updated upstream
 /* ------------------------ 리뷰 등록 버튼 클릭  ----------------------------*/
+=======
+>>>>>>> Stashed changes
 	$('#btn_review').click(function(){
 		let user_id = '<%=session.getAttribute("user_id")%>';
 		
@@ -358,6 +484,7 @@ $(function(){
 						review_insert();	
 					}					
 				}
+<<<<<<< Updated upstream
 						
 				});
 		}
@@ -395,6 +522,15 @@ $(function(){
 });
 
 /* ------------------------ 리뷰 새로고침  ----------------------------*/
+=======
+			}		
+				  			
+		})
+});//btn_review.click end
+	//추천 버튼 클릭
+//review 업데이트를 하기 위한 getbook실행
+});
+>>>>>>> Stashed changes
 function getReview(){
 	$.ajax({
 		type : "get",
@@ -413,8 +549,13 @@ function getReview(){
 		}
 	});
 }
+</script>
 
+<!-- Script Bootstrap, jqurey-3.6.3 -->
+	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
+	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 
+<<<<<<< Updated upstream
 /* ------------------------ [모달] 리뷰 수정  ----------------------------*/
 function review_upd(val){
 	$('#my-modal').modal('show');
@@ -473,6 +614,11 @@ function modal_close(){
 
 
 </script>
+=======
+	<!-- Script FontAwesome-->
+	<script src="https://kit.fontawesome.com/4bf42f841a.js"
+		crossorigin="anonymous"></script>
+>>>>>>> Stashed changes
 
 <!-- Script Bootstrap, jqurey-3.6.3 -->
 	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
@@ -482,7 +628,10 @@ function modal_close(){
 	<script src="https://kit.fontawesome.com/4bf42f841a.js"
 		crossorigin="anonymous"></script>
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 </body>
 </html>
 
