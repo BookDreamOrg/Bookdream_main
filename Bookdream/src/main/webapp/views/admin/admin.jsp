@@ -103,7 +103,7 @@
 					<ul class="navbar-nav me-auto mb-2 mb-xl-0">
 						<li class="nav-item"><a class="nav-link" aria-current="page"
 							href="#">Home</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">Logout</a>
+						<li class="nav-item"><a class="nav-link" href="/views/main/main_teset.jsp">Logout</a>
 						</li>
 						<li class="nav-item"><a class="nav-link disabled" href="#"
 							tabindex="-1" aria-disabled="true">Disabled</a>
