@@ -395,16 +395,6 @@ $(function(){
 			exist_review();
 		}
 		
-	
-		
-		if(user_id === null ||user_id === "" || user_id === "null"){
-
-			alert('로그인 페이지로 이동합니다.');
-			location.replace("views/user/login.jsp");
-			
-		}else{
-			exist_review();
-		}
 		
 		//리뷰 존재 여부 확인 
 		function exist_review(){
@@ -542,16 +532,6 @@ function modal_close(){
 	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
 	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 
-
-
-	<!-- Script FontAwesome-->
-	<script src="https://kit.fontawesome.com/4bf42f841a.js"
-		crossorigin="anonymous"></script>
-
-
-<!-- Script Bootstrap, jqurey-3.6.3 -->
-	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
-	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 
 	<!-- Script FontAwesome-->
 	<script src="https://kit.fontawesome.com/4bf42f841a.js"
