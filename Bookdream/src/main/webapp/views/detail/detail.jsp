@@ -181,7 +181,7 @@
 						<div class="col-md-4">
 						<i class="bi bi-person-circle fs-2"></i>
 						   ID : ${review.user_id} <br>
-						   <fmt:formatDate value="${review.review_date}" pattern="YYYY년 MM월 DD일" type="date"/> 
+						   등록 날짜 : <fmt:formatDate value="${review.review_date}" pattern="yyyy년 MM월 dd일" type="date"/> 
 						</div>
 						<div class="col-md-4">
 						</div>
@@ -321,15 +321,6 @@ $(function(){
 	$('#btn_review').click(function(){
 		let user_id = '<%=session.getAttribute("user_id")%>';
 		
-		if(user_id === null ||user_id === "" || user_id === "null"){
-
-			alert('로그인 페이지로 이동합니다.');
-			location.replace("views/user/login.jsp");
-			
-		}else{
-			exist_review();
-		}
-		
 		//리뷰 버튼 클릭 시 가져오는 리뷰 정보  		
 		let review_json = {
 		        "review_star" : star.val(),
@@ -339,7 +330,14 @@ $(function(){
 		        "review_recommend" :0 
 		};
 		
-		exist_review();
+		if(user_id === null ||user_id === "" || user_id === "null"){
+
+			alert('로그인 페이지로 이동합니다.');
+			location.replace("views/user/login.jsp");
+			
+		}else{
+			exist_review();
+		}
 		
 		//리뷰 존재 여부 확인 
 		function exist_review(){
