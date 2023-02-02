@@ -227,70 +227,6 @@
 	</div>
 	</div>
 	
-	<footer>
-			<div>
-				<a class="footer-logo" href="#"> <img class="footer-logo-img"
-					src="/resources/images/logo/logo_white.png" alt="logo_white" /> <img
-					class="footer-logo-text"
-					src="/resources/images/logo/logo_text--white.png"
-					alt="logo_text--white" />
-				</a>
-			</div>
-			<div class="footer-section">
-				<div class="footer-profile-box">
-					<div class="footer-profile">
-						<div class="profile-github">
-							<a href="#"> <i class="fa-brands fa-github fa-xl"></i>
-							</a>
-						</div>
-						<div class="profile-text">
-							<a href="#">윤동환</a>
-						</div>
-					</div>
-					<div class="footer-profile">
-						<div class="profile-github">
-							<a href="#"> <i class="fa-brands fa-github fa-xl"></i>
-							</a>
-						</div>
-						<div class="profile-text">
-							<a href="#">양현정</a>
-						</div>
-					</div>
-					<div class="footer-profile">
-						<div class="profile-github">
-							<a href="#"> <i class="fa-brands fa-github fa-xl"></i>
-							</a>
-						</div>
-						<div class="profile-text">
-							<a href="#">백기렬</a>
-						</div>
-					</div>
-					<div class="footer-profile">
-						<div class="profile-github">
-							<a href="#"> <i class="fa-brands fa-github fa-xl"></i>
-							</a>
-						</div>
-						<div class="profile-text">
-							<a href="#">차승윤</a>
-						</div>
-					</div>
-					<div class="footer-profile">
-						<div class="profile-github">
-							<a href="#"> <i class="fa-brands fa-github fa-xl"></i>
-							</a>
-						</div>
-						<div class="profile-text">
-							<a href="#">안성연</a>
-						</div>
-					</div>
-				</div>
-				<div class="footer-document">
-					<div class="doucumnet-text">Project 설명이 포함되어 있습니다.</div>
-					<span>© BOOKDREAM BUKDACK-BUCKDACK</span>
-				</div>
-			</div>
-		</footer>
-
 <!--------------------------------- 리뷰 수정 모달  -------------------------------->	
 <div class="modal" tabindex="-1" id="my-modal">
   <div class="modal-dialog modal-dialog-centered">
@@ -424,7 +360,6 @@ $.ajax({
 }	
 
 
-
 /* ------------------------항상 실행----------------------------*/
 /* ------------------------변수에 별점 가져오기 ----------------------------*/
 
@@ -445,7 +380,7 @@ $(function(){
 		if(user_id === null ||user_id === "" || user_id === "null"){
 
 			alert('로그인 페이지로 이동합니다.');
-			location.replace("views/user/login.jsp");
+			location.replace("/views/user/login.jsp");
 			
 		}else{
 			exist_review();
@@ -516,15 +451,6 @@ $(function(){
 });
 
 /* ------------------------ 리뷰 새로고침  ----------------------------*/
-
-			}		
-				  			
-		})
-});//btn_review.click end
-	//추천 버튼 클릭
-//review 업데이트를 하기 위한 getbook실행
-});
-
 function getReview(){
 	$.ajax({
 		type : "get",
