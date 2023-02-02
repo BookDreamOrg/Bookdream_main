@@ -7,7 +7,6 @@
 		<result property="user_id" column="user_id"/>
 		<result property="user_password" column="user_password"/>
 		<result property="user_name" column="user_name"/>
-		<result property="user_address" column="user_address"/>
 		<result property="user_tel" column="user_tel"/>
 		<result property="user_level" column="user_level"/>
 		<result property="blacklist_yn" column="blacklist_yn"/>
@@ -37,10 +36,20 @@
 	</select>
 	
 	<!-- 카카오 정보 찾기 -->
-	<select id="findKakao" parameterType="java.util.HashMap" resultType="user">
-		select user_name, user_email from users where user_name=#{nickname} and user_email=#{email}
+	<select id="findKakao" resultType="user">
+		select * from users where flatform_type='KAKAO' and user_email=#{user_email}
 	</select>
-
+	
+	<!-- 네이버 정보 찾기 -->
+	<select id="findNaver" parameterType="user" resultType="user">
+		select * from users where flatform_type='naver' and user_email=#{user_email}
+	</select>
+	
+	<!-- 구글 정보 찾기 -->
+	<select id="findGoogle" parameterType="user" resultType="user">
+		select * from users where flatform_type='google' and user_email=#{user_email}
+	</select>
+	
 	<!-- 플랫폼 정보 가져오기ㅡ -->
 	<select id="findFlatform" resultType="String">
 		select flatform_type from users where user_id=#{user_id} and user_password=#{user_password}
@@ -48,22 +57,22 @@
 
 	<!--카카오 정보 저장 -->
 	<insert id="kakaoInsert" parameterType="java.util.HashMap">
-		insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_ADDRESS, USER_TEL, FLATFORM_TYPE, USER_EMAIL) 
-		values(user_seq.nextval,'','',#{nickname},'','','KAKAO',#{email})
+		insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_TEL, FLATFORM_TYPE, USER_EMAIL) 
+		values(user_seq.nextval,'','',#{nickname},'','KAKAO',#{email})
 	</insert>
 	
 		
 	<!-- 구글 정보 저장 --> 
 	<insert id="googleInsert">
-		insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_ADDRESS, USER_TEL, FLATFORM_TYPE, USER_EMAIL)
-		values(user_seq.nextval,'','',#{user_name}, '','',#{flatform_type}, #{user_email})
+		insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_TEL, FLATFORM_TYPE, USER_EMAIL)
+		values(user_seq.nextval,'','',#{user_name},'',#{flatform_type}, #{user_email})
 	</insert>
 
 	
 	<!-- 네이버 정보 저장 --> 
 	<insert id="naverInsert">
-		insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_ADDRESS, USER_TEL, FLATFORM_TYPE, USER_EMAIL)
-		values(user_seq.nextval,'','',#{user_name}, '',#{user_tel}, #{flatform_type}, #{user_email})
+		insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_TEL, FLATFORM_TYPE, USER_EMAIL)
+		values(user_seq.nextval,'','',#{user_name}, #{user_tel}, #{flatform_type}, #{user_email})
 	</insert>
 	
 	
@@ -77,4 +86,12 @@
 		select user_password from users where user_id=#{user_id} and user_name=#{user_name} and user_email=#{user_email} 
 	</select>
 	
+	<!-- 회원정보 수정 -->
+	<update id="updateUser">
+		update users set user_password=#{user_password}, user_name=#{user_name}, user_email=#{user_email} where user_id = #{user_id}
+	</update>
+	
+	<delete id="deleteUser">
+		delete from users where user_id = #{user_id} and user_password = #{user_password}
+	</delete>
 </mapper>

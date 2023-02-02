@@ -72,4 +72,20 @@ public class UserServiceImpl implements UserService {
 	public void naverInsert(UserVO vo) {
 		userDAO.naverinsert(vo);
 	}
+
+	@Override
+	public UserVO getBySns(UserVO snsUser) {
+		return userDAO.getBySns(snsUser);
+	}
+	
+	@Override
+	public void updateUser(UserVO vo) {
+		userDAO.updateUser(vo);
+	}
+
+	@Override
+	public void deleteUser(UserVO vo) {
+		userDAO.deleteUser(vo);
+	}
+
 }

@@ -23,6 +23,7 @@ import com.google.api.services.people.v1.model.Person;
 import com.spring.bookdream.auth.SNSLogin;
 import com.spring.bookdream.auth.SnsValue;
 import com.spring.bookdream.dao.UserDAO;
+import com.spring.bookdream.service.UserService;
 import com.spring.bookdream.vo.UserVO;
 
 @Controller
@@ -42,35 +43,46 @@ public class SnsLoginController {
 		@Inject
 		UserDAO userDao;
 		
-		@RequestMapping(value="/auth/{service}/callback",
+		@Inject
+		private UserService userService;
+		
+		@RequestMapping(value="/auth/{snsService}/callback",
 				method =  {RequestMethod.GET, RequestMethod.POST}) 
-		public String snsLoginCallback(@PathVariable String service, 
+		public String snsLoginCallback(@PathVariable String snsService, 
 				Model model, @RequestParam String code, HttpSession session) throws Exception {
 			
 			SnsValue sns = null;
-			if(StringUtils.equals("naver", service)) {
+			if(StringUtils.equals("naver", snsService)) {
 				sns = naverSns;
-			} else if(StringUtils.equals("google", service)) {
+			} else if(StringUtils.equals("google", snsService)) {
 				sns = googleSns;
 			};
 			
 			// 1. code를 이용해서 access_token 받기
 			// 2. access_token을 이용해서 사용자 profile 정보 가져오기
 			SNSLogin snsLogin = new SNSLogin(sns);
-			UserVO userVo = snsLogin.getUserProfile(code);
+			UserVO snsUser = snsLogin.getUserProfile(code);
 			
-			if (service.equals("naver")) {
-				userDao.naverinsert(userVo);
-			} else if (service.equals("google")) {
-				userDao.googleinsert(userVo);
-			}
-			System.out.println("Service>>" + service);
-			System.out.println("Profile>>" + userVo);
+			System.out.println("Service>>" + snsService);
+			System.out.println("Profile>>" + snsUser);
 			
 			// 3. DB 해당 유저가 존재하는지 Check (googleid, naverid 컬럼 추가)
 			// 4. 존재 시 강제 로그인, 미존재 시 가입페이지
+			UserVO user = userService.getBySns(snsUser);
+			if(user == null) {
+				model.addAttribute("result", "존재하지 않는 사용자입니다. 가입해주세요");
+				if (snsService.equals("naver")) {
+					userDao.naverinsert(snsUser);
+				} else if (snsService.equals("google")) {
+					userDao.googleinsert(snsUser);
+				}
+			} else {
+				System.out.println(user.getUser_name() + " 님 반갑습니다.");
+				model.addAttribute("result", user.getUser_name() + " 님 반갑습니다.");
+				session.setAttribute("authUser", user);
+			}
 			
-			return "user/main_test";
+			return "main/main_teset";
 		}
 		
 }

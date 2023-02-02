@@ -25,10 +25,6 @@
 	%>
 	
 	<%
-		String id = (String)session.getAttribute("user_id");
-		String kakaoN = (String)session.getAttribute("kakaoName");
-		String flatform = (String)session.getAttribute("flatform");
-		
 		UserVO user = (UserVO)session.getAttribute("authUser");
 	
 		if(user == null){		
@@ -94,25 +90,13 @@
 			<div class="header-nav-list">
 				<ul class="nav header-nav">
 					<%
-						if(user.getFlatform_type().equals("KAKAO")){ // 카카오 로그아웃
+						if(user.getFlatform_type().equals("KAKAO")){ //기존 로그아웃
 					%>
 						<li class="nav-item"><a class="nav-link header-nav-link"
 						href="https://kauth.kakao.com/oauth/logout?client_id=47ad839005d8b9a94d3007b30a956894&logout_redirect_uri=http://localhost:8000/views/user/kakaoLogout">로그아웃</a></li>
 					<span class="nav-bar-line"></span>
 					<% 
-						} else if(user.getFlatform_type().equals("google")) { // google 로그아웃
-					%>
-						<li class="nav-item"><a class="nav-link header-nav-link"
-						href="/views/user/logout.do">로그아웃</a></li>
-					<span class="nav-bar-line"></span>
-					<% 
-						} else if(user.getFlatform_type().equals("naver")) { // naver 로그아웃
-					%>
-						<li class="nav-item"><a class="nav-link header-nav-link"
-						href="/views/user/logout.do">로그아웃</a></li>
-					<span class="nav-bar-line"></span>
-					<% 
-						} else { // 기존 로그아웃
+						} else { // 카카오 로그아웃
 					%>
 						<li class="nav-item"><a class="nav-link header-nav-link"
 						href="/views/user/logout.do">로그아웃</a></li>
@@ -122,14 +106,16 @@
 					%>
 					
 					<li class="nav-item"><a class="nav-link header-nav-link"
-						href="#">고객센터</a></li>
+						href="#">고객센터</a>
+					</li>
 					<span class="nav-bar-line"></span>
 					<li class="nav-item"><a class="nav-link header-nav-link"
 						href="/views/main/mypage.jsp">마이페이지</a></li>
 					<span class="nav-bar-line"></span>
 					<li class="nav-item"><a
 						class="nav-link header-nav-link disabled" href="#" tabindex="-1"
-						aria-disabled="true"> 관리자 </a></li>
+						aria-disabled="true"> 관리자 </a>
+					</li>
 				</ul>
 			</div>
 			<div class="row d-flex header-row">
@@ -171,47 +157,39 @@
 		}
 	%>
 	
-			<div class="header-menu mb-1">
-				<div class="btn-circle btn-circle-tint">
-					<i class="fa-solid fa-bars"></i>
-				</div>
-				<ul class="nav header-menu-list">
-					<li class="nav-item">
-						<form action="/getBook" method="get">
-							<button type="submit" name="book_no" value="<%=book_no%>">베스트</button>
-						</form>
-					</li>
-					<div class="dot"></div>
-					<li class="nav-item"><a class="nav-link menu-link" href="#">신상품</a>
-					</li>
-					<div class="dot"></div>
-					<li class="nav-item"><a class="nav-link menu-link" href="#">이벤트</a>
-					</li>
-					<div class="dot"></div>
-					<li class="nav-item"><a class="nav-link menu-link disabled"
-						href="#" tabindex="-1" aria-disabled="true">Disabled</a></li>
-				</ul>
-			</div>
 		</header>
 
-		<main>
-		<div class="banner">
-			<div class="banner-text">Banner Title Text</div>
-			<div class="banner-img"></div>
-			<div class="banner-books">
-				<div class="banner-book"></div>
-				<div class="banner-book banner-book-lg"></div>
-				<div class="banner-book banner-book-xl"></div>
+			
+			<div class="container">
+				<h1><a href="/views/main/edit.jsp">회원정보 수정</a></h1>
+				<!-- Button trigger modal -->
+				<button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+				  회원탈퇴
+				</button>
+				
+				<!-- Modal -->
+				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">회원탈퇴</h5>
+				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				      </div>
+				      <div class="modal-body">
+				        <div>
+				        	회원탈퇴 시 개인정보 및 BookDream에서 제공되는 서비스가 중단됩니다....
+				        	@@ 비밀번호 재확인 로직 추가
+				        </div>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+				        <button type="button" class="btn btn-primary">회원탈퇴</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
 			</div>
-		</div>
-		<ul class="nav nav-tabs book-section-nav">
-			<li class="nav-item"><a class="nav-link active"
-				aria-current="page" href="#">베스트</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">신상품</a></li>
-		</ul>
-		<div class="book-section"></div>
-		</main>
-
+			
 		<footer>
 			<div>
 				<a class="footer-logo" href="#"> <img class="footer-logo-img"
@@ -284,6 +262,5 @@
 	<!-- Script FontAwesome-->
 	<script src="https://kit.fontawesome.com/4bf42f841a.js"
 		crossorigin="anonymous"></script>
-		
 </body>
 </html>

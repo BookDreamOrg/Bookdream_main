@@ -2,6 +2,13 @@ create user bookdream identified by bookdream;
 grant connect, resource, create view to bookdream;
 connect bookdream/bookdream;
 
+-- Table KEY 확인하기
+SELECT uc.constraint_name, uc.table_name, ucc.column_name, uc.constraint_type, uc.r_constraint_name
+
+FROM user_constraints uc, user_cons_columns ucc
+
+WHERE uc.constraint_name = ucc.constraint_name;
+
 -- Users Table
 --------------------------------------------------------------------
 -------------------------- USERS ------------------------------------
@@ -35,8 +42,12 @@ insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_ADDRESS, USER
 -- BookDream 회원 로그인 insert
 insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
 	values(user_seq.nextval,'sycha','1234','이름','BD','이메일');
+-- BookDream test 로그인 insert
+insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
+   values(user_seq.nextval,'test','test','test','BD','test@test.com');
 
-
+-- BookDream User_ADDRESS 제거
+alter table users drop column USER_ADDRESS;
 
 select * from users;
 commit;
@@ -47,15 +58,18 @@ commit;
 drop table review;
 
 create table review(
-review_no         number(10) not null,
-user_id           varchar2(20) not null,
-book_no           number(10) not null,
-REVIEW_CONTENT    varchar2(1000) not null,
-REVIEW_DATE       date default sysdate,
-REVIEW_RECOMMEND  number(20),
-REVIEW_STAR       number(1) not null,
+review_no number(10) not null,
+USER_ID  varchar2(20)  not null,
+book_no number(10) not null,
+REVIEW_CONTENT varchar2(1000) not null,
+REVIEW_DATE date default sysdate,
+REVIEW_RECOMMEND number(20),
+REVIEW_STAR number(1) not null,
 constraint pk_riview PRIMARY KEY (review_no)
 );
+
+-- review table fk user_id casecade
+alter table review add constraint fk_review_user_id foreign key (user_id) references users (user_id) on delete cascade;
 
 select * from review;
 
@@ -98,6 +112,9 @@ CREATE TABLE orders(
     order_fee           number not null
 );
 
+-- orders table fk user_no casecade
+alter table orders drop constraint SYS_C007481;
+alter table orders add constraint fk_orders_user_no foreign key (user_no) references users (user_no) on delete cascade;
 
 select * from orders;
 
@@ -153,6 +170,10 @@ insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(5, 1, 5, 1);
 
 insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(4, 2, 5, 1);
 
+-- cart user_no casecade
+alter table cart drop constraint FK_CART_USER_NO;
+alter table cart add constraint FK_CART_USER_NO foreign key (user_no) references users (user_no) on delete cascade;
+
 select * from cart;
 
 commit; 
@@ -174,6 +195,11 @@ CREATE TABLE purchase (
     constraint FK_PURCHASE_BOOK_NO foreign key(BOOK_NO) REFERENCES BOOK (BOOK_NO), 
     constraint FK_PURCHASE_ORDER_NO foreign key(ORDER_NO) REFERENCES ORDERS (ORDER_NO)     
 );
+
+-- pusrchase table fk user_no casecade
+alter table purchase drop constraint fk_purchase_user_no;
+alter table purchase add constraint fk_purchase_user_no foreign key (user_no) references users (user_no) on delete cascade;
+
 
 ----------------------------- purchase_no 자동증번 ------------------------------
 drop sequence numplus;
@@ -204,6 +230,10 @@ CREATE TABLE ADDRESS (
     constraint PK_ADDRESS primary key(ADDRESS_NO),
     constraint FK_ADDRESS_USER_NO foreign key(USER_NO) REFERENCES USERS (USER_NO)
 );
+
+-- address table fk user_no casecade
+alter table address drop constraint fk_address_user_no;
+alter table address add constraint fk_address_user_no foreign key (user_no) references users (user_no) on delete cascade;
 
 SELECT * FROM ADDRESS;
 

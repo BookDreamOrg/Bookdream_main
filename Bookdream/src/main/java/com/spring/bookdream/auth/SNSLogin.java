@@ -35,7 +35,7 @@ public class SNSLogin {
 
 	public UserVO getUserProfile(String code) throws Exception {
 		OAuth2AccessToken accessToken = oauthService.getAccessToken(code);
-		
+		System.out.println(accessToken);
 		OAuthRequest request = new OAuthRequest(Verb.GET, this.sns.getProfileUrl());
 		oauthService.signRequest(accessToken, request);
 		
