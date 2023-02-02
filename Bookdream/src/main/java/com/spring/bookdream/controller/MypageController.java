@@ -21,14 +21,23 @@ public class MypageController {
 	
 	@Autowired
 	private HttpSession session;
-	
+	 
 	//회원정보 수정
 	@PostMapping(value="/updateUser.do")
 	@ResponseBody
 	public String updateUser(@RequestParam(value="id") String id,
 							 @RequestParam(value="password") String password,
+							 @RequestParam(value="password_check") String password_check,
 							 @RequestParam(value="email") String email,
 							 @RequestParam(value="name") String name){
+		
+		if(id.equals("") || password.equals("") || password_check.equals("") || email.equals("") || name.equals("")) {
+			return "error";
+		}
+		
+		if(!(password.equals(password_check))) {
+			return "password_error";
+		}
 		
 		UserVO userVO = (UserVO)session.getAttribute("authUser");
 		
@@ -36,12 +45,13 @@ public class MypageController {
 		userVO.setUser_password(password);
 		userVO.setUser_email(email);
 		userVO.setUser_name(name);
+		System.out.println("회원정보 수정");
 		System.out.println(id);
 		System.out.println(password);
 		System.out.println(email);
 		System.out.println(name);
 		userService.updateUser(userVO);
 		
-		return password;
+		return "/views/main/mypage.jsp";
 	}
 }
