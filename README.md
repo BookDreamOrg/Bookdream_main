@@ -19,5 +19,4 @@ KH Team Project_BookDream
 - 안성연 :
 
 ## 💻개발환경
-
- <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=TypeScript&logoColor=white"/>
+- java11
