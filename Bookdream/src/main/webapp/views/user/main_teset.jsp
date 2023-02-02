@@ -19,6 +19,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 	<%
 		int book_no = (int) (Math.random() * 100) + 1;
 	%>
@@ -64,11 +65,19 @@
 					</div>
 				</div>
 				<div class="col-lg-1 p-5 flex-grow-1 header-col-btn">
+<<<<<<< Updated upstream
 					<a href="/cart">
 						<div class="header-btn">
 							<i class="fa-solid fa-cart-shopping"></i>
 						</div>
 					</a> <a href="detail/cart/orderitem">
+=======
+					<a href="/itemorder/cart/list">
+						<div class="header-btn">
+							<i class="fa-solid fa-cart-shopping"></i>
+						</div>
+					</a> <a href="/itemorder/cart/list">
+>>>>>>> Stashed changes
 						<div class="header-btn btn-circle ms-3">
 							<i class="fa-solid fa-user"></i>
 						</div>
@@ -113,6 +122,7 @@
 				aria-current="page" href="#">베스트</a></li>
 			<li class="nav-item"><a class="nav-link" href="#">신상품</a></li>
 		</ul>
+		<h1><a href="/itemorder/cart/list">장바구니</a></h1>
 		<div class="book-section"></div>
 		</main>
 
