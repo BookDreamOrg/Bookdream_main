@@ -92,6 +92,6 @@
 	</update>
 	
 	<delete id="deleteUser">
-		delete from users where user_id = #{user_id} and user_password = #{user_password}
+		delete from users where user_id = #{user_id}
 	</delete>
 </mapper>

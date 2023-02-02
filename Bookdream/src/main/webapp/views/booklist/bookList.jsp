@@ -66,7 +66,7 @@
 							<li><a class="dropdown-item" href="#">베스트</a></li>
 							<li><a class="dropdown-item" href="#">신상품</a></li>
 						</ul>
-						<form action="/bookKeywordList" method="get">
+						<form action="/bookListSearchByKeyword" method="get">
 						<input type="text" name="keyword" class="form-control search-input"
 							aria-label="Text input with dropdown button"
 							placeholder="성공적인 프로젝트를 위하여!!👍" />
@@ -108,7 +108,7 @@
 						href="#" tabindex="-1" aria-disabled="true">Disabled</a></li>
 				</ul>
 			</div>
-		</header>
+		</header>	
 
 		<main>
 		<div class="banner">

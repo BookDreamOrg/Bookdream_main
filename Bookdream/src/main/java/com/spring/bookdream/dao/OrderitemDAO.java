@@ -58,6 +58,14 @@ public class OrderitemDAO {
 		
 	}
 
+	public int updateBookStock_now(OrderitemVO vo) {
+
+		System.out.println("---> updateBookStock_now 처리 <---");
+		
+		return mybatis.update("OrderitemDAO.updateBookStock_now", vo);
+		
+	}	
+	
 	public int deleteCartList(OrderitemVO user_no) {
 
 		System.out.println("---> deleteCardList 처리 <---");
