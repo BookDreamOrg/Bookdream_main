@@ -95,6 +95,7 @@
 				<div class="col-md-4">
 				</div>
 				<div class="col-md-5" id="detail-price">
+
 				<c:choose>
 					<c:when test="${book.stock > 0 }">
 						<input class=" form-control text-center border-0 " type="number" id="product_cnt" min="1" max="${book.stock}" value="1" >
@@ -105,6 +106,10 @@
 					</c:otherwise>
 				</c:choose>
 				  
+				  <input class=" form-control text-center border-0 "
+                                    type="number" id="product_count" min="1" max="${book.stock}" value="1" >
+				<fmt:formatNumber  value="${book.book_price}" pattern="#,###"/>원
+
 				</div>
 				<div class="col-md-3">
 				</div>
@@ -137,9 +142,12 @@
 					<button id="btn_buy_now" class="text-center btn btn-outline-dark flex-shrink-0 btn-lg btn-info" onclick="now_buy()">
 						<i class="bi bi-basket2"></i> 바로구매
 					</button>
+
 						<button class="text-center btn btn-outline-dark flex-shrink-0  btn-lg me-3 btn-info" onclick="cart()">
+					<button id="addCart" class="text-center btn btn-outline-dark flex-shrink-0  btn-lg me-3" >
 						<i class="bi-cart-fill me-1"></i>장바구니
 					</button>
+					<input id="book_no" type="hidden" value="${book.book_no}">
 				</div>
 				</c:if>
 				</div>
@@ -218,7 +226,7 @@
 </c:forEach>
 	</div>
 	</div>
-
+	
 <!--------------------------------- 리뷰 수정 모달  -------------------------------->	
 <div class="modal" tabindex="-1" id="my-modal">
   <div class="modal-dialog modal-dialog-centered">
@@ -245,6 +253,7 @@
 
 
 <script type="text/javascript">
+
 
 /* ------------------------바로구매 버튼 클릭  ----------------------------*/
 function now_buy(){
@@ -278,6 +287,50 @@ function cart(){
 	}
 }
 
+$("#addCart").click(function(){	
+	
+	var data = {
+			  book_no :  $("#book_no").val(),
+			  product_count : $("#product_count").val()
+			};
+	
+	console.log(data);
+	  
+	$.ajax({
+	   url : "/itemorder/cart/add",
+	   type : "POST",
+	   data : data,
+	   success : function(result){
+			
+		   if(result == 1) { // 1 : 장바구니 추가 성공, 0 : 장바구니 추가 실패
+				alert("카트 담기 성공");
+				$("#product_cnt").val("1");
+			} else {
+				alert("회원만 사용할 수 있습니다.")
+				$("#product_cnt").val("1");
+			}
+		   
+		}, error : function(){
+		     alert("error : 카트 담기 실패");
+		    }		
+	 });
+});
+
+
+<%-- function cart(){
+	let book_no = document.getElementById("book_no").value;
+	let user_no = '<%=session.getAttribute("user_no")%>';
+	let product_cnt  = document.getElementById("product_cnt").value;
+	console.log("book_no : " + book_no + "user_no :  " + user_no + "product : " + product_cnt )
+	if(user_no === null ||user_no === "" || user_no === "null"){
+		alert('user_no = null');
+		location.replace("/itemorder/cart/list?book_no="+book_no+"&user_no=0"+"&product_count="+product_cnt);
+	}else{ 
+		location.replace("/itemorder/cart/add");
+		alert("카트 담기 성공");
+		//location.replace("/itemorder/cart/list?book_no="+book_no+"&user_no="+user_no+"&product_count="+product_cnt);
+	}
+} --%>
 
 
 /* ------------------------ 추천 버튼 클릭  ----------------------------*/
@@ -309,6 +362,7 @@ $.ajax({
 
 /* ------------------------항상 실행----------------------------*/
 /* ------------------------변수에 별점 가져오기 ----------------------------*/
+
 $(function(){
 	let star = 
 	$('#REVIEW_STAR').change(function(){
@@ -317,11 +371,13 @@ $(function(){
 	});
 	
 	
+
 /* ------------------------ 리뷰 등록 버튼 클릭  ----------------------------*/
+
 	$('#btn_review').click(function(){
 		let user_id = '<%=session.getAttribute("user_id")%>';
 		
-		//리뷰 버튼 클릭 시 가져오는 리뷰 정보  		
+    	//리뷰 버튼 클릭 시 가져오는 리뷰 정보  		
 		let review_json = {
 		        "review_star" : star.val(),
 		        "book_no" : ${book.book_no}, 
@@ -329,6 +385,17 @@ $(function(){
 		        "review_content" : $('#review_content').val(),
 		        "review_recommend" :0 
 		};
+
+		if(user_id === null ||user_id === "" || user_id === "null"){
+
+			alert('로그인 페이지로 이동합니다.');
+			location.replace("/views/user/login.jsp");
+			
+		}else{
+			exist_review();
+		}
+		
+	
 		
 		if(user_id === null ||user_id === "" || user_id === "null"){
 
@@ -356,7 +423,7 @@ $(function(){
 						review_insert();	
 					}					
 				}
-						
+
 				});
 		}
 		
@@ -411,7 +478,6 @@ function getReview(){
 		}
 	});
 }
-
 
 /* ------------------------ [모달] 리뷰 수정  ----------------------------*/
 function review_upd(val){
@@ -471,6 +537,17 @@ function modal_close(){
 
 
 </script>
+
+<!-- Script Bootstrap, jqurey-3.6.3 -->
+	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
+	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+
+
+
+	<!-- Script FontAwesome-->
+	<script src="https://kit.fontawesome.com/4bf42f841a.js"
+		crossorigin="anonymous"></script>
+
 
 <!-- Script Bootstrap, jqurey-3.6.3 -->
 	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>

@@ -21,7 +21,9 @@
 </head> 
 <body>
 	
+
 		<jsp:include page="/views/inc/header.jsp" />
+		
 		<main>
 		<div class="banner">
 			<div class="banner-text">Banner Title Text</div>
@@ -41,7 +43,7 @@
 		</main>
 
 		<jsp:include page="/views/inc/footer.jsp" />
-	</div>
+
 
 	<!-- Script Bootstrap, jqurey-3.6.3 -->
 	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>

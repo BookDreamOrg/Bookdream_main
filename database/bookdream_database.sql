@@ -13,6 +13,7 @@ WHERE uc.constraint_name = ucc.constraint_name;
 --------------------------------------------------------------------
 -------------------------- USERS ------------------------------------
 drop table USERS;
+drop table kakao_table;
 
 create table USERS (    
   USER_NO                 number(10)    not null,
@@ -28,6 +29,11 @@ create table USERS (
   USER_POINT              number(10)    default 10000,
   constraint PK_USER primary key (USER_NO)
 );
+
+
+
+alter table  USERS add USER_POINT number(10) default '';
+
 
 
 desc users;
@@ -90,6 +96,7 @@ CREATE TABLE PAY (
     USE_POINT      number(10)   DEFAULT 0,
     constraint PK_PAY primary key(PAY_NO)  
 );
+alter table pay add USE_POINT  number(10) DEFAULT 0;
 
 select * from pay;  
 commit;
@@ -151,17 +158,24 @@ commit;
 --------------------------------------------------------------------
 -------------------------- CART ------------------------------------
 
-drop table cart;
+drop table CART;
 
 create table CART (
     CART_NO       number(10) NOT NULL,
     USER_NO       number     NOT NULL,
     BOOK_NO       number     NOT NULL,
-    PRODUCT_COUNT  number(10) NOT NULL,
+    PRODUCT_COUNT number(10) DEFAULT 1 NOT NULL , -- 디폴트 1로 지정하기.
     constraint PK_CART primary key (CART_NO),
     constraint FK_CART_USER_NO foreign key(USER_NO) REFERENCES USERS (USER_NO),
     constraint FK_CART_BOOK_NO foreign key(BOOK_NO) REFERENCES BOOK (BOOK_NO)
 );
+
+DROP sequence CART_SEQ;
+CREATE sequence CART_SEQ increment by 1 START with 1;
+
+-- sequence적용 cart inert 예시
+insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) 
+values(CART_SEQ.nextval, 1, 30, 3);
 
 insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(1, 1, 1, 1);
 insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(2, 1, 2, 1);
@@ -169,7 +183,22 @@ insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(3, 1, 3, 2);
 insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(4, 1, 4, 1);
 insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(5, 1, 5, 1);
 
-insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(4, 2, 5, 1);
+insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(6, 2, 5, 1);
+
+select PRODUCT_COUNT from cart
+where user_no=1 and book_no = 20;
+
+insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) 
+            values(CART_SEQ.nextval, 1, 20, 2);
+
+
+-- if 조건 then 처리문 else if 조건2 then 처리문;     
+    
+UPDATE CART set PRODUCT_COUNT = (PRODUCT_COUNT + 5) where user_no=1 and book_no=20;
+  
+select PRODUCT_COUNT from cart
+where user_no=1 and book_no = 20;
+
 
 -- cart user_no casecade
 alter table cart drop constraint FK_CART_USER_NO;
@@ -177,8 +206,27 @@ alter table cart add constraint FK_CART_USER_NO foreign key (user_no) references
 
 select * from cart;
 
+
 commit; 
 
+SELECT  count(*) 
+		FROM cart 
+		WHERE user_no = 1
+        group by user_no;
+        
+SELECT  -- *
+        row_number() over(order by C.cart_no desc) as num, -- 등록 순서대로 칼럼 num(index) 지정.
+        C.cart_no, C.user_no, C.product_count, B.book_no, B.book_img, B.title, B.book_price, B.stock 
+from CART C
+        inner join BOOK B
+        on C.book_no = B.book_no   
+where c.user_no = 1 ;
+--AND product_count = 0;
+-- where c.user_no = #{user_no};
+
+DELETE 	CART
+	    WHERE 	book_no = 20
+	    AND 	user_no = 1;
 
 -------------------------------------------------------------------------------
 ---------------------------------- PARCHASE -----------------------------------

@@ -14,18 +14,43 @@ public class CartDAO {
 	private SqlSessionTemplate mybatis;
 
 	// 장바구니 목록 조회
-	public List<CartVO> getCartList(CartVO vo) {
-		
-		System.out.println("---> 장바구니 목록 조회 <---");
-		
-		return mybatis.selectList("CartDAO.getCartList", vo);
+	public List<CartVO> getCartList(int user_no) {
+		System.out.println("\n\t>>>>> CartDAO <<<<<< ");
+		System.out.println("\t---> [장바구니] getCartList() 목록 조회");
+		return mybatis.selectList("CartDAO.getCartList", user_no);
 	}
-
+	
+	// 장바구니 리스트 갯수 -> 장바구니 뱃지로 사용
+	public int selectListCount(int user_no) {
+		System.out.println("\n\t>>>>> CartDAO <<<<<< ");
+		System.out.println("\t---> [장바구니] selectListCount() 리스트 갯수 측정");
+		return mybatis.selectOne("CartDAO.selectListCount", user_no);
+	}
+	
+	// 장바구니 추가
+	public int addCart(CartVO vo) {
+		System.out.println("\n\t>>>>> CartDAO <<<<<< ");
+		System.out.println("\t---> [장바구니] addCart() 새로운 아이템 추가 ");
+		return mybatis.insert("CartDAO.addCart", vo);
+	}
+	
+	// 장바구니 삭제
+	/**/
 	public int deleteCart(CartVO vo) {
-
-		System.out.println("---> 선택한 장바구니 삭제 <---");
-		
+		System.out.println("\n\t>>>>> CartDAO <<<<<< ");
+		System.out.println("\t---> [장바구니] deleteCart() 선택한 장바구니 삭제 ");
 		return mybatis.delete("CartDAO.deleteCart", vo);
 	}
+	 
+	
+	// 장바구니 수량 수정
+	/*
+	public int modifyCount(CartVO vo) {
+		System.out.println("\n >>>>> CartDAO <<<<<< ");
+		System.out.println("---> [장바구니] 아이템 수량 수정 <---");
+		return mybatis.update("CartDAO.modifyCount", vo);
+	}
+	 */
+	
 	
 }
