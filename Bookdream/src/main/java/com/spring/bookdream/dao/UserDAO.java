@@ -113,5 +113,10 @@ public class UserDAO {
 			System.out.println("userDAO : " + vo.getUser_password());
 			mybatis.update("UserDAO.updateUser", vo);
 		}
+		
+		// 회원탈퇴
+		public void deleteUser(UserVO vo) {
+			mybatis.delete("UserDAO.deleteUser", vo);
+		}
 
 }

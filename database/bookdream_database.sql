@@ -61,6 +61,9 @@ REVIEW_STAR number(1) not null,
 constraint pk_riview PRIMARY KEY (review_no)
 );
 
+-- review table fk user_id casecade
+alter table review add constraint fk_review_user_id foreign key (user_id) references users (user_id) on delete cascade;
+
 select * from review;
 
 --------------------------------------------------------------------------------
@@ -102,6 +105,9 @@ CREATE TABLE orders(
     order_fee           number not null
 );
 
+-- orders table fk user_no casecade
+alter table orders drop constraint fk_orders_user_no;
+alter table orders add constraint fk_orders_user_no foreign key (user_no) references users (user_no) on delete cascade;
 
 select * from orders;
 
@@ -157,6 +163,10 @@ insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(5, 1, 5, 1);
 
 insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(4, 2, 5, 1);
 
+-- cart user_no casecade
+alter table cart drop constraint FK_CART_USER_NO;
+alter table cart add constraint FK_CART_USER_NO foreign key (user_no) references users (user_no) on delete cascade;
+
 select * from cart;
 
 commit; 
@@ -178,6 +188,11 @@ CREATE TABLE purchase (
     constraint FK_PURCHASE_BOOK_NO foreign key(BOOK_NO) REFERENCES BOOK (BOOK_NO), 
     constraint FK_PURCHASE_ORDER_NO foreign key(ORDER_NO) REFERENCES ORDERS (ORDER_NO)     
 );
+
+-- pusrchase table fk user_no casecade
+alter table purchase drop constraint fk_purchase_user_no;
+alter table purchase add constraint fk_purchase_user_no foreign key (user_no) references users (user_no) on delete cascade;
+
 
 ----------------------------- purchase_no 자동증번 ------------------------------
 drop sequence numplus;
@@ -208,6 +223,10 @@ CREATE TABLE ADDRESS (
     constraint PK_ADDRESS primary key(ADDRESS_NO),
     constraint FK_ADDRESS_USER_NO foreign key(USER_NO) REFERENCES USERS (USER_NO)
 );
+
+-- address table fk user_no casecade
+alter table address drop constraint fk_address_user_no;
+alter table address add constraint fk_address_user_no foreign key (user_no) references users (user_no) on delete cascade;
 
 SELECT * FROM ADDRESS;
 
