@@ -116,7 +116,7 @@
 						href="#">고객센터</a></li>
 					<span class="nav-bar-line"></span>
 					<li class="nav-item"><a class="nav-link header-nav-link"
-						href="/views/main/mypage.jsp">마이페이지</a></li>
+						href="/views/mypage/mypage.jsp">마이페이지</a></li>
 					<span class="nav-bar-line"></span>
 					<li class="nav-item"><a
 						class="nav-link header-nav-link disabled" href="#" tabindex="-1"
