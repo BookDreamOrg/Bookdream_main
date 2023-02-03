@@ -133,7 +133,7 @@
 				</div>
 				
 				<div class="col-lg-1 p-5 flex-grow-1 header-col-btn">
-					<a href="">
+					<a href="/itemorder/cart/list">
 						<div class="header-btn">
 							<i class="fa-solid fa-cart-shopping"></i>
 						</div>
