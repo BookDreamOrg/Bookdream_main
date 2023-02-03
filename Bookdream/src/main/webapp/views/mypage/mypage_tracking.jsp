@@ -34,7 +34,8 @@
 </head>
 <body>
 
-	<jsp:include page="/views/inc/header.jsp" />		
+	<jsp:include page="/views/inc/header.jsp" />	
+		
 	<div class="main">
 		<div class="side"></div>
 	
@@ -55,6 +56,7 @@
 					</table>
 				</div>
 			</div>
+			<hr class="trackinglist_table_hr">
 
 
 			
@@ -63,7 +65,7 @@
 			</div>
 					
 		</div>	
-	</div>
+
 
 
 
@@ -123,7 +125,9 @@
     		</div>
   		</div>
 	</div>
-		
+	
+	</div>
+			
 	<jsp:include page="/views/inc/footer.jsp" />
 	</div>
 	

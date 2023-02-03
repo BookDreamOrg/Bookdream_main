@@ -38,6 +38,7 @@ button {
 
 
 .main {
+	line-height: 130%;
 	position:relative;
 	margin: 0 auto;
 	width: 1240px;

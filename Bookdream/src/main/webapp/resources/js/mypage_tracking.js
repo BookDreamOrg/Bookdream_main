@@ -125,7 +125,7 @@ function order_list() {
 				html += `<table class="trackinglist_table">` +	
 							`<tr>` +
 								`<td class="trackinglist_table_main" colspan="4">` +
-									`<b>${date} (${result[i].order_no})</b><br>` +
+									`<span class="trackinglist_table_title">${date} (${result[i].order_no})<span><br>` +
 									`<input type="hidden" name="trackinglist_order_no" value="${result[i].order_no}">` +
 									`<button type="button" class="btn btn-link trackinglist_table_main_button" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="tracking_detail(this)" value="${result[i].order_no}">상세 조회<i class="bi bi-chevron-right"></i></button>` +
 								`</td>` +
@@ -148,7 +148,7 @@ function order_list() {
 								} else {
 				html +=			`<td class="trackinglist_table_col4">${status}</td>` 									
 								}
-							`</tr>` +									
+				html +=		`</tr>` +									
 						`</table>` +
 						`<hr class="trackinglist_table_hr">` 
 			}			
