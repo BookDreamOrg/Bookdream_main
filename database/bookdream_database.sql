@@ -20,7 +20,6 @@ create table USERS (
   USER_ID                 varchar2(40)  UNIQUE,
   USER_PASSWORD           varchar2(20),
   USER_NAME               varchar2(50)  not null,
-  USER_ADDRESS            varchar2(50)  default '',
   USER_TEL                varchar2(20)  default '',
   USER_LEVEL              number(1)     default 0     check(USER_LEVEL in(0,1)),
   BLACKLIST_YN            varchar2(5)   default 'N'   check(BLACKLIST_YN in ('Y','N')),
@@ -30,11 +29,7 @@ create table USERS (
   constraint PK_USER primary key (USER_NO)
 );
 
-<<<<<<< Updated upstream
-=======
 alter table  USERS add USER_POINT number(10) default '';
-
->>>>>>> Stashed changes
 
 desc users;
 
@@ -42,12 +37,6 @@ drop sequence user_seq;
 -- 번호를 자동으로 1부터 1씩 증가하도록 만듦
 create sequence user_seq increment by 1 start with 1;
 
--- 카카오 로그인 insert
-insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_ADDRESS, USER_TEL, FLATFORM_TYPE, USER_EMAIL) 
-		values(user_seq.nextval,'','','이름','','','KAKAO','이메일');    
--- BookDream 회원 로그인 insert
-insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
-	values(user_seq.nextval,'sycha','1234','이름','BD','이메일');
 -- BookDream test 로그인 insert
 insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
    values(user_seq.nextval,'test','test','test','BD','test@test.com');
