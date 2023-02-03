@@ -105,11 +105,6 @@
 						<div class="h1"> 품절  </div>					
 					</c:otherwise>
 				</c:choose>
-				  
-				  <input class=" form-control text-center border-0 "
-                                    type="number" id="product_count" min="1" max="${book.stock}" value="1" >
-				<fmt:formatNumber  value="${book.book_price}" pattern="#,###"/>원
-
 				</div>
 				<div class="col-md-3">
 				</div>
@@ -142,9 +137,7 @@
 					<button id="btn_buy_now" class="text-center btn btn-outline-dark flex-shrink-0 btn-lg btn-info" onclick="now_buy()">
 						<i class="bi bi-basket2"></i> 바로구매
 					</button>
-
 						<button class="text-center btn btn-outline-dark flex-shrink-0  btn-lg me-3 btn-info" onclick="cart()">
-					<button id="addCart" class="text-center btn btn-outline-dark flex-shrink-0  btn-lg me-3" >
 						<i class="bi-cart-fill me-1"></i>장바구니
 					</button>
 					<input id="book_no" type="hidden" value="${book.book_no}">
@@ -189,7 +182,7 @@
 						<div class="col-md-4">
 						<i class="bi bi-person-circle fs-2"></i>
 						   ID : ${review.user_id} <br>
-						   <fmt:formatDate value="${review.review_date}" pattern="YYYY년 MM월 DD일" type="date"/> 
+						   등록 날짜 : <fmt:formatDate value="${review.review_date}" pattern="yyyy년 MM월 dd일" type="date"/> 
 						</div>
 						<div class="col-md-4">
 						</div>
@@ -274,7 +267,7 @@ function now_buy(){
 
 /* ------------------------장바구니 버튼 클릭 ----------------------------*/
 function cart(){
-	let book_no = ${book.book_no};
+<%-- 	let book_no = ${book.book_no};
 	let user_no = '<%=session.getAttribute("user_no")%>';
 	let product_cnt  = document.getElementById("product_cnt").value;
 	console.log("book_no : " + book_no + "user_no :  " + user_no + "product : " + product_cnt )
@@ -284,14 +277,14 @@ function cart(){
 	}else{
 		alert('장바구니');
 		location.replace("/itemorder/cart/list?book_no="+book_no+"&user_no="+user_no+"&product_count="+product_cnt);
-	}
-}
-
-$("#addCart").click(function(){	
+	} --%>
+	
+	let book_no = document.getElementById("book_no").value;
+	let product_count  = document.getElementById("product_cnt").value;
 	
 	var data = {
-			  book_no :  $("#book_no").val(),
-			  product_count : $("#product_count").val()
+			  book_no :  book_no,
+			  product_count :product_count
 			};
 	
 	console.log(data);
@@ -304,33 +297,20 @@ $("#addCart").click(function(){
 			
 		   if(result == 1) { // 1 : 장바구니 추가 성공, 0 : 장바구니 추가 실패
 				alert("카트 담기 성공");
-				$("#product_cnt").val("1");
+				$("#product_cnt").val(1);
 			} else {
 				alert("회원만 사용할 수 있습니다.")
-				$("#product_cnt").val("1");
+				$("#product_cnt").val(1);
 			}
 		   
 		}, error : function(){
 		     alert("error : 카트 담기 실패");
 		    }		
 	 });
-});
+}
 
 
-<%-- function cart(){
-	let book_no = document.getElementById("book_no").value;
-	let user_no = '<%=session.getAttribute("user_no")%>';
-	let product_cnt  = document.getElementById("product_cnt").value;
-	console.log("book_no : " + book_no + "user_no :  " + user_no + "product : " + product_cnt )
-	if(user_no === null ||user_no === "" || user_no === "null"){
-		alert('user_no = null');
-		location.replace("/itemorder/cart/list?book_no="+book_no+"&user_no=0"+"&product_count="+product_cnt);
-	}else{ 
-		location.replace("/itemorder/cart/add");
-		alert("카트 담기 성공");
-		//location.replace("/itemorder/cart/list?book_no="+book_no+"&user_no="+user_no+"&product_count="+product_cnt);
-	}
-} --%>
+
 
 
 /* ------------------------ 추천 버튼 클릭  ----------------------------*/
@@ -377,6 +357,15 @@ $(function(){
 	$('#btn_review').click(function(){
 		let user_id = '<%=session.getAttribute("user_id")%>';
 		
+    	//리뷰 버튼 클릭 시 가져오는 리뷰 정보  		
+		let review_json = {
+		        "review_star" : star.val(),
+		        "book_no" : ${book.book_no}, 
+		        "user_id" : user_id,
+		        "review_content" : $('#review_content').val(),
+		        "review_recommend" :0 
+		};
+
 		if(user_id === null ||user_id === "" || user_id === "null"){
 
 			alert('로그인 페이지로 이동합니다.');
@@ -386,16 +375,6 @@ $(function(){
 			exist_review();
 		}
 		
-		//리뷰 버튼 클릭 시 가져오는 리뷰 정보  		
-		let review_json = {
-		        "review_star" : star.val(),
-		        "book_no" : ${book.book_no}, 
-		        "user_id" : user_id,
-		        "review_content" : $('#review_content').val(),
-		        "review_recommend" :0 
-		};
-		
-		exist_review();
 		
 		//리뷰 존재 여부 확인 
 		function exist_review(){
@@ -533,16 +512,6 @@ function modal_close(){
 	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
 	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 
-
-
-	<!-- Script FontAwesome-->
-	<script src="https://kit.fontawesome.com/4bf42f841a.js"
-		crossorigin="anonymous"></script>
-
-
-<!-- Script Bootstrap, jqurey-3.6.3 -->
-	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
-	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 
 	<!-- Script FontAwesome-->
 	<script src="https://kit.fontawesome.com/4bf42f841a.js"
