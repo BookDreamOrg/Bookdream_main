@@ -1,10 +1,13 @@
 @charset "UTF-8";
 
+
+
 .wrapper {
 	height: auto;
 }
 
 .main {
+	line-height: 180%;
 	position:relative;
 	margin: 0 auto;
 	width: 1240px;
@@ -26,35 +29,53 @@
 }
 
 .address_title {
-    padding: 30px;
+    padding: 40px;
     vertical-align: middle;
     height: 100px;
+	margin-top: 30px;    
     font-size: 20px;
     font-weight: bold;
 }
 
 .address_main {
-	height: 200px;
-	font-size: 20px;
-}
-
-.address_main_default {
-	margin: 55px 0px 0px 55px;
+	background-color: #f7f7f7;
+	height: 160px;
+	border-radius: 20px;
+	padding: 40px 0px 40px 40px;
 	
 }
 
+.address_sub {
+	margin-top: 10px;
+	padding: 0px 0px 0px 20px;
+	font-size: 12px;
+}
 
 .main_address {
 	height: auto;
-	min-height: 1000px;
+	min-height: 1200px;
 	float: right;
 	
 }
 
 .addresslist {
 	height:auto;
-	min-height: 500px;
-	border: 1px solid black;		
+	min-height: 300px;	
+}
+
+.addresslist_title {
+	height: 50px;
+	line-height:50px;	
+	font-weight: bold;
+	padding-left: 10px;
+}
+
+.addresslist_main {
+	font-size: 14px;
+}
+.addresslist_button {
+	float: right;
+	height: 40px;
 }
 
 .addresslist_table {
@@ -75,12 +96,123 @@
 .addresslist_table_col3 {
 	vertical-align:middle;
 	text-align:center;
-	width: 100px;
+	width: 150px;
 
 }
 
+.address_change_button {
+	height: 50px;
+	width: 150px;
+	margin: 30px 400px;
+	text-align: center;
+}
+
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Modal !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  */
 .address_insert_content {
+	padding: 20px;
 	height: 700px;
 }
 
+.address_input {
+	margin: 0px 0px 15px 0px;
+	font-size: 14px;
+}
 
+.form-label {
+	width:100%;
+	margin: 10px 0px 15px 0px;
+	font-size: 14px;	
+	font-weight: bold;
+	line-height: 30px;
+}
+
+.address_search {
+	margin: 30px 0px 0px 0px;
+}
+
+.address_search_button {
+	width: 100px;
+	height: 30px;
+	margin-left:20px;
+	font-size: 10px;
+	font-weight: bold;
+	float: right;
+}
+
+.form-check {
+	height: 30px;
+	font-size: 12px;
+}
+
+.form-check-input {
+	margin-top: 8px;
+}
+
+.form-check-label {
+	line-height: 30px;	
+}
+
+input::placeholder {
+	font-size: 12px;
+}
+
+
+
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Bootstrap color !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  */
+
+.btn-outline-primary {
+    --bs-btn-color: #484877;
+    --bs-btn-border-color: #484877;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #484877;
+    --bs-btn-hover-border-color: #484877;
+    --bs-btn-focus-shadow-rgb: 13,110,253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #484877;
+    --bs-btn-active-border-color: #484877;
+    --bs-btn-active-shadow: inset 0 3px 5pxrgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #484877;
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: #484877;
+    --bs-gradient: none;
+      border: none;
+}
+
+.btn-outline-secondary {
+    --bs-btn-color: #484877;
+    --bs-btn-border-color: #484877;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #484877;
+    --bs-btn-hover-border-color: #484877;
+    --bs-btn-focus-shadow-rgb: 13,110,253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #484877;
+    --bs-btn-active-border-color: #484877;
+    --bs-btn-active-shadow: inset 0 3px 5pxrgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #484877;
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: #484877;
+    --bs-gradient: none;
+}
+
+.btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #6768ab;
+    --bs-btn-border-color: #6768ab;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #3d3e66;
+    --bs-btn-hover-border-color: #3d3e66;
+    --bs-btn-focus-shadow-rgb: 49,132,253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #3d3e66;
+    --bs-btn-active-border-color: #141422;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #6768ab;
+    --bs-btn-disabled-border-color: #6768ab;
+}
+
+.form-check-input:checked {
+    background-color: #8586bb;
+    border-color: #8586bb;
+}
