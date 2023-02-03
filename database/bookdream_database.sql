@@ -30,11 +30,11 @@ create table USERS (
   constraint PK_USER primary key (USER_NO)
 );
 
-<<<<<<< Updated upstream
-=======
+
+
 alter table  USERS add USER_POINT number(10) default '';
 
->>>>>>> Stashed changes
+
 
 desc users;
 
@@ -199,14 +199,13 @@ UPDATE CART set PRODUCT_COUNT = (PRODUCT_COUNT + 5) where user_no=1 and book_no=
 select PRODUCT_COUNT from cart
 where user_no=1 and book_no = 20;
 
-<<<<<<< Updated upstream
+
 -- cart user_no casecade
 alter table cart drop constraint FK_CART_USER_NO;
 alter table cart add constraint FK_CART_USER_NO foreign key (user_no) references users (user_no) on delete cascade;
 
 select * from cart;
-=======
->>>>>>> Stashed changes
+
 
 commit; 
 

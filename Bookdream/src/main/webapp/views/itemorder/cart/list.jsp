@@ -510,37 +510,9 @@
 				alert("현재 재고가 부족합니다.");
 			}
 	});
-	
-
 	</script>
+
 	
-	<script>
-	 /*
-	 
-	  $(".plus").click(function(){
-		   var num = $(".numBox").val();
-		   var plusNum = Number(num) + 1;
-		   
-		   if(plusNum >= ${view.gdsStock}) {
-		    $(".numBox").val(num);
-		   } else {
-		    $(".numBox").val(plusNum);          
-		   }
-		  });
-		  
-		$(".minus").click(function(){
-		   var num = $(".numBox").val();
-		   var minusNum = Number(num) - 1;
-		   
-		   if(minusNum <= 0) {
-		    $(".numBox").val(num);
-		   } else {
-		    $(".numBox").val(minusNum);          
-		   }
-		  });
-		*/
-	
-		</script>
 
 	<!-- Script Bootstrap, jqurey-3.6.3 -->
 	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
@@ -549,6 +521,7 @@
 
 	<!-- Script FontAwesome-->
 	<script src="https://kit.fontawesome.com/4bf42f841a.js" crossorigin="anonymous"></script>
+	
 
 </body>
 
