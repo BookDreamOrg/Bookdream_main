@@ -31,6 +31,10 @@ public class AddressController {
 		
 		int user_no = (int) session.getAttribute("user_no");
 		vo.setUser_no(user_no);
+
+		if ("Y".equals(vo.getDefault_add())) {
+			addressService.defaultAddress(vo);
+		}
 		
 		addressService.insertAddress(vo);
 
@@ -101,6 +105,10 @@ public class AddressController {
 		int user_no = (int) session.getAttribute("user_no");
 		vo.setUser_no(user_no);
 		
+		if ("Y".equals(vo.getDefault_add())) {
+			addressService.defaultAddress(vo);
+		}
+
 		addressService.updateAddress(vo);
 
 	}	

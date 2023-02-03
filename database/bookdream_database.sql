@@ -29,6 +29,9 @@ create table USERS (
   constraint PK_USER primary key (USER_NO)
 );
 
+-- BookDream User_ADDRESS 제거
+alter table users drop column USER_ADDRESS;
+
 alter table  USERS add USER_POINT number(10) default '';
 
 desc users;
@@ -41,8 +44,7 @@ create sequence user_seq increment by 1 start with 1;
 insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
    values(user_seq.nextval,'test','test','test','BD','test@test.com');
 
--- BookDream User_ADDRESS 제거
-alter table users drop column USER_ADDRESS;
+
 
 select * from users;
 commit;
@@ -188,14 +190,13 @@ UPDATE CART set PRODUCT_COUNT = (PRODUCT_COUNT + 5) where user_no=1 and book_no=
 select PRODUCT_COUNT from cart
 where user_no=1 and book_no = 20;
 
-<<<<<<< Updated upstream
+
 -- cart user_no casecade
 alter table cart drop constraint FK_CART_USER_NO;
 alter table cart add constraint FK_CART_USER_NO foreign key (user_no) references users (user_no) on delete cascade;
 
 select * from cart;
-=======
->>>>>>> Stashed changes
+
 
 commit; 
 
@@ -240,7 +241,7 @@ CREATE TABLE purchase (
 alter table purchase drop constraint fk_purchase_user_no;
 alter table purchase add constraint fk_purchase_user_no foreign key (user_no) references users (user_no) on delete cascade;
 
-
+select * from purchase;
 ----------------------------- purchase_no 자동증번 ------------------------------
 drop sequence numplus;
 
