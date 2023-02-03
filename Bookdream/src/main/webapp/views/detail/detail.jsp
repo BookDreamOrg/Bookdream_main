@@ -105,11 +105,6 @@
 						<div class="h1"> 품절  </div>					
 					</c:otherwise>
 				</c:choose>
-				  
-				  <input class=" form-control text-center border-0 "
-                                    type="number" id="product_count" min="1" max="${book.stock}" value="1" >
-				<fmt:formatNumber  value="${book.book_price}" pattern="#,###"/>원
-
 				</div>
 				<div class="col-md-3">
 				</div>
@@ -142,9 +137,7 @@
 					<button id="btn_buy_now" class="text-center btn btn-outline-dark flex-shrink-0 btn-lg btn-info" onclick="now_buy()">
 						<i class="bi bi-basket2"></i> 바로구매
 					</button>
-
 						<button class="text-center btn btn-outline-dark flex-shrink-0  btn-lg me-3 btn-info" onclick="cart()">
-					<button id="addCart" class="text-center btn btn-outline-dark flex-shrink-0  btn-lg me-3" >
 						<i class="bi-cart-fill me-1"></i>장바구니
 					</button>
 					<input id="book_no" type="hidden" value="${book.book_no}">
@@ -274,7 +267,7 @@ function now_buy(){
 
 /* ------------------------장바구니 버튼 클릭 ----------------------------*/
 function cart(){
-	let book_no = ${book.book_no};
+<%-- 	let book_no = ${book.book_no};
 	let user_no = '<%=session.getAttribute("user_no")%>';
 	let product_cnt  = document.getElementById("product_cnt").value;
 	console.log("book_no : " + book_no + "user_no :  " + user_no + "product : " + product_cnt )
@@ -284,14 +277,14 @@ function cart(){
 	}else{
 		alert('장바구니');
 		location.replace("/itemorder/cart/list?book_no="+book_no+"&user_no="+user_no+"&product_count="+product_cnt);
-	}
-}
-
-$("#addCart").click(function(){	
+	} --%>
+	
+	let book_no = document.getElementById("book_no").value;
+	let product_count  = document.getElementById("product_cnt").value;
 	
 	var data = {
-			  book_no :  $("#book_no").val(),
-			  product_count : $("#product_count").val()
+			  book_no :  book_no,
+			  product_count :product_count
 			};
 	
 	console.log(data);
@@ -304,33 +297,20 @@ $("#addCart").click(function(){
 			
 		   if(result == 1) { // 1 : 장바구니 추가 성공, 0 : 장바구니 추가 실패
 				alert("카트 담기 성공");
-				$("#product_cnt").val("1");
+				$("#product_cnt").val(1);
 			} else {
 				alert("회원만 사용할 수 있습니다.")
-				$("#product_cnt").val("1");
+				$("#product_cnt").val(1);
 			}
 		   
 		}, error : function(){
 		     alert("error : 카트 담기 실패");
 		    }		
 	 });
-});
+}
 
 
-<%-- function cart(){
-	let book_no = document.getElementById("book_no").value;
-	let user_no = '<%=session.getAttribute("user_no")%>';
-	let product_cnt  = document.getElementById("product_cnt").value;
-	console.log("book_no : " + book_no + "user_no :  " + user_no + "product : " + product_cnt )
-	if(user_no === null ||user_no === "" || user_no === "null"){
-		alert('user_no = null');
-		location.replace("/itemorder/cart/list?book_no="+book_no+"&user_no=0"+"&product_count="+product_cnt);
-	}else{ 
-		location.replace("/itemorder/cart/add");
-		alert("카트 담기 성공");
-		//location.replace("/itemorder/cart/list?book_no="+book_no+"&user_no="+user_no+"&product_count="+product_cnt);
-	}
-} --%>
+
 
 
 /* ------------------------ 추천 버튼 클릭  ----------------------------*/

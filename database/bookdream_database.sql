@@ -20,7 +20,6 @@ create table USERS (
   USER_ID                 varchar2(40)  UNIQUE,
   USER_PASSWORD           varchar2(20),
   USER_NAME               varchar2(50)  not null,
-  USER_ADDRESS            varchar2(50)  default '',
   USER_TEL                varchar2(20)  default '',
   USER_LEVEL              number(1)     default 0     check(USER_LEVEL in(0,1)),
   BLACKLIST_YN            varchar2(5)   default 'N'   check(BLACKLIST_YN in ('Y','N')),
@@ -30,7 +29,8 @@ create table USERS (
   constraint PK_USER primary key (USER_NO)
 );
 
-
+-- BookDream User_ADDRESS 제거
+alter table users drop column USER_ADDRESS;
 
 alter table  USERS add USER_POINT number(10) default '';
 
@@ -52,8 +52,7 @@ insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USE
 insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
    values(user_seq.nextval,'test','test','test','BD','test@test.com');
 
--- BookDream User_ADDRESS 제거
-alter table users drop column USER_ADDRESS;
+
 
 select * from users;
 commit;
@@ -250,7 +249,7 @@ CREATE TABLE purchase (
 alter table purchase drop constraint fk_purchase_user_no;
 alter table purchase add constraint fk_purchase_user_no foreign key (user_no) references users (user_no) on delete cascade;
 
-
+select * from purchase;
 ----------------------------- purchase_no 자동증번 ------------------------------
 drop sequence numplus;
 
