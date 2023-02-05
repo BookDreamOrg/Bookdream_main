@@ -75,3 +75,9 @@
     background-color: var(--bs-progress-bg);
     border-radius: var(--bs-progress-border-radius);
 }
+
+
+.bg-primary {
+    --bs-bg-opacity: 1;
+    --bs-primary-rgb: 103,104,171;
+}

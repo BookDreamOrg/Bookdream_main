@@ -84,9 +84,7 @@ public class OrderitemController {
 
 		}
 
-		
-//		return "itemorder/orderitem";
-		return "itemorder/ordetest";
+		return "itemorder/orderitem";
 		
 	}
 	

@@ -259,9 +259,9 @@ function address_list() {
 								     `<span>${result[i].detail_add}</span><label>` +
 								`</td>` +
 								`<td class="addresslist_table_col3">` + 
-									`<div><button class="btn btn-outline-primary"  value=${result[i].address_no}><i class="bi bi-pen"> 수정</i></button></div>` 
+									`<div><button class="btn btn-outline-primary"  onclick="modal_address_get(this)" value=${result[i].address_no}><i class="bi bi-pen"> 수정</i></button></div>` 
 								if (i!=0) {
-				html +=				`<br><div><button class="btn btn-outline-primary"  value=${result[i].address_no}><i class="bi bi-trash"> 삭제</i></button></div>`
+				html +=				`<br><div><button class="btn btn-outline-primary"  onclick="modal_address_delete(this)" value=${result[i].address_no}><i class="bi bi-trash"> 삭제</i></button></div>`
 								}	
 				html +=			`</td>` +
 							`</tr>` +
