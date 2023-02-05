@@ -133,7 +133,7 @@ function address_list() {
 								`<td class="address_col2">`
 								
 									if (i==0) {
-				html +=				` <label for="address_radio+${no}"><div style="color: purple; font-weight: bold;"> ${result[i].address_alias}&nbsp;<i class="bi bi-geo-alt-fill"></i>${address}</div>` 										
+				html +=				` <label for="address_radio+${no}"><div style="color: #6768ab; font-weight: bold;"><i class="bi bi-geo-alt-fill"></i>&nbsp;${result[i].address_alias}&nbsp;${address}</div>` 										
 									} else {
 				html +=			  	` <label for="address_radio+${no}"><div> ${result[i].address_alias}${address}</div>` 									
 									}
@@ -248,7 +248,7 @@ function user_address_info(no, address_no) {
 				html +=	`<div>`
 				
 							if(`${result.default_add}` == `Y`) {
-				html +=			`<div style="color: purple; font-weight: bold;" id="user_info_alias">${result.address_alias}&nbsp;<i class="bi bi-geo-alt-fill"></i>&nbsp;[기본배송지]</div>` 	
+				html +=			`<div style="color: #6768ab; font-weight: bold;" id="user_info_alias"><i class="bi bi-geo-alt-fill"></i>&nbsp;${result.address_alias}&nbsp;[기본배송지]</div>` 	
 							} else {
 				html +=			`<div id="user_info_alias">${result.address_alias}</div>`
 							}			

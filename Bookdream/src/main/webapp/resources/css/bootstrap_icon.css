@@ -1,0 +1,77 @@
+@charset "UTF-8";
+
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Bootstrap color !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  */
+
+.btn-outline-primary {
+    --bs-btn-color: #484877;
+    --bs-btn-border-color: #484877;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #484877;
+    --bs-btn-hover-border-color: #484877;
+    --bs-btn-focus-shadow-rgb: 13,110,253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #484877;
+    --bs-btn-active-border-color: #484877;
+    --bs-btn-active-shadow: inset 0 3px 5pxrgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #484877;
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: #484877;
+    --bs-gradient: none;
+      border: none;
+}
+
+.btn-outline-secondary {
+    --bs-btn-color: #484877;
+    --bs-btn-border-color: #484877;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #484877;
+    --bs-btn-hover-border-color: #484877;
+    --bs-btn-focus-shadow-rgb: 13,110,253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #484877;
+    --bs-btn-active-border-color: #484877;
+    --bs-btn-active-shadow: inset 0 3px 5pxrgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #484877;
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: #484877;
+    --bs-gradient: none;
+}
+
+.btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #6768ab;
+    --bs-btn-border-color: #6768ab;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #484877;
+    --bs-btn-hover-border-color: #484877;
+    --bs-btn-focus-shadow-rgb: 49,132,253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #484877;
+    --bs-btn-active-border-color: #484877;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #6768ab;
+    --bs-btn-disabled-border-color: #6768ab;
+}
+
+.form-check-input:checked {
+    background-color: #8586bb;
+    border-color: #8586bb;
+}
+
+.progress {
+    --bs-progress-height: 1rem;
+    --bs-progress-font-size: 0.75rem;
+    --bs-progress-bg: #e9ecef;
+    --bs-progress-border-radius: 0.375rem;
+    --bs-progress-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075);
+    --bs-progress-bar-color: #fff;
+    --bs-progress-bar-bg: #6768ab;
+    --bs-progress-bar-transition: width 0.6s ease;
+    display: flex;
+    height: var(--bs-progress-height);
+    overflow: hidden;
+    font-size: var(--bs-progress-font-size);
+    background-color: var(--bs-progress-bg);
+    border-radius: var(--bs-progress-border-radius);
+}

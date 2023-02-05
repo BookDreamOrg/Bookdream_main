@@ -23,10 +23,9 @@
 
 <title>마이페이지 - 배송조회</title>
 
-
-
 <!-- CSS -->
 <link rel="stylesheet" type="text/css" href="/resources/css/mypage_tracking.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/bootstrap_icon.css">
 
 <!-- jQuery -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -44,7 +43,7 @@
 			<div class="tracking">
 
 				<div class="tracking_main">
-					<div class="tracking_title"><b>주문/배송 목록</b></div>
+					<div class="tracking_title">주문 / 배송 목록</div>
 					<table class="tracking_main_table">
 						<tr>
 							<td class="tracking_main_table_col1">주문내역</td>
@@ -84,7 +83,6 @@
       			</div>
       			<input type="hidden" id="pay_cencel_order_no">
       			<button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="modal_pay_cencel">결제취소</button>         			
-	       		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
     		</div>
   		</div>
 	</div>
@@ -103,7 +101,6 @@
       			</div>
       			<input type="hidden" id="return_request_order_no">
       			<button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="modal_return_request">반품신청</button>         			
-	       		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
     		</div>
   		</div>
 	</div>

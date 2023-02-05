@@ -2,21 +2,9 @@
 
 
 * {
-	border-radius:10px;
+	border-radius:20px;
 	box-sizing: border-box;
 	
-}
-
-body:before {
-     content: "";
-     opacity: 0.6;
-     position: absolute;
-     top: 0px;
-     left: 0px;
-     right: 0px;
-     bottom: 0px;
-     background-color: white;
-  	 z-index: -1;	     
 }
 
 hr {
@@ -35,7 +23,9 @@ button {
 	cursor: pointer;	
 }
 
-
+.container {
+	line-height: 130%;
+}
 
 .main {
 	line-height: 130%;
@@ -81,7 +71,7 @@ button {
 	float: right;
 	padding: 0px 15px;
 	margin-top:30px;		
-	border: 2px solid #bdbdbd;	
+	border: 1px solid #bdbdbd;	
 	background-color: white;	
 }
 
@@ -122,7 +112,7 @@ button {
 	height: auto;
 	min-height:300px;
 	margin-top:30px;	
-	border: 2px solid #bdbdbd;
+	border: 1px solid #bdbdbd;
 	background-color: white;	
 }
 
@@ -213,7 +203,7 @@ td {
 	
 	padding: 50px 50px;
 	background-color:white;	
-	border: 2px solid black;
+	border: 1px solid black;
 	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 
@@ -275,7 +265,7 @@ td {
 	
 	padding: 50px 50px;
 	background-color: white;
-	border: 2px solid black;	
+	border: 1px solid black;	
 	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 	z-index: 2;
 }
@@ -342,7 +332,7 @@ td {
 	
 	padding: 50px 50px;
 	background-color:white;	
-	border: 2px solid black;
+	border: 1px solid black;
 	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 
@@ -363,7 +353,7 @@ td {
 	height: auto;
 	min-height:220px;
 	margin-top:30px;	
-	border: 2px solid #bdbdbd;
+	border: 1px solid #bdbdbd;
 	background-color: white;	
 }
 
@@ -421,7 +411,7 @@ td {
 	height: auto;
 	min-height:220px;
 	margin-top:30px;	
-	border: 2px solid #bdbdbd;
+	border: 1px solid #bdbdbd;
 	background-color: white;	
 }
 
@@ -464,7 +454,7 @@ td {
 	height: auto;
 	min-height:500px;
 	margin-top:30px;	
-	border: 2px solid #bdbdbd;
+	border: 1px solid #bdbdbd;
 	margin-bottom: 50px;	
 	background-color: white;	
 }

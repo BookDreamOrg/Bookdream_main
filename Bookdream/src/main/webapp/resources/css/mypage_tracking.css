@@ -15,9 +15,12 @@
 
 .side {
 	position:relative;
-	width: 200px;
-	height: 100vh;
+	width: 220px;
+	min-height: 500px;
+	margin-top: 130px;
+	border-radius: 20px;
 	float: left;
+	background-color: #d1d1e5;
 }
 
 .main_tracking {
@@ -39,6 +42,7 @@
 	padding: 30px;
 	vertical-align: middle;
 	margin-top: 30px;
+	font-weight:bold;
 	font-size: 20px;
 }
 
@@ -70,6 +74,7 @@
 
 .modal_pay_cencel {
 	height: 300px;
+	padding: 10px 20px 20px 20px;
 }
 
 

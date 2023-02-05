@@ -29,6 +29,7 @@
 
 <!--  CSS -->
 <link rel="stylesheet" type="text/css" href="/resources/css/mypage_address.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/bootstrap_icon.css">
 
 <!-- jQuery -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -37,6 +38,7 @@
 <body>
 	
 	<jsp:include page="/views/inc/header.jsp" />	
+	
 	<div class="main">
 		<div class="side"></div>
 	
@@ -45,7 +47,7 @@
 			<div class="address">
 				<div class="address_title">배송주소록</div>
 				<div class="address_main" id="address_main"></div>
-				<div class="address_sub">기본배송지 기준으로 배송일자가 안내됩니다.<br>기본 배송지는 삭제 불가합니다.</div>
+				<div class="address_sub">처음 생성한 배송지는 기본 배송지로 설정 됩니다.<br>기본 배송지 기준으로 배송일자가 안내됩니다.<br>기본 배송지는 삭제 불가합니다.</div>
 			</div>
 
 			<div class="addresslist">

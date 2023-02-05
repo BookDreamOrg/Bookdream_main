@@ -41,11 +41,14 @@
 
 <!-- CSS -->
 <link rel="stylesheet" type="text/css" href="/resources/css/orderitem.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/bootstrap_icon.css">
+
 </head>
 
 <body>
 	
 	<jsp:include page="/views/inc/header.jsp" />
+	
 	<div class="container">
 	
 	<!-- !!!!!!!!!!!!!!!!!!!!!  Modal  !!!!!!!!!!!!!!!!!!!!! -->		
@@ -208,9 +211,7 @@
 					</c:choose>
 					</table>
 				</form>
-				
-
-						
+									
 			</div>	
 		</div>
 		

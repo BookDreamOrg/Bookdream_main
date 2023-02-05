@@ -2,31 +2,30 @@ $(function() {
 	order_list();
 })
 
-// 주문 상세보기
+// 주문 상세보기 클릭
 function tracking_detail(no) {
 	var no = $(no).val();
 	order_detail(no);	
 }
 
-
-// 주문취소창 열림
+// 결제 취소 모달 열림
 function pay_cencel_open(no) {
     $("#pay_cencel_order_no").val(no);
 }
 
-// 반품신청창 열림
+// 반품 신청 모달 열림
 function return_request_open(no) {
     $("#return_request_order_no").val(no);	
 }
 
-// 주문취소창에서 취소선택
+// 결제 취소 모달에서 결제 취소 클릭
 $('#modal_pay_cencel').click(function() {
 	
 	var order_no = $("#pay_cencel_order_no").val();	
 	orderTrackingUpdate(order_no, 10);
 })	
 
-// 반품신청창에서 신청선택
+// 반품 신청 모달에서 반품 신청 클릭
 $('#modal_return_request').click(function() {
 
 	var order_no = $("#return_request_order_no").val();	
@@ -39,6 +38,8 @@ function orderTrackingUpdate(no, status) {
 	var data = { "order_no" : no,
 				 "order_status" : status}
 
+	console.log(data);
+	
 	$.ajax({
 		type : "POST",                              
 		url : "/order/update",	
@@ -75,7 +76,6 @@ function order_list() {
 			var html = "";
 			
 			if (result == "") {
-				console.log("없음");
 				
 				html += `<div class="trackinglist_null"><i class="bi bi-exclamation-circle"> 주문내역이 없습니다.</i></div>`
 			} 
@@ -169,14 +169,14 @@ function order_list() {
 							
 }
 
-// date 형식 변환
+// date 형식 변환 (YYYY-MM-DD HH24:MI)
 function timestamp(date){
     var today = new Date(date);
     today.setHours(today.getHours() + 9);
     return today.toISOString().replace('T', ' ').substring(0, 16);
 }
 
-
+// 주문 상세 모달 열림
 function order_detail(no) {
 	
 	var data = {"order_no" : no}
@@ -190,6 +190,7 @@ function order_detail(no) {
 		contentType : "application/json",
 		
 		success : function(result) {	
+			console.log(result);
 			var result =  JSON.parse(result);
 			var html = "";
 			

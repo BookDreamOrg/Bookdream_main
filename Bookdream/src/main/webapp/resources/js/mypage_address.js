@@ -3,7 +3,7 @@ $(function() {
 		address_list();
 })
 
-// 배송지 입력하기 누르면 초기화됨
+// 배송지 입력하기 클릭 : value 값 초기화
 $('#modal_open').click(function() {
 	$('#address_alias').val('');
 	$('#address_name').val('');
@@ -17,25 +17,22 @@ $('#modal_open').click(function() {
 
 })
 	
-// 주소 등록
+// 배송지 모달에서 배송지 등록
 $('#modal_address_insert').click(function() {
 	
 	address_insert(0);
 })
 
-// 주소 수정
+// 배송지 모달에서 배송지 수정
 $('#modal_address_update').click(function() {
 	
 	address_insert(1);
 })
 
 
-// 주소 입력 및 수정란
+// 배송지 입력 / 수정 모달
 function address_insert(no) {
-	
-	// 기본 배송지 설정 헤제
-
-	
+		
 	// INPUT VALUE 값 저장
 	var address_alias = $('input[name="address_alias"]').val();
 	var address_name = $('input[name="address_name"]').val();
@@ -47,18 +44,14 @@ function address_insert(no) {
 	
 	if (address_alias == '') {
 		alert("배송지 이름을 입력하세요.");
-		return;
 	} else if (address_name == '') {
 		alert("받는사람 이름을 입력하세요.");
-		return false;
 	} else if (address_tel == '') {
 		alert("받는사람 전화번호를 입력하세요.");
-		return false;
 	} else if (zone_code == '' || road_add == '' || detail_add == '') {
 		alert("주소를 입력하세요.");
-		return false;
 		
-	// 주소 입력하기를 누르면 사용자의 주소 목록을 조회함
+	// 배송지 입력하기 : 사용자의 배송지 리스트를 조회
 	} else if(no == 0) {
 		$.ajax({
 			type : "POST",                              
@@ -67,15 +60,16 @@ function address_insert(no) {
 			contentType : "application/json",
 			
 			success : function(result) {	
+				console.log(result);
 				
-				// 기본배송지로 설정을 눌렀다면,
+				// 기본배송지로 설정을 눌렀다면 기본 배송지로 설정
 				if ($('input[id=default_address_check]').is(':checked')) {
 					
-					var checked = 'Y';
+					var default_add = "Y";
 					
 				} else {
-					// 등록된 주소가 없다면 생성한 주소는 기본 배송지로 설정됨		 
-					var checked = (result=="") ? "Y" : "N";
+					// 등록된 배송지가 없다면 기본 배송지로 설정	 
+					var default_add = (result=="") ? "Y" : "N";
 				}
 				
 				var data = {
@@ -86,9 +80,11 @@ function address_insert(no) {
 						 "road_add" : road_add,
 						 "detail_add" : detail_add,
 						 "address_no" : address_no,
-						 "default_add" : checked
-					};				
-									
+						 "default_add" : default_add
+					}				
+								
+				console.log(data);
+				
 					$.ajax({
 						type : "POST",                              
 						url : "/address/insert",         
@@ -97,7 +93,8 @@ function address_insert(no) {
 						contentType : "application/json",
 						
 						success : function() {	
-							// 주소 갱신
+							
+							// 배송지 갱신
 							address_list();
 							load_default();
 
@@ -113,11 +110,12 @@ function address_insert(no) {
 					
 		})		
 		
-	// 주소수정	
+	// 배송지 수정
 	} else {
 
+		// 기본 배송지 설정 클릭 : 수정된 배송지는 기본 배송지로 설정됨
 		if ($('input[id=default_address_check]').is(':checked')) {
-			var checked = 'Y';
+			var default_add = "Y";
 		}
 		 
 		var data = {
@@ -128,8 +126,9 @@ function address_insert(no) {
 				 "road_add" : road_add,
 				 "detail_add" : detail_add,
 				 "address_no" : address_no,
-				 "default_add" : checked
+				 "default_add" : default_add
 			};			
+		console.log(data);
 		
 		$.ajax({
 			type : "POST",                              
@@ -139,6 +138,8 @@ function address_insert(no) {
 			contentType : "application/json",
 			
 			success : function() {	
+				
+				// 배송지 갱신
 				address_list();
 				load_default();
 				
@@ -158,60 +159,60 @@ function address_insert(no) {
 }
 
 
-// 기본 배송지 표시
+// 상단 기본 배송지 표시
 function load_default() {
 			
-		url = "/address/getDefault"
-		data = {"default_add" : 'Y'}	
+	var data = {"default_add" : "Y"}	
 			
-			$.ajax({
-				type : "POST",                              
-				url : url,
-				data : JSON.stringify(data),  	
-				dataType : "text",
-				contentType : "application/json",		
+		$.ajax({
+			type : "POST",                              
+			url : "/address/getDefault",
+			data : JSON.stringify(data),  	
+			dataType : "text",
+			contentType : "application/json",		
 				
-				success : function(result) {
-					
-					var html = "";
+			success : function(result) {
+				console.log(result);
+				
+				var html = "";
 
-					if (result == "") {
-						html += `기본 배송지가 없습니다.`		
-					} else {
+				if (result == "") {
+					html += `기본 배송지가 없습니다.`		
+				
+				} else {
 
-						var result =  JSON.parse(result);
+					var result =  JSON.parse(result);
 
-						
-									if(`${result.default_add}` == `Y`) {
-						html +=			`<div style="color: #6768ab; font-weight: bold;"><i class="bi bi-geo-alt-fill"></i>&nbsp;${result.address_alias}&nbsp;[기본배송지]</div>` 	
-									} else {
-						html +=			`<div>${result.address_alias}</div>`
-									}			
-						html +=			`<span> ${result.address_tel}</span>&nbsp;/&nbsp;` +
-										`<span>${result.address_name}</span>` +
-										`<br>[` +
-										`<span>${result.zone_code}</span>]&nbsp;` +
-										`<span>${result.road_add}</span>&nbsp;` +
-										`<span>${result.detail_add}</span>&nbsp;` 						
+								if(`${result.default_add}` == `Y`) {
+					html +=			`<div style="color: #6768ab; font-weight: bold;"><i class="bi bi-geo-alt-fill"></i>&nbsp;${result.address_alias}&nbsp;[기본배송지]</div>` 	
+								} else {
+					html +=			`<div>${result.address_alias}</div>`
+								}			
+					html +=			`<span> ${result.address_tel}</span>&nbsp;/&nbsp;` +
+									`<span>${result.address_name}</span>` +
+									`<br>[` +
+									`<span>${result.zone_code}</span>]&nbsp;` +
+									`<span>${result.road_add}</span>&nbsp;` +
+									`<span>${result.detail_add}</span>&nbsp;` 						
 									
-					}
-				      document.getElementById('address_main').innerHTML = html;		
-				},
+				}
+				     document.getElementById('address_main').innerHTML = html;		
+			},
 				
-				error: function(request, status, error) {
-			        console.log("code: " + request.status)
-			        console.log("message: " + request.responseText)
-			        console.log("error: " + error);
+			error: function(request, status, error) {
+			       console.log("code: " + request.status)
+			       console.log("message: " + request.responseText)
+			       console.log("error: " + error);
 			        
-				}	
+			}	
 			
 			
-		})
-	}
+	})
+}
 
 
 
-// 기본배송지를 포함한 사용자의 주소 목록 표시
+// 기본배송지를 포함한 사용자의 배송지 목록 표시
 function address_list() {
 
 	$.ajax({
@@ -222,10 +223,8 @@ function address_list() {
 		contentType : "application/json",
 		
 		success : function(result) {	
-			
+			console.log(result);
 			var html = "";
-
-			console.log(result.length);
 			
 			for (i=0; i < result.length; i++) {
 
@@ -260,9 +259,9 @@ function address_list() {
 								     `<span>${result[i].detail_add}</span><label>` +
 								`</td>` +
 								`<td class="addresslist_table_col3">` + 
-									`<div><button class="btn btn-outline-primary" onclick="modal_address_get(this)" value=${result[i].address_no}><i class="bi bi-pen"> 수정</i></button></div>` 
+									`<div><button class="btn btn-outline-primary"  value=${result[i].address_no}><i class="bi bi-pen"> 수정</i></button></div>` 
 								if (i!=0) {
-				html +=				`<br><div><button class="btn btn-outline-primary" onclick="modal_address_delete(this)" value=${result[i].address_no}><i class="bi bi-trash"> 삭제</i></button></div>`
+				html +=				`<br><div><button class="btn btn-outline-primary"  value=${result[i].address_no}><i class="bi bi-trash"> 삭제</i></button></div>`
 								}	
 				html +=			`</td>` +
 							`</tr>` +
@@ -284,11 +283,12 @@ function address_list() {
 	
 };
 
-// 주소 삭제
+// 배송지 삭제
 function modal_address_delete(no) {
 	 
 	var address_no = $(no).val();
 	var data = {"address_no" : address_no};
+	
 	console.log(data);
 	
 	$.ajax({
@@ -299,7 +299,7 @@ function modal_address_delete(no) {
 		contentType : "application/json",
 		
 		success : function(result) {
-					
+			console.log(result);		
 			var result =  JSON.parse(result);
 			
 			if (result.default_add == 'Y') {
@@ -318,6 +318,7 @@ function modal_address_delete(no) {
 					success : function() {	
 						// 주소 갱신
 						address_list();	
+						load_default();
 					},
 					
 					error: function(request, status, error) {
@@ -338,15 +339,11 @@ function modal_address_delete(no) {
 		
 		
 	})
-		
-	
-	
 }
 
 
-// 주소 수정시 해당 주소의 값 가져옴
+// 배송지 수정 클릭시 배송지 정보 값 호출
 function modal_address_get(no) {
-
 
 	$('#exampleModal').modal('show');
 	$('#modal_address_insert').hide();
@@ -355,6 +352,7 @@ function modal_address_get(no) {
 	
 	var address_no = $(no).val();
 	var data = {"address_no" : address_no};
+	console.log(data);
 	
 	$.ajax ({
 		type : 'POST',
@@ -363,9 +361,9 @@ function modal_address_get(no) {
 		dataType : 'text',
 		contentType : "application/json",		
 		
-		success : function(data) {	
-			
-			var result =  JSON.parse(data)
+		success : function(result) {	
+			console.log(result)
+			var result =  JSON.parse(result)
 
 			// 해당 주소의 값 자동 입력
 			$('#address_alias').val(result.address_alias);
@@ -389,18 +387,17 @@ function modal_address_get(no) {
 
 
 
-//주소 목록 창에서 저장
+// 배송지 목록에서 기본 배송지 설정 클릭
 $('#address_change_button').click(function() {
 
 	// 선택한 주소의 address_no 저장
 	var address_no = $('input[name=address_radio]:checked').val();
 
-	// 기본 배송지 설정
-	// 기본 배송지 설정을 누르고 저장
-		
+		// 기본 배송지 설정		
 		alert("기본 배송지를 변경합니다.");
 
 		var data = {"address_no" : address_no};
+		console.log(data);
 		
 		$.ajax ({
 			type : 'POST',
@@ -426,7 +423,7 @@ $('#address_change_button').click(function() {
 
 
 
-//////////////////////////////////////////////////다음 우편번호 API //////////////////////////////////////////////////
+////////////////////////////////////////////////// 다음 우편번호 API //////////////////////////////////////////////////
 
 // 다음 우편번호 찾기 서비스
 function execDaumPostcode() {
@@ -498,5 +495,6 @@ function execDaumPostcode() {
 		        	
 		        }
 		    }
+			
 			}).open();
 }
