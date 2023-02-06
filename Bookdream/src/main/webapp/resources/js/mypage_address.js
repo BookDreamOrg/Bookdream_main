@@ -1,7 +1,15 @@
+/***************************** 페이지 로딩 *****************************/
 $(function() {
 		load_default();
 		address_list();
 })
+
+
+/***************************** getElementById function *****************************/
+function ById(id) {
+	return document.getElementById(id);
+}
+
 
 // 배송지 입력하기 클릭 : value 값 초기화
 $('#modal_open').click(function() {

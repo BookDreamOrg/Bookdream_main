@@ -9,7 +9,6 @@ function ById(id) {
 	return document.getElementById(id);
 }
 
-
 /***************************** 주문 상품 토글 *****************************/
 $(document).on("click", "#orderlist_table_toggle", function(e) {	
 	e.preventDefault();	
@@ -351,40 +350,8 @@ $(document).on("click", "#side_pay_now_btn", function(e) {
 	        console.log("error: " + error);
 		}				
 	});
-	
-	
 
-
-	
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /***************************** 포인트 전액사용 버튼 클릭 function *****************************/
 function max_point_toggle(btn) {

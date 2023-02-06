@@ -10,6 +10,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+
 <!-- bootstrap -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -25,11 +26,13 @@
 
 
 <title>주문완료 페이지</title>
-
-
+<!-- jQuery -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <!-- CSS -->
 <link rel="stylesheet" type="text/css" href="/resources/css/success.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/bootstrap_icon.css">
+
 
 
 </head>
@@ -37,91 +40,101 @@
 <body>
 
 	<jsp:include page="/views/inc/header.jsp" />
-	<div class="container">
-		<div class="main">
-		
-			<div class="topbar">
-				 <div>
-				 	<span class="topbar_title">주문&nbsp;완료</span>
-				 </div>
-			</div>
-			
-			<div class="center">
-				<div class="center_info">
-					<i class="bi bi-check2-circle">&nbsp;주문이 완료 되었습니다.</i>
-				</div>	
-				<hr>
-				<br>
-					<table class="center_table">
-						<tr >
-							<th class="center_table_th">주문 번호</th>
-							<td class="center_table_td">${payData.pay_no}</td>							
-						</tr>	
-						
-						<tr>
-							<th class="center_table_th col2">배송지 정보</th>
-							<td class="center_table_td">${order.order_receiver}<br>${order.order_tel}<br>${order.order_address}</td>
-						</tr>
-						
-						<tr>
-							<th class="center_table_th">포인트 적립</th>
-							<td class="center_table_td"><fmt:formatNumber value="${order.save_point}" pattern="###,###"/>P</td>							
-						</tr>						
-												
-						<tr>
-							<th class="center_table_th col4">결제 정보</th>
-							<td class="center_table_td">결제방법 : ${order.pay_method}<br>결제시간 : ${payData.pay_date}</td>							
-						</tr>
-
-														
-					</table>						
 	
+	<div class="container">
+		
+			<!-- dummy box -->
+			<div style="height: 100px">
+				<!-- dummy -->
 			</div>
 
-			<div class="sidebar">
-				<div class="sidebar_item">
-						<div class="sidebar_item_title_down" id="sidebar_item_title_down">주문상세열기&nbsp;<i class="bi bi-caret-down-fill" ></i></div>
-						<div class="sidebar_item_title_up" id="sidebar_item_title_up">주문상세닫기&nbsp;<i class="bi bi-caret-up-fill" ></i></div>
-					<hr>
-					<div class="sidebar_item_icon" id="sidebar_item_icon"><i class="bi bi-question"></i></div>
-					<table class="sidebar_item_table" id="sidebar_item_table">
-						<c:forEach items="${purchase}" var="pur" varStatus="i">
+		<!-- -----------------------top_bar-------------------- -->
+			<div class="top_bar">
+				<h2></h2>
+			</div>				
+				
+		<!-- ----------------------- main -------------------- -->
+			<div class="main">
+			
+			
+		<!-- ----------------------- orderlist -------------------- -->
+				<div class="orderlist">
+				
+					<div class="title">주문상품</div>
+					<table class="orderlist_table">
+						<tr>
+							<th class="orderlist_table_th1" colspan="3">${order.order_name}</th>
+							<th class="orderlist_table_th2">
+								<span class="orderlist_table_th_right"><i class="bi bi-chevron-down" id="orderlist_table_toggle"></i></span>							
+							</th>
+						</tr>
 						
-							<tr>
-								<td class="sidebar_item_table_td col1" rowspan="3"><img class="sidebar_item_table_td_img" alt="" src="${pur.bookVO.book_img}"></td>
-								<td class="sidebar_item_table_td col2" >${pur.bookVO.title}</td>
+						<c:forEach items="${purchase}" var="pur" varStatus="i">
+							<tr class="orderlist_table_tr" id="orderlist_table_tr">
+								<td class="orderlist_table_col1"><img class="orderlist_table_img" alt="" src="${pur.bookVO.book_img}"></td>
+								<td class="orderlist_table_col2">${pur.bookVO.title}</td>
+								<td class="orderlist_table_col3"><fmt:formatNumber value="${pur.bookVO.book_price}" pattern="###,###"/>원</td>
+								<td class="orderlist_table_col4">${pur.product_count}개</td>
 							</tr>
-
-
-							<tr>
-								<td class="sidebar_item_table_td" ><fmt:formatNumber value="${pur.bookVO.book_price}" pattern="###,###"/>원</td>							
-							</tr>
-
-							<tr>
-								<td class="sidebar_item_table_td" >${pur.product_count}개</td>
-							</tr>
+						</c:forEach>
 					
-						</c:forEach>	
-												
 					</table>
 				</div>
-				<hr>
-				<div class="sidebar_pay">
-					<div class="sidebar_pay_main">결제금액<span class="sidebar_pay_right"><b><fmt:formatNumber value="${order.final_price}" pattern="###,###"/></b>&nbsp;원</span></div>
-					<div class="sidebar_pay_left">ㄴ 상품금액<span class="sidebar_pay_right"><fmt:formatNumber value="${order.total_price}" pattern="###,###"/>&nbsp;원</span></div>
-					<div class="sidebar_pay_left">ㄴ 배송비<span class="sidebar_pay_right">(+)&nbsp;<fmt:formatNumber value="${order.pay_fee}" pattern="###,###"/>&nbsp;원</span></div>
-					<div class="sidebar_pay_left">ㄴ 할인금액<span class="sidebar_pay_right">(-)&nbsp;<fmt:formatNumber value="${order.discount_price}" pattern="###,###"/>&nbsp;원</span></div>					
-					<div class="sidebar_pay_left">ㄴ 포인트사용<span class="sidebar_pay_right">(-)&nbsp;<fmt:formatNumber value="${order.use_point}" pattern="###,###"/>&nbsp;원</span></div>
-				</div>
-			
-			
-			</div>	
 		
-		</div>
+		<!-- ----------------------- pay_info -------------------- -->		
+				<div class="pay_info">
+					<div class="title">결제정보</div>
+					<div class="pay_info_content">
+					
+						<ul class="pay_info_ul1">
+							<li class="pay_info_li1">주문금액<span class="text_right"><fmt:formatNumber value="${order.total_price}" pattern="###,###"/></span></li>
+							<li class="pay_info_krw">원</li>
+							<li class="pay_info_li2">배송료<span class="text_right">+ <fmt:formatNumber value="${order.pay_fee}" pattern="###,###"/></span></li>
+							<li class="pay_info_krw">원</li>
+							<li class="pay_info_li3">할인금액<span class="text_right">- <fmt:formatNumber value="${order.use_point}" pattern="###,###"/></span></li>						
+							<li class="pay_info_krw">원</li>
+						</ul>
+						
+						<hr>
+						
+						<ul class="pay_info_ul2">
+							<li class="pay_info_li4">최종결제금액<span class="text_right_final"><fmt:formatNumber value="${order.final_price}" pattern="###,###"/></span><span class="text_right_krw"></span></li>
+							<li class="pay_info_krw">원</li>
+							<li class="pay_info_li5">${order.pay_method} 결제</li>
+						</ul>					
+									
+					</div>
+				
+				</div>		
+	<!-- ----------------------- user_info -------------------- -->				
+				<div class="user_info">		
+					<div class="title">배송지 정보</div>	
+					<div class="user_info_content">
+					
+						<ul class="user_info_ul1">
+							<li class="user_info_li1">받는 사람</li>
+							<li class="user_info_li2">${order.order_receiver} / ${order.order_tel}</li>
+							<li class="user_info_li3">받는 주소</li>
+							<li class="user_info_li4">${order.order_address}</li>
+						</ul>
+					</div>	
+					
+					<div class="user_info_button">
+						<button class="btn btn-outline-secondary shopping_btn" id="shopping_btn">쇼핑 계속</button>
+						<button class="btn btn-primary mypage_btn" id="mypage_btn">마이페이지 이동</button>
+					</div>			
+				</div>
+		
+	<!-- ----------------------- button -------------------- -->		
+
+		
+		
+		</div>		
 	</div>
 	
 	<jsp:include page="/views/inc/footer.jsp" />
-	</div>
+	
+
 
 	<!-- Script Bootstrap, jqurey-3.6.3 -->
 	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
@@ -132,22 +145,48 @@
 	
 	<script type="text/javascript">
 	
-	$("#sidebar_item_title_down").click(function() {
-		$('#sidebar_item_table').fadeIn();
-		$('#sidebar_item_title_up').show();		
-		$('#sidebar_item_title_down').hide();
-		$('#sidebar_item_icon').hide();		
-
+	/***************************** getElementById function *****************************/
+	function ById(id) {
+		return document.getElementById(id);
+	}
 	
+
+	/***************************** 주문 상품 토글 *****************************/
+	$(document).on("click", "#orderlist_table_toggle", function(e) {	
+		e.preventDefault();	
+
+		var toggle = document.getElementsByClassName('orderlist_table_tr');
+			
+		if ($("#orderlist_table_tr").css("display") == "none") {
+		
+			for (var i=0; i<toggle.length; i++) {
+				toggle[i].style.display = "table-row";
+			}
+			console.log("상품목록 열림");
+			ById('orderlist_table_toggle').className = 'bi bi-chevron-up';	
+		} else {
+			for (var i=0; i<toggle.length; i++) {		
+				toggle[i].style.display = "none";
+			}	
+			console.log("상품목록 닫힘");		
+			ById("orderlist_table_toggle").className = "bi bi-chevron-down";		
+		}
+
 	})
 	
-	$("#sidebar_item_title_up").click(function() {
-		$('#sidebar_item_table').hide();
-		$('#sidebar_item_title_up').hide();
-		$('#sidebar_item_title_down').show();
-		$('#sidebar_item_icon').show();
+	$(document).on("click", "#shopping_btn", function(e) {	
+		e.preventDefault();	
+		
+		location.href="/views/main/main_teset.jsp";
+	})
 	
-	})	
+	
+	
+	$(document).on("click", "#mypage_btn", function(e) {	
+		e.preventDefault();	
+		
+		location.href="/mypage/tracking";
+	})
 	
 	</script>
 	

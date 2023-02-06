@@ -34,9 +34,6 @@
 <!-- Tosspay api -->
 <script src="https://js.tosspayments.com/v1/payment"></script>
 
-<!-- Iamport api -->
-<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
-
 <!-- 주소찾기 api-->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
@@ -125,8 +122,7 @@
 					<table class="orderlist_table">
 					
 						<tr>
-							<th class="orderlist_table_th1">주문 상품
-							</th>
+							<th class="orderlist_table_th1">주문 상품</th>
 
 							<th class="orderlist_table_th2" colspan="3">
 								<span class="ordferlist_count">${orderitemCount.total_count} </span>개
@@ -424,7 +420,7 @@
 			</div>		
 
 	</div>
-
+ 
 	<jsp:include page="/views/inc/footer.jsp" />
 
 	<script type="text/javascript" src="/resources/js/orderitem.js"></script>

@@ -2,37 +2,61 @@ $(function() {
 	order_list();
 })
 
-// 주문 상세보기 클릭
+
+/***************************** getElementById function *****************************/
+function ById(id) {
+	return document.getElementById(id);
+}
+
+/***************************** 날짜 형식 변경 function *****************************/
+function timestamp(date){
+    var today = new Date(date);
+    today.setHours(today.getHours() + 9);
+    return today.toISOString().replace('T', ' ').substring(0, 16); //년도~분까지 표시
+}
+
+/***************************** 주문상세보기 function *****************************/
 function tracking_detail(no) {
-	var no = $(no).val();
 	order_detail(no);	
 }
 
-// 결제 취소 모달 열림
-function pay_cencel_open(no) {
-    $("#pay_cencel_order_no").val(no);
-}
 
-// 반품 신청 모달 열림
-function return_request_open(no) {
-    $("#return_request_order_no").val(no);	
-}
-
-// 결제 취소 모달에서 결제 취소 클릭
-$('#modal_pay_cencel').click(function() {
+/***************************** 결제취소신청 모달 열림 *****************************/
+$(document).on("click", "#pay_cencel_open", function(e) {	
+	e.preventDefault();	
 	
-	var order_no = $("#pay_cencel_order_no").val();	
-	orderTrackingUpdate(order_no, 10);
-})	
+	var no = ById('pay_cencel_open').value
+	ById('pay_cencel_order_no').value = no; 
 
-// 반품 신청 모달에서 반품 신청 클릭
-$('#modal_return_request').click(function() {
-
-	var order_no = $("#return_request_order_no").val();	
-	orderTrackingUpdate(order_no, 11);
-	
 })
 
+/***************************** 반품신청 모달 열림 *****************************/
+$(document).on("click", "#return_request_open", function(e) {	
+	e.preventDefault();	
+	
+	var no = ById('return_request_open').value
+	ById('return_request_order_no').value = no; 
+
+})
+
+/***************************** 결제취소 모달 취소버튼 클릭 *****************************/
+$(document).on("click", "#modal_pay_cencel", function(e) {	
+	e.preventDefault();	
+	
+	var order_no = ById('pay_cencel_order_no').value;
+	orderTrackingUpdate(order_no, 10);
+})
+
+/***************************** 결제취소 모달 반품버튼 클릭 *****************************/
+$(document).on("click", "#modal_return_request", function(e) {	
+	e.preventDefault();	
+
+	var order_no = ById('return_request_order_no').value;
+	orderTrackingUpdate(order_no, 11);
+
+})
+
+/***************************** 배송상태 갱신 *****************************/
 function orderTrackingUpdate(no, status) {
 	
 	var data = { "order_no" : no,
@@ -60,7 +84,7 @@ function orderTrackingUpdate(no, status) {
 	})
 }
 
-
+/***************************** 주문 목록 표시 *****************************/
 function order_list() {
 	
 	$.ajax({
@@ -127,7 +151,7 @@ function order_list() {
 								`<td class="trackinglist_table_main" colspan="4">` +
 									`<span class="trackinglist_table_title">${date} (${result[i].order_no})<span><br>` +
 									`<input type="hidden" name="trackinglist_order_no" value="${result[i].order_no}">` +
-									`<button type="button" class="btn btn-link trackinglist_table_main_button" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="tracking_detail(this)" value="${result[i].order_no}">상세 조회<i class="bi bi-chevron-right"></i></button>` +
+									`<button type="button" class="btn btn-link trackinglist_table_main_button" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="tracking_detail(this.value)" value="${result[i].order_no}">상세 조회<i class="bi bi-chevron-right"></i></button>` +
 								`</td>` +
 							`</tr>` +	
 							
@@ -136,11 +160,11 @@ function order_list() {
 								`<td class="trackinglist_table_col2">${result[i].order_name}</td>` +
 								`<td class="trackinglist_table_col3"><b>${result[i].payVO.final_price.toLocaleString()}</b>원</td>` 
 								if(check == 0) {
-				html +=			`<td class="trackinglist_table_col4">${status}<br><button type="button" class="btn btn-link pay_cencel" id="pay_cencel_open" data-bs-toggle="modal" data-bs-target="#pay_cencel" onclick="pay_cencel_open(${result[i].order_no})">결제취소</button></td>` 								
+				html +=			`<td class="trackinglist_table_col4">${status}<br><button type="button" class="btn btn-link pay_cencel" id="pay_cencel_open" data-bs-toggle="modal" data-bs-target="#pay_cencel" value="${result[i].order_no}">결제취소</button></td>` 								
 								} else if(check == 10) {
 				html +=			`<td class="trackinglist_table_col4" style="color:red"><b>${status}</b></td>` 								
 								} else if(check == 2) {
-				html +=			`<td class="trackinglist_table_col4">${status}<br><button type="button" class="btn btn-link pay_cencel" id="return_request_open" data-bs-toggle="modal" data-bs-target="#return_reqeust" onclick="return_request_open(${result[i].order_no})">반품신청</button></td>` 																
+				html +=			`<td class="trackinglist_table_col4">${status}<br><button type="button" class="btn btn-link pay_cencel" id="return_request_open" data-bs-toggle="modal" data-bs-target="#return_reqeust" value="${result[i].order_no}">반품신청</button></td>` 																
 								} else if(check == 11) {
 				html +=			`<td class="trackinglist_table_col4" style="color:blue"><b>${status}</b></td>` 								
 								} else if(check == 12) {
@@ -153,11 +177,11 @@ function order_list() {
 						`<hr class="trackinglist_table_hr">` 
 			}			
 			
-			 document.getElementById('trackinglist').innerHTML = html;
-			 document.getElementById('tracking_main_table_col2').innerHTML = cnt0;
-			 document.getElementById('tracking_main_table_col3').innerHTML = cnt1;
-			 document.getElementById('tracking_main_table_col4').innerHTML = cnt2;
-			 document.getElementById('tracking_main_table_col5').innerHTML = cnt10;
+			 ById('trackinglist').innerHTML = html;
+			 ById('tracking_main_table_col2').innerHTML = cnt0;
+			 ById('tracking_main_table_col3').innerHTML = cnt1;
+			 ById('tracking_main_table_col4').innerHTML = cnt2;
+			 ById('tracking_main_table_col5').innerHTML = cnt10;
 		},
 		
 		error: function(request, status, error) {
@@ -169,14 +193,9 @@ function order_list() {
 							
 }
 
-// date 형식 변환 (YYYY-MM-DD HH24:MI)
-function timestamp(date){
-    var today = new Date(date);
-    today.setHours(today.getHours() + 9);
-    return today.toISOString().replace('T', ' ').substring(0, 16);
-}
 
-// 주문 상세 모달 열림
+
+/***************************** 주문 상세 모달 열림 *****************************/
 function order_detail(no) {
 	
 	var data = {"order_no" : no}
@@ -233,7 +252,8 @@ function order_detail(no) {
 					`<div class="tracking_detail_price_col4">` +
 						`포인트적립 <div class="tracking_detail_price_right"><b>${result[0].payVO.save_point.toLocaleString()}</b>P</div>` +
 					`</div>`
-			 document.getElementById('tracking_detail_list').innerHTML = html;
+						
+			 ById('tracking_detail_list').innerHTML = html;
 		},
 		
 		error: function(request, status, error) {
