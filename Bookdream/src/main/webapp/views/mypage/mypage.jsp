@@ -15,7 +15,7 @@
 <link rel="icon" type="image/png" sizes="16x16"
 	href="/resources/images/favicon/favicon-16x16.png" />
 <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
-<link rel=stylesheet " href="/resources/css/screen/unregister.css" />
+<link rel="stylesheet" href="/resources/css/screen/unregister.css" />
 <link rel="stylesheet" href="/resources/css/styles.css" />
 
 <title>Insert title here</title>
