@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.bookdream.dao.OrderDAO;
 import com.spring.bookdream.vo.OrderVO;
+import com.spring.bookdream.vo.SearchCriteria;
 
 @Service("OrderService")
 public class OrderImpl implements OrderService {
@@ -23,9 +24,9 @@ public class OrderImpl implements OrderService {
 
 	// 
 	@Override
-	public List<OrderVO> searchOrder(OrderVO vo) {
+	public List<OrderVO> searchOrder(SearchCriteria cir) {
 
-		return orderDAO.searchOrder(vo);
+		return orderDAO.searchOrder(cir);
 	}
 
 	@Override
@@ -52,7 +53,11 @@ public class OrderImpl implements OrderService {
 		orderDAO.trackingUpdate(vo);
 		
 	}
-	
-	
+
+	@Override
+	public OrderVO orderCount(OrderVO vo) {
+
+		return orderDAO.orderCount(vo);
+	}	
 
 }

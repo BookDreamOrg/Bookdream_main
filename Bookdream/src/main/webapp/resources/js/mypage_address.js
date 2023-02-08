@@ -1,7 +1,6 @@
 /***************************** 페이지 로딩 *****************************/
 $(function() {
-		load_default();
-		address_list();
+	load_default();
 })
 
 
@@ -10,164 +9,7 @@ function ById(id) {
 	return document.getElementById(id);
 }
 
-
-// 배송지 입력하기 클릭 : value 값 초기화
-$('#modal_open').click(function() {
-	$('#address_alias').val('');
-	$('#address_name').val('');
-	$('#address_tel').val('');
-	$('#zonecode').val('');
-	$('#roadAddr').val('');
-	$('#detailAddress').val('');
-
-	$('#modal_address_update').hide();
-	$('#modal_address_insert').show();
-
-})
-	
-// 배송지 모달에서 배송지 등록
-$('#modal_address_insert').click(function() {
-	
-	address_insert(0);
-})
-
-// 배송지 모달에서 배송지 수정
-$('#modal_address_update').click(function() {
-	
-	address_insert(1);
-})
-
-
-// 배송지 입력 / 수정 모달
-function address_insert(no) {
-		
-	// INPUT VALUE 값 저장
-	var address_alias = $('input[name="address_alias"]').val();
-	var address_name = $('input[name="address_name"]').val();
-	var address_tel = $('input[name="address_tel"]').val();
-	var zone_code = $('input[name="address_zonecode"]').val();
-	var road_add = $('input[name="address_roadAddr"]').val();
-	var detail_add = $('input[name="address_detailAddress"]').val();
-	var address_no = $('input[name="address_no"]').val();
-	
-	if (address_alias == '') {
-		alert("배송지 이름을 입력하세요.");
-	} else if (address_name == '') {
-		alert("받는사람 이름을 입력하세요.");
-	} else if (address_tel == '') {
-		alert("받는사람 전화번호를 입력하세요.");
-	} else if (zone_code == '' || road_add == '' || detail_add == '') {
-		alert("주소를 입력하세요.");
-		
-	// 배송지 입력하기 : 사용자의 배송지 리스트를 조회
-	} else if(no == 0) {
-		$.ajax({
-			type : "POST",                              
-			url : "/address/allList",	
-			dataType : "json",
-			contentType : "application/json",
-			
-			success : function(result) {	
-				console.log(result);
-				
-				// 기본배송지로 설정을 눌렀다면 기본 배송지로 설정
-				if ($('input[id=default_address_check]').is(':checked')) {
-					
-					var default_add = "Y";
-					
-				} else {
-					// 등록된 배송지가 없다면 기본 배송지로 설정	 
-					var default_add = (result=="") ? "Y" : "N";
-				}
-				
-				var data = {
-						 "address_alias" : address_alias,
-						 "address_name" : address_name,
-						 "address_tel" : address_tel,
-						 "zone_code" : zone_code,
-						 "road_add" : road_add,
-						 "detail_add" : detail_add,
-						 "address_no" : address_no,
-						 "default_add" : default_add
-					}				
-								
-				console.log(data);
-				
-					$.ajax({
-						type : "POST",                              
-						url : "/address/insert",         
-						data : JSON.stringify(data),   
-						dataType : "text",
-						contentType : "application/json",
-						
-						success : function() {	
-							
-							// 배송지 갱신
-							address_list();
-							load_default();
-
-						},
-						error: function(request, status, error) {
-					        console.log("code: " + request.status)
-					        console.log("message: " + request.responseText)
-					        console.log("error: " + error);
-						}
-					});	
-								
-			},
-					
-		})		
-		
-	// 배송지 수정
-	} else {
-
-		// 기본 배송지 설정 클릭 : 수정된 배송지는 기본 배송지로 설정됨
-		if ($('input[id=default_address_check]').is(':checked')) {
-			var default_add = "Y";
-		}
-		 
-		var data = {
-				 "address_alias" : address_alias,
-				 "address_name" : address_name,
-				 "address_tel" : address_tel,
-				 "zone_code" : zone_code,
-				 "road_add" : road_add,
-				 "detail_add" : detail_add,
-				 "address_no" : address_no,
-				 "default_add" : default_add
-			};			
-		console.log(data);
-		
-		$.ajax({
-			type : "POST",                              
-			url : "/address/update",         
-			data : JSON.stringify(data),   
-			dataType : "text",
-			contentType : "application/json",
-			
-			success : function() {	
-				
-				// 배송지 갱신
-				address_list();
-				load_default();
-				
-			},
-			error: function(request, status, error) {
-		        console.log("code: " + request.status)
-		        console.log("message: " + request.responseText)
-		        console.log("error: " + error);
-			}				
-		})
-		
-		// 기본 배송지 체크박스 해제
-		$('input:checkbox[id="default_address_check"]').prop("checked", false);
-		
-	}
-	
-}
-
-
-// 상단 기본 배송지 표시
+/***************************** 상단 기본배송지 표시 function *****************************/
 function load_default() {
 			
 	var data = {"default_add" : "Y"}	
@@ -180,8 +22,6 @@ function load_default() {
 			contentType : "application/json",		
 				
 			success : function(result) {
-				console.log(result);
-				
 				var html = "";
 
 				if (result == "") {
@@ -192,7 +32,8 @@ function load_default() {
 					var result =  JSON.parse(result);
 
 								if(`${result.default_add}` == `Y`) {
-					html +=			`<div style="color: #6768ab; font-weight: bold;"><i class="bi bi-geo-alt-fill"></i>&nbsp;${result.address_alias}&nbsp;[기본배송지]</div>` 	
+					html +=			`<div style="color: #6768ab; font-weight: bold;">` +
+									`<i class="bi bi-geo-alt-fill"></i>&nbsp;${result.address_alias}&nbsp;[기본배송지]</div>` 	
 								} else {
 					html +=			`<div>${result.address_alias}</div>`
 								}			
@@ -204,7 +45,8 @@ function load_default() {
 									`<span>${result.detail_add}</span>&nbsp;` 						
 									
 				}
-				     document.getElementById('address_main').innerHTML = html;		
+				     ById('address_main').innerHTML = html;
+				     address_list();
 			},
 				
 			error: function(request, status, error) {
@@ -219,19 +61,17 @@ function load_default() {
 }
 
 
-
-// 기본배송지를 포함한 사용자의 배송지 목록 표시
+/***************************** 배송지 목록 표시 function *****************************/
 function address_list() {
 
 	$.ajax({
 		type : "POST",                              
 		url : "/address/allList",
-		data : "",		
 		dataType : "json",
 		contentType : "application/json",
 		
 		success : function(result) {	
-			console.log(result);
+
 			var html = "";
 			
 			for (i=0; i < result.length; i++) {
@@ -267,9 +107,9 @@ function address_list() {
 								     `<span>${result[i].detail_add}</span><label>` +
 								`</td>` +
 								`<td class="addresslist_table_col3">` + 
-									`<div><button class="btn btn-outline-primary"  onclick="modal_address_get(this)" value=${result[i].address_no}><i class="bi bi-pen"> 수정</i></button></div>` 
+									`<div><button class="btn btn-outline-primary address_update" value=${result[i].address_no}><i class="bi bi-pen"> 수정</i></button></div>` 
 								if (i!=0) {
-				html +=				`<br><div><button class="btn btn-outline-primary"  onclick="modal_address_delete(this)" value=${result[i].address_no}><i class="bi bi-trash"> 삭제</i></button></div>`
+				html +=				`<br><div><button type="button" class="btn btn-outline-primary address_delete"  value=${result[i].address_no}><i class="bi bi-trash"> 삭제</i></button></div>`
 								}	
 				html +=			`</td>` +
 							`</tr>` +
@@ -277,8 +117,9 @@ function address_list() {
 						`<hr>`	
 			}	
 			  var cnt = result.length;	
-		      document.getElementById('addresslist_main').innerHTML = html;
-		      document.getElementById('addresslist_title').innerHTML = cnt;
+			  	ById('addresslist_main').innerHTML = html;
+			  	ById('addresslist_title').innerHTML = cnt;
+			  	console.log("배송지 로딩 완료");
 
 		},
 		error: function(request, status, error) {
@@ -291,75 +132,40 @@ function address_list() {
 	
 };
 
-// 배송지 삭제
-function modal_address_delete(no) {
-	 
-	var address_no = $(no).val();
-	var data = {"address_no" : address_no};
+
+/***************************** 배송지 입력 버튼 클릭 *****************************/
+$(document).on("click", "#address_insert_btn", function(e) {
 	
-	console.log(data);
+	$('#exampleModal').modal('show');
 	
-	$.ajax({
-		type : "POST",                              
-		url : "/address/get",
-		data : JSON.stringify(data),  	
-		dataType : "text",
-		contentType : "application/json",
-		
-		success : function(result) {
-			console.log(result);		
-			var result =  JSON.parse(result);
-			
-			if (result.default_add == 'Y') {
-				
-				alert("기본배송지는 삭제할 수 없습니다.");
+	ById('address_alias').value = null;
+	ById('address_name').value = null;
+	ById('address_tel').value = null;
+	ById('zonecode').value = null;
+	ById('roadAddr').value = null;
+	ById('detailAddress').value = null;
 
-			} else {
-				
-				$.ajax ({
-					type : 'POST',
-					url : '/address/delete',
-					data : JSON.stringify(data),   
-					dataType : 'text',
-					contentType : "application/json",		
-					
-					success : function() {	
-						// 주소 갱신
-						address_list();	
-						load_default();
-					},
-					
-					error: function(request, status, error) {
-				        console.log("code: " + request.status)
-				        console.log("message: " + request.responseText)
-				        console.log("error: " + error);
-					}	
-				})
-				
-			}
-		},
-		
-		error: function(request, status, error) {
-	        console.log("code: " + request.status)
-	        console.log("message: " + request.responseText)
-	        console.log("error: " + error);
-		}	
-		
-		
-	})
-}
+	ById('address_update_modal_btn').style.display = "none";
+	ById('address_insert_modal_btn').style.display = "block";
+	
+});
 
+/***************************** 배송지 수정 버튼 클릭 *****************************/
+$(document).on("click", "button.address_update", function(e) {
+	let order_no = e.currentTarget.value
+	address_update(order_no);
+})	
 
-// 배송지 수정 클릭시 배송지 정보 값 호출
-function modal_address_get(no) {
+/***************************** 배송지 수정 버튼 클릭시 value 리턴 function *****************************/
+function address_update(address_no) {
 
 	$('#exampleModal').modal('show');
-	$('#modal_address_insert').hide();
-	$('#modal_address_update').show();
 	
+	ById('address_insert_modal_btn').style.display = "none";
+	ById('address_update_modal_btn').style.display = "block";
 	
-	var address_no = $(no).val();
 	var data = {"address_no" : address_no};
+	
 	console.log(data);
 	
 	$.ajax ({
@@ -370,7 +176,7 @@ function modal_address_get(no) {
 		contentType : "application/json",		
 		
 		success : function(result) {	
-			console.log(result)
+
 			var result =  JSON.parse(result)
 
 			// 해당 주소의 값 자동 입력
@@ -393,18 +199,192 @@ function modal_address_get(no) {
 }
 
 
+/***************************** 배송지 입력/수정 모달에서 입력 클릭 *****************************/
+$(document).on("click", "#address_insert_modal_btn", function(e) {	
+	address_insert('insert');	
+})
+
+/***************************** 배송지 입력/수정 모달에서 수정 클릭 *****************************/
+$(document).on("click", "#address_update_modal_btn", function(e) {	
+	address_insert('update');
+})
+
+/***************************** 배송지 입력/수정 모달 : DB 전송 function *****************************/
+function address_insert(check) {
+		
+	var address_alias = ById('address_alias').value;
+	var address_name = ById('address_name').value;
+	var address_tel = ById('address_tel').value;
+	var zone_code = ById('zonecode').value;
+	var road_add = ById('roadAddr').value;
+	var detail_add = ById('detailAddress').value;
+	var address_no = ById('address_no').value;
+
+	
+	if (address_alias == '') {
+		alert("배송지 이름을 입력하세요.");
+	} else if (address_name == '') {
+		alert("받는사람 이름을 입력하세요.");
+	} else if (address_tel == '') {
+		alert("받는사람 전화번호를 입력하세요.");
+	} else if (zone_code == '' || road_add == '' || detail_add == '') {
+		alert("주소를 입력하세요.");
+		
+	// 배송지 입력하기 모달에서 저장 클릭
+	} else if(check == 'insert') {
+		$.ajax({
+			type : "POST",                              
+			url : "/address/allList",	
+			dataType : "json",
+			contentType : "application/json",
+			
+			success : function(result) {	
+				
+				// 기본배송지로 설정을 눌렀다면 기본 배송지로 설정
+				if (ById('default_address_check').checked == true) {
+					
+					var default_add = "Y";
+					
+				} else {
+					// 기본 배송지 설정을 누르지 않음, 
+					// 등록된 배송지가 없을경우 기본 배송지로 강제 설정	 
+					var default_add = (result=="") ? "Y" : "N";
+				}
+				
+				var data = {
+						 "address_alias" : address_alias,
+						 "address_name" : address_name,
+						 "address_tel" : address_tel,
+						 "zone_code" : zone_code,
+						 "road_add" : road_add,
+						 "detail_add" : detail_add,
+						 "address_no" : address_no,
+						 "default_add" : default_add
+					}				
+								
+				console.log(data);
+				
+					$.ajax({
+						type : "POST",                              
+						url : "/address/insert",         
+						data : JSON.stringify(data),   
+						dataType : "text",
+						contentType : "application/json",
+						
+						success : function() {	
+
+							console.log("배송지 등록 완료");
+							load_default();
+							
+						},
+						error: function(request, status, error) {
+					        console.log("code: " + request.status)
+					        console.log("message: " + request.responseText)
+					        console.log("error: " + error);
+						}
+					});	
+								
+			},
+					
+		})		
+		
+	// 배송지 수정
+	} else {
+
+		// 기본 배송지 설정 클릭 : 수정할 배송지는 기본 배송지로 설정됨
+		if (ById('default_address_check').checked == true) {
+			var default_add = "Y";
+		}
+		 
+		var data = {
+				 "address_alias" : address_alias,
+				 "address_name" : address_name,
+				 "address_tel" : address_tel,
+				 "zone_code" : zone_code,
+				 "road_add" : road_add,
+				 "detail_add" : detail_add,
+				 "address_no" : address_no,
+				 "default_add" : default_add
+		}			
+		
+		console.log(data);
+		
+		$.ajax({
+			type : "POST",                              
+			url : "/address/update",         
+			data : JSON.stringify(data),   
+			dataType : "text",
+			contentType : "application/json",
+			
+			success : function() {	
+
+				console.log("배송지 수정 완료");
+				load_default();
+				
+			},
+			error: function(request, status, error) {
+		        console.log("code: " + request.status)
+		        console.log("message: " + request.responseText)
+		        console.log("error: " + error);
+			}				
+		})
+		
+		
 
 
-// 배송지 목록에서 기본 배송지 설정 클릭
-$('#address_change_button').click(function() {
+	}
+	// 전송되면 기본 배송지 체크박스 해제됨
+	ById("default_address_check").checked = false;
+	$('#exampleModal').modal('hide');
+}
+
+/***************************** 배송지 삭제 버튼 클릭 *****************************/
+$(document).on("click", ".address_delete", function(e) {
+	let order_no = e.currentTarget.value
+	address_delete(order_no)
+})	
+
+
+/***************************** 배송지 삭제 function *****************************/
+function address_delete(address_no) {
+	 
+	var data = {"address_no" : address_no};
+	
+	console.log(data);
+	
+	$.ajax ({
+		type : 'POST',
+		url : '/address/delete',
+		data : JSON.stringify(data),   
+		dataType : 'text',
+		contentType : "application/json",		
+					
+		success : function() {	
+						
+			console.log("배송지 삭제 완료");
+			load_default();
+		},
+					
+		error: function(request, status, error) {
+			console.log("code: " + request.status)
+			console.log("message: " + request.responseText)
+			console.log("error: " + error);
+		}	
+	})
+
+}
+
+/***************************** 배송지 목록에서 기본 배송지 변경 버튼 클릭 *****************************/
+$(document).on("click", "#address_change_button", function(e) {	
 
 	// 선택한 주소의 address_no 저장
-	var address_no = $('input[name=address_radio]:checked').val();
+	var address_no = document.querySelector('input[name="address_radio"]:checked').value;
 
 		// 기본 배송지 설정		
 		alert("기본 배송지를 변경합니다.");
 
 		var data = {"address_no" : address_no};
+		
 		console.log(data);
 		
 		$.ajax ({
@@ -415,8 +395,8 @@ $('#address_change_button').click(function() {
 			contentType : "application/json",		
 			
 			success : function() {	
+				console.log("기본 배송지 변경 완료");
 				load_default();
-				address_list();
 			},
 			
 			error: function(request, status, error) {
@@ -427,8 +407,6 @@ $('#address_change_button').click(function() {
 		})
 
 })
-
-
 
 
 ////////////////////////////////////////////////// 다음 우편번호 API //////////////////////////////////////////////////

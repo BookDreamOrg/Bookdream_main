@@ -277,14 +277,14 @@
 					      
 							<div class="mb-3">
 				  				<label for="address_insert_alias" class="form-label">배송지 이름</label>
-				  				<input class="form-control address_input" id="address_insert_alias" placeholder="배송지 이름을 입력해주세요.">
+				  				<input class="form-control address_input" id="address_insert_alias" maxlength="10" placeholder="배송지 이름을 입력해주세요.">
 							</div>		
 				
 				
 							<div class="mb-3">
 				  				<label for="address_insert_name" class="form-label">받는 사람</label>
-				  				<input class="form-control address_input" id="address_insert_name" placeholder="이름을 입력해주세요.">
-				  				<input class="form-control address_input" id="address_insert_tel"  placeholder="휴대번호를 -없이 입력해주세요.">
+				  				<input class="form-control address_input" id="address_insert_name" maxlength="10" placeholder="이름을 입력해주세요.">
+				  				<input class="form-control address_input" id="address_insert_tel"  maxlength="11" placeholder="휴대번호를 -없이 입력해주세요.">
 							</div>				
 							
 							<div class="address_insert_dummy"></div>
@@ -296,7 +296,7 @@
 				  				<input class="form-control address_input" id="zonecode"  placeholder="우편번호" readonly>
 				  				<input class="form-control address_input" id="roadAddr"  placeholder="도로명주소" readonly>
 				  				<span  id="guide" style="color: #999; display: none"></span>
-				  				<input class="form-control address_input" id="detailAddress" placeholder="상세주소" >
+				  				<input class="form-control address_input" id="detailAddress" maxlength="20" placeholder="상세주소" >
 								<input type="hidden" id="extraAddress" placeholder="참고항목" readonly="readonly">			
 								<input type="hidden" id="address_insert_address_no">	
 							</div>					      	
@@ -376,18 +376,28 @@
 				</div>
 		
 				<!-- ------------------ pay ---------------------- -->
-				<div class="pay">
-					
+				<div class="pay">			
 					<table class="pay_table">
 						
 						<tr>
 							<th class="pay_table_th1">결제수단</th>
 						</tr>
+
+						<c:if test="${null ne lastPayment}">
+							<tr>
+								<td class="pay_table_col_lastpay">
+									<span>최근결제수단</span>
+									<input type="radio" class="btn-check" name="pay_radio" id="pay_radio0" autocomplete="off" value="${lastPayment.pay_method}" checked>
+									<label class="btn btn-outline-secondary pay_radio_label_last" for="pay_radio0">${lastPayment.pay_method}</label>								
+								</td>
+							</tr>						
+						</c:if>
+	
 					
 						<tr>
 							<td class="pay_table_col1">
 								<input type="radio" class="btn-check" name="pay_radio" id="pay_radio1" autocomplete="off" value="카드">
-								<label class="btn btn-outline-secondary pay_radio_label" for="pay_radio1">신용카드</label>
+								<label class="btn btn-outline-secondary pay_radio_label" for="pay_radio1">카드</label>
 								
 								<input type="radio" class="btn-check" name="pay_radio" id="pay_radio2" autocomplete="off" value="토스페이">
 								<label class="btn btn-outline-secondary pay_radio_label" for="pay_radio2">토스페이</label>

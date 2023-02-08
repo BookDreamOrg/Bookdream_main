@@ -22,10 +22,10 @@ public class OrderController {
 	@Autowired
 	private HttpSession session;	
 	
-	// 주소등록
+	// 배송상태 갱신
 	@RequestMapping(value="/update")
 	@ResponseBody
-	public void cencelOrder(@RequestBody OrderVO order) {
+	public OrderVO cencelOrder(@RequestBody OrderVO order) {
 		
 		int user_no = (int) session.getAttribute("user_no");		
 		order.setUser_no(user_no);
@@ -41,7 +41,8 @@ public class OrderController {
 		    
 		    System.out.println("---> 도서 재고 반환 <---");
 		    orderService.updateBookStock(order);			
-		}		
+		}
+		return order;		
 
 		
 	    

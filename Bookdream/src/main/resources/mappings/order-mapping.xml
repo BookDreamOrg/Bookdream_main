@@ -10,6 +10,7 @@
 		<result property="user_no" column="USER_NO" />	
 		<result property="order_date" column="ORDER_DATE" />	
 		<result property="order_status" column="ORDER_STATUS" />	
+		<result property="order_count" column="ORDER_COUNT" />	
 		<collection property="purchaseVO" resultMap="purchaseList"></collection>		
 		<collection property="bookVO" resultMap="bookList"></collection>
 		<collection property="payVO" resultMap="payList"></collection>
@@ -54,9 +55,9 @@
 		         )
 	</insert>
 		
-	<!-- 마이페이지 주문조회 (간단) -->
-	<select id="searchOrder" parameterType="order" resultMap="orderList">
-		SELECT order_no, 
+	<!-- 
+	
+			SELECT order_no, 
 			   order_name, 
 			   book_img, 
       		   order_date,
@@ -80,6 +81,48 @@
                 )
         WHERE rn = 1         
 		order by order_no desc
+	
+	 -->	
+		
+		
+	<!-- 마이페이지 주문조회 (간단) -->
+	<select id="searchOrder" parameterType="order" resultMap="orderList">		
+		select order_no,
+			   order_name,
+			   book_img, 
+      		   order_date,
+			   final_price,
+			   order_status				   
+		from (SELECT  ROW_NUMBER() OVER (ORDER BY rnum DESC) AS rnum,
+		              order_no, 
+		              order_name, 
+		              book_img,
+		              order_date,	
+		              final_price, 
+		              order_status
+		      FROM   (select rownum rnum, 
+		      				 o.order_no, 
+		                     o.order_name, 
+		                     b.book_img, 
+		                     o.order_date,
+		                     y.final_price,
+		                     o.order_status,
+		                     ROW_NUMBER() OVER(PARTITION BY o.order_no ORDER BY o.order_name DESC) AS rn                       
+		              from   orders o, 
+		                     purchase p, 
+		                     book b,
+		                     pay y
+		              where  p.book_no = b.book_no   AND
+		                     p.order_no = o.order_no AND
+		                     y.pay_no = o.order_no   AND
+		                     o.user_no = #{user_no}
+		              )
+		     WHERE rn = 1
+		     order by rnum desc)
+		     
+		WHERE rnum between ((#{pageNum}-1) * #{amount})+1 AND 
+		                     #{pageNum} * #{amount}	
+		order by order_no desc                     
 	</select>	
 		
 		
@@ -157,5 +200,11 @@
       		   order_status = 1
       	]]>	  
 	</update>
+	
+	<select id="orderCount" resultMap="orderList">
+		SELECT count(order_no) as order_count
+		FROM   orders
+		WHERE  user_no = #{user_no}
+	</select>
 			
 </mapper>

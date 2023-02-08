@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.bookdream.vo.OrderVO;
+import com.spring.bookdream.vo.SearchCriteria;
 
 @Repository
 public class OrderDAO {
@@ -22,10 +23,10 @@ public class OrderDAO {
 	}
 
 	// 주문 조회
-	public List<OrderVO> searchOrder(OrderVO vo) {
+	public List<OrderVO> searchOrder(SearchCriteria cir) {
 		
 		System.out.println("---> OrderDAO searchOrder 실행 <---");
-		return mybatis.selectList("OrderDAO.searchOrder", vo);	
+		return mybatis.selectList("OrderDAO.searchOrder", cir);	
 		
 	}
 
@@ -67,4 +68,13 @@ public class OrderDAO {
 		// 배송중 -> 배송완료
 		mybatis.update("OrderDAO.trackingUpdate2", vo);		
 	}	
+	
+	// 주문 개수 확인
+	public OrderVO orderCount(OrderVO vo) {
+		
+		System.out.println("---> OrderDAO orderCount 실행 <---");
+		
+		return mybatis.selectOne("OrderDAO.orderCount", vo);	
+		
+	}		
 }

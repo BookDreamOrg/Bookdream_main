@@ -11,7 +11,7 @@ function ById(id) {
 
 /***************************** 주문 상품 토글 *****************************/
 $(document).on("click", "#orderlist_table_toggle", function(e) {	
-	e.preventDefault();	
+		
 
 	var toggle = document.getElementsByClassName('orderlist_table_tr');
 		
@@ -35,7 +35,7 @@ $(document).on("click", "#orderlist_table_toggle", function(e) {
 
 /***************************** 배송지 목록 모달 열림 *****************************/
 $(document).on("click", "#address_search_btn", function(e) {
-	e.preventDefault();
+	
 	console.log("배송지 목록 열림")
 	$('#address_list_modal').modal('show');
 	
@@ -46,7 +46,6 @@ $(document).on("click", "#address_search_btn", function(e) {
 
 /***************************** 배송지 입력 모달 열림 *****************************/
 $(document).on("click", "#address_insert_btn", function(e) {
-	e.preventDefault();
 	console.log("배송지 입력 열림")
 	$('#address_insert_modal').modal('show');
 
@@ -65,7 +64,7 @@ $(document).on("click", "#address_insert_btn", function(e) {
 
 /***************************** 배송지 수정 모달 열림 *****************************/
 $(document).on("click", "#address_list_table_update", function(e) {
-	e.preventDefault();
+	
 	console.log("배송지 수정 열림")
 	$('#address_insert_modal').modal('show');
 
@@ -73,22 +72,22 @@ $(document).on("click", "#address_list_table_update", function(e) {
 	ById('address_update_modal_btn').style.display = "block";
 	
 	// 선택한 배송지의 value를 호출하여 input에 출력
-	var address_no = ById('address_list_table_update').value;
+	var address_no = e.currentTarget.value
 	select_address_value(address_no);
 });
 
 
-/***************************** 배송지 추가 버튼 클릭 *****************************/
+/***************************** 배송지 입력모달 : 입력 버튼 클릭 *****************************/
 $(document).on("click", "#address_insert_modal_btn", function(e) {
-	e.preventDefault();	
+		
 	
 	address_insert('insert');
 	console.log("배송지 추가 완료");	
 });
 
-/***************************** 배송지 목록 : 수정 버튼 클릭 *****************************/
+/***************************** 배송지 입력모달 : 수정 버튼 클릭 *****************************/
 $(document).on("click", "#address_update_modal_btn", function(e) {
-	e.preventDefault();	
+		
 	
 	address_insert('update');
 	console.log("배송지 수정 완료");	
@@ -96,23 +95,23 @@ $(document).on("click", "#address_update_modal_btn", function(e) {
 
 /***************************** 배송지 목록 : 삭제 버튼 클릭 *****************************/
 $(document).on("click", "#address_list_table_delete", function(e) {
-	e.preventDefault();
 	
-	var address_no = ById('address_list_table_delete').value;
+	
+	var address_no = e.currentTarget.value;
 	address_delete(address_no);
 	console.log("배송지 삭제 완료");
 });
 
 /***************************** 배송요청사항 버튼 클릭 *****************************/
 $(document).on("click", "#delivery_request_btn", function(e) {
-	e.preventDefault();
+	
 	console.log("배송요청사항 열림");
 	$('#delivery_request').modal('show');
 });
 
 /***************************** 배송요청사항 : 직접입력하기 클릭 *****************************/
 $(document).on("change", "#delrivery_reqeust_select", function(e) {
-	e.preventDefault();
+	
 	
 	var select = ById('delrivery_reqeust_select');
 	var message = ById('delrivery_reqeust_message');
@@ -128,7 +127,7 @@ $(document).on("change", "#delrivery_reqeust_select", function(e) {
 
 /***************************** 배송요청사항 : 저장 클릭 *****************************/
 $(document).on("click", "#delivery_request_change_btn", function(e) {
-	e.preventDefault();
+	
 	
 	var value = ById('delrivery_reqeust_select').value;
 	var html = '';
@@ -151,7 +150,7 @@ $(document).on("click", "#delivery_request_change_btn", function(e) {
 
 /***************************** 포인트 테이블 토글 *****************************/
 $(document).on("click", "#point_table_toggle", function(e) {
-	e.preventDefault();
+	
 	
 	var table = ById('point_table_none');
 	var btn = ById('point_table_toggle');
@@ -170,7 +169,7 @@ $(document).on("click", "#point_table_toggle", function(e) {
 
 /***************************** 포인트 전액사용 버튼 클릭 *****************************/
 $(document).on("click", "#point_table_full_use_btn", function(e) {
-	e.preventDefault();
+	
 	
 	var btn = ById('point_table_full_use_btn');
 
@@ -194,7 +193,7 @@ $(document).on("click", "#point_table_full_use_btn", function(e) {
 
 /***************************** 포인트 수동 입력 *****************************/
 $(document).on("keyup", "#point_table_use_point_input", function(e) {
-	e.preventDefault();
+	
 	// 정규식 변환 (숫자만 기입)
 	var point = ById('point_table_use_point_input');
     point.value = point.value.replace(/[^0-9]/g,'');
@@ -203,7 +202,6 @@ $(document).on("keyup", "#point_table_use_point_input", function(e) {
 
 /***************************** 포인트 수동입력후 포커스 아웃 *****************************/
 $(document).on("focusout", "#point_table_use_point_input", function(e) {
-	e.preventDefault();
 	
 	var this_point = Number(ById('point_table_use_point_input').value)
 	var final_price = Number(ById('final_price_value').value)
@@ -254,7 +252,7 @@ $(document).on("focusout", "#point_table_use_point_input", function(e) {
 
 /***************************** 결제하기 버튼 클릭 *****************************/
 $(document).on("click", "#side_pay_now_btn", function(e) {
-	e.preventDefault();	
+		
 	
 	// 결제 정보
 	var pay_method = document.querySelector('input[name="pay_radio"]:checked');
@@ -264,6 +262,18 @@ $(document).on("click", "#side_pay_now_btn", function(e) {
 	var save_point = uncomma(ById('save_point_value').innerText);
 	var final_price = uncomma(ById('final_price').innerText);
 	var discount_price = 0;
+	
+	if(ById('user_info_name') == null || ById('user_info_tel') == null || ById('user_info_zone_code') == null ||
+	   ById('user_info_road_add') == null || ById('user_info_detail_add') == null) {
+		
+		alert("배송지정보를 입력하세요.");
+		return false;	
+		
+	} else if (pay_method == null) {
+		alert("결제수단을 선택하세요.");
+		return false;		
+	} 
+	
 	
 	// 사용자 정보
 	var order_name = ById('order_name').value;
@@ -275,14 +285,7 @@ $(document).on("click", "#side_pay_now_btn", function(e) {
 	var add3 = ById('user_info_detail_add').innerText;
 	var order_address = "[" + add1 + "]" + " " + add2 + " " + add3
 	
-	if (pay_method == null) {
-		alert("결제수단을 선택하세요.");
-		return false;		
-	} else if ((order_name == '') || (order_receiver == '') || (order_address == '') || (order_tel == '')) {
-		alert("배송지 정보를 입력하세요.");
-		return false;
-	} 
-	
+
 
 
 	var data = {
@@ -442,10 +445,12 @@ function select_address_value(address_no) {
 		success : function(data) {	
 			
 			var result =  JSON.parse(data)
-
+			// - 제거
+			var address_tel = result.address_tel.replace(/-/g, "");
+			
 			ById('address_insert_alias').value = result.address_alias;
 			ById('address_insert_name').value = result.address_name ;
-			ById('address_insert_tel').value = result.address_tel;
+			ById('address_insert_tel').value = address_tel;
 			ById('zonecode').value = result.zone_code;
 			ById('roadAddr').value = result.road_add;
 			ById('detailAddress').value = result.detail_add;
@@ -460,7 +465,12 @@ function select_address_value(address_no) {
 		}	
 	})
 }
-
+/***************************** 전화번호 입력 *****************************/
+$(document).on("keyup", "#address_insert_tel", function(e) { 
+	
+	var tel = e.currentTarget.value
+	e.currentTarget.value = tel.replace(/[^0-9]/g,'');
+})
 
 /***************************** 배송지 추가/수정 전송 function *****************************/
 function address_insert(check) {
@@ -468,11 +478,13 @@ function address_insert(check) {
 	// INPUT VALUE 값 저장
 	var address_alias = ById('address_insert_alias').value;
 	var address_name = ById('address_insert_name').value;
-	var address_tel = ById('address_insert_tel').value;
+	var address_tel = ById('address_insert_tel').value.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`); // - 추가
 	var zone_code = ById('zonecode').value;
 	var road_add = ById('roadAddr').value;
 	var detail_add = ById('detailAddress').value;
 	var address_no = ById('address_insert_address_no').value;
+	
+	console.log(address_tel.length)
 	
 	if (address_alias == '') {
 		alert("배송지 이름을 입력하세요.");
@@ -480,6 +492,8 @@ function address_insert(check) {
 		alert("받는사람 이름을 입력하세요.");
 	} else if (address_tel == '') {
 		alert("받는사람 전화번호를 입력하세요.");
+	} else if (address_tel.length != 13) { // - 포함 13자리
+		alert("전화번호를 11자리 기입하세요.");
 	} else if (zone_code == '' || road_add == '' || detail_add == '') {
 		alert("주소를 입력하세요.");
 		
@@ -601,7 +615,7 @@ function address_delete(address_no) {
 
 /***************************** 배송지 목록에서 등록 버튼 클릭 *****************************/
 $(document).on("click", "#address_list_change_btn", function(e) {
-	e.preventDefault();	
+		
     
 	var value = document.getElementsByName('address_radio')
 	var address_no = Array.from(value).find(radio => radio.checked).value;

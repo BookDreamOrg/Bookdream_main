@@ -10,7 +10,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-
 <!-- bootstrap -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -26,14 +25,13 @@
 
 
 <title>주문완료 페이지</title>
+
 <!-- jQuery -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <!-- CSS -->
 <link rel="stylesheet" type="text/css" href="/resources/css/success.css">
 <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap_icon.css">
-
-
 
 </head>
 
@@ -118,17 +116,13 @@
 							<li class="user_info_li4">${order.order_address}</li>
 						</ul>
 					</div>	
-					
+
+	<!-- ----------------------- button -------------------- -->					
 					<div class="user_info_button">
 						<button class="btn btn-outline-secondary shopping_btn" id="shopping_btn">쇼핑 계속</button>
 						<button class="btn btn-primary mypage_btn" id="mypage_btn">마이페이지 이동</button>
 					</div>			
-				</div>
-		
-	<!-- ----------------------- button -------------------- -->		
-
-		
-		
+				</div>		
 		</div>		
 	</div>
 	
@@ -174,6 +168,7 @@
 
 	})
 	
+	/***************************** 주문 계속 버튼 클릭 *****************************/
 	$(document).on("click", "#shopping_btn", function(e) {	
 		e.preventDefault();	
 		
@@ -181,7 +176,7 @@
 	})
 	
 	
-	
+	/***************************** 마이페이지 이동 버튼 클릭 *****************************/
 	$(document).on("click", "#mypage_btn", function(e) {	
 		e.preventDefault();	
 		

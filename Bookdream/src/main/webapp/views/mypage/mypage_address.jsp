@@ -52,7 +52,7 @@
 
 			<div class="addresslist">
 				<span class="addresslist_title" id="addresslist_title"></span><span>&nbsp;개</span>
-				<button type="button" class="btn btn-outline-secondary addresslist_button" id="modal_open" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-plus"> 배송지 입력</i></button>
+				<button type="button" class="btn btn-outline-secondary addresslist_button" id="address_insert_btn" ><i class="bi bi-plus"> 배송지 입력</i></button>
 				<hr>
 				<div class="addresslist_main" id="addresslist_main"></div>
 			</div>
@@ -109,8 +109,8 @@
 
 
      		    <div class="d-grid gap-2 address_save">
-					<button class="btn btn-primary" data-bs-dismiss="modal" id="modal_address_insert">저장</button>
-					<button class="btn btn-primary" data-bs-dismiss="modal" id="modal_address_update">수정</button>				
+					<button class="btn btn-primary" id="address_insert_modal_btn">저장</button>
+					<button class="btn btn-primary" id="address_update_modal_btn">수정</button>				
 				</div>	
      		    
      		    

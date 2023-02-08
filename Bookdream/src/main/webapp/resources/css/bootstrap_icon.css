@@ -81,3 +81,9 @@
     --bs-bg-opacity: 1;
     --bs-primary-rgb: 103,104,171;
 }
+
+.page-link {
+    --bs-pagination-hover-color: #5c5d99;
+	--bs-pagination-color: #5c5d99;
+    --bs-pagination-active-bg: #5c5d99;
+}

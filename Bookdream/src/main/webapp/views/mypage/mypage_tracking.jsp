@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>    
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+   
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,14 +58,142 @@
 					</table>
 				</div>
 			</div>
-			<hr class="trackinglist_table_hr">
+			
+			<!-- <hr class="trackinglist_table_hr">  -->
 
 
 			
 			<div class="trackinglist" id="trackinglist">
 
-			</div>
+				<c:forEach items="${orderlist}" var="order" varStatus="i">
+				 
+					<table class="trackinglist_table">
+						<tr>
+							<th class="trackinglist_table_th1" colspan="3">
+								<span class="trackinglist_table_title">
+								<fmt:formatDate value="${order.order_date}" pattern="YY. MM. dd / HH:mm"/> (${order.order_no})</span>
+								<br>
+								<button type="button" class="btn btn-link trackinglist_table_detail_btn" 
+										data-bs-toggle="modal" data-bs-target="#exampleModal" value="${order.order_no}">
+										상세 조회<i class="bi bi-chevron-right"></i>
+								</button>
+							</th>	
+							
+							<th class="trackinglist_table_th2" >
+								
+							<c:choose>
+								<c:when test="${order.order_status == 0}">
+									<button type="button" class="btn btn-primary pay_cencel cencel_btn" 
+									 		data-bs-toggle="modal" data-bs-target="#pay_cencel" 
+									 		value="${order.order_no}">결제취소</button>									
+								</c:when>
+								
+								<c:when test="${order.order_status == 2}">
+									<button type="button" class="btn btn-primary return_request cencel_btn" 
+											data-bs-toggle="modal" data-bs-target="#return_reqeust" 
+											value="${order.order_no}">반품신청</button>									
+								</c:when>								
+								
+								<c:otherwise>
+								</c:otherwise>
+							</c:choose>
+
+							</th>
+						</tr>	
+								
+						<tr>
+							<td class="trackinglist_table_col1">
+								<img class="trackinglist_table_img" alt="img" src="${order.bookVO.book_img}">
+							</td>						
+							<td class="trackinglist_table_col2">${order.order_name}</td>						
+							<td class="trackinglist_table_col3">
+								<fmt:formatNumber value="${order.payVO.final_price}" pattern="###,###"/> 원
+							</td>						
 					
+							<c:if test="${order.order_status == 0}">
+							<c:set value="결제 완료" var="status"/>
+								<td class="trackinglist_table_col4" id="order_status_text${order.order_no}">
+									${status}
+								</td>													
+							</c:if>
+							
+							<c:if test="${order.order_status == 1}">
+							<c:set value="배송 중" var="status"/>
+								<td class="trackinglist_table_col4" id="order_status_text${order.order_no}">
+								
+									${status}
+								</td>													
+							</c:if>
+							
+							<c:if test="${order.order_status == 2}">
+							<c:set value="배송 완료" var="status"/>
+								<td class="trackinglist_table_col4" id="order_status_text${order.order_no}">
+									${status}
+								</td>
+							</c:if>
+							
+							<c:if test="${order.order_status == 10}">
+							<c:set value="결제 취소" var="status"/>
+								<td class="trackinglist_table_col4" id="order_status_text${order.order_no}" style="color: red">							
+
+									${status}
+								</td>													
+							</c:if>
+
+							<c:if test="${order.order_status == 11}">
+							<c:set value="반품 신청 중" var="status"/>
+								<td class="trackinglist_table_col4" id="order_status_text${order.order_no}" style="color: blue">							
+
+									${status}
+								</td>													
+							</c:if>
+							
+							<c:if test="${order.order_status == 12}">
+							<c:set value="반품 완료" var="status"/>
+								<td class="trackinglist_table_col4" id="order_status_text${order.order_no}" style="color: blue">	
+									${status}
+								</td>													
+							</c:if>
+
+						</tr>
+						
+					</table>
+				</c:forEach>
+				
+			<!-- <hr class="trackinglist_table_hr">  -->							
+
+			</div>
+
+			<!-- ****************************** 페이징 처리 ****************************** -->
+
+			<div class="text-center">
+				<ul class="pagination justify-content-center">
+				
+					<c:if test="${pageMaker.prev}">
+						<li class="page-item paginate_button previous">
+							<a class="page-link" href="tracking?p=${pageMaker.startPage -1}">Previous</a>
+						</li>
+					</c:if>
+										
+					<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num" >
+					
+						<c:set var="active" value="${pageMaker.cri.pageNum == num ? 'active' : ''}" />
+						
+							<li class="page-item paginate_button ${active}" >								
+							<a class="page-link" href="tracking?p=${num}" >${num}</a>
+							</li>
+
+					</c:forEach>
+					
+					<c:if test="${pageMaker.next}">
+						<li class="page-item paginate_button next">
+							<a class="page-link" href="tracking?p=${pageMaker.endPage +1 }">Next</a>
+						</li>
+					</c:if>
+					
+				</ul>
+			</div>
+		
 		</div>	
 
 
@@ -81,8 +212,10 @@
       			<div class="modal-body">
  					결제취소를 하시겠습니까?
       			</div>
-      			<input type="hidden" id="pay_cencel_order_no">
-      			<button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="modal_pay_cencel">결제취소</button>         			
+      			
+      			<div class="modal-footer">
+  					<button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="modal_pay_cencel">결제취소</button>         			
+      			</div>			
     		</div>
   		</div>
 	</div>
@@ -99,8 +232,10 @@
       			<div class="modal-body">
  					반품요청을 하시겠습니까?
       			</div>
-      			<input type="hidden" id="return_request_order_no">
-      			<button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="modal_return_request">반품신청</button>         			
+      			
+      			<div class="modal-footer">
+      				<button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="modal_return_request">반품신청</button>         			
+    			</div>
     		</div>
   		</div>
 	</div>
