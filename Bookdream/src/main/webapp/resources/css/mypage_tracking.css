@@ -23,6 +23,9 @@
 	background-color: #d1d1e5;
 }
 
+
+
+/***************************** 주문내역 카운터 *****************************/
 .main_tracking {
 	height: auto;
 	min-height: 1000px;
@@ -39,14 +42,28 @@
 
 .tracking_title {
 	height: 100px;
-	padding: 30px;
+	padding: 30px 0px 30px 30px;
 	vertical-align: middle;
 	margin-top: 30px;
 	font-weight:bold;
 	font-size: 20px;
 }
 
-.tracking_main {
+.order_search_title {
+	font-weight: normal;
+	float: right;
+	font-size: 12px;
+}
+
+.order_search_btn {
+	
+	margin-left: 20px;
+	font-weight: bold;
+	font-size: 14px;
+	
+}
+
+.tracking_history {
 	vertical-align:middle;
 	height: 200px;
 	margin-bottom: 20px;
@@ -57,25 +74,73 @@
 	width:100%;
 	height:100px;
 	background-color: #f7f7f7; 
-	border-radius: 20px;
 }
 
 .tracking_main_table_col1, .tracking_main_table_col2, .tracking_main_table_col3, .tracking_main_table_col4, .tracking_main_table_col5 {
 	width: 310px;
-	text-align: center;
+	padding: 0px 30px;
+	font-size: 12px;
 	vertical-align: middle;
+}
+
+.tracking_main_table_col1 {
+	font-weight: bold;
+	font-size: 16px;	
+}
+.order_count {
+	color: #3d3e66;
+	font-size: 22px;
+	font-weight: 900;
 }
 
 .pay_cencel, .return_request {
 	font-size: 10px;
-	color: blue;
 	text-decoration-line: none; 
 }
+
 
 .modal_pay_cencel {
 	height: 300px;
 	padding: 0px 20px;
 }
+
+/***************************** offcanvas *****************************/
+.offcanvas {
+	padding: 0px 20px;
+}
+
+
+.offcanvas_text {
+	margin-bottom: 20px;
+	padding:10px;
+	font-size: 12px;
+	background-color: #f7f7f7; 
+}
+
+.order_search_select_label, .order_status_select_label {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.order_status_select, .order_search_select {
+	line-height:150%;
+	font-size: 14px;
+	margin: 5px 0px 30px 0px;
+}
+
+.order_search_reset_btn, .order_search_view_btn {
+	width: 100px;
+	height: 40px;
+	margin-top: 20px;
+
+}
+
+.order_search_reset_btn {
+	margin-left: 50px;
+}
+
+
+/***************************** 주문내역 리스트 *****************************/
 
 .trackinglist {
 	height: auto;
@@ -114,9 +179,7 @@
 	border-bottom: 1px solid #DFDFDF;	
 }
 
-.pay_cencel, .return_request {
-	color: white;
-}
+
 
 .trackinglist_table_title {
 	color : #5c5d99;

@@ -39,132 +39,200 @@
 	<jsp:include page="/views/inc/header.jsp" />	
 		
 	<div class="main">
+	
 		<div class="side"></div>
 	
 		<div class="main_tracking">
 			
 			<div class="tracking">
 
-				<div class="tracking_main">
-					<div class="tracking_title">주문 / 배송 목록</div>
+				<div class="tracking_history">
+					<div class="tracking_title">
+						주문 / 배송 목록 
+						<span class="order_search_title">최근 1개월 주문내역 입니다.
+							<button type="button" class="btn btn-outline-secondary order_search_btn" id="order_search_btn">
+							<i class="bi bi-calendar"></i> 상세조회</button>
+						</span>
+					</div>
+	
+					
+					<!-- 오프캔버스.... 뭐가좋을려나.. -->
+					<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasRightLabel">
+					  <div class="offcanvas-header">
+					    <h5 class="offcanvas-title" id="offcanvasRightLabel">상세조회</h5>
+					    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+					  </div>
+					  <div class="offcanvas-body">
+					  		<div class="offcanvas_text">
+					   			조회기간 설정은 6개월 단위이며, 주문정보 조회는 5년까지 가능합니다.
+								필터 이용 시 선택한 주문정보만 조회 가능합니다.					  	
+					  		</div>
+			
+							<div>
+								<label class="form-check-label order_search_select_label" for="order_search_select_btn">기간조회</label>
+								<select class="form-select order_search_select" aria-label="Default select example" id="order_search_select_btn">
+								  <option selected value="30">최근 1개월</option>
+								  <option value="60">최근 2개월</option>
+								  <option value="90">최근 3개월</option>
+								  <option value="180">최근 6개월</option>
+								</select>
+
+							</div>
+							
+							<div>
+								<label class="form-check-label order_status_select_label" for="order_status_select_btn">주문배송 상태</label>
+									<select class="form-select order_status_select" aria-label="Default select example" id="order_status_select_btn">
+									  <option selected value="100">전체</option>
+									  <option value="0">결제완료</option>
+									  <option value="1">배송중</option>
+									  <option value="2">배송완료</option>
+									  <option value="10">결제취소</option>
+									  <option value="11">반품요청</option>
+									  <option value="12">반품완료</option>
+									</select>
+
+							</div>							
+							
+							<div>
+								<button type="button" class="btn btn-outline-secondary order_search_reset_btn" id="order_search_reset_btn">초기화</button>							
+								<button type="button" class="btn btn-primary order_search_view_btn" id="order_search_view_btn">적용</button>
+							</div>
+							
+					  </div>
+					</div>
+							
+	
+	
+	
+	
+					
 					<table class="tracking_main_table">
 						<tr>
 							<td class="tracking_main_table_col1">주문내역</td>
-							<td class="tracking_main_table_col2">결제완료<br><span id="tracking_main_table_col2"></span></td>
-							<td class="tracking_main_table_col3">배송중<br><span id="tracking_main_table_col3"></span></td>
-							<td class="tracking_main_table_col4">배송완료<br><span id="tracking_main_table_col4"></span></td>
-							<td class="tracking_main_table_col5">반품/취소<br><span id="tracking_main_table_col5"></span></td>
+							<td class="tracking_main_table_col2"><span class="order_count" id="order_count0">0</span><br><p class="">결제완료</p></td>
+							<td class="tracking_main_table_col3"><span class="order_count" id="order_count1">0</span><br><p class="">배송중</p></td>
+							<td class="tracking_main_table_col4"><span class="order_count" id="order_count2">0</span><br><p class="">배송완료</p></td>
+							<td class="tracking_main_table_col5"><span class="order_count" id="order_count10">0</span><br><p>반품/취소</p></td>
 						</tr>
 					</table>
-				</div>
-			</div>
-			
-			<!-- <hr class="trackinglist_table_hr">  -->
-
-
-			
-			<div class="trackinglist" id="trackinglist">
-
-				<c:forEach items="${orderlist}" var="order" varStatus="i">
-				 
-					<table class="trackinglist_table">
-						<tr>
-							<th class="trackinglist_table_th1" colspan="3">
-								<span class="trackinglist_table_title">
-								<fmt:formatDate value="${order.order_date}" pattern="YY. MM. dd / HH:mm"/> (${order.order_no})</span>
-								<br>
-								<button type="button" class="btn btn-link trackinglist_table_detail_btn" 
-										data-bs-toggle="modal" data-bs-target="#exampleModal" value="${order.order_no}">
-										상세 조회<i class="bi bi-chevron-right"></i>
-								</button>
-							</th>	
-							
-							<th class="trackinglist_table_th2" >
-								
-							<c:choose>
-								<c:when test="${order.order_status == 0}">
-									<button type="button" class="btn btn-primary pay_cencel cencel_btn" 
-									 		data-bs-toggle="modal" data-bs-target="#pay_cencel" 
-									 		value="${order.order_no}">결제취소</button>									
-								</c:when>
-								
-								<c:when test="${order.order_status == 2}">
-									<button type="button" class="btn btn-primary return_request cencel_btn" 
-											data-bs-toggle="modal" data-bs-target="#return_reqeust" 
-											value="${order.order_no}">반품신청</button>									
-								</c:when>								
-								
-								<c:otherwise>
-								</c:otherwise>
-							</c:choose>
-
-							</th>
-						</tr>	
-								
-						<tr>
-							<td class="trackinglist_table_col1">
-								<img class="trackinglist_table_img" alt="img" src="${order.bookVO.book_img}">
-							</td>						
-							<td class="trackinglist_table_col2">${order.order_name}</td>						
-							<td class="trackinglist_table_col3">
-								<fmt:formatNumber value="${order.payVO.final_price}" pattern="###,###"/> 원
-							</td>						
+					</div>
+				</div>	
 					
-							<c:if test="${order.order_status == 0}">
-							<c:set value="결제 완료" var="status"/>
-								<td class="trackinglist_table_col4" id="order_status_text${order.order_no}">
-									${status}
-								</td>													
-							</c:if>
-							
-							<c:if test="${order.order_status == 1}">
-							<c:set value="배송 중" var="status"/>
-								<td class="trackinglist_table_col4" id="order_status_text${order.order_no}">
-								
-									${status}
-								</td>													
-							</c:if>
-							
-							<c:if test="${order.order_status == 2}">
-							<c:set value="배송 완료" var="status"/>
-								<td class="trackinglist_table_col4" id="order_status_text${order.order_no}">
-									${status}
-								</td>
-							</c:if>
-							
-							<c:if test="${order.order_status == 10}">
-							<c:set value="결제 취소" var="status"/>
-								<td class="trackinglist_table_col4" id="order_status_text${order.order_no}" style="color: red">							
 
-									${status}
-								</td>													
-							</c:if>
-
-							<c:if test="${order.order_status == 11}">
-							<c:set value="반품 신청 중" var="status"/>
-								<td class="trackinglist_table_col4" id="order_status_text${order.order_no}" style="color: blue">							
-
-									${status}
-								</td>													
-							</c:if>
-							
-							<c:if test="${order.order_status == 12}">
-							<c:set value="반품 완료" var="status"/>
-								<td class="trackinglist_table_col4" id="order_status_text${order.order_no}" style="color: blue">	
-									${status}
-								</td>													
-							</c:if>
-
-						</tr>
 						
-					</table>
+				<div class="trackinglist" id="trackinglist">
+
+					<div class="text-center" style="margin-top: 100px">
+					  <div class="spinner-border text-secondary"  style="width: 3rem; height: 3rem;" role="status">
+					    <span class="visually-hidden">Loading...</span>
+					  </div>
+					</div>
+
+
+				<!--  	
+					<c:forEach items="${orderlist}" var="order" varStatus="i">
+					 
+						<table class="trackinglist_table">
+						
+							<tr>
+								<th class="trackinglist_table_th1" colspan="3">
+									<span class="trackinglist_table_title">
+									<fmt:formatDate value="${order.order_date}" pattern="YY. MM. dd / HH:mm"/> (${order.order_no})</span>
+									<br>
+									<button type="button" class="btn btn-link trackinglist_table_detail_btn" 
+											data-bs-toggle="modal" data-bs-target="#exampleModal" value="${order.order_no}">
+											상세 조회<i class="bi bi-chevron-right"></i>
+									</button>
+								</th>	
+								
+								<th class="trackinglist_table_th2" >
+									
+								<c:choose>
+									<c:when test="${order.order_status == 0}">
+										<button type="button" class="btn btn-primary pay_cencel cencel_btn" 
+										 		data-bs-toggle="modal" data-bs-target="#pay_cencel" 
+										 		value="${order.order_no}">결제취소</button>									
+									</c:when>
+									
+									<c:when test="${order.order_status == 2}">
+										<button type="button" class="btn btn-primary return_request cencel_btn" 
+												data-bs-toggle="modal" data-bs-target="#return_reqeust" 
+												value="${order.order_no}">반품신청</button>									
+									</c:when>								
+									
+									<c:otherwise>
+									</c:otherwise>
+								</c:choose>
+	
+								</th>
+							</tr>	
+									
+							<tr>
+								<td class="trackinglist_table_col1">
+									<img class="trackinglist_table_img" alt="img" src="${order.bookVO.book_img}">
+								</td>						
+								<td class="trackinglist_table_col2">${order.order_name}</td>						
+								<td class="trackinglist_table_col3">
+									<fmt:formatNumber value="${order.payVO.final_price}" pattern="###,###"/> 원
+								</td>						
+						
+								<c:if test="${order.order_status == 0}">
+								<c:set value="결제 완료" var="status"/>
+									<td class="trackinglist_table_col4" id="order_status_text${order.order_no}">
+										${status}
+									</td>													
+								</c:if>
+								
+								<c:if test="${order.order_status == 1}">
+								<c:set value="배송 중" var="status"/>
+									<td class="trackinglist_table_col4" id="order_status_text${order.order_no}">
+									
+										${status}
+									</td>													
+								</c:if>
+								
+								<c:if test="${order.order_status == 2}">
+								<c:set value="배송 완료" var="status"/>
+									<td class="trackinglist_table_col4" id="order_status_text${order.order_no}">
+										${status}
+									</td>
+								</c:if>
+								
+								<c:if test="${order.order_status == 10}">
+								<c:set value="결제 취소" var="status"/>
+									<td class="trackinglist_table_col4" id="order_status_text${order.order_no}" style="color: red">							
+	
+										${status}
+									</td>													
+								</c:if>
+	
+								<c:if test="${order.order_status == 11}">
+								<c:set value="반품 신청 중" var="status"/>
+									<td class="trackinglist_table_col4" id="order_status_text${order.order_no}" style="color: blue">							
+	
+										${status}
+									</td>													
+								</c:if>
+								
+								<c:if test="${order.order_status == 12}">
+								<c:set value="반품 완료" var="status"/>
+									<td class="trackinglist_table_col4" id="order_status_text${order.order_no}" style="color: blue">	
+										${status}
+									</td>													
+								</c:if>
+	
+							</tr>
+							
+						</table>
 				</c:forEach>
-				
-			<!-- <hr class="trackinglist_table_hr">  -->							
+			-->				
+									
 
 			</div>
 
-			<!-- ****************************** 페이징 처리 ****************************** -->
+
+				
+			<!-- ****************************** 페이징 처리 ****************************** 
 
 			<div class="text-center">
 				<ul class="pagination justify-content-center">
@@ -193,6 +261,8 @@
 					
 				</ul>
 			</div>
+			
+			-->
 		
 		</div>	
 
@@ -241,7 +311,7 @@
 	</div>
 
 
-<!----------------------------------------- Modal -------------------------------------->
+<!----------------------------------------- 상세조회 모달 -------------------------------------->
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   		<div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
    			<div class="modal-content tracking_detail">

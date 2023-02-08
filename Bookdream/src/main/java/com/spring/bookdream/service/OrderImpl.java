@@ -1,6 +1,7 @@
 package com.spring.bookdream.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,9 +25,9 @@ public class OrderImpl implements OrderService {
 
 	// 
 	@Override
-	public List<OrderVO> searchOrder(SearchCriteria cir) {
+	public List<OrderVO> searchOrder(OrderVO vo) {
 
-		return orderDAO.searchOrder(cir);
+		return orderDAO.searchOrder(vo);
 	}
 
 	@Override
@@ -55,9 +56,9 @@ public class OrderImpl implements OrderService {
 	}
 
 	@Override
-	public OrderVO orderCount(OrderVO vo) {
+	public List<Map<String, Object>> orderStatusCount(OrderVO vo) {
 
-		return orderDAO.orderCount(vo);
+		return orderDAO.orderStatusCount(vo);
 	}	
 
 }

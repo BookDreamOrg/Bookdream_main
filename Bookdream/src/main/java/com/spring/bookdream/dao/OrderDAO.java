@@ -1,6 +1,7 @@
 package com.spring.bookdream.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +24,10 @@ public class OrderDAO {
 	}
 
 	// 주문 조회
-	public List<OrderVO> searchOrder(SearchCriteria cir) {
+	public List<OrderVO> searchOrder(OrderVO vo) {
 		
 		System.out.println("---> OrderDAO searchOrder 실행 <---");
-		return mybatis.selectList("OrderDAO.searchOrder", cir);	
+		return mybatis.selectList("OrderDAO.searchOrder", vo);	
 		
 	}
 
@@ -70,11 +71,11 @@ public class OrderDAO {
 	}	
 	
 	// 주문 개수 확인
-	public OrderVO orderCount(OrderVO vo) {
+	public List<Map<String, Object>> orderStatusCount(OrderVO vo) {
 		
 		System.out.println("---> OrderDAO orderCount 실행 <---");
 		
-		return mybatis.selectOne("OrderDAO.orderCount", vo);	
+		return mybatis.selectList("OrderDAO.orderStatusCount", vo);	
 		
 	}		
 }

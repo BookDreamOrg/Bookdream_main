@@ -87,3 +87,23 @@
 	--bs-pagination-color: #5c5d99;
     --bs-pagination-active-bg: #5c5d99;
 }
+
+.text-secondary {
+   	--bs-secondary-rgb: 103,104,171;
+}
+
+
+
+.form-select {
+	
+}
+
+.form-select:focus {
+
+	
+}
+
+.form-select:hover {
+
+
+}

@@ -22,10 +22,14 @@ public class OrderVO {
 	private int order_status;
 	
 	// 페이징 처리용
-	private int order_count;
+	private int status_count;
     private int pageNum;
 	private int amount;	
 	
+	// 마이페이지 조회용
+	private int search_date;
+	private int search_status;
+		
 	// JOIN
 	private PurchaseVO purchaseVO;
 	private BookVO bookVO;
