@@ -78,7 +78,7 @@
                        y.pay_no = o.order_no   AND
                        o.user_no = #{user_no}
                 )
-        where rn = 1         
+        WHERE rn = 1         
 		order by order_no desc
 	</select>	
 		
@@ -119,6 +119,7 @@
                		   ) 
 		
 	</update>	
+	
 	<!-- 포인트 반환 -->	
 	<update id="updateUserPoint">
 		UPDATE users u
@@ -138,21 +139,22 @@
 	
 	</update>	
 
+	<!-- 주문조회시 결제날짜와 현재날짜를 계산해서 갱신함 -->
 	<update id="trackingUpdate">		
 		<![CDATA[	
 		UPDATE orders
-		SET order_status = 1
-		WHERE order_date + 1 < sysdate AND
-      		  order_status = 0
+		SET    order_status = 1
+		WHERE  order_date + 1 < sysdate AND
+      		   order_status = 0
       	]]>	  
 	</update>
 		
 	<update id="trackingUpdate2">		
 		<![CDATA[	
 		UPDATE orders
-		SET order_status = 2
-		WHERE order_date + 2 < sysdate AND
-      		  order_status = 1
+		SET    order_status = 2
+		WHERE  order_date + 2 < sysdate AND
+      		   order_status = 1
       	]]>	  
 	</update>
 			

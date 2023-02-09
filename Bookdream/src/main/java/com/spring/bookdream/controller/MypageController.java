@@ -35,7 +35,9 @@ public class MypageController {
 	private PurchaseService purchaseService;	
 	
 	@Autowired
-	private HttpSession session;	
+	private HttpSession session;
+
+	private Object UserVO;	
 	
 	// 마이페이지 (배송조회)
 	@RequestMapping(value="/tracking")
@@ -144,7 +146,31 @@ public class MypageController {
 		System.out.println(name);
 		userService.updateUser(userVO);
 		
-		return "/main/mypage";
+		return "/mypage/mypage";
+	}
+	
+	// 회원탈퇴
+	@RequestMapping(value="/deleteUser")
+	@ResponseBody
+	public String deleteUser(@RequestParam(value="id") String id,
+			 				 @RequestParam(value="password") String password) throws Exception {
+		
+		System.out.println("회원탈퇴 중...");
+		if(password.equals("")) {
+			return "error";
+		}
+		
+		UserVO userVO = (UserVO)session.getAttribute("authUser");
+		String sessionPassword = userVO.getUser_password();
+		System.out.println("password check...");
+		
+		if(!sessionPassword.equals(password)) {
+			return("password_error");
+		} 		
+		userService.deleteUser(userVO);
+		session.invalidate();
+		return "/views/main/main_teset.jsp";
+		
 	}
 	
 }

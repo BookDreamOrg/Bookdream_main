@@ -7,8 +7,13 @@
 	<resultMap type="cart" id="cartList">
 		<id property="cart_no" column="CART_NO" />
 		<result property="user_no" column="USER_NO" />	
-		<result property="book_no" column="BOOK_NO" />	
+		<result property="book_no" column="BOOK_NO" />
 		<result property="product_count" column="PRODUCT_COUNT" />	
+		
+		<result property="listCount" column="LISTCOUNT" />	
+		
+		<result property="num" column="NUM" />
+				
 		<collection property="userVO" resultMap="userList"></collection>
 		<collection property="bookVO" resultMap="bookList"></collection>
 	</resultMap>	
@@ -25,22 +30,56 @@
 		<result property="book_img" column="BOOK_IMG" />		
 		<result property="stock" column="STOCK" />	
 	</resultMap>
-
-	<select id="getCartList" parameterType="cart" resultMap="cartList">
-		SELECT c.cart_no, u.user_no, b.book_img, b.title, b.book_price, c.product_count, b.stock
-		FROM cart c, users u, book b
-		WHERE c.book_no = b.book_no AND u.user_no = c.user_no AND c.user_no = 1
-		order by cart_no
+	
+	<!-- 장바구니 목록 조회 -->
+	<select id="getCartList" parameterType="cart" resultMap="cartList">		
+		SELECT  row_number() over(order by C.cart_no desc) as num,
+        		C.cart_no, C.user_no, C.product_count, B.book_no, B.book_img, B.title, B.book_price, B.stock 
+		FROM 	CART C
+		        INNER JOIN BOOK B
+		        ON C.book_no = B.book_no   
+		WHERE 	C.user_no = #{user_no}
 	</select>
 	
+	<!-- 장바구니 리스트 갯수  	-->
+	<select id="selectListCount" resultType="integer">
+		SELECT count(*) 
+		FROM   CART 
+		WHERE  user_no = #{user_no}
+	</select>
 	
+	<!-- 장바구니 추가 -->
+	<insert id="addCart">
+		INSERT into CART(cart_no, user_no , book_no , product_count)
+		values( CART_SEQ.nextval,  
+				#{user_no}, 
+				#{book_no}, 
+				#{product_count} ) 
+	</insert>
+	<!-- sequence적용 cart inert 예시
+	DROP sequence CART_SEQ;
+	CREATE sequence CART_SEQ increment by 1;
+	insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) 
+	values(CART_SEQ.nextval, 1, 8, 6);
+	 -->
+	 
+	<!-- 장바구니 삭제 -->
 	<delete id="deleteCart">
-		DELETE
-		FROM ( select u.USER_no, CART_NO
-        	   from USERS U, BOOK B, CART C
-        	   where U.USER_NO = C.USER_NO  AND B.BOOK_NO = C.BOOK_NO)
-	    WHERE cart_no = #{cart_no} AND user_no = 1
-	</delete>	
+		DELETE 	CART
+	    WHERE 	cart_no = #{cart_no} 
+	    AND 	user_no = #{user_no}
+	</delete>
+
+	<!-- 장바구니 수량 수정  
+	<update  id="modifyCount">
+		UPDATE 	CART 
+		SET 	product_count = #{product_count} 
+		WHERE	cart_no = #{cart_no} AND user_no = #{user_no}
+	</update>
+	-->
+	
+	
+	
 </mapper>
 
 
