@@ -25,5 +25,12 @@ public class PayDAO {
 
 		return mybatis.selectOne("PayDAO.searchPay", vo);	
 	}
+	
+	public PayVO lastPayment(PayVO vo) {
+		
+		System.out.println("---> PayDAO lastPayment 실행 <---");
+
+		return mybatis.selectOne("PayDAO.lastPayment", vo);	
+	}	
 
 }

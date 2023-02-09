@@ -9,6 +9,7 @@ public interface PayService {
 	
 	PayVO searchPay(PayVO vo);
 
-
+	// 마지막 결제수단 찾기
+	PayVO lastPayment(PayVO vo);
 	
 }

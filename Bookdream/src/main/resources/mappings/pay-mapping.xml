@@ -7,6 +7,8 @@
 	<resultMap type="pay" id="payList">
 		<result property="pay_no" column="PAY_NO" />
 		<result property="pay_date" column="PAY_DATE" />
+		<result property="pay_method" column="PAY_METHOD" />
+		<result property="user_no" column="USER_NO" />			
 	</resultMap>
 
 	<insert id="insertPay" >
@@ -40,6 +42,21 @@
         WHERE  rownum = 1
      ]]>
 	</select>
+
+	<select id="lastPayment" resultMap="payList">
+		SELECT y.pay_method, 
+		       y.pay_no
+		FROM   pay y, 
+		       orders o
+		WHERE  o.user_no = ${user_no} AND
+		       o.order_no = y.pay_no AND
+		       rownum = 1
+		order by pay_no desc		
+	</select>
+
+
+
+
 
 	
 </mapper>

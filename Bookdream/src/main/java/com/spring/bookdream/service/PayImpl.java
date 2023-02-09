@@ -26,4 +26,10 @@ public class PayImpl implements PayService {
 		return payDAO.searchPay(vo);
 	}
 
+	@Override
+	public PayVO lastPayment(PayVO vo) {
+		
+		return payDAO.lastPayment(vo);
+	}
+
 }

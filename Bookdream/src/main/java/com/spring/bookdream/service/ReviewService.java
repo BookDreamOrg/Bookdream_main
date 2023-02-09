@@ -1,6 +1,9 @@
  package com.spring.bookdream.service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+
 
 import com.spring.bookdream.vo.ReviewVO;
 
@@ -24,4 +27,10 @@ public interface ReviewService {
 	
 	//등록된 리뷰가 있는지 확인
 	int existReview(int book_no,String user_id);
+	
+	//리뷰 평균 평점
+	double avgReview(int book_no);
+	
+	//별점 별 갯수
+	List<HashMap<Integer, Integer>> progressStar(int book_no);
 }
