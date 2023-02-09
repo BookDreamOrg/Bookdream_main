@@ -21,7 +21,7 @@
 	
 		if(user == null){		
 	%>
-		<div class="wrapper">
+		<div class="wrapper"> 
 		<header>
 			<div class="header-nav-list">
 				<ul class="nav header-nav">
