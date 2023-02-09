@@ -84,7 +84,7 @@
                </a>
             </div>
             <form action="/bookListSearchByKeyword" method="get">
-            <div class="col-lg-6 p-2 ms-5 header-col-search input-group">
+            <div class="col-lg-6 p-2 header-col-search input-group">
                <div class="input-group mb-2 col-search">
                   <button
                      class="btn btn-outline-secondary dropdown-toggle search-toggle"
@@ -159,7 +159,7 @@
                </a>
             </div>
             
-            <div class="col-lg-1 p-5 flex-grow-1 header-col-btn">
+            <div class="col-lg-1 flex-grow-1 header-col-btn">
 <!--  cart btn -------------------------- -->
                <button type="button" class="header-btn btn position-relative p-1" 
                         onclick="location.href='/itemorder/cart/list'">
@@ -180,7 +180,7 @@
          </div>
             
             <form action="/bookListSearchByKeyword" method="get">
-            <div class="col-lg-6 p-2 ms-5 header-col-search input-group">
+            <div class="col-lg-6 p-2 mb-2 header-col-search input-group">
                <div class="input-group mb-2 col-search">
                   <button
                      class="btn btn-outline-secondary dropdown-toggle search-toggle"
