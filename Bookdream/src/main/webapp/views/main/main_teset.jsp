@@ -21,9 +21,7 @@
 </head> 
 <body>
 	
-
 		<jsp:include page="/views/inc/header.jsp" />
-		
 		<main>
 		<div class="banner">
 			<div class="banner-text">Banner Title Text</div>
