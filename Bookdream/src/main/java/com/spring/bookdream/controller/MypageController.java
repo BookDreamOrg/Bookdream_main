@@ -2,6 +2,7 @@ package com.spring.bookdream.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -176,7 +177,7 @@ public class MypageController {
 		} 		
 		userService.deleteUser(userVO);
 		session.invalidate();
-		return "/views/main/main_teset.jsp";
+		return "/views/main/main.jsp";
 		
 	}
 	

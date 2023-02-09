@@ -177,7 +177,8 @@
 		
 	<script>
 		function unregisterCheck() {
-
+			const checkbox = document.getElementById('unregister_agree').checked;
+			console.log(checkbox);
 		}
 		function deleteUser() {
 			const id = $('#unregister_id').val();

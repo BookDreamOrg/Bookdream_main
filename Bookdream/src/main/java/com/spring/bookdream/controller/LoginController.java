@@ -79,14 +79,14 @@ public class LoginController {
 			
 			session.setAttribute("authUser", userInfo);
 			
-		return "/main/main_teset";
+		return "/main/main";
 		
     	}
 	
 	@RequestMapping(value="/kakaoLogout", method=RequestMethod.GET)
 	public String kakaoLogout() {
 		session.invalidate();
-		return "/main/main_teset";
+		return "/main/main";
 	}
 
 
