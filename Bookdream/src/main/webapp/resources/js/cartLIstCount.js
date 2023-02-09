@@ -1,8 +1,6 @@
 /* ------------------ ${cartListCount} 가져오기 ------------------ */
  $(function(){ 
-	//let user_no = $("#user_no").val();
-	let user_no = <%= (int)session.getAttribute("user_no") %>;
-	
+	//let user_no = <%= (int)session.getAttribute("user_no") %>;
 	console.log(user_no)
 	
 	$.ajax({

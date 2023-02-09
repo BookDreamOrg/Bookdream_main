@@ -34,8 +34,14 @@
 <!-- jQuery -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
+<!--  맨위 자동 검색시 필요 (페이지마다 다 넣어줘야 함?)-->
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+ 
 </head>
 <body>
+
+	<div class="wrapper">
 	
 	<jsp:include page="/views/inc/header.jsp" />	
 	
@@ -120,6 +126,7 @@
 	
 		
 	<jsp:include page="/views/inc/footer.jsp" />
+	
 	</div>
 	
 	
@@ -133,9 +140,14 @@
 	<script src="https://kit.fontawesome.com/4bf42f841a.js" crossorigin="anonymous"></script>	
 
 	
+	   <!-- 아래 자동 검색시 필요 (페이지마다 다 넣어줘야 함?)-->
+   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-
-
+   <script>
+   		let user_no = <%= (int)session.getAttribute("user_no") %>;
+   		<%@include file="/resources/js/cartLIstCount.js"%>
+   </script>
 
 </body>
 </html>
