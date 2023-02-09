@@ -20,6 +20,7 @@ public class QnADAO {
 	
 	//나의 문의 목록 리스트
 	public List<QnAVO> getMyQnAList(QnAVO qnaVO){
+		System.out.println("MyList");
 		return mybatis.selectList("QnADAO.getMyQnAList", qnaVO);
 	}
 	

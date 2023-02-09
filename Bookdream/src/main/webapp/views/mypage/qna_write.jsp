@@ -16,7 +16,7 @@
 	href="/resources/images/favicon/favicon-16x16.png" />
 <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
 <link rel="stylesheet" href="/resources/css/styles.css" />
-
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <style>
 .side {
 	position: relative;
@@ -99,8 +99,8 @@
 										<div class="col_box">
 											<input class="form-control" type="text" id="qna_title"
 												name="qna_title" placeholder="제목을 입력해주세요"> <input
-												class="form-control" type="hidden" id="user_no"
-												name="user_no" value="${authUser.getUser_no() }">
+												class="form-control" type="hidden" id="qna_user_no"
+												name="qna_user_no" value="${authUser.getUser_no() }">
 
 										</div>
 										<div class="col_box">
@@ -167,7 +167,7 @@
 
 	<script type="text/javascript">
 		function qna_btn() {
-			var user_no = $('#user_no').val();
+			var qna_user_no = $('#qna_user_no').val();
 			var qna_type = $('#qna_type').val();
 			var qna_title = $('#qna_title').val();
 			var qna_content = $('#qna_content').val();
@@ -176,7 +176,7 @@
 				type : "POST",
 				url : "/mypage/insertQnA",
 				data : {
-					user_no : user_no,
+					user_no : qna_user_no,
 					qna_type : qna_type,
 					qna_title : qna_title,
 					qna_content : qna_content
@@ -206,5 +206,10 @@
 		;
 	<%@include file="/resources/js/cartLIstCount.js"%>
 	</script>
+
+	<!-- 자동 검색시 필요 (페이지마다 다 넣어줘야 함?)-->
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
 </body>
 </html>
