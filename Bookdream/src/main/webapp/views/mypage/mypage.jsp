@@ -15,7 +15,7 @@
 <link rel="icon" type="image/png" sizes="16x16"
 	href="/resources/images/favicon/favicon-16x16.png" />
 <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
-<link rel="stylesheet" href="/resources/css/screen/unregister.css" />
+<link rel="stylesheet" href="/resources/css/unregister.css" />
 <link rel="stylesheet" href="/resources/css/styles.css" />
 
 <title>Insert title here</title>
@@ -79,16 +79,16 @@
 								</div>
 							</div>
 							<div class="unregister_modal_agree">
-								<input type="checkbox" id="unregister_agree" /> <label
-									for="unregister_agree">해당 내용을
-									모두 확인했으며, 회원탈퇴에 동의합니다.</label>
+								<label for="unregister_agree">
+								<input type="checkbox" id="unregister_agree" onclick ="unregisterCheck()" /> 
+								해당 내용을 모두 확인했으며, 회원탈퇴에 동의합니다.</label>
 							</div>
 						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
 							data-bs-dismiss="modal">닫기</button>
-						<button type="button" class="btn" data-bs-toggle="modal"
+						<button type="button" id="unregister_btn" class="btn btn-primary" data-bs-toggle="modal"
 							data-bs-target="#unregisterCheckModal">
 							회원탈퇴</button>
 					</div>
@@ -153,6 +153,9 @@
 		crossorigin="anonymous"></script>
 		
 	<script>
+	function unregisterCheck() {
+		
+	}
 	function deleteUser() {
 		const id = $('#unregister_id').val();
 		const password = $('#unregister_password').val();
