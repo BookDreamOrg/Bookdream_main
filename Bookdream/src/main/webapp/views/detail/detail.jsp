@@ -3,6 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+
+
+
 <!DOCTYPE html>
 
 <html>
@@ -39,80 +42,7 @@
 %>
 <div class="wrapper"> 
 
-<header>
-			<div class="header-nav-list">
-				<ul class="nav header-nav">
-					<li class="nav-item"><a class="nav-link header-nav-link"
-						aria-current="page" href="#">회원가입</a></li>
-					<span class="nav-bar-line"></span>
-					<li class="nav-item"><a class="nav-link header-nav-link"
-						href="#">로그인</a></li>
-					<span class="nav-bar-line"></span>
-					<li class="nav-item"><a class="nav-link header-nav-link"
-						href="#">고객센터</a></li>
-					<span class="nav-bar-line"></span>
-					<li class="nav-item"><a
-						class="nav-link header-nav-link disabled" href="#" tabindex="-1"
-						aria-disabled="true"> 관리자 </a></li>
-				</ul>
-			</div>
-			<div class="row d-flex header-row">
-				<div class="col-lg-1 p-2 header-col-home mr-2 mb-1">
-					<a href="#"> <img class="header-row-logo ms-4 mb-1"
-						src="/resources/images/logo/logo_white.png" alt="logo_white" /> <img
-						class="header-row-logo_text"
-						src="/resources/images/logo/logo_text.png" alt="logo_text" />
-					</a>
-				</div>
-				<div class="col-lg-6 p-2 ms-5 header-col-search">
-					<div class="input-group mb-2 col-search">
-						<button
-							class="btn btn-outline-secondary dropdown-toggle search-toggle"
-							type="button" data-bs-toggle="dropdown" aria-expanded="false">
-							통합검색</button>
-						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="#">베스트</a></li>
-							<li><a class="dropdown-item" href="#">신상품</a></li>
-						</ul>
-						<input type="text" class="form-control search-input"
-							aria-label="Text input with dropdown button"
-							placeholder="성공적인 프로젝트를 위하여!!👍" />
-					</div>
-				</div>
-				<div class="col-lg-1 p-5 flex-grow-1 header-col-btn">
-					<a href="#">
-						<div class="header-btn">
-							<i class="fa-solid fa-cart-shopping"></i>
-						</div>
-					</a> <a href="#">
-						<div class="header-btn btn-circle ms-3">
-							<i class="fa-solid fa-user"></i>
-						</div>
-					</a>
-				</div>
-			</div>
-			<div class="header-menu mb-1">
-				<div class="btn-circle btn-circle-tint">
-					<i class="fa-solid fa-bars"></i>
-				</div>
-				<ul class="nav header-menu-list">
-					<li class="nav-item">
-						<form action="/getBook" method="get">
-							<button type="submit" name="book_no" value="<%=book_no%>">베스트</button>
-						</form>
-					</li>
-					<div class="dot"></div>
-					<li class="nav-item"><a class="nav-link menu-link" href="#">신상품</a>
-					</li>
-					<div class="dot"></div>
-					<li class="nav-item"><a class="nav-link menu-link" href="#">이벤트</a>
-					</li>
-					<div class="dot"></div>
-					<li class="nav-item"><a class="nav-link menu-link disabled"
-						href="#" tabindex="-1" aria-disabled="true">Disabled</a></li>
-				</ul>
-			</div>
-		</header>
+		<jsp:include page="/views/inc/header.jsp" />
 		
 		<main>
 		<div class="banner">
@@ -168,16 +98,17 @@
 				<div class="col-md-4">
 				</div>
 				<div class="col-md-5" id="detail-price">
+
 				<c:choose>
 					<c:when test="${book.stock > 0 }">
 						<input class=" form-control text-center border-0 " type="number" id="product_cnt" min="1" max="${book.stock}" value="1" >
 						<div class="mt-3 text-center"><fmt:formatNumber value="${book.book_price}" pattern="#,###" />원</div>
+						<div class="mt-5 text-center h5"><a style="color: red;">3만원 이상 무료배송</a></div>
 					</c:when>
 					<c:otherwise>
 						<div class="h1"> 품절  </div>					
 					</c:otherwise>
 				</c:choose>
-				  
 				</div>
 				<div class="col-md-3">
 				</div>
@@ -189,8 +120,8 @@
 		</div>
 		<div class="col-md-10">
 		<i class="bi bi-info-circle"></i>
-			<span id="detail-bookinfo">책 소개</span>
-			<p class="pt-5" id="book_content">
+			<span class="h2" id="detail-bookinfo">책 소개</span>
+			<p class="pt-5 h5" id="book_content">
 			${book.book_content }
 			</p>	
 		</div>
@@ -207,12 +138,13 @@
 				</div>
 				<c:if test="${book.stock > 0 }">
 				<div class="col-md-6 text-end">
-					<button id="btn_buy_now" class="text-center btn btn-outline-dark flex-shrink-0 btn-lg btn-info" onclick="now_buy()">
+					<button id="btn_buy_now" class="text-center btn btn-outline-dark flex-shrink-0 btn-lg" onclick="now_buy()">
 						<i class="bi bi-basket2"></i> 바로구매
 					</button>
-						<button class="text-center btn btn-outline-dark flex-shrink-0  btn-lg me-3 btn-info" onclick="cart()">
+						<button id="btn_cart" class="text-center btn btn-outline-dark flex-shrink-0  btn-lg me-3" onclick="cart()">
 						<i class="bi-cart-fill me-1"></i>장바구니
 					</button>
+					<input id="book_no" type="hidden" value="${book.book_no}">
 				</div>
 				</c:if>
 				</div>
@@ -221,11 +153,66 @@
 				</div>
 				</div>
 				</div>
+
 		
 </main>
 
+
+<div id="reviewList">
 <div id="detail-review">
 
+<!-- 리뷰 평가  -->
+<div class="row mt-5">
+		<div class="col-md-5 text-end">
+		<img class="header-row-logo ms-4"src="/resources/images/logo/logo_white.png" alt="logo_white" />
+		<img class="header-row-logo_text" src="/resources/images/logo/logo_text.png" alt="bookdream" /></div>
+		<div class="col-md-7 h1 text-start mt-2"> 회원이 평가한 리뷰 </div> 
+</div>
+<div class="row mt-5 h3">
+<div class="col-md-6">
+	<c:forEach var="progressStar" items="${progressStar}" varStatus="status">
+			<div class="row mt-2">
+			<div  class="col-md-1"></div>
+			<div class="col-md-4">
+			<!--  -->
+			<c:forEach var="i" begin="1" end="5">
+			<c:choose>
+				<c:when test="${i <= progressStar.key}">
+					💜
+				</c:when>
+				<c:otherwise>
+					🤍
+				</c:otherwise>
+			</c:choose>
+			</c:forEach>
+				
+			</div>
+			<div class="col-md-6 mt-3">
+			<div class="progress">
+				<div class="progress-bar" id="progress" role="progressbar" style="width: ${progressStar.value.PROPORTION}%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">${progressStar.value.PROPORTION}%</div>
+			</div>
+			</div>
+			</div>
+	</c:forEach>
+</div>	
+<div class="col-md-6 align-self-center text-center" >
+	<div id="img_text" class="pt-3 pl-3 mt-3 align-self-center text-center">
+		<p class="mb-5 fw-bold text" >⭐ 평균 별점</p>
+		<span class="h1 fw-bold">  ${avgStar} </span> /  <small class="text-muted">  5.0 </small>
+	</div>
+	<div id="book_img">
+		<img src="/resources/image/detail/book-805405.svg" alt="book_img">
+	</div>
+	
+</div>
+
+
+</div>				
+</div>				
+
+
+
+<!-- 리뷰 등록 창 -->
 <div class="mt-5">
 	<h3 class="mb-3"><i class="bi bi-book"></i> 리뷰</h3>
 	<select id="REVIEW_STAR"> 
@@ -240,7 +227,7 @@
 	<button class="text-center btn btn-outline-dark flex-shrink-0" name="btn_review" id="btn_review">등록</button>
 </div>
 
-<div id="reviewList">
+<div>
 <c:if test="${empty review}"  >
 		<div class="text-center mt-5"> 작성된 리뷰가 없습니다. </div>
 	</c:if>
@@ -253,7 +240,7 @@
 						<div class="col-md-4">
 						<i class="bi bi-person-circle fs-2"></i>
 						   ID : ${review.user_id} <br>
-						   <fmt:formatDate value="${review.review_date}" pattern="YYYY년 MM월 DD일" type="date"/> 
+						   등록 날짜 : <fmt:formatDate value="${review.review_date}" pattern="yyyy년 MM월 dd일" type="date"/> 
 						</div>
 						<div class="col-md-4">
 						</div>
@@ -285,12 +272,13 @@
 						<button id="btn_recommend" value="${review.review_no }"  onclick="review_recommend(this.value)" class="text-center btn btn-outline-dark flex-shrink-0 btn-xs" > <i class="bi bi-hand-thumbs-up"> </i> 추천하기 </button>
 					
 			</div>
+			<hr class="my-2">
 		</div>
 
 </c:forEach>
 	</div>
 	</div>
-
+	
 <!--------------------------------- 리뷰 수정 모달  -------------------------------->	
 <div class="modal" tabindex="-1" id="my-modal">
   <div class="modal-dialog modal-dialog-centered">
@@ -309,78 +297,15 @@
     </div>
   </div>
 </div>
+
 	
 <!-- ---------------------------------- 푸터  --------------------------------- -->	
-	<footer>
-			<div>
-				<a class="footer-logo" href="#"> <img class="footer-logo-img"
-					src="/resources/images/logo/logo_white.png" alt="logo_white" /> <img
-					class="footer-logo-text"
-					src="/resources/images/logo/logo_text--white.png"
-					alt="logo_text--white" />
-				</a>
-			</div>
-			<div class="footer-section">
-				<div class="footer-profile-box">
-					<div class="footer-profile">
-						<div class="profile-github">
-							<a href="#"> <i class="fa-brands fa-github fa-xl"></i>
-							</a>
-						</div>
-						<div class="profile-text">
-							<a href="#">윤동환</a>
-						</div>
-					</div>
-					<div class="footer-profile">
-						<div class="profile-github">
-							<a href="#"> <i class="fa-brands fa-github fa-xl"></i>
-							</a>
-						</div>
-						<div class="profile-text">
-							<a href="#">양현정</a>
-						</div>
-					</div>
-					<div class="footer-profile">
-						<div class="profile-github">
-							<a href="#"> <i class="fa-brands fa-github fa-xl"></i>
-							</a>
-						</div>
-						<div class="profile-text">
-							<a href="#">백기렬</a>
-						</div>
-					</div>
-					<div class="footer-profile">
-						<div class="profile-github">
-							<a href="#"> <i class="fa-brands fa-github fa-xl"></i>
-							</a>
-						</div>
-						<div class="profile-text">
-							<a href="#">차승윤</a>
-						</div>
-					</div>
-					<div class="footer-profile">
-						<div class="profile-github">
-							<a href="#"> <i class="fa-brands fa-github fa-xl"></i>
-							</a>
-						</div>
-						<div class="profile-text">
-							<a href="#">안성연</a>
-						</div>
-					</div>
-				</div>
-				<div class="footer-document">
-					<div class="doucumnet-text">Project 설명이 포함되어 있습니다.</div>
-					<span>© BOOKDREAM BUKDACK-BUCKDACK</span>
-				</div>
-			</div>
-		</footer>
-
-
-
-
+<jsp:include page="/views/inc/footer.jsp" />
+</div>
 
 
 <script type="text/javascript">
+
 
 /* ------------------------바로구매 버튼 클릭  ----------------------------*/
 function now_buy(){
@@ -401,18 +326,46 @@ function now_buy(){
 
 /* ------------------------장바구니 버튼 클릭 ----------------------------*/
 function cart(){
-	let book_no = ${book.book_no};
-	let user_no = '<%=session.getAttribute("user_no")%>';
-	let product_cnt  = document.getElementById("product_cnt").value;
-	console.log("book_no : " + book_no + "user_no :  " + user_no + "product : " + product_cnt )
-	if(user_no === null ||user_no === "" || user_no === "null"){
-		alert('user_no = null');
-		location.replace("/itemorder/cart/list?book_no="+book_no+"&user_no=0"+"&product_count="+product_cnt);
-	}else{
-		alert('장바구니');
-		location.replace("/itemorder/cart/list?book_no="+book_no+"&user_no="+user_no+"&product_count="+product_cnt);
-	}
+   let book_no = document.getElementById("book_no").value;
+   let product_count  = document.getElementById("product_cnt").value;
+   
+   let data = {
+           book_no :  book_no,
+           product_count :product_count
+         };
+      
+   console.log(data);
+     
+   $.ajax({
+      url : "/itemorder/cart/add",
+      type : "POST",
+      data : data,
+      success : function(result){
+         
+         if(result == 1) { // 1 : 장바구니 추가 성공, 0 : 장바구니 추가 실패
+               $("#product_cnt").val(1);
+            // 카트 리스트 갯수 뱃지 recount
+            
+               let confirm_cart = confirm("장바구니에 추가되었습니다.\n>> 장바구니로 이동할꺄요?");
+               
+               if (confirm_cart) { location.href = "/itemorder/cart/list"; } 
+            
+         } else {
+            
+            let confirm_login = confirm("회원만 사용할 수 있습니다. \n>> 로그인 페이지로 이동할까요?");
+               
+               if (confirm_login) { location.replace("/views/user/login.jsp");} 
+               
+            $("#product_cnt").val(1);
+         }
+         
+      }, error : function(){
+           alert("error : 카트 담기 실패");
+          }      
+    });
 }
+
+
 
 
 
@@ -445,6 +398,7 @@ $.ajax({
 
 /* ------------------------항상 실행----------------------------*/
 /* ------------------------변수에 별점 가져오기 ----------------------------*/
+
 $(function(){
 	let star = 
 	$('#REVIEW_STAR').change(function(){
@@ -453,16 +407,13 @@ $(function(){
 	});
 	
 	
+
 /* ------------------------ 리뷰 등록 버튼 클릭  ----------------------------*/
+
 	$('#btn_review').click(function(){
 		let user_id = '<%=session.getAttribute("user_id")%>';
 		
-		if(user_id === 'null' ||user_id === "" || user_id === null){
-			alert('로그인 페이지로 이동합니다.');
-			location.replace("views/user/login.jsp");
-		}
-		
-		//리뷰 버튼 클릭 시 가져오는 리뷰 정보  		
+    	//리뷰 버튼 클릭 시 가져오는 리뷰 정보  		
 		let review_json = {
 		        "review_star" : star.val(),
 		        "book_no" : ${book.book_no}, 
@@ -470,8 +421,16 @@ $(function(){
 		        "review_content" : $('#review_content').val(),
 		        "review_recommend" :0 
 		};
+
+		if(user_id === null ||user_id === "" || user_id === "null"){
+
+			alert('로그인 페이지로 이동합니다.');
+			location.replace("/views/user/login.jsp");
+			
+		}else{
+			exist_review();
+		}
 		
-		exist_review();
 		
 		//리뷰 존재 여부 확인 
 		function exist_review(){
@@ -484,13 +443,13 @@ $(function(){
 				async: false,
 				success: function (data){
 					if(data > 0){
-						alert('등록한 리뷰가 있습니다. ');
+						alert('등록한 리뷰가 있습니다.');
 					}else{
 						//리뷰가 존재하지 않으면 실행
 						review_insert();	
 					}					
 				}
-						
+
 				});
 		}
 		
@@ -545,7 +504,6 @@ function getReview(){
 		}
 	});
 }
-
 
 /* ------------------------ [모달] 리뷰 수정  ----------------------------*/
 function review_upd(val){
@@ -602,17 +560,20 @@ function modal_close(){
 	
 }
 
-
-
 </script>
 
-<!-- Script Bootstrap, jqurey-3.6.3 -->
-	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
 	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
+
 
 	<!-- Script FontAwesome-->
 	<script src="https://kit.fontawesome.com/4bf42f841a.js"
 		crossorigin="anonymous"></script>
+
+
+	<!-- 자동 검색시 필요 -->
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
 </body>

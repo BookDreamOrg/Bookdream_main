@@ -33,6 +33,9 @@ $('#modal_address_update').click(function() {
 // 주소 입력 및 수정란
 function address_insert(no) {
 	
+	// 기본 배송지 설정 헤제
+
+	
 	// INPUT VALUE 값 저장
 	var address_alias = $('input[name="address_alias"]').val();
 	var address_name = $('input[name="address_name"]').val();
@@ -44,14 +47,18 @@ function address_insert(no) {
 	
 	if (address_alias == '') {
 		alert("배송지 이름을 입력하세요.");
+		return;
 	} else if (address_name == '') {
 		alert("받는사람 이름을 입력하세요.");
+		return false;
 	} else if (address_tel == '') {
 		alert("받는사람 전화번호를 입력하세요.");
+		return false;
 	} else if (zone_code == '' || road_add == '' || detail_add == '') {
 		alert("주소를 입력하세요.");
+		return false;
 		
-		// 주소 입력하기를 누르면 사용자의 주소 목록을 조회함
+	// 주소 입력하기를 누르면 사용자의 주소 목록을 조회함
 	} else if(no == 0) {
 		$.ajax({
 			type : "POST",                              
@@ -61,9 +68,16 @@ function address_insert(no) {
 			
 			success : function(result) {	
 				
-				// 등록된 주소가 없다면 생성한 주소는 기본 배송지로 설정됨		
-				var checked = (result=="") ? "Y" : "N";
-
+				// 기본배송지로 설정을 눌렀다면,
+				if ($('input[id=default_address_check]').is(':checked')) {
+					
+					var checked = 'Y';
+					
+				} else {
+					// 등록된 주소가 없다면 생성한 주소는 기본 배송지로 설정됨		 
+					var checked = (result=="") ? "Y" : "N";
+				}
+				
 				var data = {
 						 "address_alias" : address_alias,
 						 "address_name" : address_name,
@@ -83,14 +97,10 @@ function address_insert(no) {
 						contentType : "application/json",
 						
 						success : function() {	
-
-							if(checked == 'Y') {
-								alert("처음 생성한 배송지는 기본 배송지로 설정됩니다.");
-							}
 							// 주소 갱신
 							address_list();
-							$('#exampleModal').modal('hide');
-							$('#modal-backdrop').modal('hide');
+							load_default();
+
 						},
 						error: function(request, status, error) {
 					        console.log("code: " + request.status)
@@ -105,7 +115,11 @@ function address_insert(no) {
 		
 	// 주소수정	
 	} else {
-		
+
+		if ($('input[id=default_address_check]').is(':checked')) {
+			var checked = 'Y';
+		}
+		 
 		var data = {
 				 "address_alias" : address_alias,
 				 "address_name" : address_name,
@@ -113,7 +127,8 @@ function address_insert(no) {
 				 "zone_code" : zone_code,
 				 "road_add" : road_add,
 				 "detail_add" : detail_add,
-				 "address_no" : address_no
+				 "address_no" : address_no,
+				 "default_add" : checked
 			};			
 		
 		$.ajax({
@@ -124,27 +139,27 @@ function address_insert(no) {
 			contentType : "application/json",
 			
 			success : function() {	
-				// 주소 갱신
 				address_list();
-
+				load_default();
+				
 			},
 			error: function(request, status, error) {
 		        console.log("code: " + request.status)
 		        console.log("message: " + request.responseText)
 		        console.log("error: " + error);
 			}				
-		});			
+		})
+		
+		// 기본 배송지 체크박스 해제
+		$('input:checkbox[id="default_address_check"]').prop("checked", false);
 		
 	}
 	
 }
 
 
-
-
 // 기본 배송지 표시
 function load_default() {
-		
 			
 		url = "/address/getDefault"
 		data = {"default_add" : 'Y'}	
@@ -161,15 +176,14 @@ function load_default() {
 					var html = "";
 
 					if (result == "") {
-						html += `! 기본 배송지가 없습니다.`		
+						html += `기본 배송지가 없습니다.`		
 					} else {
 
 						var result =  JSON.parse(result);
 
-						html +=	`<div class="address_main_default">`
 						
 									if(`${result.default_add}` == `Y`) {
-						html +=			`<div style="color: purple; font-weight: bold;"><i class="bi bi-geo-alt-fill"></i>&nbsp;${result.address_alias}&nbsp;[기본배송지]</div>` 	
+						html +=			`<div style="color: #6768ab; font-weight: bold;"><i class="bi bi-geo-alt-fill"></i>&nbsp;${result.address_alias}&nbsp;[기본배송지]</div>` 	
 									} else {
 						html +=			`<div>${result.address_alias}</div>`
 									}			
@@ -178,8 +192,7 @@ function load_default() {
 										`<br>[` +
 										`<span>${result.zone_code}</span>]&nbsp;` +
 										`<span>${result.road_add}</span>&nbsp;` +
-										`<span>${result.detail_add}</span>&nbsp;` +
-								`</div>` 							
+										`<span>${result.detail_add}</span>&nbsp;` 						
 									
 					}
 				      document.getElementById('address_main').innerHTML = html;		
@@ -211,8 +224,11 @@ function address_list() {
 		success : function(result) {	
 			
 			var html = "";
+
+			console.log(result.length);
 			
 			for (i=0; i < result.length; i++) {
+
 				let checked = (i==0) ? "checked" : "";
 				let address = (i==0) ? "&nbsp;[기본배송지]" : "";
 				let no = i;
@@ -232,7 +248,7 @@ function address_list() {
 								`<td class="addresslist_table_col2">`
 								
 									if (i==0) {
-				html +=				` <label for="address_radio+${no}"><div style="color: purple; font-weight: bold;"><i class="bi bi-geo-alt-fill"></i> ${result[i].address_alias}&nbsp;${address}</div>` 										
+				html +=				` <label for="address_radio+${no}"><div style="color: #6768ab; font-weight: bold;"><i class="bi bi-geo-alt-fill"></i> ${result[i].address_alias}&nbsp;${address}</div>` 										
 									} else {
 				html +=			  	` <label for="address_radio+${no}"><div> ${result[i].address_alias}${address}</div>` 									
 									}
@@ -243,17 +259,19 @@ function address_list() {
 								     `<span>${result[i].road_add}</span>&nbsp;` +
 								     `<span>${result[i].detail_add}</span><label>` +
 								`</td>` +
-								
 								`<td class="addresslist_table_col3">` + 
-									`<div><button class="btn btn-light" onclick="modal_address_get(this)" value=${result[i].address_no}><i class="bi bi-pen"></i></button></div>` +
-									`<div><button class="btn btn-light" onclick="modal_address_delete(this)" value=${result[i].address_no}><i class="bi bi-trash"></i></button></div>` +
-								`</td>` +
+									`<div><button class="btn btn-outline-primary" onclick="modal_address_get(this)" value=${result[i].address_no}><i class="bi bi-pen"> 수정</i></button></div>` 
+								if (i!=0) {
+				html +=				`<br><div><button class="btn btn-outline-primary" onclick="modal_address_delete(this)" value=${result[i].address_no}><i class="bi bi-trash"> 삭제</i></button></div>`
+								}	
+				html +=			`</td>` +
 							`</tr>` +
-						`</table>`			
-
+						`</table>` +			
+						`<hr>`	
 			}	
-
+			  var cnt = result.length;	
 		      document.getElementById('addresslist_main').innerHTML = html;
+		      document.getElementById('addresslist_title').innerHTML = cnt;
 
 		},
 		error: function(request, status, error) {
@@ -368,17 +386,6 @@ function modal_address_get(no) {
 	})
 }
 
-// 기본배송지 설정을 눌려야 버튼이 활성화 
-$('#address_default_check').click(function() {
-	var check = $("#address_default_check").prop("checked");
-	
-	if (check) {
-		$('#address_change_button').attr('disabled', false);
-	} else {
-		$('#address_change_button').attr('disabled', true);
-	}
-	
-})
 
 
 
@@ -390,7 +397,6 @@ $('#address_change_button').click(function() {
 
 	// 기본 배송지 설정
 	// 기본 배송지 설정을 누르고 저장
-	if ($('input[id=address_default_check]').is(':checked')) {
 		
 		alert("기본 배송지를 변경합니다.");
 
@@ -415,8 +421,6 @@ $('#address_change_button').click(function() {
 			}	
 		})
 
-	} 
-		
 })
 
 

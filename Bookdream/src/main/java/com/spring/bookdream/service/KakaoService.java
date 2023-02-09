@@ -16,6 +16,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.spring.bookdream.dao.UserDAO;
+import com.spring.bookdream.vo.KakaoLoginVO;
 import com.spring.bookdream.vo.UserVO;
 @Service
 public class KakaoService {
@@ -33,12 +34,12 @@ public class KakaoService {
             
 			conn.setRequestMethod("POST");
 			conn.setDoOutput(true);
-			// POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
-            
+			
+			
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
 			 String sb = "grant_type=authorization_code" +
-		                "&client_id=47ad839005d8b9a94d3007b30a956894" + // REST_API_KEY
-		                "&redirect_uri=http://localhost:8000/views/user/kakaoLogin" + // REDIRECT_URI
+		                "&client_id=" + KakaoLoginVO.client_id + // REST_API_KEY
+		                "&redirect_uri=" + KakaoLoginVO.redirect_uri + // REDIRECT_URI
 		                "&code=" + authorize_code;
 			 System.out.println("#######zz"+authorize_code);
 			bw.write(sb);
@@ -83,6 +84,8 @@ public class KakaoService {
 		// 요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
 		HashMap<String, Object> userInfo = new HashMap<String, Object>();
 		String reqURL = "https://kapi.kakao.com/v2/user/me";
+		
+		UserVO userVO = new UserVO();
 		try {
 			URL url = new URL(reqURL);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -112,27 +115,26 @@ public class KakaoService {
 
 			String nickname = properties.getAsJsonObject().get("nickname").getAsString();
 			String email = kakao_account.getAsJsonObject().get("email").getAsString();
+			String birthday = kakao_account.getAsJsonObject().get("birthday").getAsString();
 
+			System.out.println("내 생일 : "+birthday);
 			userInfo.put("nickname", nickname);
 			userInfo.put("email", email);
+			
+			userVO.setUser_name(nickname);
+			userVO.setUser_email(email);
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		// catch 아래 코드 추가.
-				UserVO result = mr.findkakao(userInfo);
-				// 위 코드는 먼저 정보가 저장되있는지 확인하는 코드.
+		
+				UserVO result = mr.findkakao(userVO);
 				System.out.println("S:" + result);
 				if(result== null) {
-				// result가 null이면 정보가 저장이 안되있는거므로 정보를 저장.
 					mr.kakaoinsert(userInfo);
-					// 위 코드가 정보를 저장하기 위해 Repository로 보내는 코드임.
-					return mr.findkakao(userInfo);
-					// 위 코드는 정보 저장 후 컨트롤러에 정보를 보내는 코드임.
-					//  result를 리턴으로 보내면 null이 리턴되므로 위 코드를 사용.
+					return mr.findkakao(userVO);
 				} else {
 					return result;
-					// 정보가 이미 있기 때문에 result를 리턴함.
 				}
 	}
 }

@@ -2,6 +2,7 @@ package com.spring.bookdream.dao;
 
 import java.util.HashMap;
 
+import org.apache.commons.lang.StringUtils;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -60,11 +61,8 @@ public class UserDAO {
 		
 
 		// 카카오 정보 확인
-		public UserVO findkakao(HashMap<String, Object> userInfo) {
-			System.out.println("RN:"+userInfo.get("nickname"));
-			System.out.println("RE:"+userInfo.get("email"));
-			
-			return mybatis.selectOne("UserDAO.findKakao", userInfo);	
+		public UserVO findkakao(UserVO vo) {
+			return mybatis.selectOne("UserDAO.findKakao", vo);	
 		}
 		
 		// 플랫폼 정보 가져오기
@@ -99,4 +97,26 @@ public class UserDAO {
 			String pw = mybatis.selectOne("UserDAO.pwFind", vo);
 			return pw;
 		}
+		
+		// naver, google 소셜로그인 정보 확인
+		public UserVO getBySns(UserVO snsUser) {
+			if(StringUtils.equals(snsUser.getFlatform_type(), "naver")) {
+				return mybatis.selectOne("UserDAO.findNaver", snsUser.getUser_email());
+			} else {
+				return mybatis.selectOne("UserDAO.findGoogle", snsUser.getUser_email());
+			}
+		}
+		
+		//회원정보 수정
+		public void updateUser(UserVO vo) {
+			System.out.println("userDAO : " + vo.getUser_id());
+			System.out.println("userDAO : " + vo.getUser_password());
+			mybatis.update("UserDAO.updateUser", vo);
+		}
+		
+		// 회원탈퇴
+		public void deleteUser(UserVO vo) {
+			mybatis.delete("UserDAO.deleteUser", vo);
+		}
+
 }
