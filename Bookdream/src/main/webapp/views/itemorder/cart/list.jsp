@@ -16,6 +16,9 @@
 	<!-- bootstrap -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	
+	<!--  맨위 자동 검색시 필요 (페이지마다 다 넣어줘야 함?)-->
+	<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>	
+	
 	<!-- bootstrap -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -253,6 +256,7 @@
 																	} else {
 																		$(".product_cnt${cart.cart_no}").val(++cnt);
 																		let total = cnt*price;
+																		
 																		$(".total${cart.cart_no}").text(total +"원");
 																		//alert("수량 변경");
 																	}
@@ -369,46 +373,6 @@
 	<!-- ---------------------------<footer> footer-------------------------- -->
 	<jsp:include page="/views/inc/footer.jsp" />
 	</div>
-	<script>/* 수량 버튼 */
-	function numberWithCommas(x) {
-		  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-	};
-	
-/* 		$(".minus${cart.cart_no}").on("click", function() {
-			let cnt = $("input[class='product_cnt${cart.cart_no}']").val(); // input 수량값
-			let price = $("input[class='book_pirce${cart.cart_no}']").val(); // bookPrice값
-			
-			console.log("minus---> if문 실행 전");
-			console.log(cnt, price, (cnt>1));	
-	
-				if (cnt > 1) {
-					$("input[class='product_cnt${cart.cart_no}']").val();
-					alert("수량 변경");
-				} else {
-					alert("장바구니에 책 1권 이하로 담을 수 없어요");
-				}
-		}); 
-		 
-		$(".plus").on("click", function() {
-			var cnt = $(this).siblings("input[name='product_cnt']").val();// input 수량값
-			var stock = $(this).siblings("input[name='stock']").val(); // bookStock값
-			var price = $(this).siblings("input[name='book_pirce']").val(); // bookPrice값
-			
-			console.log("plus---> if문 실행 전");
-			console.log( cnt , stock, price, (cnt<stock));	// 2 < 10 -> false??????????? 	
-					
-				if (stock >= cnt) {
-					$(this).siblings("div").find("input[name='product_cnt']").val(++cnt);
-					$(this).siblings("input[name='stock']").val(stock);
-					$(this).siblings("input[name='book_pirce']").val(price);
-					console.log( cnt , stock, price, (cnt<stock));
-					//$(this).parent("div").parent("div").find("fmt:formatNumber").val(cnt*price);
-					alert("수량 변경");
-				} else {
-					alert("현재 재고가 부족합니다.");
-				}
-		});*/
-	</script>
 	
 	
 	<script>/* 장바구니  삭제 */
@@ -462,6 +426,10 @@
 	<script type="text/javascript">
 	<%@include file="/resources/js/cartLIstCount.js"%>
 	</script>
+	
+	 <!-- 아래 자동 검색시 필요 (페이지마다 다 넣어줘야 함?)-->
+   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </body>
 
 </html>
