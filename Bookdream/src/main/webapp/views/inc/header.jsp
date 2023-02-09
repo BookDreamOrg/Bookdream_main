@@ -1,10 +1,13 @@
 <%@page import="com.spring.bookdream.vo.UserVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+
 <title>Insert title here</title>
 
 <!-- 자동검색 시 사용 -->
@@ -40,9 +43,8 @@
 		String id = (String)session.getAttribute("user_id");
 		String kakaoN = (String)session.getAttribute("kakaoName");
 		String flatform = (String)session.getAttribute("flatform");
-		
+
 		UserVO user = (UserVO)session.getAttribute("authUser");
-	
 		if(user == null){		
 	%>
 		<div class="wrapper">
@@ -101,6 +103,7 @@
 				</form>
 				
 			</div>
+		
 	<% 
 		} else{ // 로그인 시
 	%>
@@ -157,11 +160,18 @@
 				</div>
 				
 				<div class="col-lg-1 p-5 flex-grow-1 header-col-btn">
-					<a href="/itemorder/cart/list">
-						<div class="header-btn">
-							<i class="fa-solid fa-cart-shopping"></i>
-						</div>
-					</a> <a href="/detail/cart/orderitem">
+<!--  cart btn -------------------------- -->
+					<button type="button" class="header-btn btn position-relative p-1" 
+								onclick="location.href='/itemorder/cart/list'">
+						<i class="fa-solid fa-cart-shopping"></i>
+							<span id="cartListCount" class="position-absolute top-0 start-100 translate-middle
+						  			badge rounded-pill bg-danger fs-6 "> 
+						  			${cartListCount}
+						  		<span class="visually-hidden">User Cart List Count</span>
+						  	</span>
+					</button>
+					<input id="user_no" value="${user.user_no}" type="hidden">
+					<a href="/detail/cart/orderitem">
 						<div class="header-btn btn-circle ms-3">
 							<i class="fa-solid fa-user"></i>
 						</div>

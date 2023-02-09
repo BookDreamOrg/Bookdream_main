@@ -347,7 +347,10 @@
 
 	<!-- Script FontAwesome-->
 	<script src="https://kit.fontawesome.com/4bf42f841a.js" crossorigin="anonymous"></script>
-
+	
+	<script type="text/javascript">
+	<%@include file="/resources/js/cartLIstCount.js"%>
+	</script>
 </body>
 
 </html>

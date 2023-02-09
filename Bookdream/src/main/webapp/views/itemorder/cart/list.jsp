@@ -50,7 +50,7 @@
 </head>
 
 <body>
-
+	<div class="wrapper">
 	<!-- ---------------------------<header> header------------------------- -->
 	<jsp:include page="/views/inc/header.jsp" />
 	
@@ -58,11 +58,6 @@
 	<div class="container">
 
 		<main>
-			
-			<!-- dummy box -->
-			<div style="height: 100px">
-				<!-- dummy -->
-			</div>
 			
 			<!-- ---------------------------top------------------------- -->
 			<div class="top py-3 text-center fw-bold fs-1">
@@ -98,12 +93,9 @@
 													</span>
 													<span class="delBtn">
 												   		<button type="button" 
-												   				class="selectDelete_btn 
-												   						btn btn-sm btn-secondary rounded-pill" >선택 삭제</button> 
-												   		
-														
-												   		<button type="button" 
-												   				class="btn btn-sm btn-secondary rounded-pill" >버튼 버튼</button> 
+												   				class="selectDelete_btn btn btn-sm btn-secondary rounded-pill" >선택 삭제</button> 
+												  	
+													  
 												  	</span>
 												</div>
 											</th>
@@ -116,11 +108,9 @@
 			
 												<!-- -----------------------체크박스----------------------- -->
 												<td class="align-middle">
-													<div class="checkBox 
-																form-check checkBox">
-														<input id="" class="chBox 
-																			form-check-input border rounded-circle"
-																type="checkbox" name="chBox" data-cartNum="${cart.cart_no }" > 
+													<div class="checkBox form-check checkBox">
+														<input class="chBox form-check-input border rounded-circle"
+																type="checkbox" name="chBox" data-cartNo="${cart.cart_no}" > 
 														<script>
 															$(".chBox").click(function(){
 															  	$("#allCheck").prop("checked", false);
@@ -155,19 +145,43 @@
 														</span>
 													</div>
 													
-													<%-- <span class="text-muted ms-3 lh-sm" >
-															<fmt:formatNumber pattern="재고 : ###,###,### 권" value="${cart.bookVO.stock }" />
-													</span> --%>
 												</td>
 												
-												<!-- -------장바구니 삭제------ -->
+												<!-- -----------------------장바구니 삭제------------------------ -->
 												<td class="delete border-end m-1 " >
-													<button class="delete_btn close
-																	align-middle align-items-center
+													<button class="delete${cart.cart_no}btn 
+																	close align-middle align-items-center
 																	btn btn-light rounded-circle "
-														data-cartNum="${cart.num }" type="button" aria-label="Close">
+														data-cartNo="${cart.cart_no}" type="button" aria-label="Close">
 														<span class="" aria-hidden="true">&times;</span>
 													</button>
+													<script >
+													/*------------------------장바구니 x 버튼 클릭  삭제-------------------------------*/
+													$(".delete${cart.cart_no}btn").click(function(){
+														
+														let confirm_val = confirm("정말 삭제하시겠습니까?");
+														
+														if(confirm_val) {
+															let checkArr = [];
+															checkArr.push($(this).attr("data-cartNo"));
+															
+															console.log("checkArr : " + checkArr)
+																								  	    
+															$.ajax({
+																url : "/itemorder/cart/delete",
+																type : "POST",
+																data : { chbox : checkArr },
+																success : function(result){
+																	if(result == 1) {          
+																		location.href = "/itemorder/cart/list";
+																	} else {
+																	   alert("삭제 실패");
+																	}
+																}
+															});
+														}
+													});
+													</script>
 												</td>
 												
 												<!-- -----------------------금액 , 수량----------------------- -->
@@ -176,21 +190,75 @@
 													<div class="p-3">
 													<!-- justify-content-center  text-center align-middle-->
 														<div class="d-flex justify-content-center  mx-auto"> 
-															<span id="test" class="fs-5 lh-sm  fs-4">
-																<fmt:formatNumber  pattern="###,###,###원" value="${(cart.bookVO.book_price * cart.product_count)}" />
+															<span class="total${cart.cart_no} fs-5 lh-sm  fs-4">
+																${(cart.product_count*cart.bookVO.book_price)}원
 															</span>
 														</div>
-															<%-- <input type="hidden" name="book_pirce" value="${cart.bookVO.book_price-(cart.bookVO.book_price*0.1)}"> --%>
 															
 														<div class="input-group input-group-sm w-75 m-auto
 																	border border-dark-subtle rounded-3 border-2">
-															<button class="minus btn fw-bold" type="button">-</button>
-															<input id="product_cnt" class=" qty form-control text-center border-0 "
-																	type="number" name="product_cnt" min="1" max="${cart.bookVO.stock}" 
-																	value="${cart.product_count}">
-															<input type="hidden" name="book_pirce" value="${cart.bookVO.book_price }">
-															<input type="hidden" name="stock" value="${cart.bookVO.stock }">
-															<button class="plus btn fw-bold" type="button">+</button>
+															<input type="hidden" class="book_pirce${cart.cart_no}" value="${cart.bookVO.book_price }">
+															<input type="hidden" class="stock${cart.cart_no}" value="${cart.bookVO.stock }">
+															<input  class="product_cnt${cart.cart_no} qty form-control text-center border-0 " type="number" min="1" max="${cart.bookVO.stock}"  
+																	value="${cart.product_count}" readonly="readonly">
+
+															<button class="minus${cart.cart_no} btn fw-bold order-first" type="button" data-cartNo="${cart.cart_no}">-</button>
+															<script >
+															$(".minus${cart.cart_no}").click(function() {
+																let cnt = $(".product_cnt${cart.cart_no}").val(); // input 수량값
+																let price = $("input[class='book_pirce${cart.cart_no}']").val(); // bookPrice값
+																
+																	if (cnt > 1) {
+																		$(".product_cnt${cart.cart_no}").val(--cnt);
+																		let total = cnt*price;
+																		
+																		$(".total${cart.cart_no}").text(total +"원");
+																		
+																		//alert("수량 변경");
+																	} else {
+																		let del = confirm("책 1권 이하로 담을 수 없어요...\n>> 장바구니에서 삭제할까요?");
+																		
+																		if(del) {
+																			let checkArr = [];
+																			checkArr.push($(this).attr("data-cartNo"));
+																			
+																			console.log("checkArr : " + checkArr)
+																												  	    
+																			$.ajax({
+																				url : "/itemorder/cart/delete",
+																				type : "POST",
+																				data : { chbox : checkArr },
+																				success : function(result){
+																					if(result == 1) {          
+																						location.href = "/itemorder/cart/list";
+																					} else {
+																					   alert("삭제 실패");
+																					}
+																				}
+																			});
+																		}
+																	}
+															}); 
+															</script>
+															
+															<button class="plus${cart.cart_no} btn fw-bold order-last" type="button">+</button>
+															<script >
+															$(".plus${cart.cart_no}").click(function() {
+																let cnt = $(".product_cnt${cart.cart_no}").val(); // input 수량값
+																let price = $(".book_pirce${cart.cart_no}").val(); // bookPrice값
+																let stock = $(".stock${cart.cart_no}").val(); // bookPrice값
+																
+																	if (cnt === stock) {
+																		alert("[재고] : "+stock +"권\n재고가  부족합니다.");
+																	} else {
+																		$(".product_cnt${cart.cart_no}").val(++cnt);
+																		let total = cnt*price;
+																		$(".total${cart.cart_no}").text(total +"원");
+																		//alert("수량 변경");
+																	}
+															}); 
+															</script>
+															
 														</div>
 													</div>
 												</td>
@@ -221,6 +289,7 @@
 							</div> 
 							<span class="text-muted mt-3 me-3">
 								<fmt:formatNumber pattern=" ###,###,### 원" value="10000" />	
+								<%-- <fmt:formatNumber pattern=" ###,###,### 원" value="${totalPrice }" />	 --%>
 							</span>
 						</li>
 						
@@ -231,6 +300,7 @@
 							</div> 
 							<span class="text-muted me-3">
 								<fmt:formatNumber pattern="- ###,###,### 원" value="3000" />
+								<%-- <fmt:formatNumber pattern="- ###,###,### 원" value="${discountPrice }" /> --%>
 							</span>
 						</li>
 						
@@ -268,6 +338,7 @@
 							</span>
 							<span class="d-flex justify-content-end align-items-end lh-sm mb-4 mx-3 fw-bold fs-3 ">
 								<fmt:formatNumber pattern="###,###,### " value="100000" />
+								<%-- <fmt:formatNumber pattern="- ###,###,###" value="${(total - discountPrice - 3000) }" /> --%>
 								<h6 class="fs-6 ms-1 my-1"> 원</h6>
 							</span>  
 						</li>
@@ -297,78 +368,88 @@
 	
 	<!-- ---------------------------<footer> footer-------------------------- -->
 	<jsp:include page="/views/inc/footer.jsp" />
+	</div>
+	<script>/* 수량 버튼 */
+	function numberWithCommas(x) {
+		  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	};
 	
+/* 		$(".minus${cart.cart_no}").on("click", function() {
+			let cnt = $("input[class='product_cnt${cart.cart_no}']").val(); // input 수량값
+			let price = $("input[class='book_pirce${cart.cart_no}']").val(); // bookPrice값
+			
+			console.log("minus---> if문 실행 전");
+			console.log(cnt, price, (cnt>1));	
 	
-	
-	<script>
-	 $(".selectDelete_btn").click(function(){
-		  var confirm_val = confirm("장바구니를 삭제할까요?");
-		  
-		  if(confirm_val) {
-		  	var checkArr = new Array();
-		   	$("input[class='chBox']:checked").each(function(){
-		    	checkArr.push($(this).attr("data-cartNum"));
-		  });
-		    
-		   $.ajax({
-			    url : "/itemorder/cart/delete",
-			    type : "POST",
-			    data : { chbox : checkArr },
-			    success : function(result){ // 1 : 장바구니 삭제 성공, 0 : 장바구니 삭제 실패
-			    	
-			    	if (result == 1) {
-					    location.href = "/itemorder/cart/list";
-					    alert("삭제 성공");
-					} else {
-						alert("삭제 실패");
-					}
-			    }
-		   });
-		 } 
-	});
-</script>
-	<script>
-	
-	$(".minus").on("click", function() {
-		var cnt = $(this).siblings("input[name='product_cnt']").val(); // input 수량값
-		var price = $(this).siblings("input[name='book_pirce']").val(); // bookPrice값
-		
-		console.log("minus---> if문 실행 전");
-		console.log(cnt, price, (cnt>1));	
-
-			if (cnt > 1) {
-				$(this).siblings("div").find("input[name='product_cnt']").val(--cnt);	
-				$(this).siblings("input[name='book_pirce']").val(price);
-				console.log(cnt, price, (cnt>1));	
-				//$(this).parent("div").siblings("div").find("fmt:formatNumber").val(cnt*price);
-				alert("수량 변경");
-			} else {
-				alert("장바구니에 책 1권 이하로 담을 수 없어요");
-			}
-	}); 
-	
-	$(".plus").on("click", function() {
-		var cnt = $(this).siblings("input[name='product_cnt']").val();// input 수량값
-		var stock = $(this).siblings("input[name='stock']").val(); // bookStock값
-		var price = $(this).siblings("input[name='book_pirce']").val(); // bookPrice값
-		
-		console.log("plus---> if문 실행 전");
-		console.log( cnt , stock, price, (cnt<stock));	// 2 < 10 -> false??????????? 	
-				
-			if (stock >= cnt) {
-				$(this).siblings("div").find("input[name='product_cnt']").val(++cnt);
-				$(this).siblings("input[name='stock']").val(stock);
-				$(this).siblings("input[name='book_pirce']").val(price);
-				console.log( cnt , stock, price, (cnt<stock));
-				//$(this).parent("div").parent("div").find("fmt:formatNumber").val(cnt*price);
-				alert("수량 변경");
-			} else {
-				alert("현재 재고가 부족합니다.");
-			}
-	});
+				if (cnt > 1) {
+					$("input[class='product_cnt${cart.cart_no}']").val();
+					alert("수량 변경");
+				} else {
+					alert("장바구니에 책 1권 이하로 담을 수 없어요");
+				}
+		}); 
+		 
+		$(".plus").on("click", function() {
+			var cnt = $(this).siblings("input[name='product_cnt']").val();// input 수량값
+			var stock = $(this).siblings("input[name='stock']").val(); // bookStock값
+			var price = $(this).siblings("input[name='book_pirce']").val(); // bookPrice값
+			
+			console.log("plus---> if문 실행 전");
+			console.log( cnt , stock, price, (cnt<stock));	// 2 < 10 -> false??????????? 	
+					
+				if (stock >= cnt) {
+					$(this).siblings("div").find("input[name='product_cnt']").val(++cnt);
+					$(this).siblings("input[name='stock']").val(stock);
+					$(this).siblings("input[name='book_pirce']").val(price);
+					console.log( cnt , stock, price, (cnt<stock));
+					//$(this).parent("div").parent("div").find("fmt:formatNumber").val(cnt*price);
+					alert("수량 변경");
+				} else {
+					alert("현재 재고가 부족합니다.");
+				}
+		});*/
 	</script>
-
 	
+	
+	<script>/* 장바구니  삭제 */
+		
+	/*------------------------장바구니 선택(체크) 삭제-------------------------------*/
+		$(".selectDelete_btn").click(function(){
+			
+			// 선택(체크)된 아이템 갯수
+			let i = $('input:checkbox[name=chBox]:checked').length; 
+			
+			if (i > 0) {
+				var confirm_val = confirm("정말 삭제하시겠습니까?");
+				
+				if(confirm_val) {
+					var checkArr = [];
+					$('input:checkbox[name=chBox]').each(function() {
+						if($(this).is(":checked")==true){
+					    	console.log("chBox, data-cartNo : " + $(this).attr("data-cartNo"));
+					    	checkArr.push($(this).attr("data-cartNo"));
+					    }
+					});
+					console.log("checkArr : " + checkArr)
+														  	    
+					$.ajax({
+						url : "/itemorder/cart/delete",
+						type : "POST",
+						data : { chbox : checkArr },
+						success : function(result){
+							if(result == 1) {          
+								location.href = "/itemorder/cart/list";
+							} else {
+							   alert("삭제 실패");
+							}
+						}
+					});
+				}
+			} else {
+				alert("삭제 선택된 품목이 없습니다.");
+			}
+		});
+	</script>
 
 	<!-- Script Bootstrap, jqurey-3.6.3 -->
 	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
@@ -377,8 +458,10 @@
 
 	<!-- Script FontAwesome-->
 	<script src="https://kit.fontawesome.com/4bf42f841a.js" crossorigin="anonymous"></script>
-	
 
+	<script type="text/javascript">
+	<%@include file="/resources/js/cartLIstCount.js"%>
+	</script>
 </body>
 
 </html>
