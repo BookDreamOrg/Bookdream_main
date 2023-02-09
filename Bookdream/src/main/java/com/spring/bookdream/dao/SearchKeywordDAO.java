@@ -1,6 +1,7 @@
 package com.spring.bookdream.dao;
 
-import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -8,12 +9,13 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.github.mustachejava.PragmaHandler;
 import com.spring.bookdream.vo.KeywordHistoryVO;
 
 @Repository
-public class SearchKeywordHistoryDAO {
+public class SearchKeywordDAO {
 
-	public SearchKeywordHistoryDAO() {
+	public SearchKeywordDAO() {
 
 	}
 	
@@ -41,4 +43,10 @@ public class SearchKeywordHistoryDAO {
 		
 				
 	}
+	
+	public List<Map<String, Object>>viewAutoKeyword(Map<String, Object> paramMap) throws Exception {
+		return mybatis.selectList("SearchKeywordHistoryDAO.viewAutoKeyword",paramMap);
+	}
+
 }
+

@@ -1,5 +1,7 @@
 package com.spring.bookdream.vo;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -17,5 +19,15 @@ public class AddressVO {
 	private String default_add;
 	
 	private UserVO userVO;
+	
+	
+	
+	private AddressVO addressVO;
+	private List<AddressVO> list;
 
+	
+	
+	
+	
+	
 }

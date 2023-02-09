@@ -16,15 +16,8 @@ public class CartVO {
 	private int product_count;
 	
 	private int listCount;
-	
-	private int num;
-	/*
-	private String title;
-	private String book_img;
-	private int book_price;
-	private int stock;
-	 */
-	
+	private int initCount;
+
 	private UserVO userVO;
 	private BookVO bookVO;
 	

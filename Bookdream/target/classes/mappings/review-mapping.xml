@@ -15,13 +15,14 @@
 	</resultMap>
 
 
+<!-- 리뷰 가져오기 -->
 	<select id="getReview"  resultMap="reviewResult">
 	<![CDATA[ SELECT * From review
 	WHERE BOOK_NO = #{book_no} ORDER BY REVIEW_NO desc
 	]]>
 	</select>
 	
-	
+<!-- 리뷰 등록 -->
 	<insert id="insertReview" parameterType="review" >
 		<![CDATA[ INSERT INTO review (REVIEW_NO,USER_ID,BOOK_NO,REVIEW_CONTENT,REVIEW_DATE,REVIEW_RECOMMEND,REVIEW_STAR)
 		values ( (select NVL(max(REVIEW_NO),0)+1 from review),
@@ -33,34 +34,51 @@
                  #{review_star}) ]]>
 	</insert>
 	
-	
+<!-- 리뷰 추천 -->
 	<update id="updateReviewRecommend">
 		UPDATE review 
 		SET review_recommend = (SELECT (review_recommend + 1) FROM review WHERE review_no = #{review_no}) 
 		WHERE review_no = #{review_no}
 	</update>
 	
+<!-- 리뷰 수정 -->	
 	<update id="updateReview">
 		UPDATE review 
 		SET review_content = #{review_content}
 		WHERE review_no = #{review_no}
 	</update>
 	
-	
+<!-- 리뷰 삭제 -->	
 	<delete id="deleteReview">
 		DELETE from review 
 		where review_no=#{review_no}
 	</delete>
-	
+
+<!-- 리뷰 존재여부 확인 -->	
 	<select id="existReview" resultType="integer">
 	SELECT count(*) 
 	FROM review 
 	WHERE book_no=#{book_no} and user_id=#{user_id}
 	</select>
-	
-	
-	
-	
+
+<!-- 리뷰 평점 (소수점 1자리 까지) -->	
+	<select id="avgReview" resultType="double">
+	SELECT NVL(round(sum(review_star)/COUNT(*),1),0) 
+	FROM review 
+	WHERE BOOK_NO = #{book_no}
+	</select>
+
+<!-- 리뷰 별점 별 갯수,퍼센트 계산 -->	
+	<select id="progressStar" resultType="java.util.HashMap">
+	SELECT review_star,
+		   COUNT(review_star) as starCount,
+		   NVL(ROUND((COUNT(review_star)/(SELECT COUNT(*) FROM review WHERE book_no=#{book_no}))*100,2),0) as proportion 
+	FROM   review 
+	WHERE book_no = #{book_no}
+	GROUP BY review_star 
+	ORDER BY review_star
+	</select>
+
 	
 	
 </mapper>

@@ -1,6 +1,7 @@
 package com.spring.bookdream.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,4 +68,13 @@ public class OrderDAO {
 		// 배송중 -> 배송완료
 		mybatis.update("OrderDAO.trackingUpdate2", vo);		
 	}	
+	
+	// 주문 개수 확인
+	public List<Map<String, Object>> orderStatusCount(OrderVO vo) {
+		
+		System.out.println("---> OrderDAO orderCount 실행 <---");
+		
+		return mybatis.selectList("OrderDAO.orderStatusCount", vo);	
+		
+	}		
 }
