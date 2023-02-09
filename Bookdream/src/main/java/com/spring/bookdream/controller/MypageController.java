@@ -43,7 +43,7 @@ public class MypageController {
 	@Autowired
 	private HttpSession session;
 
-	private Object UserVO;	
+	@Autowired
 	private QnAService qnaService;
 	
 	// 마이페이지 (배송조회)
@@ -226,7 +226,7 @@ public class MypageController {
 		
 		qnaVO.setUser_no(user.getUser_no());
 		System.out.println(qnaVO.getUser_no());
-		
+		System.out.println(qnaVO);
 		List<QnAVO> qnaMyList = qnaService.getMyQnAList(qnaVO);
 		
 		model.addAttribute("myQnAList", qnaMyList);
