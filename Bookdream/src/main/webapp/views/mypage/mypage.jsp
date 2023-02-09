@@ -120,6 +120,10 @@
 							회원탈퇴</button>
 					</div>
 				</div>
+				
+				<div><a href="/mypage/address">배송지 관리</a></div>
+				<div><a href="/mypage/tracking?p=1">배송 조회</a></div>
+				
 			</div>
 		</div>
 		<div class="modal fade" id="unregisterCheckModal" aria-hidden="true"

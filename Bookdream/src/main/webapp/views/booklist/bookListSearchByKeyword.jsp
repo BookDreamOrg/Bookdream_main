@@ -9,6 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+<!-- J쿼리 -->
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<!-- CSS -->
 <link href="/resources/css/bookList.css" rel="stylesheet">
 
 <!-- Bootstrap 5.0.2 -->

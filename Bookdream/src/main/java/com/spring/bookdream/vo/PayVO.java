@@ -16,5 +16,6 @@ public class PayVO {
 	private int final_price;
 	private int save_point;	
 	private int use_point;
-		
+	
+	private int user_no;		
 }

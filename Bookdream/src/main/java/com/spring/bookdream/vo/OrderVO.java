@@ -2,6 +2,7 @@ package com.spring.bookdream.vo;
 
 import java.util.Date;
 
+
 import lombok.Data;
 
 @Data
@@ -18,12 +19,21 @@ public class OrderVO {
 	private String order_tel;	
 	private int order_status;
 	
-	//
+	// 페이징 처리용
+	private int status_count;
+    private int pageNum;
+	private int amount;	
+	
+	// 마이페이지 조회용
+	private int search_date;
+	private int search_status;
+		
+	// JOIN
 	private PurchaseVO purchaseVO;
 	private BookVO bookVO;
 	private PayVO payVO;
 	
-	// DB에는 없음 데이터전송용
+	// 세션저장용
 	private String pay_method;
 	private int pay_fee;
 	private int final_price;	
@@ -32,5 +42,5 @@ public class OrderVO {
 	private int save_point;
 	private int use_point;
 	private int address_no;
-	
+		
 }

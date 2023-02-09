@@ -166,23 +166,16 @@ CREATE sequence CART_SEQ increment by 1 START with 1;
 insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) 
 values(CART_SEQ.nextval, 1, 30, 3);
 
-insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(1, 1, 1, 1);
-insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(2, 1, 2, 1);
-insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(3, 1, 3, 2);
-insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(4, 1, 4, 1);
-insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(5, 1, 5, 1);
-
-insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(6, 2, 5, 1);
-
-select PRODUCT_COUNT from cart
-where user_no=1 and book_no = 20;
-
-insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) 
-            values(CART_SEQ.nextval, 1, 20, 2);
+SELECT  -- *
+        -- count(*)
+        row_number() over(order by c.cart_no desc) as num, -- 카트 추가 순서대로 밑에서부터 정렬
+        c.cart_no, c.user_no, b.book_img, b.title, b.book_price, c.product_count, b.stock
+		FROM 	cart c
+				INNER JOIN 	book b
+						ON	b.book_no = c.book_no
+		WHERE 	c.user_no = 1;
 
 
--- if 조건 then 처리문 else if 조건2 then 처리문;     
-    
 UPDATE CART set PRODUCT_COUNT = (PRODUCT_COUNT + 5) where user_no=1 and book_no=20;
   
 select PRODUCT_COUNT from cart
@@ -198,24 +191,6 @@ select * from cart;
 
 commit; 
 
-SELECT  count(*) 
-		FROM cart 
-		WHERE user_no = 1
-        group by user_no;
-        
-SELECT  -- *
-        row_number() over(order by C.cart_no desc) as num, -- 등록 순서대로 칼럼 num(index) 지정.
-        C.cart_no, C.user_no, C.product_count, B.book_no, B.book_img, B.title, B.book_price, B.stock 
-from CART C
-        inner join BOOK B
-        on C.book_no = B.book_no   
-where c.user_no = 1 ;
---AND product_count = 0;
--- where c.user_no = #{user_no};
-
-DELETE 	CART
-	    WHERE 	book_no = 20
-	    AND 	user_no = 1;
 
 -------------------------------------------------------------------------------
 ---------------------------------- PARCHASE -----------------------------------

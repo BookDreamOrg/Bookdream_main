@@ -1,5 +1,6 @@
 package com.spring.bookdream.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -70,5 +71,15 @@ public class ReviewDAO {
 		System.out.println("------> existReviewDAO");
 		return mybatis.selectOne("ReviewDAO.existReview",vo);
 	}
+
+/*************************** 리뷰 평균 평점 ********************************************/
+	public double avgReview (int book_no) {
+		System.out.println("------> avgReviewDAO");
+		return mybatis.selectOne("ReviewDAO.avgReview",book_no);
+	}
 	
+/*************************** 별점 별  갯수 ********************************************/	
+	public List<HashMap<Integer, Integer>> progressStar(int book_no){
+		return mybatis.selectList("ReviewDAO.progressStar",book_no);
+	}
 }

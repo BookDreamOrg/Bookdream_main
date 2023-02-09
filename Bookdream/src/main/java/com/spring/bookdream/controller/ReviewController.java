@@ -3,6 +3,7 @@ package com.spring.bookdream.controller;
 
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,7 +33,6 @@ public class ReviewController {
 		@ResponseBody
 		public void insertReview(@RequestBody String jsonData, Model model,ObjectMapper mapper, ReviewVO vo) throws Exception {
 			System.out.println("/Review+insert");
-				
 			//JSON을 객체로 변경시 UnknownProperty에 대해서는 무시하고 처리
 			mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
 
@@ -81,4 +81,6 @@ public class ReviewController {
 		public int existReview(int book_no, String user_id) {
 			return reviewService.existReview(book_no,user_id);
 		}
+		
+		
 }
