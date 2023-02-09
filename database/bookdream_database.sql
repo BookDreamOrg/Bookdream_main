@@ -34,25 +34,15 @@ alter table users drop column USER_ADDRESS;
 
 alter table  USERS add USER_POINT number(10) default '';
 
-
-
 desc users;
 
 drop sequence user_seq;
 -- 번호를 자동으로 1부터 1씩 증가하도록 만듦
 create sequence user_seq increment by 1 start with 1;
 
--- 카카오 로그인 insert
-insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_ADDRESS, USER_TEL, FLATFORM_TYPE, USER_EMAIL) 
-		values(user_seq.nextval,'','','이름','','','KAKAO','이메일');    
--- BookDream 회원 로그인 insert
-insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
-	values(user_seq.nextval,'sycha','1234','이름','BD','이메일');
 -- BookDream test 로그인 insert
 insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
    values(user_seq.nextval,'test','test','test','BD','test@test.com');
-
-
 
 select * from users;
 commit;
@@ -297,4 +287,55 @@ create table KEYWORD_HISTORY(
     LOGIN_YN        varchar2(5) not null
 );
 
+
+-------------------------------- 1:1문의 테이블(QNA)------------------------------
+drop table QNA;
+create table QNA(
+    QNA_NO NUMBER(10) NOT NULL,
+    USER_NO NUMBER(10) NOT NULL,
+    QNA_TITLE VARCHAR2(100) NOT NULL,
+    QNA_CONTENT VARCHAR2(500) NOT NULL,
+    QNA_TYPE VARCHAR2(200) NOT NULL,
+    REG_DATE DATE default sysdate,
+    ANS_CHECK VARCHAR2(5) default '0' check(ans_check in ('0','1')),
+    constraint PK_QNA primary key(QNA_NO),
+    constraint FK_QNA_USER_NO foreign key(USER_NO) REFERENCES USERS (USER_NO)
+);
+
+insert into QNA(QNA_NO, USER_NO, QNA_TITLE, QNA_CONTENT, QNA_TYPE) 
+		values(qna_seq.nextval, 1 , '이게안돼','이게 왜 안될까요','QNA타입');
+delete from qna where user_no=1;
+
+ALTER TABLE QNA 
+        ADD CONSTRAINT FK_QNA_USER_NO FOREIGN KEY(USER_NO) REFERENCES USERS(USER_NO);
+
+drop sequence qna_seq;
+-- 번호를 자동으로 1부터 1씩 증가하도록 만듦
+create sequence qna_seq increment by 1 start with 1;
+
+-- qna table fk user_no casecade
+alter table QNA drop constraint FK_QNA_USER_NO;
+alter table QNA add constraint FK_QNA_USER_NO foreign key (user_no) references users (user_no) on delete cascade;
+
+select * from qna;
+delete from QNA where qna_no=10;
+rollback;
 commit; 
+
+create table ANSWER(
+    ANS_NO NUMBER(10) NOT NULL,
+    ANS_CONTENT VARCHAR(200) NOT NULL,
+    USER_NO NUMBER(10) NOT NULL,
+    constraint PK_ANSWER primary key(ANS_NO),
+    constraint FK_ANSWER foreign key(USER_NO) references USERS (USER_NO) 
+);
+
+drop sequence answer_seq;
+-- 번호를 자동으로 1부터 1씩 증가하도록 만듦
+create sequence answer_seq increment by 1 start with 1;
+
+insert into ANSWER (ANS_NO, ANS_CONTENT, USER_NO) VALUES (answer_seq.nextval, 'zz', '1');
+
+select * from answer;
+rollback;
+commit;

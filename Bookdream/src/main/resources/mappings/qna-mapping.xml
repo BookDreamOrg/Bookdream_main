@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="QnADAO"> 
+
+	<resultMap type="qna" id="qnaResult">
+		<result property="qna_no" column="qna_no"/>
+		<result property="user_no" column="user_no"/>
+		<result property="qna_title" column="qna_title"/>
+		<result property="qna_content" column="qna_content"/>
+		<result property="qna_type" column="qna_type"/>
+		<result property="reg_date" column="reg_date"/>
+		<result property="ans_check" column="ans_check"/>
+	</resultMap>
+
+	<resultMap type="answer" id="answerResult">
+		<result property="ans_no" column="ans_no"/>
+		<result property="ans_content" column="ans_content"/>
+		<result property="user_no" column="user_no"/>
+	</resultMap>
+
+	<!-- 문의 insert  -->	
+	<insert id="qnaInsert">
+		insert into QNA(QNA_NO, USER_NO, QNA_TITLE, QNA_CONTENT, QNA_TYPE) 
+		values(qna_seq.nextval, #{user_no}, #{qna_title} ,#{qna_content}, #{qna_type})
+	</insert> 
+	
+	<!-- 나의 문의 리스트 가져오기  -->
+	<select id="getMyQnAList" resultMap="qnaResult" parameterType="int">
+		select * from QNA where user_no = #{user_no}
+	</select>
+	
+	<!-- 문의정보 가져오기 -->
+	<select id="getQnA" resultType="qna">
+		select * from QNA where qna_no = #{qna_no}
+	</select>
+	
+	<!-- 문의 수정  -->
+	<update id="updateQnA" parameterType="qna">
+		update QNA set qna_title=#{qna_title}, qna_content=#{qna_content}, qna_type=#{qna_type} where qna_no = #{qna_no}
+	</update>
+	
+	<!-- 문의 삭제  -->
+	<delete id="deleteQnA" parameterType="qna">
+		delete from QNA where qna_no = #{qna_no}
+	</delete>
+	
+	<!-- 문의 전체리스트 가져오기 -->
+	<select id="getAllQnAList" resultMap="qnaResult">
+		select * from QNA
+	</select>
+
+	<!-- 답변 insert -->
+	<insert id="insertAnswer">
+		insert into ANSWER (ans_no, ans_content, user_no) 
+		values (answer_seq.nextval, #{ans_content}, #{user_no})
+	</insert>
+	
+</mapper>

@@ -18,11 +18,37 @@
 <link rel="stylesheet" href="/resources/css/unregister.css" />
 <link rel="stylesheet" href="/resources/css/styles.css" />
 
+<style>
+.side {
+	position: relative;
+	width: 220px;
+	min-height: 500px;
+	margin-top: 130px;
+	border-radius: 20px;
+	float: left;
+	background-color: #d1d1e5;
+	text-align: center;
+}
+
+.main {
+	line-height: 180%;
+	position: relative;
+	margin: 0 auto;
+	width: 1240px;
+	height: auto;
+	min-height: 1000px;
+}
+
+.user-btn {
+	color: var(- -main-color-shadow6);
+	font-size: 2rem;
+}
+</style>
 <title>Insert title here</title>
 </head>
 <body>
 	<%
-		UserVO user = (UserVO)session.getAttribute("authUser");
+		UserVO user = (UserVO) session.getAttribute("authUser");
 	%>
 	<jsp:include page="/views/inc/header.jsp" />
 
@@ -79,23 +105,23 @@
 								</div>
 							</div>
 							<div class="unregister_modal_agree">
-								<label for="unregister_agree">
-								<input type="checkbox" id="unregister_agree" onclick ="unregisterCheck()" /> 
-								해당 내용을 모두 확인했으며, 회원탈퇴에 동의합니다.</label>
+								<label for="unregister_agree"> <input type="checkbox"
+									id="unregister_agree" onclick="unregisterCheck()" /> 해당 내용을 모두
+									확인했으며, 회원탈퇴에 동의합니다.
+								</label>
 							</div>
 						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
 							data-bs-dismiss="modal">닫기</button>
-						<button type="button" id="unregister_btn" class="btn btn-primary" data-bs-toggle="modal"
-							data-bs-target="#unregisterCheckModal">
+						<button type="button" id="unregister_btn" class="btn btn-primary"
+							data-bs-toggle="modal" data-bs-target="#unregisterCheckModal">
 							회원탈퇴</button>
 					</div>
 				</div>
 			</div>
 		</div>
-
 		<div class="modal fade" id="unregisterCheckModal" aria-hidden="true"
 			aria-labelledby="unregisterCheckModalLabel" tabindex="-1">
 			<div class="modal-dialog modal-dialog-centered">
@@ -110,11 +136,13 @@
 						<div class="unregitserCheck_modal_input">
 							<div>
 								<label for="unregister_id">아이디</label> <input type="text"
-									id="unregister_id" name="unregister_id" value="<%= user.getUser_id() %>" readonly />
+									id="unregister_id" name="unregister_id"
+									value="<%=user.getUser_id()%>" readonly />
 							</div>
 							<div>
 								<label for="unregister_password">비밀번호</label> <input
-									type="password" id="unregister_password" name="unregister_password" />
+									type="password" id="unregister_password"
+									name="unregister_password" />
 							</div>
 							<span>본인확인 후 최종 회원탈퇴가 가능합니다.</span> <span>본인확인을 위해 비밀번호를
 								다시 한번 확인합니다.</span>
@@ -124,22 +152,13 @@
 						<button class="btn btn-secondary"
 							data-bs-target="#unregisterModal" data-bs-toggle="modal">
 							취소</button>
-						<button class="btn btn-secondary"
-							onclick="deleteUser()">
+						<button class="btn btn-secondary" onclick="deleteUser()">
 							확인</button>
 					</div>
 				</div>
 			</div>
 		</div>
-
-
-		<div>
-			<a href="/mypage/address">배송지 관리</a>
-		</div>
-		<div>
-			<a href="/mypage/tracking">배송 조회</a>
-		</div>
-
+	</div>
 	</div>
 
 	<jsp:include page="/views/inc/footer.jsp" />
@@ -151,42 +170,40 @@
 	<!-- Script FontAwesome-->
 	<script src="https://kit.fontawesome.com/4bf42f841a.js"
 		crossorigin="anonymous"></script>
-		
-	<script>
-	function unregisterCheck() {
-		
-	}
-	function deleteUser() {
-		const id = $('#unregister_id').val();
-		const password = $('#unregister_password').val();
-		
 
-		// 패스워드 맞는지 확인
-		$.ajax({
-			url : "/mypage/deleteUser",
-			type : "POST",
-			data : {
-				id : id,
-				password : password
-			},
-			success:function(data){
-				console.log(data);
-				if(data === "error"){
-					alert('비밀번호를 입력해주세요');
+	<script>
+		function unregisterCheck() {
+
+		}
+		function deleteUser() {
+			const id = $('#unregister_id').val();
+			const password = $('#unregister_password').val();
+
+			// 패스워드 맞는지 확인
+			$.ajax({
+				url : "/mypage/deleteUser",
+				type : "POST",
+				data : {
+					id : id,
+					password : password
+				},
+				success : function(data) {
+					console.log(data);
+					if (data === "error") {
+						alert('비밀번호를 입력해주세요');
+					} else if (data === "password_error") {
+						alert('회원 비밀번호가 일치하지 않습니다.');
+					} else {
+						$('#unregisterCheckModal').modal('hide');
+						document.location.replace(data);
+					}
+				},
+				error : function() {
+					alert("서버 에러.");
 				}
-				else if(data === "password_error"){
-					alert('회원 비밀번호가 일치하지 않습니다.');
-				} else {
-					$('#unregisterCheckModal').modal('hide');
-					document.location.replace(data);
-				}
-			}, 
-			error : function() {
-				alert("서버 에러.");
-			}
-		});
-		
-	}
+			});
+
+		}
 	</script>
 </body>
 </html>
