@@ -17,7 +17,7 @@
 <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
 <link rel="stylesheet" href="/resources/css/styles.css" />
 
-	<style>
+<style>
 .side {
 	position: relative;
 	width: 220px;
@@ -51,128 +51,147 @@
 	font-size: 2rem;
 }
 
-.qna_title{
+.qna_title {
 	font-size: 30px;
 	float: left;
 }
-.qna_button{
+
+.qna_button {
 	float: right;
 }
 
-.form_textarea{
+.form_textarea {
 	width: 100%;
 	margin-top: 5px;
 }
 </style>
 <title>Insert title here</title>
-</head> 
+</head>
 <body>
-	<jsp:include page="/views/inc/header.jsp" />
+	<div class="wrapper">
+		<jsp:include page="/views/inc/header.jsp" />
 
-			
-			<div class="container">
-				
-				<div class="main">
-					
-					<div class="rside">
-						<div class="qna_header">
-								<p class="qna_title">1:1 문의<p>
-						</div>
-						<div class="user_info_table">
-							<table class="table table-board">
-								<tr>
-									<td>문의 유형</td>
-									<td>
-										<select class="form-select" id="qna_type" onchange="">
-												<option selected>문의유형을 선택해주세요!</option>
-												<option value="배송/수령일정일안내">배송/수령일정일안내</option>
-												<option value="주문/결제">주문/결제</option>
-												<option value="검색기능관련">검색기능관련</option>
-												<option value="message">요청사항을 직접 입력합니다.</option>
-										</select>
-									</td>
-								<tr>
-									<td>내용</td>
-									<td>
-										<div>
-											<div class="col_box">
-												<input class="form-control" type="text" id="qna_title" name="qna_title" placeholder="제목을 입력해주세요">
-												<input class="form-control" type="hidden" id="user_no" name="user_no" value="${authUser.getUser_no() }">
-													
-											</div>
-											<div class="col_box">
-												<div class="box_area">
-													<textarea class="form_textarea" id="qna_content" name="qna_content" maxlength="500" style="height: 246px"
+
+		<div class="container">
+
+			<div class="main">
+
+				<div class="rside">
+					<div class="qna_header">
+						<p class="qna_title">1:1 문의
+						<p>
+					</div>
+					<div class="user_info_table">
+						<table class="table table-board">
+							<tr>
+								<td>문의 유형</td>
+								<td><select class="form-select" id="qna_type" onchange="">
+										<option selected>문의유형을 선택해주세요!</option>
+										<option value="배송/수령일정일안내">배송/수령일정일안내</option>
+										<option value="주문/결제">주문/결제</option>
+										<option value="검색기능관련">검색기능관련</option>
+										<option value="message">요청사항을 직접 입력합니다.</option>
+								</select></td>
+							<tr>
+								<td>내용</td>
+								<td>
+									<div>
+										<div class="col_box">
+											<input class="form-control" type="text" id="qna_title"
+												name="qna_title" placeholder="제목을 입력해주세요"> <input
+												class="form-control" type="hidden" id="user_no"
+												name="user_no" value="${authUser.getUser_no() }">
+
+										</div>
+										<div class="col_box">
+											<div class="box_area">
+												<textarea class="form_textarea" id="qna_content"
+													name="qna_content" maxlength="500" style="height: 246px"
 													placeholder="빠른 답변을 위해  10자 이상의 문의 내용을 입력해주세요">
 														
 													</textarea>
-												</div>
 											</div>
 										</div>
-									</td>
-								<tr>
-									
-								</tr>
-							</table>
-							<div class="qna_btn btn btn-success" type="button" onclick="qna_btn()">
-								문의하기
-							</div>
-						</div>
+									</div>
+								</td>
+							<tr>
+
+							</tr>
+						</table>
+						<div class="qna_btn btn btn-success" type="button"
+							onclick="qna_btn()">문의하기</div>
 					</div>
-					
-					<!-- side -->
-				<div class="side">
-					<div class="user_btn"><i class="fa-solid fa-user"></i></div>
-					<div><a href="/views/mypage/mypage.jsp">${authUser.getUser_name() }</a>님 환영합니다.</div>
-					<h1><a href="/mypage/edit">회원정보 관리</a></h1>
-					<!-- Button trigger modal -->
-					<button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-					  회원탈퇴
-					</button>
-					
-					<div><a href="/mypage/address">배송지 관리</a></div>
-					<div><a href="/mypage/tracking">배송 조회</a></div>
-					<div><a href="#">나의 구매내역</a></div>
-					<div><a href="/mypage/getMyQnAList">1:1문의</a></div>
-					<div><a href="#">상품문의</a></div>
-					
-				</div>	
-					
 				</div>
-				
-				
+
+				<!-- side -->
+				<div class="side">
+					<div class="user_btn">
+						<i class="fa-solid fa-user"></i>
+					</div>
+					<div>
+						<a href="/views/mypage/mypage.jsp">${authUser.getUser_name() }</a>님
+						환영합니다.
+					</div>
+					<h1>
+						<a href="/mypage/edit">회원정보 관리</a>
+					</h1>
+					<!-- Button trigger modal -->
+					<button type="button" class="btn" data-bs-toggle="modal"
+						data-bs-target="#exampleModal">회원탈퇴</button>
+
+					<div>
+						<a href="/mypage/address">배송지 관리</a>
+					</div>
+					<div>
+						<a href="/mypage/tracking">배송 조회</a>
+					</div>
+					<div>
+						<a href="#">나의 구매내역</a>
+					</div>
+					<div>
+						<a href="/mypage/getMyQnAList">1:1문의</a>
+					</div>
+					<div>
+						<a href="#">상품문의</a>
+					</div>
+
+				</div>
+
 			</div>
-			
+
+
+		</div>
+
 		<jsp:include page="/views/inc/footer.jsp" />
+	</div>
 
+	<script type="text/javascript">
+		function qna_btn() {
+			var user_no = $('#user_no').val();
+			var qna_type = $('#qna_type').val();
+			var qna_title = $('#qna_title').val();
+			var qna_content = $('#qna_content').val();
+			console.log(user_no);
+			$.ajax({
+				type : "POST",
+				url : "/mypage/insertQnA",
+				data : {
+					user_no : user_no,
+					qna_type : qna_type,
+					qna_title : qna_title,
+					qna_content : qna_content
+				},
+				success : function(data) {
+					alert('문의완료');
+					location.href = '/mypage/getMyQnAList';
+				},
+				error : function() {
+					alert('서버에러입니다.');
+				}
 
-		<script type="text/javascript">
-			function qna_btn(){
-				var user_no = $('#user_no').val();
-				var qna_type = $('#qna_type').val();
-				var qna_title = $('#qna_title').val();
-				var qna_content = $('#qna_content').val();
-				console.log(user_no);
-				$.ajax({
-					type : "POST",
-					url : "/mypage/insertQnA",
-					data : {
-							user_no : user_no,
-							qna_type : qna_type,
-							qna_title : qna_title,
-							qna_content : qna_content
-							},
-					success : function(data){
-						alert('문의완료');
-						location.href='/mypage/getMyQnAList';
-					},
-					error : function(){
-						alert('서버에러입니다.');
-					}
-					
-				});
-			}
-		</script>
+			});
+		}
+	</script>
 	<!-- Script Bootstrap, jqurey-3.6.3 -->
 	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
 	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
@@ -180,5 +199,12 @@
 	<!-- Script FontAwesome-->
 	<script src="https://kit.fontawesome.com/4bf42f841a.js"
 		crossorigin="anonymous"></script>
+
+	<script>
+		let user_no =
+	<%=(int) session.getAttribute("user_no")%>
+		;
+	<%@include file="/resources/js/cartLIstCount.js"%>
+	</script>
 </body>
 </html>
