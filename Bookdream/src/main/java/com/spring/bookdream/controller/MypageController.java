@@ -227,7 +227,7 @@ public class MypageController {
 		
 		qnaVO.setUser_no(user.getUser_no());
 		System.out.println(qnaVO.getUser_no());
-		
+		System.out.println(qnaVO);
 		List<QnAVO> qnaMyList = qnaService.getMyQnAList(qnaVO);
 		
 		model.addAttribute("myQnAList", qnaMyList);
@@ -283,12 +283,6 @@ public class MypageController {
 		String qna_no = request.getParameter("qna_no");
 		
 		qnaService.deleteQnA(qnaVO);
-		
-		response.setContentType("text/html; charset=utf-8");
-		PrintWriter w = response.getWriter();
-		w.write("<script>alert('삭제되었습니다.');</script>");
-		w.flush();
-        w.close();
 		
 		return "redirect:/mypage/getMyQnAList";
 	}

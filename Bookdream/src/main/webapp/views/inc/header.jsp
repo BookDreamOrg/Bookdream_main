@@ -16,7 +16,6 @@
 </head>
 
 <style>
-
 #ui-id-1 {
    border: 10px solid rgba(black, .1);
     border-radius: 15px;
@@ -30,7 +29,6 @@
 .ui-menu-item-wrapper:hover,.ui-state-active {
  background-color: var(--main-color-tint1);
 }
-
 </style>
 
 
@@ -43,7 +41,6 @@
       String id = (String)session.getAttribute("user_id");
       String kakaoN = (String)session.getAttribute("kakaoName");
       String flatform = (String)session.getAttribute("flatform");
-
       UserVO user = (UserVO)session.getAttribute("authUser");
       if(user == null){      
    %>
@@ -249,5 +246,3 @@
 
 
 </html>
-
-

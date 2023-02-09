@@ -102,7 +102,6 @@
 				<div class="rside">
 					<div class="qna_header">
 						<p class="qna_title">1:1 문의답변
-						<p>
 					</div>
 					<div class="qna_body">
 						<c:choose>
@@ -252,6 +251,38 @@
 		
 	</script>
 
+<<<<<<< HEAD
+		<script type="text/javascript">
+			/* function answer_btn(event){
+				var user_no = $('#user_no').val();
+				var ans_content = $('#ans_content').val();
+				var ans_title = $('#ans_title').val();
+				console.log(user_no);
+				console.log(ans_title);
+				$.ajax({
+					type : "POST",
+					url : "/mypage/answerQnA",
+					data : {
+							user_no : user_no,
+							ans_content : ans_content
+							},
+					success : function(data){
+						alert('답변완료 되었습니다.');
+					},
+					error : function(){
+						alert('서버에러입니다.');
+					}
+				});
+				
+		        }) */
+				const answer = document.querySelector('.answer_btn');
+		        answer.addEventListener('click',function(e){
+		            console.log("currentTarget : ",e.currentTarget);
+		            console.log("Target : ",e.target);
+			}
+		</script>
+=======
+>>>>>>> origin/main_ing
 	<!-- Script Bootstrap, jqurey-3.6.3 -->
 	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
 	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>

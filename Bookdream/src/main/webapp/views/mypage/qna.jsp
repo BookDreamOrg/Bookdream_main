@@ -144,7 +144,7 @@
 												</div>
 												<div class="qna_delete_btn">
 													<button class="btn btn-secondary" type="button"
-														onclick="location.href='deleteQnA?qna_no=${list.getQna_no() }'">삭제</button>
+														onclick="delete_btn(${list.getQna_no() })">삭제</button>
 												</div>
 											</div>
 										</div>
@@ -210,6 +210,25 @@
 		crossorigin="anonymous"></script>
 	<link rel="stylesheet"
 		href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+
+	<script type="text/javascript">
+		function delete_btn(value){
+			var qna_no = value;
+			console.log(qna_no);
+			$.ajax({
+				type : "POST",
+				url : "/mypage/deleteQnA",
+				data : {qna_no : qna_no},
+				success : function(data){
+					alert('삭제 되었습니다.');
+					location.href='/mypage/getMyQnAList'
+				},
+				error : function(){
+					alert('서버에러입니다.')
+				}
+			});
+		}
+	</script>
 
 	<script>
 		let user_no =

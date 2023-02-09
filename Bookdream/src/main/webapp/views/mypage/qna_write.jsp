@@ -99,8 +99,8 @@
 										<div class="col_box">
 											<input class="form-control" type="text" id="qna_title"
 												name="qna_title" placeholder="제목을 입력해주세요"> <input
-												class="form-control" type="hidden" id="user_no"
-												name="user_no" value="${authUser.getUser_no() }">
+												class="form-control" type="hidden" id="qna_user_no"
+												name="qna_user_no" value="${authUser.getUser_no() }">
 
 										</div>
 										<div class="col_box">
@@ -167,7 +167,7 @@
 
 	<script type="text/javascript">
 		function qna_btn() {
-			var user_no = $('#user_no').val();
+			var qna_user_no = $('#qna_user_no').val();
 			var qna_type = $('#qna_type').val();
 			var qna_title = $('#qna_title').val();
 			var qna_content = $('#qna_content').val();
@@ -176,7 +176,7 @@
 				type : "POST",
 				url : "/mypage/insertQnA",
 				data : {
-					user_no : user_no,
+					user_no : qna_user_no,
 					qna_type : qna_type,
 					qna_title : qna_title,
 					qna_content : qna_content
