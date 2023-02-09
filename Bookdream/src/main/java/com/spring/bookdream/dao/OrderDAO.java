@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.bookdream.vo.OrderVO;
-import com.spring.bookdream.vo.SearchCriteria;
 
 @Repository
 public class OrderDAO {

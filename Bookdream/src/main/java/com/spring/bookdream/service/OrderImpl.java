@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.spring.bookdream.dao.OrderDAO;
 import com.spring.bookdream.vo.OrderVO;
-import com.spring.bookdream.vo.SearchCriteria;
 
 @Service("OrderService")
 public class OrderImpl implements OrderService {

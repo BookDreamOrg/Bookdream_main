@@ -2,8 +2,6 @@ package com.spring.bookdream.vo;
 
 import java.util.Date;
 
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import lombok.Data;
 

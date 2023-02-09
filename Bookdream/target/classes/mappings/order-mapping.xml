@@ -97,14 +97,7 @@
 	</select>
 
 	<!-- 마이페이지 주문조회 (간단) (관리자 페이지로 넘길예정 : 페이징처리추가됨)
-	
-	        	<if test="search_status == 'all' ">
-        		AND	1 = 1 
-         	</if>	    
-         	<if test="search_status == '0' ">
-        		AND order_status = #{search_status}
-         	</if>
-	
+		
 	<select id="searchOrder" parameterType="order" resultMap="orderList">		
 		select order_no,
 			   order_name,

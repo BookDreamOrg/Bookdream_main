@@ -1,3 +1,5 @@
+
+
 /***************************** 페이지 로딩 *****************************/
 $(function() {
 	load_default();
@@ -374,8 +376,10 @@ function address_delete(address_no) {
 
 }
 
+
 /***************************** 배송지 목록에서 기본 배송지 변경 버튼 클릭 *****************************/
 $(document).on("click", "#address_change_button", function(e) {	
+
 
 	// 선택한 주소의 address_no 저장
 	var address_no = document.querySelector('input[name="address_radio"]:checked').value;

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.spring.bookdream.vo.OrderVO;
-import com.spring.bookdream.vo.SearchCriteria;
 
 public interface OrderService {
 	
