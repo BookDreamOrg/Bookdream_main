@@ -1,6 +1,7 @@
 package com.spring.bookdream.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.spring.bookdream.vo.OrderVO;
 
@@ -23,4 +24,10 @@ public interface OrderService {
 	
 	// 배송상태 업데이트
 	void trackingUpdate(OrderVO vo);
+	
+	// 마이페이지 배송상태 카운터
+	List<Map<String, Object>> orderStatusCount(OrderVO vo);	
+
+
+
 }

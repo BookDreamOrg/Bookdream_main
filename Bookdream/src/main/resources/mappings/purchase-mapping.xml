@@ -28,6 +28,7 @@
 		<result property="order_receiver" column="ORDER_RECEIVER"/>
 		<result property="order_tel" column="ORDER_TEL"/>
 		<result property="order_address" column="ORDER_ADDRESS"/>
+		<result property="order_status" column="ORDER_STATUS"/>
 	</resultMap>	
 
 	<resultMap type="pay" id="payList">
@@ -112,6 +113,7 @@
       		   o.order_receiver, 
      		   o.order_tel, 
      		   o.order_address,
+     		   o.order_status,
      		   y.total_price,
      		   y.final_price,
      		   y.pay_fee,

@@ -1,171 +1,230 @@
 @charset "UTF-8";
 
-* {
-	border-radius:10px;
-	box-sizing: border-box;
-}
-
-body {
-	 position: relative;
-
-}
-
 .main {
 	position:relative;
-	margin: 0 auto;
+
 	width: 1240px;
 	height: auto;
 	min-height: 1000px;
+	
+	margin: 0 auto;
+	line-height: 180%;
 }
 
-.topbar {
-	position:relative;
-	height:150px;	
-	margin-top: 50px;	
-	background-color: white;
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 공통 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  */
+.title {
+	font-size: 14px;
+	margin-bottom: 10px;
 }
 
-.topbar_title{
-	position:absolute;
-	top:60px;
-	margin-left:70px;
-	font-size: 30px;
-	font-weight: bold;
-}
-
-/* !!!!!!!!!!!!! 사이드바 !!!!!!!!!!!!! */
-
-.sidebar {
-	position:relative;
-	width: 290px;
-	min-height: 300px;
-	float: right;
-	padding: 0px 15px;
-	margin: 30px 0px 60px 0px;		
-	border: 2px solid #bdbdbd;	
-	background-color: white;	
-}
-
-.sidebar_item {
-	width: 260px;
-	height: auto;
-	min-height: 100px;
-
-}
-
-.sidebar_item_title_up, .sidebar_item_title_down {
-	margin: 10px 0px;
-	text-align: center;
-	cursor: pointer;
-}
-
-.sidebar_item_title_up {
-	display: none;
-}
-
-
-
-.sidebar_pay_main {
-	margin: 20px 0px;
-	font-size: 20px;
-}
-
-.sidebar_pay_right {
+.text_right_krw {
 	float: right;
 }
 
-.sidebar_pay_left {
-	margin: 10px 0px;
-	opacity: 0.7;
-}
 
-.sidebar_item_icon {
-	font-size: 40px;
-	text-align: center;
-	opacity: 0.5;
-}
-
-
-
-.sidebar_item_table {	
-	font-size: 12px;
-	width: 100%;
-	display: none;
-}
-
-
-.sidebar_item_table_td {
-	padding:10px 20px 10px 0px;
-
-}
-
-.sidebar_item_table_td.col1 {
-	vertical-align : middle;
-	width: 80px;
-	height: 100px;	
-}
-
-.sidebar_item_table_td.col2 {
-	overflow: hidden; 
-	text-overflow: ellipsis; 
-	white-space: nowrap;
-	max-width: 100px;
-
-}
-
-.sidebar_item_table_td_img {
-	width: 80px;
-	height: 100px;
-	border: 1px solid black;
-}
-
-.sidebar_item_table_tr {
-	border: 1px solid black;
-}
-
-/* !!!!!!!!!!!!! 센터 !!!!!!!!!!!!! */
-
-.center {
-	display:inline-block;
-	width: 900px;
-	height:700px;
-	margin-top:30px;	
-	border: 2px solid #bdbdbd;
-	background-color: white;	
-}
-
-
-.center_info {
-	margin: 60px 0px;
-	text-align:center;
-	font-size: 40px;
+.text_right {
+	font-size: 16px;
 	font-weight: bold;
-}
-
-.center_table {
-	margin:0 auto;
-	width:700px;	
- 	text-align:justify;
-	font-size: 20px;
+	float: right;
 	
 }
 
-.center_table_th {
-	height: 50px;
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! orderlist !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  */
+.orderlist {
+	width: 850px;
+	height: auto;
+		
+	margin-bottom: 30px;
+	padding: 0px 25px;
+}
+
+.orderlist_table {
+	width: 800px;
+	font-size: 12px;
+
+    border: 1px solid #DFDFDF;
+}
+
+.orderlist_table_th1 {
+	width: 680px;
+	height: 80px;
+	vertical-align: middle;
+	padding: 0px 30px;
+
+	font-size: 16px;	
+	font-weight: bold;
+
+	border-bottom: 1px solid #DFDFDF;	
+}
+
+.orderlist_table_th2 {
 	width: 120px;
+	height: 50px;
+	padding: 0px 30px;
+	vertical-align: middle;		
+	
+	color: #6768ab;
 	font-weight: bold;
 }
 
-.center_table_td {
-	padding: 20px 30px;
+.orderlist_table_th_right {
+	float: right;
 }
 
-.center_table_th.col2 {
-	height: 200px;
+.bi-chevron-down, .bi-chevron-up {
+	cursor: pointer;
 }
 
-.center_table_th.col4 {
+.orderlist_table_tr {
+	display: none;
+}
+
+.orderlist_table_img {
+	width: 80px;
 	height: 100px;
+	vertical-align: middle;		
+	border: 1px solid #DFDFDF;		
+}
+
+.orderlist_table_col1  {
+	width: 150px;
+	height: 150px;
+	text-align: center;	
+	vertical-align: middle;	
+	border-bottom: 1px solid #DFDFDF;
+}
+
+.orderlist_table_col2 {
+	width: 350px;
+	padding: 0px 0px 0px 20px ;
+	vertical-align: middle;	
+	border-bottom: 1px solid #DFDFDF;		
+}
+
+.orderlist_table_col3, .orderlist_table_col4 {
+	width: 150px;
+	padding: 0px 20px;
+	text-align: center;	
+	vertical-align: middle;		
+	border-bottom: 1px solid #DFDFDF;	
+}
+
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! pay_info !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  */
+
+.pay_info {
+	width: 850px;
+	height: auto;
+		
+	font-size: 14px;
+	margin-bottom: 30px;
+	padding: 0px 25px;
+}
+
+.pay_info_content {
+	width: 800px;
+	height: 300px;
+	
+	display: table-cell;
+	vertical-align:middle;	
+	
+	padding: 30px;
+    border: 1px solid #DFDFDF;
+}
+
+.pay_info_ul1 {
+	display: inline-block;
+}
+
+.pay_info_krw {
+	width: 50px;
+	float: left;
+	margin: 15px 0px 0px 5px;	
+	
+	padding-top: 3px;
+	font-size: 12px;
+}
+
+.pay_info_li1, .pay_info_li2, .pay_info_li3 {
+	width: 400px;
+	float: left;
+	margin: 15px 0px;
+}
+
+.pay_info_li4 {
+	width: 400px;		
+	float: left;
+	margin: 15px 0px;	
+}
+
+.pay_info_li5 {
+	width: 100px;
+	float: left;
+	padding-top: 3px;
+	margin: 15px 0px 15px 0px;		
+}
+
+.text_right_final {
+	
+	font-weight: bold;
+	float:right;
+	font-size: 22px;
+	color: #5c5d99;
+}
+
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! user_info !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  */
+
+.user_info {
+	width: 850px;
+	height: auto;
+		
+	margin-bottom: 30px;
+	padding: 0px 25px;
+
+}
+
+.user_info_content {
+	width: 800px;
+	height: auto;
+	min-height: 100px;
+	
+	display: table-cell;
+	vertical-align:middle;	
+	
+	padding: 30px;
+    border: 1px solid #DFDFDF;
+}
+
+.user_info_li1, .user_info_li3 {
+	width: 200px;
+	float: left;
+	margin: 8px 0px;
+}
+
+.user_info_li2, .user_info_li4{
+	width: 530px;
+	float: left;
+	margin: 8px 0px;	
+
+}
+
+.user_info_li2 {
+	font-weight: bold;
+}
+
+.user_info_button {
+	width: 320px;
+	margin: 0 auto;
 }
 
 
+.shopping_btn, .mypage_btn {
+	width: 150px;
+	height: 50px;
+
+	margin-top:30px;
+	font-weight: bold;
+}
+
+.mypage_btn {
+	float: right;	
+}

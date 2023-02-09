@@ -29,6 +29,7 @@
 
 <!--  CSS -->
 <link rel="stylesheet" type="text/css" href="/resources/css/mypage_address.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/bootstrap_icon.css">
 
 <!-- jQuery -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -37,6 +38,7 @@
 <body>
 	
 	<jsp:include page="/views/inc/header.jsp" />	
+	
 	<div class="main">
 		<div class="side"></div>
 	
@@ -45,12 +47,12 @@
 			<div class="address">
 				<div class="address_title">배송주소록</div>
 				<div class="address_main" id="address_main"></div>
-				<div class="address_sub">기본배송지 기준으로 배송일자가 안내됩니다.<br>기본 배송지는 삭제 불가합니다.</div>
+				<div class="address_sub">처음 생성한 배송지는 기본 배송지로 설정 됩니다.<br>기본 배송지 기준으로 배송일자가 안내됩니다.<br>기본 배송지는 삭제 불가합니다.</div>
 			</div>
 
 			<div class="addresslist">
 				<span class="addresslist_title" id="addresslist_title"></span><span>&nbsp;개</span>
-				<button type="button" class="btn btn-outline-secondary addresslist_button" id="modal_open" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-plus"> 배송지 입력</i></button>
+				<button type="button" class="btn btn-outline-secondary addresslist_button" id="address_insert_btn" ><i class="bi bi-plus"> 배송지 입력</i></button>
 				<hr>
 				<div class="addresslist_main" id="addresslist_main"></div>
 			</div>
@@ -107,8 +109,8 @@
 
 
      		    <div class="d-grid gap-2 address_save">
-					<button class="btn btn-primary" data-bs-dismiss="modal" id="modal_address_insert">저장</button>
-					<button class="btn btn-primary" data-bs-dismiss="modal" id="modal_address_update">수정</button>				
+					<button class="btn btn-primary" id="address_insert_modal_btn">저장</button>
+					<button class="btn btn-primary" id="address_update_modal_btn">수정</button>				
 				</div>	
      		    
      		    

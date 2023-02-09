@@ -39,54 +39,8 @@ public class AddressController {
 		addressService.insertAddress(vo);
 
 	}
-	
-	// 주소목록 조회
-	@RequestMapping(value="/allList")
-	@ResponseBody	
-	public List<AddressVO> getAddressList(AddressVO vo) {
-		
-		int user_no = (int) session.getAttribute("user_no");
-		vo.setUser_no(user_no);
-		
-		List<AddressVO> list  = addressService.getAddressList(vo);
-		
-		return list;
-	}
 
-	// 선택한 주소 조회
-	@RequestMapping(value="/get")
-	@ResponseBody	
-	public AddressVO getAddress(@RequestBody AddressVO vo) {
-
-		int user_no = (int) session.getAttribute("user_no");
-		vo.setUser_no(user_no);
-		
-		return addressService.getAddress(vo);
-	}
-	
-	// 기본 주소 불러옴
-	@RequestMapping(value="/getDefault")
-	@ResponseBody	
-	public AddressVO getDefaultAddress(@RequestBody AddressVO vo) {
-
-		int user_no = (int) session.getAttribute("user_no");
-		vo.setUser_no(user_no);
-		
-		return addressService.getDefaultAddress(vo);
-	}
-	
-	// 기본 주소 설정
-	@RequestMapping(value="/default")
-	@ResponseBody
-	public void defaultAddress(@RequestBody AddressVO vo) {
-		
-		int user_no = (int) session.getAttribute("user_no");
-		vo.setUser_no(user_no);
-		
-		addressService.defaultAddress(vo);
-	}	
-	
-	// 주소 삭제
+	// 주소삭제
 	@RequestMapping(value="/delete")
 	@ResponseBody
 	public void deleteAddress(@RequestBody AddressVO vo) {
@@ -111,5 +65,56 @@ public class AddressController {
 
 		addressService.updateAddress(vo);
 
+	}		
+
+	// 선택한 주소 호출 (주소 수정시 값 호출함)
+	@RequestMapping(value="/get")
+	@ResponseBody	
+	public AddressVO getAddress(@RequestBody AddressVO vo) {
+
+		int user_no = (int) session.getAttribute("user_no");
+		vo.setUser_no(user_no);
+		
+		return addressService.getAddress(vo);
+	}
+	
+	// 페이지 로딩시 기본 주소 호출
+	@RequestMapping(value="/getDefault")
+	@ResponseBody	
+	public AddressVO getDefaultAddress(@RequestBody AddressVO vo) {
+
+		int user_no = (int) session.getAttribute("user_no");
+		vo.setUser_no(user_no);
+		
+
+		return addressService.getDefaultAddress(vo);
+	}
+	
+	
+	// 주소목록 조회
+	@RequestMapping(value="/allList")
+	@ResponseBody	
+	public List<AddressVO> getAddressList(AddressVO vo) {
+		
+		int user_no = (int) session.getAttribute("user_no");
+		vo.setUser_no(user_no);
+		
+		List<AddressVO> list  = addressService.getAddressList(vo);
+		
+		return list;
+	}
+
+
+	// 기본 주소 설정
+	@RequestMapping(value="/default")
+	@ResponseBody
+	public void defaultAddress(@RequestBody AddressVO vo) {
+		
+		int user_no = (int) session.getAttribute("user_no");
+		vo.setUser_no(user_no);
+		
+		addressService.defaultAddress(vo);
 	}	
+	
+
 }
