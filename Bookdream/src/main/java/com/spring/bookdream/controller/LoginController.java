@@ -50,7 +50,7 @@ public class LoginController {
 			
 			session.setAttribute("flatform", user.getFlatform_type());
 			
-			return "/main/main_teset";
+			return "/main/main";
 		} else { //로그인 실패
 			System.out.println("로그인 실패");
 			

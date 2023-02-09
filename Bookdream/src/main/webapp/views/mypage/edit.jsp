@@ -58,7 +58,7 @@
 	min-height: 1000px;
 }
 
-.user_info_title{
+.user_info_title {
 	font-size: 30px;
 	margin-bottom: 10px;
 }
@@ -70,11 +70,15 @@
 	<%
 		UserVO user = (UserVO) session.getAttribute("authUser");
 	%>
+	<div class="wrapper">
 	<jsp:include page="/views/inc/header.jsp" />
 	<div class="container">
 		<div class="main">
 			<div class="rside">
-				<div class="user_info_title"><p>회원정보 수정<p></div>
+				<div class="user_info_title">
+					<p>회원정보 수정
+					<p>
+				</div>
 				<hr>
 				<div class="user_info_table">
 					<table class="table table-board">
@@ -115,15 +119,19 @@
 								name="user_email" value="<%=user.getUser_email()%>"></td>
 						</tr>
 					</table>
-					
+
 					<div class="d-grid gap-2">
-						<button type="button" class="btn btn-light " id="modal_reg_check" onclick="updateUser()">저장</button>
+						<button type="button" class="btn btn-light " id="modal_reg_check"
+							onclick="updateUser()">저장</button>
 					</div>
 				</div>
 			</div>
 
 			<div class="side">
-				<div><a href="/views/mypage/mypage.jsp">${authUser.getUser_name() }</a>님 환영합니다.</div>
+				<div>
+					<a href="/views/mypage/mypage.jsp">${authUser.getUser_name() }</a>님
+					환영합니다.
+				</div>
 				<h1>
 					<a href="/mypage/edit">회원정보 관리</a>
 				</h1>
@@ -131,11 +139,21 @@
 				<button type="button" class="btn" data-bs-toggle="modal"
 					data-bs-target="#exampleModal">회원탈퇴</button>
 
-				<div><a href="/mypage/address">배송지 관리</a></div>
-				<div><a href="/mypage/tracking">배송 조회</a></div>
-				<div><a href="#">나의 구매내역</a></div>
-					<div><a href="/mypage/getMyQnAList">1:1문의</a></div>
-					<div><a href="#">상품문의</a></div>
+				<div>
+					<a href="/mypage/address">배송지 관리</a>
+				</div>
+				<div>
+					<a href="/mypage/tracking">배송 조회</a>
+				</div>
+				<div>
+					<a href="#">나의 구매내역</a>
+				</div>
+				<div>
+					<a href="/mypage/getMyQnAList">1:1문의</a>
+				</div>
+				<div>
+					<a href="#">상품문의</a>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -192,7 +210,7 @@
 
 	<jsp:include page="/views/inc/footer.jsp" />
 	</div>
-
+	</div>
 	<!-- Script Bootstrap, jqurey-3.6.3 -->
 	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
 	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
@@ -200,6 +218,14 @@
 	<!-- Script FontAwesome-->
 	<script src="https://kit.fontawesome.com/4bf42f841a.js"
 		crossorigin="anonymous"></script>
+
+	<script>
+		let user_no =
+	<%=(int) session.getAttribute("user_no")%>
+		;
+	<%@include file="/resources/js/cartLIstCount.js"%>
+		
+	</script>
 
 
 </body>

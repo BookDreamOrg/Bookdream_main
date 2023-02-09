@@ -67,6 +67,7 @@
 <title>Insert title here</title>
 </head> 
 <body>
+<div class="wrapper">
 	<jsp:include page="/views/inc/header.jsp" />
 
 			
@@ -142,7 +143,7 @@
 			</div>
 			
 		<jsp:include page="/views/inc/footer.jsp" />
-	
+</div>	
 		<script type="text/javascript">
 		function updateQnAIn(){
 			var qna_no = $('#qna_no').val();
@@ -180,5 +181,12 @@
 	<!-- Script FontAwesome-->
 	<script src="https://kit.fontawesome.com/4bf42f841a.js"
 		crossorigin="anonymous"></script>
+		
+	<script>
+		let user_no =
+	<%=(int) session.getAttribute("user_no")%>
+		;
+	<%@include file="/resources/js/cartLIstCount.js"%>
+	</script>	
 </body>
 </html>
