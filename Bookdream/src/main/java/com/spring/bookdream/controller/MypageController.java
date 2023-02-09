@@ -284,12 +284,6 @@ public class MypageController {
 		
 		qnaService.deleteQnA(qnaVO);
 		
-		response.setContentType("text/html; charset=utf-8");
-		PrintWriter w = response.getWriter();
-		w.write("<script>alert('삭제되었습니다.');</script>");
-		w.flush();
-        w.close();
-		
 		return "redirect:/mypage/getMyQnAList";
 	}
 
