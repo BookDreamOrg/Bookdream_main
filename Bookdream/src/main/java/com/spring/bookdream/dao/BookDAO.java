@@ -23,6 +23,7 @@ public class BookDAO {
 		return mybatis.selectList("BookDAO.getBookList", vo);
 	}
 	
+	//한 권의 도서 상품 조회
 	public BookVO getBook(int book_no) {
 		
 		System.out.println("---> getBook() 처리");
@@ -39,6 +40,27 @@ public class BookDAO {
 		// selectList : select 조회 SQL문에서 결과값이 여러개의 row가 return될 때 사용
 		return mybatis.selectList("BookDAO.getBookKeyword", keyword);
 	}
+	
+	//베스트 셀러 상위 5개 상품 조회
+	public List<BookVO> bestSeller(){
+		System.out.println("---> JDBC로 bestSeller() 처리");
+		return mybatis.selectList("BookDAO.bestSeller");
+	}
+	
+	//리뷰가 많이 등록된 상위5개 상품 조회
+		public List<BookVO> bestSellerByReviewCount(){
+			System.out.println("---> JDBC로 bestSellerByReviewCount() 처리");
+			return mybatis.selectList("BookDAO.bestSellerByReviewCount");
+		}
+		
+	//평균리뷰가 높은 상위 5개 상품 조회
+		public List<BookVO> bestSellerByReviewGrade(){
+			System.out.println("---> JDBC로 bestSellerByReviewGrade() 처리");
+			return mybatis.selectList("BookDAO.bestSellerByReviewGrade");
+		}
+		
+		
+	
 	
 	
 }

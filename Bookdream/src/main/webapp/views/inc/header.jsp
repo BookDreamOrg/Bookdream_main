@@ -6,7 +6,31 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<!-- 자동검색 시 사용 -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 </head>
+
+<style>
+
+#ui-id-1 {
+	border: 10px solid rgba(black, .1);
+ 	border-radius: 15px;
+  	display: grid;
+  	font-size: 20px;
+  	width: 50%;
+  	
+}
+.ui-menu-item-wrapper {
+}
+.ui-menu-item-wrapper:hover,.ui-state-active {
+ background-color: var(--main-color-tint1);
+}
+
+</style>
+
+
 <body>
 	<% 
 		int book_no = (int) (Math.random() * 100) + 1;
@@ -68,7 +92,7 @@
 							<li><a class="dropdown-item" href="#">베스트</a></li>
 							<li><a class="dropdown-item" href="#">신상품</a></li>
 						</ul>
-						<input type="text" name="keyword" class="form-control search-input"
+						<input type="text" name="keyword" id="keyword_text" class="form-control search-input"
 							aria-label="Text input with dropdown button"
 							placeholder="성공적인 프로젝트를 위하여!!👍" />
 						<button type="submit"  class="btn btn-outline-secondary" id="input-group-button-right">검색</button>
@@ -156,7 +180,7 @@
 							<li><a class="dropdown-item" href="#">베스트</a></li>
 							<li><a class="dropdown-item" href="#">신상품</a></li>
 						</ul>
-						<input type="text" name="keyword" class="form-control search-input"
+						<input type="text" name="keyword" id="keyword"  class="form-control search-input"
 							aria-label="Text input with dropdown button"
 							placeholder="성공적인 프로젝트를 위하여!!👍" />
 						<button type="submit"  class="btn btn-outline-secondary" id="input-group-button-right">검색</button>
@@ -192,5 +216,29 @@
 				</ul>
 			</div>
 		</header>
+		</div>
+		
+		
+
+
+
+<!-- 자동검색 기능 js -->
+<script type="text/javascript" charset="UTF-8" >
+<%@include file="/views/inc/viewSearchKeyword.js"%>
+</script>
+
+			
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+			
+<!-- 자동 검색시 필요 -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 </body>
+
+
+
 </html>
+
+
+

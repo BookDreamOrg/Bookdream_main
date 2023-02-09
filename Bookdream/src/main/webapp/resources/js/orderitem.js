@@ -7,7 +7,8 @@ $(function() {
 	sidebar();
 })
 
-//사이드바 스크롤따라 이동
+//사이드바 스크롤따라 이동 
+/*
 $(document).ready(function(){
 	  var currentPosition = parseInt($(".sidebar").css("top"));
 	  $(window).scroll(function() {
@@ -15,7 +16,7 @@ $(document).ready(function(){
 	    $(".sidebar").stop().animate({"top":position+currentPosition+"px"},2000);
 	  });
 	});
-
+*/
 
 ////////////////////////////////////////////////// Modal //////////////////////////////////////////////////
 
