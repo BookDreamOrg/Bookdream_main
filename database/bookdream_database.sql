@@ -318,6 +318,8 @@ alter table QNA drop constraint FK_QNA_USER_NO;
 alter table QNA add constraint FK_QNA_USER_NO foreign key (user_no) references users (user_no) on delete cascade;
 
 select * from qna;
+delete from QNA where qna_no=10;
+rollback;
 commit; 
 
 create table ANSWER(
@@ -327,3 +329,13 @@ create table ANSWER(
     constraint PK_ANSWER primary key(ANS_NO),
     constraint FK_ANSWER foreign key(USER_NO) references USERS (USER_NO) 
 );
+
+drop sequence answer_seq;
+-- 번호를 자동으로 1부터 1씩 증가하도록 만듦
+create sequence answer_seq increment by 1 start with 1;
+
+insert into ANSWER (ANS_NO, ANS_CONTENT, USER_NO) VALUES (answer_seq.nextval, 'zz', '1');
+
+select * from answer;
+rollback;
+commit;
