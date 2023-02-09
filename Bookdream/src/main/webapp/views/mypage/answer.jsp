@@ -18,7 +18,7 @@
 	href="/resources/images/favicon/favicon-16x16.png" />
 <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
 <link rel="stylesheet" href="/resources/css/styles.css" />
-
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <style>
 .side {
 	position: relative;
@@ -248,41 +248,12 @@
 	<%=(int) session.getAttribute("user_no")%>
 		;
 	<%@include file="/resources/js/cartLIstCount.js"%>
-		
 	</script>
+	
+	<!-- 자동 검색시 필요 (페이지마다 다 넣어줘야 함?)-->
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<<<<<<< HEAD
-		<script type="text/javascript">
-			/* function answer_btn(event){
-				var user_no = $('#user_no').val();
-				var ans_content = $('#ans_content').val();
-				var ans_title = $('#ans_title').val();
-				console.log(user_no);
-				console.log(ans_title);
-				$.ajax({
-					type : "POST",
-					url : "/mypage/answerQnA",
-					data : {
-							user_no : user_no,
-							ans_content : ans_content
-							},
-					success : function(data){
-						alert('답변완료 되었습니다.');
-					},
-					error : function(){
-						alert('서버에러입니다.');
-					}
-				});
-				
-		        }) */
-				const answer = document.querySelector('.answer_btn');
-		        answer.addEventListener('click',function(e){
-		            console.log("currentTarget : ",e.currentTarget);
-		            console.log("Target : ",e.target);
-			}
-		</script>
-=======
->>>>>>> origin/main_ing
 	<!-- Script Bootstrap, jqurey-3.6.3 -->
 	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
 	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
