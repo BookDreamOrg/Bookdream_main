@@ -8,14 +8,12 @@ body{
   	
 }
 
-
-
 #detail-img {
-  height : 400px;
+	
+  width : 380px;
   object-fit: cover;
-  border: 2px;
-  border-style: solid;
-  border-color: gray;
+  border-style: none;
+  border-color: var(--main-color-tint4);
  
 }
 
@@ -37,7 +35,7 @@ section{
 	font-size: 30px;
 }
 
-#detail-review{
+#reviewList{
 	width: 80%;
   	align-items:center;
   	float:none; margin:0 auto;
@@ -51,5 +49,33 @@ section{
 #book_content{
 	line-height : 2em;
 	
+}
+
+#btn_buy_now,#btn_cart{
+	background-color: var(--main-color-tint1);
+	 border-color: var(--main-color-tint6);
+	 color: white;
+}
+
+#progress{
+	background-color: var(--main-color-tint1);
+}
+
+
+div#book_img_wrap{
+	position: relative;
+	
+}
+
+div#book_img{
+	vertical-align: middle;	
+	width: 300px;
+}
+
+div#img_text{
+	position: absolute; 
+	z-index: 1;
+	text-align: center;
+	right: 700px;
 }
 

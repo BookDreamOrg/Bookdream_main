@@ -18,15 +18,59 @@
 		<result property="book_category" column="BOOK_CATEGORY" />
 	</resultMap>
 
-	
+	<!-- 책 한권 정보 가져오기 -->
 	<select id="getBook" resultMap="bookResult">
 		SELECT * 
 		FROM book where book_no = #{book_no}
 	</select>
 	
+	<!-- 검색한 책 정보 가져오기 -->
 	<select id="getBookKeyword" resultMap="bookResult">
 		select * from book where title like '%' ||  #{keyword} || '%'
 	</select>
+	
+	<!-- 구매수량이 많은 상위 5개 도서 정보 가져오기 -->
+	<select id="bestSeller" resultMap="bookResult">
+		<![CDATA[
+		select * from book 
+        inner join (select book_no,sum(product_count) ,rank()over (order by sum(product_count) desc) rank 
+                     from purchase 
+                     group by book_no) order_item
+         on book.book_no =  order_item.book_no
+         where rank <=5 and rownum <=5
+         order by rank    
+         ]]>  
+	</select>
+	
+	<!-- 리뷰 많이 등록된 상위 5개 도서 정보 가져오기 -->
+	<select id="bestSellerByReviewCount" resultMap="bookResult">
+	<![CDATA[
+	 select * 
+     from book 
+     inner join(
+                     select book_no, count(*), rank()over (order by count(*) desc) rank 
+                     from review group by book_no) review_item
+     on book.book_no = review_item.book_no
+     where rank <=5 and rownum <=5
+     order by rank   
+	 ]]> 
+	</select>
+	
+	
+	<!-- 평균 리뷰가 높은 상위 5개 도서 정보 가져오기 -->
+	<select id="bestSellerByReviewGrade" resultMap="bookResult">
+	   <![CDATA[ 
+	   select * from book 
+        inner join 
+                (select book_no, round(sum(review_star)/count(*),2),rank()over (order by sum(review_star)/count(*) desc) rank  
+                 from 
+                 review group by book_no) review_item
+         on book.book_no =  review_item.book_no
+         where rank <=5 and rownum <=5
+         order by rank
+	   ]]>  
+	</select>
+	
 	
 </mapper>
 

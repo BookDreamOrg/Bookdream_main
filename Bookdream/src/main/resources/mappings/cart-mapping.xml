@@ -11,9 +11,10 @@
 		<result property="product_count" column="PRODUCT_COUNT" />	
 		
 		<result property="listCount" column="LISTCOUNT" />	
-		
-		<result property="num" column="NUM" />
-				
+		<result property="initCount" column="INITCOUNT" />	
+		<!-- 
+		<result property="num" column="NUM" /> 
+				 -->
 		<collection property="userVO" resultMap="userList"></collection>
 		<collection property="bookVO" resultMap="bookList"></collection>
 	</resultMap>	
@@ -48,20 +49,27 @@
 		WHERE  user_no = #{user_no}
 	</select>
 	
+	<!-- 장바구니 중복 아이템 확인  -->
+	<select id="selectInitCount" resultType="integer">
+		SELECT count(*)  
+		FROM   CART 
+		WHERE user_no=#{user_no} and book_no = #{book_no}
+	</select>
+	
 	<!-- 장바구니 추가 -->
 	<insert id="addCart">
 		INSERT into CART(cart_no, user_no , book_no , product_count)
 		values( CART_SEQ.nextval,  
 				#{user_no}, 
 				#{book_no}, 
-				#{product_count} ) 
+				#{product_count} )
 	</insert>
-	<!-- sequence적용 cart inert 예시
-	DROP sequence CART_SEQ;
-	CREATE sequence CART_SEQ increment by 1;
-	insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) 
-	values(CART_SEQ.nextval, 1, 8, 6);
-	 -->
+	
+	<update id="addCart_init">
+		UPDATE CART 
+		set PRODUCT_COUNT = (PRODUCT_COUNT + #{product_count}) 
+		where user_no=#{user_no} and book_no=#{book_no}
+	</update>
 	 
 	<!-- 장바구니 삭제 -->
 	<delete id="deleteCart">
@@ -77,8 +85,6 @@
 		WHERE	cart_no = #{cart_no} AND user_no = #{user_no}
 	</update>
 	-->
-	
-	
 	
 </mapper>
 

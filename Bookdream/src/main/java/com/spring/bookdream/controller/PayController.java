@@ -186,14 +186,15 @@ public class PayController {
 		// 새로고침 DB중복 방지
 		// 방금 구매한 상품을 조회함
 		@RequestMapping(value="/success")
-		public String success(@SessionAttribute("payData") PayVO pay, PurchaseVO vo, Model model) {
+		public String success(@SessionAttribute("payData") PayVO pay, @SessionAttribute("order") OrderVO order, PurchaseVO purchase, Model model) {
 
 			int user_no = (int) session.getAttribute("user_no");
 			
-			vo.setUser_no(user_no);
-			vo.setOrder_no(pay.getPay_no());			
+			purchase.setUser_no(user_no);
+			purchase.setOrder_no(pay.getPay_no());			
 
-			model.addAttribute("purchase", PurchaseService.getPurchaseList(vo));
+			model.addAttribute("purchase", PurchaseService.getPurchaseList(purchase));
+			model.addAttribute("order_name", order.getOrder_name());
 			
 			return "main/success";
 			

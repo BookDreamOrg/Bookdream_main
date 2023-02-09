@@ -1,5 +1,6 @@
 package com.spring.bookdream.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -64,6 +65,18 @@ public class ReviewServiceImpl implements ReviewService {
 		vo.setBook_no(book_no);
 		vo.setUser_id(user_id);
 		return reviewDAO.existReview(vo);
+	}
+
+/*************************** 리뷰 평균 평점  ********************************************/
+	@Override
+	public double avgReview(int book_no) {
+		return reviewDAO.avgReview(book_no);
+	}
+
+/*************************** 별점 별 갯수  ********************************************/
+	@Override
+	public List<HashMap<Integer, Integer>> progressStar(int book_no) {
+		return reviewDAO.progressStar(book_no);
 	}
 
 

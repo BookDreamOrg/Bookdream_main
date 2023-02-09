@@ -11,8 +11,7 @@
 		<result property="search_date" column="SEARCH_DATE" />
 		<result property="login_yn" column="LOGIN_YN" />
 	</resultMap>
-
-
+	
 	<insert id="insertSearchKeyword">
 		<![CDATA[ 
 			INSERT INTO KEYWORD_HISTORY (USER_ID,KEYWORD,SEARCH_DATE,LOGIN_YN) 
@@ -23,6 +22,12 @@
 		]]>
 	</insert>
 
+
+	<select id="viewAutoKeyword" resultType="map" parameterType="map">
+		<![CDATA[ 
+			SELECT title FROM book where title like '%' ||  #{keyword} || '%' order by book_no desc
+		]]>
+	</select>
 
 
 

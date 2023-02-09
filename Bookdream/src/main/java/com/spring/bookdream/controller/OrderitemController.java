@@ -11,8 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.spring.bookdream.service.OrderitemService;
-
+import com.spring.bookdream.service.PayService;
 import com.spring.bookdream.vo.OrderitemVO;
+import com.spring.bookdream.vo.PayVO;
 
 @Controller
 @RequestMapping("/detail/cart")
@@ -23,10 +24,13 @@ public class OrderitemController {
 	private OrderitemService orderitemService;
 	
 	@Autowired
+	private PayService payService;
+	
+	@Autowired
 	private HttpSession session;	
 	
 	@RequestMapping(value="/orderitem")
-	public String orderitemList(OrderitemVO vo, Model model, HttpServletResponse response) {
+	public String orderitemList(OrderitemVO vo, PayVO pay, Model model, HttpServletResponse response) {
 	
 		// 로그인해야 진입됨
 		if (session.getAttribute("user_no") == null) {
@@ -47,7 +51,11 @@ public class OrderitemController {
 		
 		int user_no = (int) session.getAttribute("user_no");		
 		vo.setUser_no(user_no);
+		
+		System.out.println("user_no : " + user_no);
+		pay.setUser_no(user_no);
 			
+		
 			
 		// 바로 가기 구매시
 		if ("Y".equals(vo.getBuy_now())) {
@@ -83,8 +91,9 @@ public class OrderitemController {
 			model.addAttribute("userPoint", orderitemService.userPoint(vo));
 
 		}
-
 		
+		model.addAttribute("lastPayment", payService.lastPayment(pay));
+
 		return "itemorder/orderitem";
 		
 	}
