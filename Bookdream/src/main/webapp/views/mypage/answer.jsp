@@ -145,7 +145,7 @@
 													        <textarea class="form_textarea" id="ans_content" name="ans_content" maxlength="500" style="width:465px; height: 246px"></textarea>
 													      </div>
 													      <div class="modal-footer">
-													        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick='answer_btn()'>답변</button>
+													        <button type="button" class="answer_btn btn btn-primary" data-bs-dismiss="modal" onclick='answer_btn(event)'>답변</button>
 													      </div>
 													    </div>
 													  </div>
@@ -188,7 +188,7 @@
 		<jsp:include page="/views/inc/footer.jsp" />
 
 		<script type="text/javascript">
-			function answer_btn(){
+			/* function answer_btn(event){
 				var user_no = $('#user_no').val();
 				var ans_content = $('#ans_content').val();
 				var ans_title = $('#ans_title').val();
@@ -209,6 +209,11 @@
 					}
 				});
 				
+		        }) */
+				const answer = document.querySelector('.answer_btn');
+		        answer.addEventListener('click',function(e){
+		            console.log("currentTarget : ",e.currentTarget);
+		            console.log("Target : ",e.target);
 			}
 		</script>
 	<!-- Script Bootstrap, jqurey-3.6.3 -->
