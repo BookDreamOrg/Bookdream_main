@@ -63,7 +63,7 @@
          </div>
          <div class="row d-flex header-row">
             <div class="col-lg-1 p-2 header-col-home mr-2 mb-1">
-               <a href="#"> <img class="header-row-logo ms-4 mb-1"
+               <a href="/views/main/main.jsp"> <img class="header-row-logo ms-4 mb-1"
                   src="/resources/images/logo/logo_white.png" alt="logo_white" /> <img
                   class="header-row-logo_text"
                   src="/resources/images/logo/logo_text.png" alt="logo_text" />
@@ -81,7 +81,7 @@
                </a>
             </div>
             <form action="/bookListSearchByKeyword" method="get">
-            <div class="col-lg-6 p-2 ms-5 header-col-search input-group">
+            <div class="col-lg-6 p-2 header-col-search input-group">
                <div class="input-group mb-2 col-search">
                   <button
                      class="btn btn-outline-secondary dropdown-toggle search-toggle"
@@ -143,20 +143,20 @@
                   href="/views/mypage/mypage.jsp">마이페이지</a></li>
                <span class="nav-bar-line"></span>
                <li class="nav-item"><a
-                  class="nav-link header-nav-link disabled" href="#" tabindex="-1"
-                  aria-disabled="true"> 관리자 </a></li>
+                  class="nav-link header-nav-link" href="/views/admin/admin.jsp" tabindex="-1"
+                  aria-disabled="true">관리자 </a></li>
             </ul>
          </div>
          <div class="row d-flex header-row">
             <div class="col-lg-1 p-2 header-col-home mr-2 mb-1">
-               <a href="#"> <img class="header-row-logo ms-4 mb-1"
+               <a href="/views/main/main.jsp"> <img class="header-row-logo ms-4 mb-1"
                   src="/resources/images/logo/logo_white.png" alt="logo_white" /> <img
                   class="header-row-logo_text"
                   src="/resources/images/logo/logo_text.png" alt="logo_text" />
                </a>
             </div>
             
-            <div class="col-lg-1 p-5 flex-grow-1 header-col-btn">
+            <div class="col-lg-1 flex-grow-1 header-col-btn">
 <!--  cart btn -------------------------- -->
                <button type="button" class="header-btn btn position-relative p-1" 
                         onclick="location.href='/itemorder/cart/list'">
@@ -177,7 +177,7 @@
          </div>
             
             <form action="/bookListSearchByKeyword" method="get">
-            <div class="col-lg-6 p-2 ms-5 header-col-search input-group">
+            <div class="col-lg-6 p-2 header-col-search input-group">
                <div class="input-group mb-2 col-search">
                   <button
                      class="btn btn-outline-secondary dropdown-toggle search-toggle"
@@ -187,7 +187,7 @@
                      <li><a class="dropdown-item" href="#">베스트</a></li>
                      <li><a class="dropdown-item" href="#">신상품</a></li>
                   </ul>
-                  <input type="text" name="keyword" id="keyword"  class="form-control search-input"
+                  <input type="text" name="keyword" id="keyword_text" class="form-control search-input"
                      aria-label="Text input with dropdown button"
                      placeholder="성공적인 프로젝트를 위하여!!👍" />
                   <button type="submit"  class="btn btn-outline-secondary" id="input-group-button-right">검색</button>
@@ -241,8 +241,9 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+	<!-- Script FontAwesome-->
+	<script src="https://kit.fontawesome.com/4bf42f841a.js"
+		crossorigin="anonymous"></script>
+
 </body>
-
-
-
 </html>
