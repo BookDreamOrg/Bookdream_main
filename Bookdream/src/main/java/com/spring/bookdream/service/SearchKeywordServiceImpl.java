@@ -28,4 +28,9 @@ public class SearchKeywordServiceImpl implements SearchKeywordService {
 	public List<Map<String, Object>> viewAutoKeyword(Map<String, Object> paramMap) throws Exception {
 		return searchingKeywordDAO.viewAutoKeyword(paramMap);
 	}
+
+	@Override
+	public List<String> bestSearchKeyword() {
+		return searchingKeywordDAO.bestSearchKeyword();
+	}
 }

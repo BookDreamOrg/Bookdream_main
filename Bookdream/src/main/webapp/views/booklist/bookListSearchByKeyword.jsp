@@ -9,6 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+<!-- 자동 검색시 필요 (페이지마다 다 넣어줘야 함?)-->
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+
 <!-- J쿼리 -->
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 
@@ -118,10 +121,10 @@ function bookList_buy(val){
 function bookList_cart(val){
 	alert('장바구니');
 	let user_no = '<%=session.getAttribute("user_no")%>';
-	console.log("book_no : " + book_no + "user_no :  " + user_no )
+	console.log("book_no : " + val + "user_no :  " + user_no )
 	if(user_no === null ||user_no === "" || user_no === "null"){
-		alert('user_no = null');
-		location.replace("/itemorder/cart/list?book_no="+val+"&user_no=0"+"&product_count=1");
+		alert('로그인 페이지로 이동합니다.');
+		location.replace("views/user/login.jsp");
 	}else{
 		alert('장바구니');
 		location.replace("/itemorder/cart/list?book_no="+val+"&user_no="+user_no+"&product_count=1");
@@ -141,6 +144,9 @@ function bookList_cart(val){
 	<script src="https://kit.fontawesome.com/4bf42f841a.js"
 		crossorigin="anonymous"></script>
 		
+	<!-- 자동 검색시 필요 (페이지마다 다 넣어줘야 함?)-->
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 </body>
 </html>

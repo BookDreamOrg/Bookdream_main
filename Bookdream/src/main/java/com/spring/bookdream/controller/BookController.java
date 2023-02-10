@@ -26,6 +26,7 @@ import com.spring.bookdream.service.MainService;
 import com.spring.bookdream.service.ReviewService;
 import com.spring.bookdream.service.SearchKeywordService;
 import com.spring.bookdream.vo.BookVO;
+import com.spring.bookdream.vo.KeywordHistoryVO;
 import com.spring.bookdream.vo.ReviewVO;
 
 
@@ -106,10 +107,10 @@ public class BookController {
 			//평균 리뷰가 높은  상품 조회
 			@RequestMapping(value = "/main/main")
 			@ResponseBody
-			public Map<Integer,List<BookVO>> bestSeller(Model model){
+			public Map<Integer,List<BookVO>> bestSeller(Model model ) throws Exception{
 				System.out.println("bestSeller controller");
 				
-				Map<Integer,List<BookVO>> mainList = new HashMap<Integer, List<BookVO>>();
+				Map<Integer,List<BookVO>> mainList= new HashMap<Integer, List<BookVO>>();
 				
 				List<BookVO> bestSeller = new ArrayList<BookVO>();
 				bestSeller = mainService.bestSeller();
@@ -123,7 +124,6 @@ public class BookController {
 				mainList.put(1,bestSeller);
 				mainList.put(2,bestSellerByReviewCount);
 				mainList.put(3,bestSellerByReviewGrade);
-				
 				System.out.println("mainList.size() : "+mainList.size());
 				
 				return mainList;
