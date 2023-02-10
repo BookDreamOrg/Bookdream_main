@@ -273,7 +273,7 @@ public class MypageController {
 		qnaService.updateQnA(qnaVO);
 		return "mypage/qna";
 	}
-	
+	 
 	// 1:1문의 삭제
 	@RequestMapping(value="/deleteQnA")
 	public String deleteQnA(HttpServletRequest request, HttpServletResponse response, QnAVO qnaVO, Model model) throws IOException {
@@ -286,7 +286,7 @@ public class MypageController {
 		
 		return "redirect:/mypage/getMyQnAList";
 	}
-
+  
 	// 관리자의 전체 문의 리스트 가져오기
 		@RequestMapping(value="/getAllQnAList")
 		public String getAllQnAList(HttpServletResponse response, Model model){
