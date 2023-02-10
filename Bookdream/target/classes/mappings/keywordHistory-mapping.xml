@@ -29,6 +29,14 @@
 		]]>
 	</select>
 
-
+	<select id="viewBestSearhKeyword" resultType="java.lang.String" parameterType="java.lang.String" >
+		<![CDATA[ 
+		select keyword from (
+   					 select rank() OVER (order by count(*) desc) rank, keyword, count(keyword) 
+   					 from keyword_history 
+   					 group by keyword )
+    	where rownum <= 10 and rank <= 10
+		]]>
+	</select>
 
 </mapper>

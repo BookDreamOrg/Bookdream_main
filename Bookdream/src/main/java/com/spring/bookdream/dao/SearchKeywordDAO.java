@@ -47,6 +47,11 @@ public class SearchKeywordDAO {
 	public List<Map<String, Object>>viewAutoKeyword(Map<String, Object> paramMap) throws Exception {
 		return mybatis.selectList("SearchKeywordHistoryDAO.viewAutoKeyword",paramMap);
 	}
+	
+	public List<String> bestSearchKeyword() {
+		System.out.println("bestSearchKeyworDAO");
+		return mybatis.selectList("SearchKeywordHistoryDAO.viewBestSearhKeyword");
+	}
 
 }
 

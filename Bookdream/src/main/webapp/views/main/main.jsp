@@ -67,6 +67,16 @@
 			<li class="nav-item"><a class="nav-link" href="#">신상품</a></li>
 		</ul>
 		<div class="book-section">
+			<!---------------------------검색 상위 키워드 10개-------------------------------->
+			
+			<div class="mt-5">
+				<div id="bestKeywordList">
+					<ul class="list-group">
+  						<li class="list-group-item list-group-item-action">//</li>
+					</ul>
+				</div>
+			</div>
+		
 			<!---------------------------베스트 셀러 상품 5개-------------------------------->
 			<div class="mt-5">
 				<span class="h1">베스트셀러</span>
@@ -85,9 +95,6 @@
 			</div>
 			<div id="bestBookByReviewGrade" class="mt-3"></div>
 
-
-
-
 		</div>
 		</main>
 
@@ -105,9 +112,7 @@
 		crossorigin="anonymous"></script>
 
 	<script>
-		let user_no =
-	<%=(int) session.getAttribute("user_no")%>
-		;
+    let user_no = <%=session.getAttribute("user_no")%>;
 	<%@include file="/resources/js/cartLIstCount.js"%>
 	</script>
 
