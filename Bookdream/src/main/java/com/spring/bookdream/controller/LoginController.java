@@ -47,7 +47,7 @@ public class LoginController {
 			
 			session.setAttribute("user_id", user.getUser_id());
 			session.setAttribute("user_no", user.getUser_no());
-			
+			 
 			session.setAttribute("flatform", user.getFlatform_type());
 			
 			return "/main/main";

@@ -277,16 +277,16 @@ create table QNA(
     constraint FK_QNA_USER_NO foreign key(USER_NO) REFERENCES USERS (USER_NO)
 );
 
+-- 번호를 자동으로 1부터 1씩 증가하도록 만듦
+drop sequence qna_seq;
+create sequence qna_seq increment by 1 start with 1;
+
 insert into QNA(QNA_NO, USER_NO, QNA_TITLE, QNA_CONTENT, QNA_TYPE) 
 		values(qna_seq.nextval, 1 , '이게안돼','이게 왜 안될까요','QNA타입');
 delete from qna where user_no=1;
 
 ALTER TABLE QNA 
         ADD CONSTRAINT FK_QNA_USER_NO FOREIGN KEY(USER_NO) REFERENCES USERS(USER_NO);
-
-drop sequence qna_seq;
--- 번호를 자동으로 1부터 1씩 증가하도록 만듦
-create sequence qna_seq increment by 1 start with 1;
 
 -- qna table fk user_no casecade
 alter table QNA drop constraint FK_QNA_USER_NO;
@@ -305,8 +305,8 @@ create table ANSWER(
     constraint FK_ANSWER foreign key(USER_NO) references USERS (USER_NO) 
 );
 
-drop sequence answer_seq;
 -- 번호를 자동으로 1부터 1씩 증가하도록 만듦
+drop sequence answer_seq;
 create sequence answer_seq increment by 1 start with 1;
 
 insert into ANSWER (ANS_NO, ANS_CONTENT, USER_NO) VALUES (answer_seq.nextval, 'zz', '1');

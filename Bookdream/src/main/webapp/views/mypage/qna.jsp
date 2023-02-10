@@ -18,7 +18,7 @@
 	href="/resources/images/favicon/favicon-16x16.png" />
 <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
 <link rel="stylesheet" href="/resources/css/styles.css" />
-
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <style>
 .side {
 	position: relative;
@@ -144,7 +144,7 @@
 												</div>
 												<div class="qna_delete_btn">
 													<button class="btn btn-secondary" type="button"
-														onclick="location.href='deleteQnA?qna_no=${list.getQna_no() }'">삭제</button>
+														onclick="delete_btn(${list.getQna_no() })">삭제</button>
 												</div>
 											</div>
 										</div>
@@ -211,12 +211,35 @@
 	<link rel="stylesheet"
 		href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
 
+	<script type="text/javascript">
+		function delete_btn(value){
+			var qna_no = value;
+			console.log(qna_no);
+			$.ajax({
+				type : "POST",
+				url : "/mypage/deleteQnA",
+				data : {qna_no : qna_no},
+				success : function(data){
+					alert('삭제 되었습니다.');
+					location.href='/mypage/getMyQnAList'
+				},
+				error : function(){
+					alert('서버에러입니다.')
+				}
+			});
+		}
+	</script>
+
 	<script>
 		let user_no =
 	<%=(int) session.getAttribute("user_no")%>
 		;
 	<%@include file="/resources/js/cartLIstCount.js"%>
-		
 	</script>
+
+	<!-- 자동 검색시 필요 (페이지마다 다 넣어줘야 함?)-->
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
 </body>
 </html>
