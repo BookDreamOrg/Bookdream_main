@@ -11,4 +11,5 @@ public class KeywordHistoryVO {
 	private String keyword;
 	private Date search_date;
 	private String login_yn;
+
 }

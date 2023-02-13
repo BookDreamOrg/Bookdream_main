@@ -48,12 +48,19 @@ public class SearchKeywordDAO {
 		return mybatis.selectList("SearchKeywordHistoryDAO.viewAutoKeyword",paramMap);
 	}
 	
+
+	public List<String> bestSearchKeyword() {
+		System.out.println("bestSearchKeyworDAO");
+		return mybatis.selectList("SearchKeywordHistoryDAO.viewBestSearhKeyword");
+	}
+
 	
 	// 상위 누적 키워드 랜덤 5개 추천도서로 표시
 	public List<KeywordHistoryVO> rcmndBooklist(KeywordHistoryVO vo) {
 
 		return mybatis.selectList("SearchKeywordHistoryDAO.rcmndBooklist", vo);
 	}
+
 
 
 }
