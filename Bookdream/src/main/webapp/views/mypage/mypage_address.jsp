@@ -46,7 +46,7 @@
 	<jsp:include page="/views/inc/header.jsp" />	
 	
 	<div class="main">
-		<div class="side"></div>
+		<jsp:include page="/views/inc/mypage_side.jsp" />	
 	
 		<div class="main_address">
 			
@@ -135,6 +135,7 @@
 	<!-- Script Bootstrap, jqurey-3.6.3 -->
 	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
 	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+	
 
 	<!-- Script FontAwesome-->
 	<script src="https://kit.fontawesome.com/4bf42f841a.js" crossorigin="anonymous"></script>	

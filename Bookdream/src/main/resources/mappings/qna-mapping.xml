@@ -55,5 +55,13 @@
 		insert into ANSWER (ans_no, ans_content, user_no) 
 		values (answer_seq.nextval, #{ans_content}, #{user_no})
 	</insert>
-	
+
+	<!-- 나의 문의 리스트 가져오기  -->
+	<select id="getRecentMyQnAList" resultMap="qnaResult" parameterType="qna">
+		select * 
+		from QNA 
+		where user_no = #{user_no} and 	
+		<![CDATA[ rownum <= 3]]> 
+		order by qna_no desc
+	</select>	
 </mapper>

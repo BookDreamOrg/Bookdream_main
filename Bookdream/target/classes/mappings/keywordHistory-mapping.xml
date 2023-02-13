@@ -11,6 +11,8 @@
 		<result property="search_date" column="SEARCH_DATE" />
 		<result property="login_yn" column="LOGIN_YN" />
 	</resultMap>
+
+	
 	
 	<insert id="insertSearchKeyword">
 		<![CDATA[ 
@@ -38,5 +40,31 @@
     	where rownum <= 10 and rank <= 10
 		]]>
 	</select>
+
+	<select id="rcmndBooklist" resultType="hashmap"> 
+	<![CDATA[	
+		SELECT title, 
+		  	   book_img, 
+		  	   book_price,
+		  	   book_no
+		FROM  (select b.title, 
+					  b.book_img, 
+					  b.book_price,
+					  b.book_no
+		       from   book b,(select keyword, 
+		                             COUNT(keyword),
+		                          	 RANK() OVER(ORDER BY COUNT(keyword) DESC) as rn
+		                      from   KEYWORD_HISTORY 
+		                      where  user_id = #{user_id} 
+		                      group by keyword
+		                      order by COUNT(keyword) desc) k
+		       where b.title like '%'|| k.keyword ||'%' and rn <= 5 
+		       order by DBMS_RANDOM.VALUE)
+		WHERE  rownum <= 5
+	]]>
+	</select>
+
+
+
 
 </mapper>

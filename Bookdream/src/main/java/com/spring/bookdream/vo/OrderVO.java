@@ -25,6 +25,7 @@ public class OrderVO {
 	private int amount;	
 	
 	// 마이페이지 조회용
+	private int row;
 	private int search_date;
 	private int search_status;
 		
