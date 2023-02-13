@@ -54,42 +54,19 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
     />
     <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
     <link rel="stylesheet" href="/resources/css/styles.css" />
+	
 
+     <!-- Swiper -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+      <link rel="stylesheet" href="/resources/css/banner.css" />
+	
     <title>Insert title here</title>
   </head>
   <body>
     <div class="wrapper">
       <jsp:include page="/views/inc/header.jsp" />
-
-      <!-- Swiper -->
-      <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
-      />
-      <link rel="stylesheet" href="/resources/css/banner.css" />
-
-      <div class="mt-5">
-        <div id="bestKeywordList">
-          <ul class="list-group">
-            <li class="list-group-item list-group-item-action">//</li>
-          </ul>
-        </div>
-      </div>
-
-      <!---------------------------베스트 셀러 상품 5개-------------------------------->
-      <div class="mt-5">
-        <span class="h1">베스트셀러</span>
-      </div>
-      <div id="bestBook" class="mt-3"></div>
-
-      <!---------------------------리뷰 많은 상품 5개-------------------------------->
-      <div class="mt-5">
-        <span class="h1">리뷰 많은 도서</span>
-      </div>
-      <div id="bestBookByReviewCount" class="mt-3"></div>
-
-      <main>
-        <div class="banner">
+      
+      <div class="banner">
           <!-- Slider main container -->
           <div class="swiper">
             <!-- Additional required wrapper -->
@@ -166,6 +143,30 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
             <div class="swiper-button-next"></div>
           </div>
         </div>
+
+      <div class="mt-5">
+        <div id="bestKeywordList">
+          <ul class="list-group">
+            <li class="list-group-item list-group-item-action">//</li>
+          </ul>
+        </div>
+      </div>
+      
+
+      <!---------------------------베스트 셀러 상품 5개-------------------------------->
+      <div class="mt-5">
+        <span class="h1">베스트셀러</span>
+      </div>
+      <div id="bestBook" class="mt-3"></div>
+
+      <!---------------------------리뷰 많은 상품 5개-------------------------------->
+      <div class="mt-5">
+        <span class="h1">리뷰 많은 도서</span>
+      </div>
+      <div id="bestBookByReviewCount" class="mt-3"></div>
+
+      <main>
+
         <ul class="nav nav-tabs book-section-nav">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">베스트</a>
