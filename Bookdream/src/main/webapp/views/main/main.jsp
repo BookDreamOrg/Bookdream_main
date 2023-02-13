@@ -144,6 +144,16 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
           </div>
         </div>
 
+	<ul class="nav nav-tabs book-section-nav">
+			<li class="nav-item"><a class="nav-link active"
+				aria-current="page" href="#">베스트</a></li>
+			<li class="nav-item"><a class="nav-link" href="#">신상품</a></li>
+		</ul>
+ 	<main>
+	<div class="book-section">
+	
+  <!---------------------------검색 상위 키워드 10개-------------------------------->
+	
       <div class="mt-5">
         <div id="bestKeywordList">
           <ul class="list-group">
@@ -165,32 +175,8 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
       </div>
       <div id="bestBookByReviewCount" class="mt-3"></div>
 
-      <main>
 
-        <ul class="nav nav-tabs book-section-nav">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">베스트</a>
-          </li>
-          <li class="nav-item"><a class="nav-link" href="#">신상품</a></li>
-        </ul>
-        <div class="book-section">
-          <!---------------------------검색 상위 키워드 10개-------------------------------->
-
-          <div class="mt-5">
-            <div id="bestKeywordList">
-              <ul class="list-group">
-                <li class="list-group-item list-group-item-action">//</li>
-              </ul>
-            </div>
-          </div>
-
-          <!---------------------------베스트 셀러 상품 5개-------------------------------->
-          <div class="mt-5">
-            <span class="h1">베스트셀러</span>
-          </div>
-          <div id="bestBook" class="mt-3"></div>
-
-          <!---------------------------평점 높은 상품 5개-------------------------------->
+       <!---------------------------평점 높은 상품 5개-------------------------------->
           <div class="mt-5">
             <span class="h1">평점 높은 도서</span>
           </div>
