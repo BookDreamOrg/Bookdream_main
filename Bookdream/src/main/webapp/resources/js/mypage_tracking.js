@@ -68,12 +68,12 @@ function order_list(search_date, search_status) {
 									<th class="trackinglist_table_th2" >`
 									
 									if(order.order_status == 0) {
-					html +=				`<button type="button" class="btn btn-outline-secondary pay_cencel cencel_btn" 
-											 	 data-bs-toggle="modal" data-bs-target="#pay_cencel" 
+					html +=				`<button type="button" class="btn btn-outline-secondary pay_cancel cancel_btn" 
+											 	 data-bs-toggle="modal" data-bs-target="#pay_cancel" 
 											 	 value="${order.order_no}">결제취소</button>`
 
 									} else if(order.order_status == 2) {
-					html +=				`<button type="button" class="btn btn-outline-secondary return_request cencel_btn" 
+					html +=				`<button type="button" class="btn btn-outline-secondary return_request cancel_btn" 
 												data-bs-toggle="modal" data-bs-target="#return_reqeust" 
 												value="${order.order_no}">반품신청</button>`							
 									
@@ -183,7 +183,7 @@ $(document).on("click", "#order_search_btn", function(e) {
 	$('#offcanvas').offcanvas('show');
 })
 
-/***************************** 주문목록 상세조회 오프캔버스 : 조건설정 후 적용버튼클릭 *****************************/
+/***************************** 주문내역 상세조회 : 조건설정 후 적용버튼클릭 *****************************/
 $(document).on("click", "#order_search_view_btn", function(e) {
 	
 	let search_date = ById('order_search_select_btn').value
@@ -281,9 +281,9 @@ function order_detail(order_no) {
 
 
 /***************************** 결제취소 버튼 클릭 *****************************/
-$(document).on("click", "button.pay_cencel", function(e) {	
+$(document).on("click", "button.pay_cancel", function(e) {	
 	
-	ById('modal_pay_cencel').value = e.currentTarget.value
+	ById('modal_pay_cancel').value = e.currentTarget.value
 
 })
 
@@ -295,7 +295,7 @@ $(document).on("click", "button.return_request", function(e) {
 })
 
 /***************************** 결제취소 모달 취소버튼 클릭 *****************************/
-$(document).on("click", "#modal_pay_cencel", function(e) {	
+$(document).on("click", "#modal_pay_cancel", function(e) {	
 	
 	var order_no = e.currentTarget.value
 	orderTrackingUpdate(order_no, 10);

@@ -1,8 +1,3 @@
-
-
-
-
-
 /***************************** 페이지 로딩 *****************************/
 $(function() {
 	load_default();
@@ -37,17 +32,17 @@ function load_default() {
 					var result =  JSON.parse(result);
 
 								if(`${result.default_add}` == `Y`) {
-					html +=			`<div style="color: #6768ab; font-weight: bold;">` +
-									`<i class="bi bi-geo-alt-fill"></i>&nbsp;${result.address_alias}&nbsp;[기본배송지]</div>` 	
+					html +=			`<div style="color: #6768ab; font-weight: bold;">
+									<i class="bi bi-geo-alt-fill"></i>&nbsp;${result.address_alias}&nbsp;[기본배송지]</div>`
 								} else {
 					html +=			`<div>${result.address_alias}</div>`
 								}			
-					html +=			`<span> ${result.address_tel}</span>&nbsp;/&nbsp;` +
-									`<span>${result.address_name}</span>` +
-									`<br>[` +
-									`<span>${result.zone_code}</span>]&nbsp;` +
-									`<span>${result.road_add}</span>&nbsp;` +
-									`<span>${result.detail_add}</span>&nbsp;` 						
+					html +=			`<span> ${result.address_tel}</span>&nbsp;/&nbsp;
+									<span>${result.address_name}</span>
+									<br>[
+									<span>${result.zone_code}</span>]&nbsp;
+									<span>${result.road_add}</span>&nbsp;
+									<span>${result.detail_add}</span>&nbsp;` 						
 									
 				}
 				     ById('address_main').innerHTML = html;
@@ -85,41 +80,41 @@ function address_list() {
 				let address = (i==0) ? "&nbsp;[기본배송지]" : "";
 				let no = i;
 				
-				html += `<table class="addresslist_table">` +	
-							`<tr>` +
-								`<td class="addresslist_table_col1">` +
-									`<input class="form-check-input" type="radio" name="address_radio" id="address_radio+${no}" value=${result[i].address_no} ${checked}></td>` +
-									`<input type="hidden" value=${result[i].address_no}>` +
-									`<input type="hidden" value=${result[i].address_alias}>` +
-									`<input type="hidden" value=${result[i].address_tel}>` +
-									`<input type="hidden" value=${result[i].address_name}>` +
-									`<input type="hidden" value=${result[i].zone_code}>` +
-									`<input type="hidden" value=${result[i].road_add}>` +
-									`<input type="hidden" value=${result[i].detail_add}>` +
+				html += `<table class="addresslist_table">
+							<tr>
+								<td class="addresslist_table_col1">
+									<input class="form-check-input" type="radio" name="address_radio" id="address_radio+${no}" value=${result[i].address_no} ${checked}></td>
+									<input type="hidden" value=${result[i].address_no}>
+									<input type="hidden" value=${result[i].address_alias}>
+									<input type="hidden" value=${result[i].address_tel}>
+									<input type="hidden" value=${result[i].address_name}>
+									<input type="hidden" value=${result[i].zone_code}>
+									<input type="hidden" value=${result[i].road_add}>
+									<input type="hidden" value=${result[i].detail_add}>
 								
-								`<td class="addresslist_table_col2">`
+								<td class="addresslist_table_col2">`
 								
 									if (i==0) {
 				html +=				` <label for="address_radio+${no}"><div style="color: #6768ab; font-weight: bold;"><i class="bi bi-geo-alt-fill"></i> ${result[i].address_alias}&nbsp;${address}</div>` 										
 									} else {
 				html +=			  	` <label for="address_radio+${no}"><div> ${result[i].address_alias}${address}</div>` 									
 									}
-				html +=				 `<span>${result[i].address_tel}</span>&nbsp;/&nbsp;` + 
-								     `<span>${result[i].address_name}</span>` +
-								     `<br>[` +
-								     `<span>${result[i].zone_code}</span>]&nbsp;` +
-								     `<span>${result[i].road_add}</span>&nbsp;` +
-								     `<span>${result[i].detail_add}</span><label>` +
-								`</td>` +
-								`<td class="addresslist_table_col3">` + 
-									`<div><button class="btn btn-outline-primary address_update" value=${result[i].address_no}><i class="bi bi-pen"> 수정</i></button></div>` 
+				html +=				 `<span>${result[i].address_tel}</span>&nbsp;/&nbsp; 
+								     <span>${result[i].address_name}</span>
+								     <br>[
+								     <span>${result[i].zone_code}</span>]&nbsp;
+								     <span>${result[i].road_add}</span>&nbsp;
+								     <span>${result[i].detail_add}</span><label>
+								</td>
+								<td class="addresslist_table_col3">
+									<div><button class="btn btn-outline-primary address_update" value=${result[i].address_no}><i class="bi bi-pen"> 수정</i></button></div>`
 								if (i!=0) {
 				html +=				`<br><div><button type="button" class="btn btn-outline-primary address_delete"  value=${result[i].address_no}><i class="bi bi-trash"> 삭제</i></button></div>`
 								}	
-				html +=			`</td>` +
-							`</tr>` +
-						`</table>` +			
-						`<hr>`	
+				html +=			`</td>
+							</tr>
+						</table>			
+						<hr>`	
 			}	
 			  var cnt = result.length;	
 			  	ById('addresslist_main').innerHTML = html;
@@ -158,16 +153,17 @@ $(document).on("click", "#address_insert_btn", function(e) {
 /***************************** 배송지 수정 버튼 클릭 *****************************/
 $(document).on("click", "button.address_update", function(e) {
 	let order_no = e.currentTarget.value
-	address_update(order_no);
-})	
-
-/***************************** 배송지 수정 버튼 클릭시 value 리턴 function *****************************/
-function address_update(address_no) {
 
 	$('#exampleModal').modal('show');
 	
 	ById('address_insert_modal_btn').style.display = "none";
 	ById('address_update_modal_btn').style.display = "block";
+	
+	address_update(order_no);
+})	
+
+/***************************** 배송지 수정 버튼 클릭시 value 리턴 function *****************************/
+function address_update(address_no) {
 	
 	var data = {"address_no" : address_no};
 	
@@ -185,13 +181,14 @@ function address_update(address_no) {
 			var result =  JSON.parse(result)
 
 			// 해당 주소의 값 자동 입력
-			$('#address_alias').val(result.address_alias);
-			$('#address_name').val(result.address_name);
-			$('#address_tel').val(result.address_tel);
-			$('#zonecode').val(result.zone_code);
-			$('#roadAddr').val(result.road_add);
-			$('#detailAddress').val(result.detail_add);
-			$('#address_no').val(result.address_no);
+			
+			ById('address_alias').value = result.address_alias
+			ById('address_name').value = result.address_name
+			ById('address_tel').value = result.address_tel
+			ById('zonecode').value = result.zone_code
+			ById('roadAddr').value = result.road_add
+			ById('detailAddress').value = result.detail_add
+			ById('address_no').value = result.address_no
 			
 		} ,
 		

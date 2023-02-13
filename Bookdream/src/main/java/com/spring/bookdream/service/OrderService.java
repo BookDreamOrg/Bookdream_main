@@ -14,7 +14,7 @@ public interface OrderService {
 	List<OrderVO> searchOrder(OrderVO vo);
 	
 	// 결제 취소
-	void cencelOrder(OrderVO vo);
+	void cancelOrder(OrderVO vo);
 
 	// 도서 재고 반환
 	int updateBookStock(OrderVO vo);
@@ -28,6 +28,13 @@ public interface OrderService {
 	// 마이페이지 배송상태 카운터
 	List<Map<String, Object>> orderStatusCount(OrderVO vo);	
 
+	// 마이페이지 최근주문 1개 출력
+	OrderVO recentOrder(OrderVO vo);
 
+	/************ 관리자 부문************/
+	// 일주일 주문 카운트
+	List<Map<String, Object>> orderDateCount(OrderVO vo);
 
+	// 일주일 주문 취소/반품 카운트
+	List<Map<String, Object>> orderCancelDateCount(OrderVO vo);
 }
