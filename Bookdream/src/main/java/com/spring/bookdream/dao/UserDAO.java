@@ -126,5 +126,20 @@ public class UserDAO {
 			
 			return mybatis.selectList("UserDAO.selectUser");
 		}
-
+		
+		// 유저 count
+		public int countUser() {
+			return mybatis.selectOne("UserDAO.countUser");
+		}
+		
+		// User list page
+		public List userListPage(int displayPost, int postNum) {
+			
+			HashMap<String, Integer> data = new HashMap<String, Integer>();
+			
+			data.put("displayPost", displayPost);
+			data.put("postNum", postNum);
+			
+			return mybatis.selectList("UserDAO.userListPage", data);
+		}
 }

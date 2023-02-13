@@ -45,4 +45,10 @@ public interface UserService {
 	
 	// 회원조회
 	public List<UserVO> selectUser();
+	
+	// 유저 Count
+	public int countUser();
+	
+	// 유저 List Paging
+	public List<UserVO> userListPage(int displayPost, int postNum);
 }

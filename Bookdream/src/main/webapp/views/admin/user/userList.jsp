@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -117,22 +117,26 @@
 				<div class="card-body admin-user-mngmn-body">
 					<h5 class="card-title admin-user-mngmn-title">사용자 관리</h5>
 					<div class="admin-user-mngmn-cotent">
-						<table>
-							<tr>
-								<th>NO</th>
-								<th>아이디</th>
-								<th>비밀번호</th>
-								<th>이름</th>
-								<th>전화번호</th>
-								<th>이메일</th>
-								<th>포인트</th>
-								<th>레벨</th>
-								<th>블랙리스트</th>
-								<th>타입</th>
-							</tr>
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">NO</th>
+									<th scope="col">아이디</th>
+									<th scope="col">비밀번호</th>
+									<th scope="col">이름</th>
+									<th scope="col">전화번호</th>
+									<th scope="col">이메일</th>
+									<th scope="col">포인트</th>
+									<th scope="col">레벨</th>
+									<th scope="col">블랙리스트</th>
+									<th scope="col">타입</th>
+								</tr>
+							</thead>
+							<tbody>
 								<c:forEach items="${userList}" var="userList">
 									<tr>
-										<td>${ userList.user_no }</td>
+										<th scope="row">${ userList.user_no }
+										</td>
 										<td>${ userList.user_id }</td>
 										<td>${ userList.user_password }</td>
 										<td>${ userList.user_name }</td>
@@ -144,10 +148,19 @@
 										<td>${ userList.flatform_type }</td>
 									</tr>
 								</c:forEach>
-							<tr>
-								<td colsapn="10">페이징처리</td>
-							</tr>
+							</tbody>
 						</table>
+						<nav aria-label="Page navigation example">
+							<ul class="pagination justify-content-center">
+								<li class="page-item disabled"><a class="page-link"
+									href="#" tabindex="-1">Previous</a></li>
+								<c:forEach begin = "1" end = "${ pageNum }" var = "num">
+									<li class="page-item"><a class="page-link" href="/user/listPage?num=${num }">${ num }</a></li>
+								</c:forEach>
+								<li class="page-item"><a class="page-link" href="#">Next</a>
+								</li>
+							</ul>
+						</nav>
 					</div>
 				</div>
 			</div>

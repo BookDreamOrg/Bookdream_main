@@ -95,4 +95,14 @@ public class UserServiceImpl implements UserService {
 		return userDAO.selectUser();
 	}
 
+	@Override
+	public int countUser() {
+		return userDAO.countUser();
+	}
+
+	@Override
+	public List<UserVO> userListPage(int displayPost, int postNum) {
+		return userDAO.userListPage(displayPost, postNum);
+	}
+
 }

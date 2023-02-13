@@ -99,4 +99,14 @@
 	<select id="selectUser" resultType = "user">
 		select * from users
 	</select>
+	
+	<!-- User Count -->
+	<select id="countUser" resultType = "int">
+		select count(user_no) from users;
+	</select>
+	
+	<!-- User Paging -->
+	<select id="userListPage" parameterType="hashMap" resultType="user">
+		 select * from users order by user_no desc limit #{displayPost}, #{postNum}
+	</select>
 </mapper>
