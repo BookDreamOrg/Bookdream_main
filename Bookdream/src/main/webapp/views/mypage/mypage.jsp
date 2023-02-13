@@ -1,33 +1,47 @@
 <%@page import="com.spring.bookdream.vo.UserVO"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+
 <!-- Favicon -->
-<link rel="apple-touch-icon" sizes="180x180"
-	href="/resources/images/favicon/apple-touch-icon.png" />
-<link rel="icon" type="image/png" sizes="32x32"
-	href="/resources/images/favicon/favicon-32x32.png" />
-<link rel="icon" type="image/png" sizes="16x16"
-	href="/resources/images/favicon/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/resources/images/favicon/apple-touch-icon.png" />
+<link rel="icon" type="/image/png" sizes="32x32" href="/resources/images/favicon/favicon-32x32.png" />
+<link rel="icon" type="/image/png" sizes="16x16" href="/resources/images/favicon/favicon-16x16.png" />
 <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
-<link rel="stylesheet" href="/resources/css/unregister.css" />
 <link rel="stylesheet" href="/resources/css/styles.css" />
+
+
+<!-- jQuery -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="/resources/css/bootstrap_icon.css">
+<!--  맨위 자동 검색시 필요 (페이지마다 다 넣어줘야 함?)-->
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<title>마이페이지 - 메인</title>
+
 <style>
-.side {
-	position: relative;
-	width: 220px;
-	min-height: 500px;
-	margin-top: 130px;
-	border-radius: 20px;
-	float: left;
-	background-color: #d1d1e5;
-	text-align: center;
+
+
+.wrapper {
+	height: auto;
+}
+
+hr {
+	padding: 0px 40px;
 }
 
 .main {
@@ -36,140 +50,305 @@
 	margin: 0 auto;
 	width: 1240px;
 	height: auto;
+
 	min-height: 1000px;
 }
 
-.user-btn {
-	color: var(- -main-color-shadow6);
-	font-size: 2rem;
+.mypage {
+	height: auto;
+	min-height: 1200px;
+	padding: 0px 40px;	
+	float: right;
 }
+
+.test {
+	width: 100px;
+	height: 100px;
+}
+
+.mypage_info {
+	position: relative;
+	width: 870px;
+	height: auto;
+	min-height: 300px;
+}
+
+.mypage_info_title {
+    padding: 30px 0px;
+    vertical-align: middle;
+    height: 100px;
+	margin-top: 30px;    
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+.mypage_info_box {
+	height:auto;
+	min-height: 300px;
+	border-radius: 20px;
+	padding: 40px 40px 40px 40px;
+	background-color: #f7f7f7;	
+	
+}
+
+.mypage_info_profile {
+	position: relative;
+	width: 150px;
+	height:150px;
+	border-radius: 50%;
+	background-color: white;
+	float: left;
+	margin: 35px 40px 0px 0px;
+}
+
+.mypage_info_icon {
+	margin: 35px 0px 0px 40px;
+	color: #e0e0ee;
+}
+
+.mypage_info_profile_set {
+	position: absolute;
+	top: 120px;
+	left: 120px;
+	color: #525388;
+}
+
+.mypage_info_content div {
+	margin-bottom: 20px;
+}
+
+.mypage_info_content ul {
+	float: left;
+}
+
+.mypage_info_content_ul2 {
+	 margin-left: 100px;
+}
+
+.mypage_info_content_text {
+	font-size: 14px;
+}
+
+/*                                     */
+.mypage_sub_title {
+    height: 50px;
+    line-height: 70px;
+	margin-top: 30px;    
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.mypage_recent_pur {
+
+}
+
+.mypage_recent_pur_table td:nth-child(1) img {
+	width: 80px;
+	height: 100px;
+	vertical-align: middle;	
+	border: 1px solid black;
+}
+
+.mypage_recent_pur_table td:nth-child(1),
+.mypage_recent_pur_table td:nth-child(2),
+.mypage_recent_pur_table td:nth-child(3) {
+	height: 120px;	
+	text-align: center;	
+	vertical-align: middle;
+	
+	font-size: 14px;
+}
+
+.mypage_recent_pur_table td:nth-child(1),
+.mypage_recent_pur_table td:nth-child(3) {
+	width: 100px;
+	font-weight: bold;
+}
+
+.mypage_recent_pur_table td:nth-child(2) {
+	width: 670px;
+	padding: 0px 40px;
+	text-align: left;
+
+}
+
+.mypage_recent_qna_table td:nth-child(1), 
+.mypage_recent_qna_table td:nth-child(2),
+.mypage_recent_qna_table td:nth-child(3) {
+	width: 100px;
+	height: 80px;
+	vertical-align: middle;
+	text-align: center;
+	
+	font-size: 14px;
+}
+
+.mypage_recent_qna_table td:nth-child(1) {
+	font-size: 12px;
+}
+
+.mypage_recent_qna_table td:nth-child(2) {
+	width: 670px;
+	padding: 0px 40px;
+	text-align: left;
+	 
+}
+
+.mypage_recent_qna_table td:nth-child(3) {
+	font-weight: bold;
+}
+
+.mypage_recent_qna_table tr:hover {
+	background-color: #e0e0ee;	
+}
+
+
+
+.mypage_info_content_title {
+	font-size: 12px;
+	color: #5c5d99;
+	font-weight: bold;
+}
+
 </style>
-<title>Insert title here</title>
+
+
 </head>
 <body>
+
 	<%
 		UserVO user = (UserVO) session.getAttribute("authUser");
 	%>
+	
 	<div class="wrapper">
 	<jsp:include page="/views/inc/header.jsp" />
 
-		<div class="container">
-			<h1>
-				<a href="/views/mypage/edit.jsp">회원정보 관리</a>
-			</h1>
-			<!-- Button trigger modal -->
-			<button type="button" class="btn" data-bs-toggle="modal"
-				data-bs-target="#unregisterModal">회원탈퇴</button>
+		
+		<div class="main">
+		
+		<jsp:include page="/views/inc/mypage_side.jsp" />		
 
-			<!-- Modal -->
-			<div class="modal fade" id="unregisterModal" tabindex="-1"
-				aria-labelledby="unregisterModalLabel" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered unregister_modal">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title unregister_modal_title"
-								id="exampleModalLabel">회원탈퇴</h5>
-							<button type="button" class="btn-close" data-bs-dismiss="modal"
-								aria-label="Close"></button>
-						</div>
-						<div class="modal-body">
-							<div class="unregister_modal_body">
-								<div class="unregister_modal_law">
-									<ol>
-										<li>회원탈퇴 시 개인정보 및 BOOKDREAM에서 만들어진 모든 데이터는 삭제됩니다.</li>
-										<li>(단, 아래 항목은 표기된 법률에 따라 특정 기간 보관됩니다.)</li>
-										<li>1. 계약 또는 청약철회 등에 관한 기록 보존 이유 : 전자상거래 등에서의 소비자보호엥 관한
-											법률 / 보존 기관 : 5년</li>
-										<li>2. 대금결제 및 재화 등의 공급에 관한 기록 보존 이유 : 전자상거래 등에서의 소비자보호에
-											관한 법률 / 보존 기관 : 5년</li>
-										<li>3. 전자금융 거래에 관한 기록 보존 이유 : 전자금융거래법 보존 기간 / 5년</li>
-										<li>4. 소비자의 불만 또는 분쟁처리에 관한 기록 보존 이유 : 전자상거래 등에서의 소비자보호에
-											관한 법률 보존기간 / 3년</li>
-										<li>5. 신용정보의 수집/처리 및 이용 등에 관한 기록 보존 이유 : 신용정보의 이용 및 보호에
-											관한 법률 보존기간 / 3년</li>
-										<li>6. 전자(세금)계산서 시스템 구축 운영하는 사업자가 지켜야 할 사항 고시(국세청 고시
-											제2016-3호)(전자세금계산서 사용자에 한함) : 5년</li>
-										<li>(단, (세금)계산서 내 개인 식별번호는 3년 경과 후 파기)</li>
-									</ol>
-								</div>
-								<div class="unregister_modal_notice">
-									<span class="unregister_modal_notice-title">유의사항</span>
-									<div class="unregister_modal_notice_content">
-										<ol>
-											<li>- 회원탈퇴 처리 후에는 회원님의 개인정보를 복원할 수 없으며, 회원탈퇴 진행 시 해당
-												아이디는 영구적으로 삭제됩니다.</li>
-											<li>- 회원님의 모든 콘텐츠와 활동 기록, 포인트 충전·적립·사용 내역이 삭제됩니다.</li>
-											<li>- 결제 취소 신청 후 완료되기 전 계정을 삭제하는 경우 구매 기록을 확일할 수 없으므로 결제
-												취소가 불가능합니다.</li>
-										</ol>
-									</div>
-								</div>
-								<div class="unregister_modal_agree">
-									<label for="unregister_agree"> <input type="checkbox"
-										id="unregister_agree" onclick="unregisterCheck()" /> 해당 내용을
-										모두 확인했으며, 회원탈퇴에 동의합니다.
-									</label>
-								</div>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary"
-								data-bs-dismiss="modal">닫기</button>
-							<button type="button" id="unregister_btn" class="btn btn-primary"
-								data-bs-toggle="modal" data-bs-target="#unregisterCheckModal">
-								회원탈퇴</button>
-						</div>
+			<div class="mypage">
+				
+				<div class="mypage_info">
+					<div class="mypage_info_title">마이페이지</div>
+
+						
+					
+					<div class="mypage_info_box">
+					<div class="mypage_info_profile"><i class="fa-solid fa-user fa-5x mypage_info_icon" ></i><i class="bi bi-gear-fill mypage_info_profile_set"></i></div>
+						<div class="mypage_info_content">
+							<div>${authUser.getUser_name()}님 | ${authUser.getFlatform_type()} 회원</div>						
+							<ul>
+								<li class="mypage_info_content_title">이메일</li>							
+								<li class="mypage_info_content_text"> ${authUser.getUser_email()}</li><br>
+								<li class="mypage_info_content_title">전화번호</li>
+								<li class="mypage_info_content_text">${authUser.getUser_tel()}</li>
+							</ul>	
+							<ul class="mypage_info_content_ul2">
+								<li class="mypage_info_content_title">포인트</li>
+								<li class="mypage_info_content_text">${authUser.getUser_point()}P</li><br>							
+								<li class="mypage_info_content_title">배송지</li>
+								<li class="mypage_info_content_text">[${address.zone_code}] ${address.road_add} ${address.detail_add}</li>						
+							</ul>
+						</div>	
 					</div>
 				</div>
-			</div>
-			<div class="modal fade" id="unregisterCheckModal" aria-hidden="true"
-				aria-labelledby="unregisterCheckModalLabel" tabindex="-1">
-				<div class="modal-dialog modal-dialog-centered">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h1 class="modal-title fs-5" id="unregisterCheckModal">비밀번호
-								재확인</h1>
-							<button type="button" class="btn-close" data-bs-dismiss="modal"
-								aria-label="Close"></button>
-						</div>
-						<div class="modal-body unregitserCheck_modal_body">
-							<div class="unregitserCheck_modal_input">
-								<div>
-									<label for="unregister_id">아이디</label> <input type="text"
-										id="unregister_id" name="unregister_id"
-										value="<%=user.getUser_id()%>" readonly />
-								</div>
-								<div>
-									<label for="unregister_password">비밀번호</label> <input
-										type="password" id="unregister_password"
-										name="unregister_password" />
-								</div>
-								<span>본인확인 후 최종 회원탈퇴가 가능합니다.</span> <span>본인확인을 위해 비밀번호를
-									다시 한번 확인합니다.</span>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button class="btn btn-secondary"
-								data-bs-target="#unregisterModal" data-bs-toggle="modal">
-								취소</button>
-							<button class="btn btn-secondary" onclick="deleteUser()">
-								확인</button>
-						</div>
-					</div>
+
+
+				<!-- 배송상태 -->
+				<c:choose>
+					<c:when test="${order.order_status == 0}">
+						<c:set var="status" value="결제완료"></c:set>
+					</c:when>
+					<c:when test="${order.order_status == 1}">
+						<c:set var="status" value="배송중"></c:set>
+					</c:when>					
+					<c:when test="${order.order_status == 2}">
+						<c:set var="status" value="배송완료"></c:set>
+					</c:when>
+					<c:when test="${order.order_status == 3}">
+						<c:set var="status" value="구매확정"></c:set>
+					</c:when>
+					<c:when test="${order.order_status == 10}">
+						<c:set var="status" value="결제취소중"></c:set>
+					</c:when>
+					<c:when test="${order.order_status == 11}">
+						<c:set var="status" value="결제취소"></c:set>
+					</c:when>					
+					<c:when test="${order.order_status == 12}">
+						<c:set var="status" value="반품요청중"></c:set>
+					</c:when>
+					<c:when test="${order.order_status == 13}">
+						<c:set var="status" value="반품완료"></c:set>
+					</c:when>																					
+				</c:choose>
+
+
+				<div class="mypage_sub_title">최근주문</div>					
+				
+				<div class="mypage_recent_pur">
+				<hr>
+					<table class="mypage_recent_pur_table">
+						<tr>
+							<td><img class="mypage_recent_pur_img" alt="" src="${order.bookVO.book_img}"></td>
+							<td>${order.order_name }</td>
+							<td>${status}</td>
+						</tr>
+					</table>
+	
 				</div>
-			</div>
+
+				<div class="mypage_sub_title">문의현황</div>
+
+				<div class="mypage_recent_qna">
+				<hr>
+
+					<table class="mypage_recent_qna_table">					
+						<c:forEach items="${qna}" var="qna">
+							
+							<!-- 문의상태 -->							
+							<c:set var="status" value="${qna.ans_check == 0 ? '문의접수' : '문의완료' }"></c:set>
+										
+							<tr>
+								<td>
+									<fmt:formatDate value="${qna.reg_date}" pattern="yy.MM.dd" /><br>
+									<fmt:formatDate value="${qna.reg_date}" pattern="HH:mm" />
+								</td>
+								<td>${qna.qna_title}</td>
+								<td>${status}</td>
+							</tr>
+						</c:forEach>
+						
+							
+					</table>						
+				</div>							
+
+
+				
+				</div>	
+						
+
+							
+			</div>	
+				
 		</div>
-	</div>
+		
+		
+		
+
 
 	<jsp:include page="/views/inc/footer.jsp" />
 	</div>
+
+	
 	<!-- Script Bootstrap, jqurey-3.6.3 -->
 	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
 	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 
 	<!-- Script FontAwesome-->
-	<script src="https://kit.fontawesome.com/4bf42f841a.js"
-		crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/4bf42f841a.js" crossorigin="anonymous"></script>
 
 	<script>
 		let user_no =
@@ -182,40 +361,8 @@
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>	
 
-	<script>
-		function unregisterCheck() {
-			const checkbox = document.getElementById('unregister_agree').checked;
-			console.log(checkbox);
-		}
-		function deleteUser() {
-			const id = $('#unregister_id').val();
-			const password = $('#unregister_password').val();
-
-			// 패스워드 맞는지 확인
-			$.ajax({
-				url : "/mypage/deleteUser",
-				type : "POST",
-				data : {
-					id : id,
-					password : password
-				},
-				success : function(data) {
-					console.log(data);
-					if (data === "error") {
-						alert('비밀번호를 입력해주세요');
-					} else if (data === "password_error") {
-						alert('회원 비밀번호가 일치하지 않습니다.');
-					} else {
-						$('#unregisterCheckModal').modal('hide');
-						document.location.replace(data);
-					}
-				},
-				error : function() {
-					alert("서버 에러.");
-				}
-			});
-
-		}
-	</script>
+	
+	
+	
 </body>
 </html>

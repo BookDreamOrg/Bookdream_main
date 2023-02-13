@@ -51,5 +51,10 @@ public class QnADAO {
 		System.out.println(answerVO.getUser_no());
 		mybatis.insert("QnADAO.insertAnswer", answerVO);
 	}
-		
+
+	//나의 문의 목록 리스트
+	public List<QnAVO> getRecentMyQnAList(QnAVO qnaVO){
+		System.out.println("MyList 3개");
+		return mybatis.selectList("QnADAO.getRecentMyQnAList", qnaVO);
+	}
 }

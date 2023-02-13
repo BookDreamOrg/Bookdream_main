@@ -698,26 +698,26 @@ function address_info(check, address_no) {
 
 				var result =  JSON.parse(result);
 				
-				html +=	`<table class="address_info_table">` +
-							`<tr>` +
-								`<td class="address_info_table_col1">` 
+				html +=	`<table class="address_info_table">
+							<tr>
+								<td class="address_info_table_col1">` 
 								if(`${result.default_add}` == `Y`) {
 				html +=				`<div style="color: #6768ab; font-weight: bold;" id="user_info_alias"><i class="bi bi-geo-alt-fill"></i>&nbsp;${result.address_alias}&nbsp;[기본배송지]</div>` 	
 								} else {
 				html +=				`<div id="user_info_alias">${result.address_alias}</div>`
 								}			
-				html +=				`<span id="user_info_tel"> ${result.address_tel}</span>&nbsp;/&nbsp;` +
-									`<span id="user_info_name">${result.address_name}</span>` +
-									`<br>[` +
-									`<span id="user_info_zone_code">${result.zone_code}</span>]&nbsp;` +
-									`<span id="user_info_road_add">${result.road_add}</span>&nbsp;` +
-									`<span id="user_info_detail_add">${result.detail_add}</span>&nbsp;` +
-								`</td>` +	
-								`<td class="address_info_table_col2">` +	
-									`<span class="modal_update"><button class="btn btn-outline-secondary address_search_btn_two" id="address_search_btn"><i class="bi bi-pencil-square"></i> 수정</button></span>` +
-								`</td>` +
-							`</tr>` +
-						`</table>` 							
+				html +=				`<span id="user_info_tel"> ${result.address_tel}</span>&nbsp;/&nbsp;
+									<span id="user_info_name">${result.address_name}</span>
+									<br>[
+									<span id="user_info_zone_code">${result.zone_code}</span>]&nbsp;
+									<span id="user_info_road_add">${result.road_add}</span>&nbsp;
+									<span id="user_info_detail_add">${result.detail_add}</span>&nbsp;
+								</td>
+								<td class="address_info_table_col2">
+									<span class="modal_update"><button class="btn btn-outline-secondary address_search_btn_two" id="address_search_btn"><i class="bi bi-pencil-square"></i> 수정</button></span>
+								</td>
+							</tr>
+						</table>` 							
 							
 			}
 			ById('address_table_col1').innerHTML = html;		
@@ -750,39 +750,39 @@ function address_list() {
 				let address = (i==0) ? " [기본배송지]" : "";
 				let no = i;
 				
-				html +=			`<tr>` +
-								`<td class="address_list_table_col1">` +
-									`<input class="form-check-input" type="radio" name="address_radio" id="address_radio+${no}" value=${result[i].address_no} ${checked}></td>` +
-									`<input type="hidden" value=${result[i].address_no}>` +
-									`<input type="hidden" value=${result[i].address_alias}>` +
-									`<input type="hidden" value=${result[i].address_tel}>` +
-									`<input type="hidden" value=${result[i].address_name}>` +
-									`<input type="hidden" value=${result[i].zone_code}>` +
-									`<input type="hidden" value=${result[i].road_add}>` +
-									`<input type="hidden" value=${result[i].detail_add}>` +								
-								`<td class="address_list_table_col2">`
+				html +=			`<tr>
+								<td class="address_list_table_col1">
+									<input class="form-check-input" type="radio" name="address_radio" id="address_radio+${no}" value=${result[i].address_no} ${checked}></td>
+									<input type="hidden" value=${result[i].address_no}>
+									<input type="hidden" value=${result[i].address_alias}>
+									<input type="hidden" value=${result[i].address_tel}>
+									<input type="hidden" value=${result[i].address_name}>
+									<input type="hidden" value=${result[i].zone_code}>
+									<input type="hidden" value=${result[i].road_add}>
+									<input type="hidden" value=${result[i].detail_add}>						
+								<td class="address_list_table_col2">`
 								
 									if (i==0) {
 				html +=				` <label for="address_radio+${no}"><div style="color: #6768ab; font-weight: bold;"><i class="bi bi-geo-alt-fill"></i>&nbsp;${result[i].address_alias}&nbsp;${address}</div>` 										
 									} else {
 				html +=			  	` <label for="address_radio+${no}"><div> ${result[i].address_alias}${address}</div>` 									
 									}
-				html +=				 `<span>${result[i].address_tel}</span>&nbsp;/&nbsp;` + 
-								     `<span>${result[i].address_name}</span>` +
-								     `<br>[` +
-								     `<span>${result[i].zone_code}</span>]&nbsp;` +
-								     `<span>${result[i].road_add}</span>&nbsp;` +
-								     `<span>${result[i].detail_add}</span><label>` +
-								`</td>` +
+				html +=				 `<span>${result[i].address_tel}</span>&nbsp;/&nbsp;
+								     <span>${result[i].address_name}</span>
+								     <br>[
+								     <span>${result[i].zone_code}</span>]&nbsp;
+								     <span>${result[i].road_add}</span>&nbsp;
+								     <span>${result[i].detail_add}</span><label>
+								</td>
 								
-								`<td class="address_list_table_col3">` + 
-									`<div><button class="btn btn-outline-primary address_list_table_update" id="address_list_table_update" value=${result[i].address_no}><i class="bi bi-pen"></i></button></div>` 
+								<td class="address_list_table_col3"> 
+									<div><button class="btn btn-outline-primary address_list_table_update" id="address_list_table_update" value=${result[i].address_no}><i class="bi bi-pen"></i></button></div>` 
 								
 									if(i!=0) {
 				html +=				`<div><button class="btn btn-outline-primary address_list_table_delete" id="address_list_table_delete" value=${result[i].address_no}><i class="bi bi-trash"></i></button></div>` 										
 									}
-				html +=			`</td>` +
-							`</tr>` 
+				html +=			`</td>
+							</tr>` 
 
 			}	
 

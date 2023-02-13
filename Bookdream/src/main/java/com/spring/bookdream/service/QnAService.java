@@ -28,5 +28,6 @@ public interface QnAService {
 	//답변 insert
 	public void insertAnswer(AnswerVO answerVO);
 	
-	
+	//마이페이지 나의 문의 목록 리스트 (3개)
+	public List<QnAVO> getRecentMyQnAList(QnAVO qnaVO);	
 }
