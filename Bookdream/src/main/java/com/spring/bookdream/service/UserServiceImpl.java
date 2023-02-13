@@ -1,5 +1,7 @@
 package com.spring.bookdream.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -86,6 +88,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteUser(UserVO vo) {
 		userDAO.deleteUser(vo);
+	}
+
+	@Override
+	public List<UserVO> selectUser() {
+		return userDAO.selectUser();
 	}
 
 }

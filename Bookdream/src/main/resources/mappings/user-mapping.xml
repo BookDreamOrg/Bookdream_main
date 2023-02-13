@@ -94,4 +94,9 @@
 	<delete id="deleteUser">
 		delete from users where user_id = #{user_id} and user_password = #{user_password}
 	</delete>
+	
+	<!-- 전체조회 -->
+	<select id="selectUser" resultType = "user">
+		select * from users
+	</select>
 </mapper>

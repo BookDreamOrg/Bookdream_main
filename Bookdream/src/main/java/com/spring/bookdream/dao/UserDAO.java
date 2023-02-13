@@ -1,6 +1,7 @@
 package com.spring.bookdream.dao;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -117,6 +118,13 @@ public class UserDAO {
 		// 회원탈퇴
 		public void deleteUser(UserVO vo) {
 			mybatis.delete("UserDAO.deleteUser", vo);
+		}
+		
+		// 회원조회
+		public List<UserVO> selectUser() {
+			System.out.println("Uesr List 불러오는중...");
+			
+			return mybatis.selectList("UserDAO.selectUser");
 		}
 
 }

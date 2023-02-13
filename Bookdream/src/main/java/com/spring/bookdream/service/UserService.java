@@ -1,5 +1,7 @@
 package com.spring.bookdream.service;
 
+import java.util.List;
+
 import org.springframework.ui.Model;
 
 import com.spring.bookdream.vo.UserVO;
@@ -40,4 +42,7 @@ public interface UserService {
 	
 	// 회원 탈퇴
 	public void deleteUser(UserVO vo);
+	
+	// 회원조회
+	public List<UserVO> selectUser();
 }

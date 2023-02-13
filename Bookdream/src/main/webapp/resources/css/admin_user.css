@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+.admin-user-mngmn {
+  grid-area: section1;
+}
+
+.admin-user-mngmn-title {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.admin-user-mngmn-cotent {
+  height: 600px;
+}
