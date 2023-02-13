@@ -61,14 +61,109 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
     <div class="wrapper">
       <jsp:include page="/views/inc/header.jsp" />
 
+      <!-- Swiper -->
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
+      />
+      <link rel="stylesheet" href="/resources/css/banner.css" />
+
+      <div class="mt-5">
+        <div id="bestKeywordList">
+          <ul class="list-group">
+            <li class="list-group-item list-group-item-action">//</li>
+          </ul>
+        </div>
+      </div>
+
+      <!---------------------------베스트 셀러 상품 5개-------------------------------->
+      <div class="mt-5">
+        <span class="h1">베스트셀러</span>
+      </div>
+      <div id="bestBook" class="mt-3"></div>
+
+      <!---------------------------리뷰 많은 상품 5개-------------------------------->
+      <div class="mt-5">
+        <span class="h1">리뷰 많은 도서</span>
+      </div>
+      <div id="bestBookByReviewCount" class="mt-3"></div>
+
       <main>
         <div class="banner">
-          <div class="banner-text">Banner Title Text</div>
-          <div class="banner-img"></div>
-          <div class="banner-books">
-            <div class="banner-book"></div>
-            <div class="banner-book banner-book-lg"></div>
-            <div class="banner-book banner-book-xl"></div>
+          <!-- Slider main container -->
+          <div class="swiper">
+            <!-- Additional required wrapper -->
+            <div class="swiper-wrapper">
+              <!-- Slides -->
+              <div class="swiper-slide">
+                <a href="">
+                  <div class="text-wrap slamdunk">
+                    <h2>영감님의 영광의</h2>
+                    <h2>시대는 언제였죠?</h2>
+                    <p>SLAMDUNK</p>
+                  </div>
+                  <img
+                    src="/resources/images/banner/banner_slamdunk.png"
+                    alt="SLAMDUNK"
+                  />
+                </a>
+              </div>
+              <div class="swiper-slide">
+                <a href="">
+                  <div class="text-wrap trend">
+                    <h2>#2023 #계묘년</h2>
+                    <h2>무엇을 준비할 것인가?</h2>
+                    <p>트렌드코리아2023</p>
+                  </div>
+                  <img
+                    src="/resources/images/banner/banner_trend.png"
+                    alt="TRENDKOREA2023"
+                  />
+                </a>
+              </div>
+              <div class="swiper-slide">
+                <a href="">
+                  <div class="text-wrap knowledge">
+                    <h2>지적대화를 위한</h2>
+                    <h2>넓고 얕은 지식</h2>
+                  </div>
+                  <img
+                    src="/resources/images/banner/banner_slamdunk.png"
+                    alt="지대넓얕"
+                  />
+                </a>
+              </div>
+              <div class="swiper-slide">
+                <a href="">
+                  <div class="text-wrap economy">
+                    <h2>부자가 되기 위한</h2>
+                    <h2>40년짜리 플랜에 속지마라</h2>
+                  </div>
+                  <img
+                    src="/resources/images/banner/banner_slamdunk.png"
+                    alt="부의 추월 차선"
+                  />
+                </a>
+              </div>
+              <div class="swiper-slide">
+                <a href="">
+                  <div class="text-wrap life">
+                    <h2>'니나' 처럼</h2>
+                    <h2>당당한 삶을 위하여</h2>
+                  </div>
+                  <img
+                    src="/resources/images/banner/banner_slamdunk.png"
+                    alt="삶의 한가운데"
+                  />
+                </a>
+              </div>
+            </div>
+            <!-- If we need pagination -->
+            <div class="swiper-pagination"></div>
+
+            <!-- If we need navigation buttons -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
           </div>
         </div>
         <ul class="nav nav-tabs book-section-nav">
@@ -94,12 +189,6 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
           </div>
           <div id="bestBook" class="mt-3"></div>
 
-          <!---------------------------리뷰 많은 상품 5개-------------------------------->
-          <div class="mt-5">
-            <span class="h1">리뷰 많은 도서</span>
-          </div>
-          <div id="bestBookByReviewCount" class="mt-3"></div>
-
           <!---------------------------평점 높은 상품 5개-------------------------------->
           <div class="mt-5">
             <span class="h1">평점 높은 도서</span>
@@ -123,8 +212,29 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
       crossorigin="anonymous"
     ></script>
 
+    <!-- Script Bootstrap, jqurey-3.6.3 -->
+    <script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
+    <script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Script FontAwesome-->
+    <script
+      src="https://kit.fontawesome.com/4bf42f841a.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+         let user_no = <%=session.getAttribute("user_no")%>;
+      <%@include file="/resources/js/cartLIstCount.js"%>
+    </script>
+
     <!-- 자동 검색시 필요 (페이지마다 다 넣어줘야 함?)-->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+
+    <!-- Banner JS -->
+    <script src="/resources/js/banner.js"></script>
   </body>
 </html>

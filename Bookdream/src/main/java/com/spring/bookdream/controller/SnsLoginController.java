@@ -82,7 +82,7 @@ public class SnsLoginController {
 				session.setAttribute("authUser", user);
 			}
 			
-			return "main/main_teset";
+			return "redirect:/views/main/main.jsp";
 		}
 		
 }
