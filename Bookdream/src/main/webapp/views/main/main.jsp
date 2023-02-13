@@ -43,6 +43,9 @@
 <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
 <link rel="stylesheet" href="/resources/css/styles.css" />
 
+<!-- Swiper -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+<link rel="stylesheet" href="/resources/css/banner.css" />
 
 <title>Insert title here</title>
 </head>
@@ -53,13 +56,81 @@
 
 		<main>
 		<div class="banner">
-			<div class="banner-text">Banner Title Text</div>
-			<div class="banner-img"></div>
-			<div class="banner-books">
-				<div class="banner-book"></div>
-				<div class="banner-book banner-book-lg"></div>
-				<div class="banner-book banner-book-xl"></div>
-			</div>
+	      <!-- Slider main container -->
+          <div class="swiper">
+            <!-- Additional required wrapper -->
+            <div class="swiper-wrapper">
+              <!-- Slides -->
+              <div class="swiper-slide">
+                <a href="">
+                  <div class="text-wrap slamdunk">
+                    <h2>영감님의 영광의</h2>
+                    <h2>시대는 언제였죠?</h2>
+                    <p>SLAMDUNK</p>
+                  </div>
+                  <img
+                    src="/resources/images/banner/banner_slamdunk.png"
+                    alt="SLAMDUNK"
+                  />
+                </a>
+              </div>
+              <div class="swiper-slide">
+                <a href="">
+                  <div class="text-wrap trend">
+                    <h2>#2023 #계묘년</h2>
+                    <h2>무엇을 준비할 것인가?</h2>
+                    <p>트렌드코리아2023</p>
+                  </div>
+                  <img
+                    src="/resources/images/banner/banner_trend.png"
+                    alt="TRENDKOREA2023"
+                  />
+                </a>
+              </div>
+              <div class="swiper-slide">
+                <a href="">
+                  <div class="text-wrap knowledge">
+                    <h2>지적대화를 위한</h2>
+                    <h2>넓고 얕은 지식</h2>
+                  </div>
+                  <img
+                    src="/resources/images/banner/banner_slamdunk.png"
+                    alt="지대넓얕"
+                  />
+                </a>
+              </div>
+              <div class="swiper-slide">
+                <a href="">
+                  <div class="text-wrap economy">
+                    <h2>부자가 되기 위한</h2>
+                    <h2>40년짜리 플랜에 속지마라</h2>
+                  </div>
+                  <img
+                    src="/resources/images/banner/banner_slamdunk.png"
+                    alt="부의 추월 차선"
+                  />
+                </a>
+              </div>
+              <div class="swiper-slide">
+                <a href="">
+                  <div class="text-wrap life">
+                    <h2>'니나' 처럼</h2>
+                    <h2>당당한 삶을 위하여</h2>
+                  </div>
+                  <img
+                    src="/resources/images/banner/banner_slamdunk.png"
+                    alt="삶의 한가운데"
+                  />
+                </a>
+              </div>
+            </div>
+            <!-- If we need pagination -->
+            <div class="swiper-pagination"></div>
+
+            <!-- If we need navigation buttons -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+          </div>
 		</div>
 		<ul class="nav nav-tabs book-section-nav">
 			<li class="nav-item"><a class="nav-link active"
@@ -119,6 +190,12 @@
 	<!-- 자동 검색시 필요 (페이지마다 다 넣어줘야 함?)-->
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
+	<!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+
+    <!-- Banner JS -->
+    <script src="/resources/js/banner.js"></script>
 
 </body>
 </html>
