@@ -68,6 +68,7 @@
 
 .qna_list_title {
 	font-size: 20px;
+	margin-right: 20px;
 }
 
 .qna_list_date {
@@ -86,6 +87,10 @@
 
 .qna_update_btn {
 	margin-right: 10px;
+}
+
+.drop_btn {
+	font-size: 2rem;
 }
 </style>
 <title>Insert title here</title>
@@ -106,32 +111,33 @@
 					<div class="qna_body">
 						<c:choose>
 							<c:when test="${empty qnaAllList }">
-								<p>문의 받은 내역이 없습니다.</p>
+								<p>답변 받은 내역이 없습니다.</p>
 							</c:when>
 							<c:when test="${!empty qnaAllList }">
 								<c:forEach var="list" items="${ qnaAllList}" varStatus="vs">
 									<div>
 										<div>
-											<i class="bi bi-chat-fill fs-10"></i> 문의한 유저번호: <span
-												class="qna_list_title" id="user_no2" name="user_no2">${list.getUser_no() }</span>
-											문의내용: <span class="qna_list_title" id="qna_title"
-												name="qna_title">${list.getQna_title() }</span> <input
-												type="hidden" id="user_no" name="user_no"
-												value="${list.getUser_no() }">
-											<div class="qna_list_date">
-												<div>${list.getReg_date() }</div>
-												<div style="display: none">
-													<p id="qna_no">${list.getQna_no() }</p>
-												</div>
-											</div>
+											<table class="table table-borderless">
+												<tr>
+													<td>
+														${list.getReg_date() }
+													</td>
+													<td>
+														문의한 유저: <span class="qna_list_title" id="user_id" name="user_id">${qna_user.getUser_id() }</span>
+													</td>
+													<td>
+														<span class="qna_list_title" id="qna_title" name="qna_title">${list.getQna_title() }</span> 
+													</td>
+													<td>
+														<i class="drop_btn bi bi-arrow-down-short"data-bs-toggle="collapse" data-bs-target="#collapseEx${list.getQna_no() }" 
+														aria-expanded="false" aria-controls="collapseEx${list.getQna_no() }"></i>
+													</td>
+												</tr>
+											</table>
+											
 										</div>
 									</div>
 
-									<i class="bi bi-arrow-down-circle-fill"
-										data-bs-toggle="collapse"
-										data-bs-target="#collapseEx${list.getQna_no() }"
-										aria-expanded="false"
-										aria-controls="collapseEx${list.getQna_no() }"></i>
 									<div class="collapse" id="collapseEx${list.getQna_no() }">
 										<div class="card card-body" id="qna_content"
 											name="qna_content">${list.getQna_content() }</div>
@@ -145,6 +151,7 @@
 												<div class="modal fade" id="ModalQnA${vs.index }"
 													tabindex="-1" aria-labelledby="ModalLabel"
 													aria-hidden="true">
+													
 													<div class="modal-dialog modal-dialog-centered">
 														<div class="modal-content">
 															<div class="modal-header">
@@ -153,16 +160,17 @@
 																	data-bs-dismiss="modal" aria-label="Close"></button>
 															</div>
 															<div class="modal-body">
-																<textarea class="form_textarea" id="ans_content"
+																<textarea class="form_textarea" id="ans_content${vs.index }"
 																	name="ans_content" maxlength="500"
 																	style="width: 465px; height: 246px"></textarea>
 															</div>
 															<div class="modal-footer">
-																<button type="button" class="btn btn-primary"
-																	data-bs-dismiss="modal" onclick='answer_btn()'>답변</button>
+																<button type="button" class="btn btn-primary" id="ans_btn${list.getQna_no() }"
+																	data-bs-dismiss="modal" onclick='answer_btn(${list.getUser_no() },${vs.index })'>답변</button>
 															</div>
 														</div>
 													</div>
+											
 												</div>
 											</div>
 										</div>
@@ -220,21 +228,30 @@
 		<jsp:include page="/views/inc/footer.jsp" />
 	</div>
 	<script type="text/javascript">
-		function answer_btn() {
-			var user_no = $('#user_no').val();
-			var ans_content = $('#ans_content').val();
-			var ans_title = $('#ans_title').val();
-			console.log(user_no);
-			console.log(ans_title);
+		function answer_btn(value,index) {
+			
+			var user_num = value;
+			let node_list = document.querySelectorAll('.form_textarea');
+			var ans_content = node_list[index].value;
+			
+			let qnano_list = document.querySelectorAll('.qna_nocls');
+			var qna_no = qnano_list[index].value;
+			
+			console.log(user_num);
+			console.log(ans_content);
+			console.log(qna_no);
+			
 			$.ajax({
 				type : "POST",
 				url : "/mypage/answerQnA",
 				data : {
-					user_no : user_no,
-					ans_content : ans_content
+					user_no : user_num,
+					ans_content : ans_content,
+					qna_no : qna_no
 				},
 				success : function(data) {
 					alert('답변완료 되었습니다.');
+					location.href='/mypage/getAllQnAList'
 				},
 				error : function() {
 					alert('서버에러입니다.');

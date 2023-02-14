@@ -1,0 +1,42 @@
+
+/* password */
+.pw_ok {
+	color: #008000;
+	display: none;
+}
+
+.pw_no {
+	color: #6A82FB;
+	display: none;
+}
+/* side */
+
+.rside {
+	height: auto;
+	width: 950px;
+	min-height: 1200px;
+	float: right;
+	margin-top: 130px;
+}
+
+.main {
+	line-height: 180%;
+	position: relative;
+	margin: 0 auto;
+	width: 1240px;
+	height: auto;
+	min-height: 1000px;
+}
+
+.user_info_title {
+	font-size: 30px;
+	margin-bottom: 10px;
+}
+
+.user_delete_info_list{
+	margin-top: 10px;
+}
+
+.user_delete_title{
+	font-size: 14px;
+}

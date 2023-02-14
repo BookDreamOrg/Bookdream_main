@@ -12,6 +12,8 @@ public interface UserService {
 	// 회원 정보 가져오기
 	public UserVO getUser(UserVO vo);
 	
+	public List<UserVO> getAllUserList();
+	
 	public String findFlatform(UserVO vo);
 	
 	// 로그인 아이디 체크

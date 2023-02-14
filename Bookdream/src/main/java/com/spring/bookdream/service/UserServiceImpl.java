@@ -23,6 +23,11 @@ public class UserServiceImpl implements UserService {
 		return userDAO.getUser(vo);
 	}
 	
+	//모든 유저 리스트 가져오기
+	public List<UserVO> getAllUserList(){
+		return userDAO.getAllUserList();
+	}
+	
 	public String findFlatform(UserVO vo) {
 		UserVO userVO = getUser(vo);
 		

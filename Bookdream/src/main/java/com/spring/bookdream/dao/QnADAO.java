@@ -51,7 +51,17 @@ public class QnADAO {
 		System.out.println(answerVO.getUser_no());
 		mybatis.insert("QnADAO.insertAnswer", answerVO);
 	}
-
+		
+	//답변 체크
+	public void answerCheck(QnAVO qnaVO) {
+		mybatis.update("QnADAO.answerCheck", qnaVO);
+	}
+	
+	//질문 번호에 따른 답변 가져오기
+	public AnswerVO getAnswer(QnAVO qnaVO) {
+		return mybatis.selectOne("QnADAO.getAnswer", qnaVO);
+	}
+	
 	//나의 문의 목록 리스트
 	public List<QnAVO> getRecentMyQnAList(QnAVO qnaVO){
 		System.out.println("MyList 3개");
