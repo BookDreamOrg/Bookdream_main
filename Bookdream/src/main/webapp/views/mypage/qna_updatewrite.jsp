@@ -17,53 +17,8 @@
 <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
 <link rel="stylesheet" href="/resources/css/styles.css" />
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
-	<style>
-.side {
-	position: relative;
-	width: 220px;
-	min-height: 500px;
-	margin-top: 130px;
-	border-radius: 20px;
-	float: left;
-	background-color: #d1d1e5;
-	text-align: center;
-}
+<link rel="stylesheet" href="/resources/css/qna_write.css" />
 
-.rside {
-	height: auto;
-	width: 950px;
-	min-height: 1200px;
-	float: right;
-	margin-top: 130px;
-}
-
-.main {
-	line-height: 180%;
-	position: relative;
-	margin: 0 auto;
-	width: 1240px;
-	height: auto;
-	min-height: 1000px;
-}
-
-.user-btn {
-	color: var(- -main-color-shadow6);
-	font-size: 2rem;
-}
-
-.qna_title{
-	font-size: 30px;
-	float: left;
-}
-.qna_button{
-	float: right;
-}
-
-.form_textarea{
-	width: 100%;
-	margin-top: 5px;
-}
-</style>
 <title>Insert title here</title>
 </head> 
 <body>
@@ -89,7 +44,9 @@
 												<option value="배송/수령일정일안내">배송/수령일정일안내</option>
 												<option value="주문/결제">주문/결제</option>
 												<option value="검색기능관련">검색기능관련</option>
-												<option value="message">요청사항을 직접 입력합니다.</option>
+												<option value="반품/교롼/환불">반품/교롼/환불</option>
+												<option value="도서/상품정보">도서/상품정보</option>
+												<option value="회원정보서비스">회원정보서비스</option>
 										</select>
 									</td>
 								<tr>
@@ -144,36 +101,8 @@
 			
 		<jsp:include page="/views/inc/footer.jsp" />
 </div>	
-		<script type="text/javascript">
-		function updateQnAIn(){
-			var qna_no = $('#qna_no').val();
-			var qna_type = $('#qna_type').val();
-			var qna_title = $('#qna_title').val();
-			var qna_content = $('#qna_content').val();
-			console.log(qna_no);
-			console.log(qna_type);
-			console.log(qna_title);
-			console.log(qna_content);
-			
-			$.ajax({
-				type : "POST",
-				url : "/mypage/updateQnAInfo",
-				data : {
-						qna_no : qna_no,
-						qna_type : qna_type,
-						qna_title : qna_title,
-						qna_content : qna_content
-						},
-				success : function(data){
-					alert('수정되었습니다.');
-					location.href='/mypage/getMyQnAList';
-				},
-				error : function(){
-					alert('서버에러입니다.');
-				}
-			});
-		}
-		</script>
+
+		<script src="/resources/js/qna_updatewrite.js"></script>
 	<!-- Script Bootstrap, jqurey-3.6.3 -->
 	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
 	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>

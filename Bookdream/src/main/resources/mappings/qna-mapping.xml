@@ -47,7 +47,7 @@
 	
 	<!-- 문의 전체리스트 가져오기 -->
 	<select id="getAllQnAList" resultMap="qnaResult">
-		select * from QNA
+		select * from QNA where ans_check = '0'
 	</select>
 
 	<!-- 답변 insert -->
@@ -56,4 +56,13 @@
 		values (answer_seq.nextval, #{ans_content}, #{user_no})
 	</insert>
 	
+	<!-- 답변 체크 -->
+	<update id="answerCheck" parameterType="qna">
+		update QNA set ans_check = 1 where qna_no = #{qna_no}
+	</update>
+	
+	<!-- 답변 가져오기 -->
+	<select id="getAnswer" resultMap="answerResult">
+		select * from answer where user_no = #{user_no}
+	</select>
 </mapper>

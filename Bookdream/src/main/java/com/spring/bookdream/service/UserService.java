@@ -1,5 +1,7 @@
 package com.spring.bookdream.service;
 
+import java.util.List;
+
 import org.springframework.ui.Model;
 
 import com.spring.bookdream.vo.UserVO;
@@ -9,6 +11,8 @@ public interface UserService {
 	// CRUD 기능의 메소드 구현
 	// 회원 정보 가져오기
 	public UserVO getUser(UserVO vo);
+	
+	public List<UserVO> getAllUserList();
 	
 	public String findFlatform(UserVO vo);
 	

@@ -52,4 +52,13 @@ public class QnADAO {
 		mybatis.insert("QnADAO.insertAnswer", answerVO);
 	}
 		
+	//답변 체크
+	public void answerCheck(QnAVO qnaVO) {
+		mybatis.update("QnADAO.answerCheck", qnaVO);
+	}
+	
+	//질문 번호에 따른 답변 가져오기
+	public AnswerVO getAnswer(QnAVO qnaVO) {
+		return mybatis.selectOne("QnADAO.getAnswer", qnaVO);
+	}
 }
