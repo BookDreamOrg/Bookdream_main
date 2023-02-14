@@ -1,6 +1,7 @@
 package com.spring.bookdream.dao;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -22,6 +23,11 @@ public class UserDAO {
 			return (UserVO) mybatis.selectOne("UserDAO.getUser", vo);
 		}
 	
+		//모든 유저 리스트 가져오기
+		public List<UserVO> getAllUserList(){
+			return mybatis.selectList("UserDAO.getAllUserList");
+		}	
+		
 		// 로그인 확인
 		public boolean loginCheck(UserVO vo) {
 			String name = mybatis.selectOne("UserDAO.loginCheck", vo);

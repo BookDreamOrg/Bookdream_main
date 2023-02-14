@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class AnswerVO {
-	private String ans_no;
+	private int ans_no;
 	private String ans_content;
-	private String user_no;
+	private int user_no;
 }

@@ -131,7 +131,20 @@ hr {
 }
 
 /*                                     */
+.mypage_sub{
+	display: flex;
+	justify-content: space-between;
+}
+
 .mypage_sub_title {
+    height: 50px;
+    line-height: 70px;
+	margin-top: 30px;    
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.mypage_sub_title_right {
     height: 50px;
     line-height: 70px;
 	margin-top: 30px;    
@@ -299,9 +312,11 @@ hr {
 					</table>
 	
 				</div>
-
-				<div class="mypage_sub_title">문의현황</div>
-
+				
+				<div class="mypage_sub">
+					<div class="mypage_sub_title">문의현황</div>
+					<div class="mypage_sub_title_right"> <a href="/mypage/getMyQnAList">+더보기</a></div>
+				</div>
 				<div class="mypage_recent_qna">
 				<hr>
 
