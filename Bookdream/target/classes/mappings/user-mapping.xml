@@ -106,11 +106,12 @@
 	
 	<!-- User Count -->
 	<select id="countUser" resultType = "int">
-		select count(user_no) from users;
+		select count(user_no) from users
 	</select>
 	
 	<!-- User Paging -->
 	<select id="userListPage" parameterType="hashMap" resultType="user">
-		 select * from users order by user_no desc limit #{displayPost}, #{postNum}
+ 		select * from (select ROW_NUMBER() over (order by user_no) NUM, A.* from users A order by user_no)
+ 		where NUM between #{displayPost} AND (#{displayPost} + #{postNum}) 
 	</select>
 </mapper>

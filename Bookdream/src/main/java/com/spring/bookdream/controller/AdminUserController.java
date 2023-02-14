@@ -14,35 +14,46 @@ import com.spring.bookdream.vo.UserVO;
 
 
 @Controller
-@RequestMapping("/admin/user/*")
+@RequestMapping("/views/admin/user/*")
 public class AdminUserController {
 	
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping(value = "/uesrList", method = RequestMethod.GET)
-	public void getUserList(Model model) {
+	@RequestMapping(value = "/uesrList.do", method = RequestMethod.GET)
+	public String getUserList(Model model) {
 		System.out.println("UserList Controller 진입");
 		
 		List<UserVO> userList = userService.selectUser();
 		model.addAttribute("userList", userList);
+		
+		return "/admin/user/userList";
 	};
 	
 	
-	@RequestMapping(value = "/userListPage", method = RequestMethod.GET)
-	public void getListPage(Model model, @RequestParam("num") int num) {
+	@RequestMapping(value = "/userListPage.do", method = RequestMethod.GET)
+	public String getListPage(Model model, @RequestParam("num") int num) {
 		
 		int count = userService.countUser();
 		
-		int postNum = 10;
+		// 페이지에 보이는 수(변경 가능)
+		int postNum = 5;
 		
 		int pageNum = (int)Math.ceil((double)count/postNum);
 		
-		int displayPost = (num - 1) * postNum;
+		int displayPost = 0;
 		
-		List<UserVO> userList = userService.userListPage(displayPost, postNum);
+		if(num > 1) {
+			displayPost = ((num - 1) * postNum) + 1;
+			postNum = (postNum - 1);
+		} 
+				
+		List<UserVO> userList = null;
+		userList = userService.userListPage(displayPost, postNum);
 		model.addAttribute("userList", userList);
 		model.addAttribute("pageNum", pageNum);
+		
+		return "/admin/user/userList";
 	}
 }
 

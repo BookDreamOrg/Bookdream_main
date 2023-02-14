@@ -134,7 +134,7 @@
 							</thead>
 							<tbody>
 								<c:forEach items="${userList}" var="userList">
-									<tr>
+									<tr class="userList-row">
 										<th scope="row">${ userList.user_no }
 										</td>
 										<td>${ userList.user_id }</td>
@@ -144,7 +144,10 @@
 										<td>${ userList.user_email }</td>
 										<td>${ userList.user_point }</td>
 										<td>${ userList.user_level }</td>
-										<td>${ userList.blacklist_yn }</td>
+										<td>
+											<span class = "blacklist-value">${ userList.blacklist_yn }</span>
+											<input type="checkbox" class="blacklist-check" onclick = "checkBlackList()"/>
+										</td>
 										<td>${ userList.flatform_type }</td>
 									</tr>
 								</c:forEach>
@@ -152,12 +155,12 @@
 						</table>
 						<nav aria-label="Page navigation example">
 							<ul class="pagination justify-content-center">
-								<li class="page-item disabled"><a class="page-link"
-									href="#" tabindex="-1">Previous</a></li>
+								<li class="page-item"><a class="page-link"
+									onclick = "return prev()" tabindex="-1">Previous</a></li>
 								<c:forEach begin = "1" end = "${ pageNum }" var = "num">
-									<li class="page-item"><a class="page-link" href="/user/listPage?num=${num }">${ num }</a></li>
+									<li class="page-item"><a class="page-link" href="userListPage.do?num=${num }">${ num }</a></li>
 								</c:forEach>
-								<li class="page-item"><a class="page-link" href="#">Next</a>
+								 <li class="page-item"><a class="page-link" onclick = "return next()">Next</a>
 								</li>
 							</ul>
 						</nav>
@@ -175,5 +178,53 @@
 	<!-- Script FontAwesome-->
 	<script src="https://kit.fontawesome.com/4bf42f841a.js"
 		crossorigin="anonymous"></script>
+	
+	<script>
+		const urlParams = new URL(location.href).searchParams;
+		const num = urlParams.get('num');
+		const prevNum = parseInt(num) - 1;
+		const nextNum = parseInt(num) + 1;
+		const listUrl = "userListPage.do?num=";
+		const page = document.getElementsByClassName('page-link');
+		const blacklistValue = document.getElementsByClassName("blacklist-value");
+		
+		$(function() {
+			
+			for(var i = 1; i < page.length - 1; i++ ) {
+				if(page[i].innerText === num) {
+					page[i].parentNode.classList.add('active');
+				}
+			};
+			
+			if(num == 1) {
+				page[0].parentNode.classList.add("disabled");
+			}
+			if(num == ${ pageNum }) {
+				page[(page.length - 1)].parentNode.classList.add("disabled");
+			}
+			
+			for(i = 0; i < blacklistValue.length; i++) {
+				if(blacklistValue[i].innerText === "N" || blacklistValue[i].innerText === "n") {
+					blacklistValue[i].nextElementSibling.setAttribute('checked', true);
+				}
+			}
+			
+		});
+		
+		function prev() {
+			window.location = listUrl + prevNum;
+		};
+		function next() {
+			window.location = listUrl + nextNum;
+		};
+		
+		function checkBlackList() {
+			console.log(this);
+			
+			
+		};
+		
+	</script>	
+		
 </body>
 </html>
