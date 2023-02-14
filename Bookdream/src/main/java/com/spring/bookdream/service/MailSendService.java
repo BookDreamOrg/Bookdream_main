@@ -16,7 +16,6 @@ public class MailSendService {
 //	private MailConfig mailConfig;
 	private JavaMailSenderImpl mailSender;
 	private int authNumber; 
-	// 난수 발생(여러분들 맘대러)
 
 		public void makeRandomNumber() {
 			// 난수의 범위 111111 ~ 999999 (6자리 난수)
@@ -26,15 +25,14 @@ public class MailSendService {
 			authNumber = checkNum;
 		}
 		
-		
-				//이메일 보낼 양식! 
+		//이메일 보낼 양식! 
 		public String joinEmail(String email) {
 			makeRandomNumber();
 			String setFrom = "sycha111@naver.com"; // email-config에 설정한 자신의 이메일 주소를 입력 
 			String toMail = email;
-			String title = "회원 가입 인증 이메일 입니다."; // 이메일 제목 
+			String title = "BookDream 회원 가입 인증 이메일 입니다."; // 이메일 제목 
 			String content = 
-					"홈페이지를 방문해주셔서 감사합니다." + 	//html 형식으로 작성 ! 
+					"홈페이지를 방문해주셔서 감사합니다." + 	 
 	                "<br><br>" + 
 				    "인증 번호는 " + authNumber + "입니다." + 
 				    "<br>" + 

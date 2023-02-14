@@ -55,4 +55,14 @@ public class QnAServiceImpl implements QnAService{
 		return qnaDAO.getRecentMyQnAList(qnaVO);
 	}
 		
+	//답변 체크
+	public void answerCheck(QnAVO qnaVO) {
+		qnaDAO.answerCheck(qnaVO);
+	}
+	
+	//질문 번호에 따른 답변 가져오기
+	public AnswerVO getAnswer(QnAVO qnaVO) {
+		return qnaDAO.getAnswer(qnaVO);
+	}
+		
 }
