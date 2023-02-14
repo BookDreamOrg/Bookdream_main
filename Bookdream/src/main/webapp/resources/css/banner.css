@@ -1,0 +1,97 @@
+@import url("https://fonts.googleapis.com/css?family=Black+Han+Sans:400");
+@import url("https://fonts.googleapis.com/css2?family=Sunflower:wght@500&display=swap");
+
+.banner {
+  position: relative;
+  margin: auto;
+  width: 100%;
+  height: 30rem;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+
+.swiper-wraper {
+  width: 100%;
+  height: inherit;
+}
+
+.swiper-slide {
+  width: 100%;
+  background-color: #fff;
+}
+
+.text-wrap {
+  position: absolute;
+  top: 0%;
+  left: 300px;
+  width: 600px;
+  margin: auto;
+  text-align: left;
+  opacity: 0;
+  margin: auto;
+  transition: 0.5s;
+  z-index: 1;
+}
+
+.swiper-slide-active .text-wrap {
+  opacity: 1;
+  top: 10%;
+  transition: 0.5s;
+}
+
+.slamdunk {
+  font-family: "Black Han Sans", sans-serif;
+}
+
+.slamdunk h2 {
+  font-size: 3.5rem;
+  color: white;
+}
+
+.slamdunk p {
+  margin-top: 2rem;
+  font-size: 2.5rem;
+}
+
+.trend {
+  font-family: "Black Han Sans", sans-serif;
+  left: 200px;
+  font-size: 3rem;
+  line-height: 3rem;
+  color: white;
+}
+
+.trend h2:first-child {
+  font-size: 2.5rem;
+}
+
+.trend p {
+  margin-top: 2.5rem;
+  color: black;
+}
+
+.swiper-pagination-bullet {
+  width: 40px;
+  height: 3px;
+  border-radius: 0;
+  background-color: #fff;
+}
+
+.swiper-pagination-bullet-active {
+  background: #fff;
+  width: 80px;
+}
+
+.swiper-button-next .swiper-button-disabled,
+.swiper-button-prev .swuper-button-disabled {
+  opacity: 0;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--main-color);
+  opacity: 0.9;
+}

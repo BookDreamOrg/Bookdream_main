@@ -61,4 +61,10 @@ public class QnADAO {
 	public AnswerVO getAnswer(QnAVO qnaVO) {
 		return mybatis.selectOne("QnADAO.getAnswer", qnaVO);
 	}
+	
+	//나의 문의 목록 리스트
+	public List<QnAVO> getRecentMyQnAList(QnAVO qnaVO){
+		System.out.println("MyList 3개");
+		return mybatis.selectList("QnADAO.getRecentMyQnAList", qnaVO);
+	}
 }

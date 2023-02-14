@@ -21,7 +21,7 @@
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 <link rel="stylesheet" href="/resources/css/qna.css" />
-<title>Insert title here</title>
+<title>1:1문의</title>
 </head>
 <body>
 	<div class="wrapper">
@@ -32,6 +32,8 @@
 
 			<div class="main">
 
+				<jsp:include page="/views/inc/mypage_side.jsp" />
+
 				<div class="rside">
 					<div class="qna_header">
 						<p class="qna_title">1:1 문의
@@ -41,7 +43,9 @@
 								onclick="location.href='/views/mypage/qna_write.jsp'">1:1문의하기</button>
 						</p>
 					</div>
+					
 					<div class="qna_body">
+					<hr>
 						<c:choose>
 							<c:when test="${empty myQnAList }">
 								<p>문의 내역이 없습니다.</p>
@@ -51,7 +55,8 @@
 									<table class="table table-borderless">
 										<tr>
 											<td width="20%">
-												${list.getReg_date() }
+											<fmt:formatDate value="${list.getReg_date() }" pattern="yy-MM-dd" />
+											<fmt:formatDate value="${list.getReg_date() }" pattern="HH:mm" />
 											</td>
 											<td width="65%">
 												 <span class="qna_list_title" id="qna_title" name="qna_title">${list.getQna_title() }</span>
@@ -115,42 +120,6 @@
 								</c:forEach>
 							</c:when>
 						</c:choose>
-					</div>
-				</div>
-
-				<!-- side -->
-				<div class="side">
-					<div class="user_btn">
-						<i class="fa-solid fa-user"></i>
-					</div>
-					<div>
-						<a href="/views/mypage/mypage.jsp">${authUser.getUser_name() }</a>님
-						환영합니다.
-					</div>
-					<h1>
-						<a href="/mypage/edit">회원정보 관리</a>
-					</h1>
-					<!-- Button trigger modal -->
-					<button type="button" class="btn" data-bs-toggle="modal"
-						data-bs-target="#exampleModal">회원탈퇴</button>
-
-					<div>
-						<a href="/mypage/address">배송지 관리</a>
-					</div>
-					<div>
-						<a href="/mypage/tracking">배송 조회</a>
-					</div>
-					<div>
-						<a href="#">나의 구매내역</a>
-					</div>
-					<div>
-						<a href="/mypage/getMyQnAList">1:1문의</a>
-					</div>
-					<div>
-						<a href="#">상품문의</a>
-					</div>
-					<div>
-						<a href="/mypage/getAllQnAList">관리자 답변</a>
 					</div>
 				</div>
 

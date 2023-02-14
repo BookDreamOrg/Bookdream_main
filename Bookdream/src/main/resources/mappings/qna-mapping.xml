@@ -65,4 +65,13 @@
 	<select id="getAnswer" resultMap="answerResult">
 		select * from answer where user_no = #{user_no}
 	</select>
+
+	<!-- 나의 문의 리스트 가져오기  -->
+	<select id="getRecentMyQnAList" resultMap="qnaResult" parameterType="qna">
+		select * 
+		from QNA 
+		where user_no = #{user_no} and 	
+		<![CDATA[ rownum <= 3]]> 
+		order by qna_no desc
+	</select>	
 </mapper>

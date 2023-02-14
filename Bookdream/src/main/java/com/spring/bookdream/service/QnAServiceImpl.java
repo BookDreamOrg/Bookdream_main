@@ -49,6 +49,11 @@ public class QnAServiceImpl implements QnAService{
 	public void insertAnswer(AnswerVO answerVO) {
 		qnaDAO.insertAnswer(answerVO);
 	}
+
+	//마이페이지 나의 문의 목록 리스트 (3개)
+	public List<QnAVO> getRecentMyQnAList(QnAVO qnaVO) {
+		return qnaDAO.getRecentMyQnAList(qnaVO);
+	}
 		
 	//답변 체크
 	public void answerCheck(QnAVO qnaVO) {

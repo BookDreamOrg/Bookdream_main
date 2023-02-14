@@ -57,7 +57,6 @@
 		
 	<!-- 마이페이지 주문조회 (간단) 1개월 이내만 조회!! -->
 	<select id="searchOrder" parameterType="order" resultMap="orderList">		
-
 		SELECT order_no, 
 			   order_name, 
 			   book_img, 
@@ -80,9 +79,9 @@
                        y.pay_no = o.order_no   AND
                        o.user_no = #{user_no}
                 )
-        WHERE rn = 1 AND
+        WHERE rn = 1 
         	<![CDATA[
-        	  order_date > sysdate-#{search_date} 
+        	 	AND order_date > sysdate-#{search_date} 
         	]]>
          	<choose>
          		<when test="search_status == 100 ">
@@ -95,6 +94,39 @@
 		order by order_no desc
 
 	</select>
+	
+	<!-- 마이페이지 최근 구매 조회-->
+	<select id="recentOrder" parameterType="order" resultMap="orderList">		
+		SELECT order_no, 
+			   order_name, 
+			   book_img, 
+      		   order_date,
+			   final_price,
+			   order_status
+		FROM   (select o.order_no, 
+                	   o.order_name, 
+                       b.book_img, 
+                       o.order_date,
+                       y.final_price,
+                       o.order_status,
+	 			       ROW_NUMBER() OVER(PARTITION BY o.order_no ORDER BY o.order_name DESC) AS rn                       
+	 			from   orders o, 
+	 			       purchase p, 
+	 			       book b,
+	 			       pay y
+	 			where  p.book_no = b.book_no   AND
+                       p.order_no = o.order_no AND
+                       y.pay_no = o.order_no   AND
+                       o.user_no = #{user_no} 
+                order by order_no desc
+                )
+        WHERE rn = 1 AND
+			  rownum = 1		
+
+
+	</select>	
+	
+	
 
 	<!-- 마이페이지 주문조회 (간단) (관리자 페이지로 넘길예정 : 페이징처리추가됨)
 		
@@ -140,7 +172,7 @@
 	-->	
 		
 	<!-- 결제취소 -->
-	<update id="cencelOrder">
+	<update id="cancelOrder">
 		UPDATE orders
 		SET	   order_status = 10
 		WHERE  order_no = #{order_no} AND
@@ -148,7 +180,7 @@
 	</update>	
 
 	<!-- 반품신청 -->
-	<update id="cencelOrder2">
+	<update id="cancelOrder2">
 		UPDATE orders
 		SET	   order_status = 11
 		WHERE  order_no = #{order_no} AND
@@ -222,4 +254,46 @@
 		group by order_status
 	</select>
 			
+	<!-- 관리자 : 일주일 주문 카운트 -->		
+	<select id="orderDateCount" resultType="HashMap">
+	<![CDATA[
+		SELECT to_date(b.dt, 'YY-MM-DD')as order_date,
+		       nvl(sum(a.cnt), 0) cnt
+		FROM  (select to_date(order_date, 'YY-MM-DD')as order_date,
+		              count(order_date) cnt
+		       from orders
+		       where order_date between to_date(sysdate-4, 'YY-MM-DD') AND 
+		             to_date(sysdate, 'YY-MM-DD') AND
+		             order_status between 0 and 3
+		       group by order_date) a,      
+		      
+		      (select to_date(TO_DATE(sysdate-6,'YY/MM/DD') + LEVEL - 1, 'YY/MM/DD') AS dt
+		       from dual 
+		       CONNECT BY LEVEL <= (TO_DATE(sysdate,'YY/MM/DD') - TO_DATE(sysdate-6,'YY/MM/DD') + 1)) b
+		WHERE b.dt = order_date(+)
+		group by b.dt
+		order by b.dt  
+	]]>	    
+	</select>		
+
+	<!-- 관리자 : 일주일 주문 취소/반품 카운트 -->		
+	<select id="orderCancelDateCount" resultType="HashMap">
+	<![CDATA[
+		SELECT nvl(sum(a.cnt2), 0) cnt2
+		FROM  (select to_date(cancel_date, 'YY-MM-DD') as order_cancel_date,
+		              count(cancel_date) cnt2
+		       from orders
+		       where to_date(cancel_date, 'YY-MM-DD') between to_date(sysdate-4, 'YY-MM-DD') AND 
+		             to_date(sysdate, 'YY-MM-DD') AND
+		             order_status between 10 and 13
+		       group by cancel_date) a,      
+		       
+		      (select to_date(TO_DATE(sysdate-6,'YY/MM/DD') + LEVEL - 1, 'YY/MM/DD') AS dt
+		       from dual 
+		       CONNECT BY LEVEL <= (TO_DATE(sysdate,'YY/MM/DD') - TO_DATE(sysdate-6,'YY/MM/DD') + 1)) b
+		WHERE b.dt = order_cancel_date(+)
+		group by b.dt
+		order by b.dt  
+	]]>	    
+	</select>			
 </mapper>

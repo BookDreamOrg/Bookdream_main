@@ -1,4 +1,16 @@
 
+/* password */
+.pw_ok {
+	color: #008000;
+	display: none;
+}
+
+.pw_no {
+	color: #6A82FB;
+	display: none;
+}
+/* side */
+
 .rside {
 	height: auto;
 	width: 950px;
@@ -16,25 +28,15 @@
 	min-height: 1000px;
 }
 
-.user-btn {
-	color: var(- -main-color-shadow6);
-	font-size: 2rem;
-}
-
-.qna_title {
+.user_info_title {
 	font-size: 30px;
-	float: left;
+	margin-bottom: 10px;
 }
 
-.qna_button {
-	float: right;
+.user_delete_info_list{
+	margin-top: 10px;
 }
 
-.form_textarea {
-	width: 100%;
-	margin-top: 5px;
-}
-
-.qna_btn{
-	float: right;	
+.user_delete_title{
+	font-size: 14px;
 }

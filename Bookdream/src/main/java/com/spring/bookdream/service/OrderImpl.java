@@ -30,9 +30,9 @@ public class OrderImpl implements OrderService {
 	}
 
 	@Override
-	public void cencelOrder(OrderVO vo) {
+	public void cancelOrder(OrderVO vo) {
 
-		orderDAO.cencelOrder(vo);
+		orderDAO.cancelOrder(vo);
 	}
 
 	@Override
@@ -58,6 +58,28 @@ public class OrderImpl implements OrderService {
 	public List<Map<String, Object>> orderStatusCount(OrderVO vo) {
 
 		return orderDAO.orderStatusCount(vo);
+	}
+
+	@Override
+	public OrderVO recentOrder(OrderVO vo) {
+		
+		return orderDAO.recentOrder(vo);
+	}
+
+	// 일주일 주문 카운트
+	@Override
+	public List<Map<String, Object>> orderDateCount(OrderVO vo) {
+		// TODO Auto-generated method stub
+		return orderDAO.orderDateCount(vo);
+	}
+
+	// 일주일 주문 취소/반품 카운트
+	@Override
+	public List<Map<String, Object>> orderCancelDateCount(OrderVO vo) {
+		// TODO Auto-generated method stub
+		return orderDAO.orderCancelDateCount(vo);
 	}	
+	
+	
 
 }
