@@ -69,15 +69,29 @@ public class OrderImpl implements OrderService {
 	// 일주일 주문 카운트
 	@Override
 	public List<Map<String, Object>> orderDateCount(OrderVO vo) {
-		// TODO Auto-generated method stub
+
 		return orderDAO.orderDateCount(vo);
 	}
 
 	// 일주일 주문 취소/반품 카운트
 	@Override
 	public List<Map<String, Object>> orderCancelDateCount(OrderVO vo) {
-		// TODO Auto-generated method stub
+
 		return orderDAO.orderCancelDateCount(vo);
+	}
+
+	// 월간 주문 카운트
+	@Override
+	public List<Map<String, Object>> orderMlyDateCount(OrderVO vo) {
+
+		return orderDAO.orderMlyDateCount(vo);
+	}
+
+	// 월간 주문 취소/반품 카운트
+	@Override
+	public List<Map<String, Object>> orderMlyCancelDateCount(OrderVO vo) {
+
+		return orderDAO.orderMlyCancelDateCount(vo);
 	}	
 	
 	

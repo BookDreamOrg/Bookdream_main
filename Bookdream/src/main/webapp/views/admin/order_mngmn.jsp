@@ -29,11 +29,33 @@
 
 <style type="text/css">
 
-.chartbox {
+.shadow-sm {
+	background-color: white;
+}
 
+main {
+	background-color: #f7f7f7;
+}
+
+.chartbox_card {
+	width: 700px;
+	margin: 30px 0px;
+}
+
+.chartbox {
 	width: 700px;
 	height: 500px;
+	padding:30px;
+	background: white;	
 }
+.chartbox_chart {
+	width: 600px;
+
+}
+
+
+
+
 </style>
 
 <!-- jQuery -->
@@ -134,12 +156,34 @@
 			</div>
 		</nav>
 	</header>
-	<div class="section_div">
-		<!--   차트를 그릴 영역으로 canvas태그를 사용한다. -->
-		<div class="chartbox">
-			<canvas class="myChart" id="myChart"></canvas>
-		</div>
 	
+	
+	<div class="container">
+	
+		<div class="card chartbox_card">
+		  <div class="card-header">
+		    Featured
+		  </div>
+		  <div class="card-body">
+		    <h5 class="card-title">Special title treatment</h5>
+		    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+		  </div>
+		</div>
+			
+		<div class="chartbox">
+			<button class="btn btn-outline-primary" id="wek_chart_btn">주간</button>
+			<button class="btn btn-outline-primary" id="mly_chart_btn">월간</button>
+			<!--   차트를 그릴 영역으로 canvas태그를 사용한다. -->
+			<div class="chartbox_chart">
+				<canvas class="myChart" id="orderChart"></canvas>
+			</div>
+		</div>
+		
+			<button class="btn btn-outline-primary" id="wek_paychart_btn">주간</button>
+			<button class="btn btn-outline-primary" id="mly_paychart_btn">월간</button>
+			<div class="chartbox_chart">
+				<canvas class="myChart" id="myChart"></canvas>
+			</div>		
 	</div>
 	</main>
 

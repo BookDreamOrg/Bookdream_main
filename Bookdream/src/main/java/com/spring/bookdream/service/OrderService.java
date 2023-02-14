@@ -13,7 +13,7 @@ public interface OrderService {
 	// 주문 조회
 	List<OrderVO> searchOrder(OrderVO vo);
 	
-	// 결제 취소
+	// 결제 취소, 반품 신청
 	void cancelOrder(OrderVO vo);
 
 	// 도서 재고 반환
@@ -37,4 +37,11 @@ public interface OrderService {
 
 	// 일주일 주문 취소/반품 카운트
 	List<Map<String, Object>> orderCancelDateCount(OrderVO vo);
+	
+	// 월간 주문 카운트
+	List<Map<String, Object>> orderMlyDateCount(OrderVO vo);
+
+	// 월간 주문 취소/반품 카운트
+	List<Map<String, Object>> orderMlyCancelDateCount(OrderVO vo);	
+	
 }

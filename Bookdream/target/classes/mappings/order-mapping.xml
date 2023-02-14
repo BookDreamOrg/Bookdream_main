@@ -170,23 +170,15 @@
 	</select>	
 	
 	-->	
-		
-	<!-- 결제취소 -->
+
+	<!-- 주문취소/반품요청시 배송상태 변경, 취소시간등록-->
 	<update id="cancelOrder">
 		UPDATE orders
-		SET	   order_status = 10
-		WHERE  order_no = #{order_no} AND
-			   order_status = 0
-	</update>	
-
-	<!-- 반품신청 -->
-	<update id="cancelOrder2">
-		UPDATE orders
-		SET	   order_status = 11
-		WHERE  order_no = #{order_no} AND
-		       order_status = 2
-	</update>	
-			
+		SET	   order_status = #{order_status},
+			   cancel_date = sysdate
+		WHERE  order_no = #{order_no} 
+	</update>
+								
 	<!-- 도서반환 -->	
 	<update id="updateBookStock">	
 		UPDATE book b
@@ -254,10 +246,10 @@
 		group by order_status
 	</select>
 			
-	<!-- 관리자 : 일주일 주문 카운트 -->		
+	<!-- 관리자 : 주간 주문 카운트 -->		
 	<select id="orderDateCount" resultType="HashMap">
 	<![CDATA[
-		SELECT to_date(b.dt, 'YY-MM-DD')as order_date,
+		SELECT to_char(b.dt, 'MM-DD')as order_date,
 		       nvl(sum(a.cnt), 0) cnt
 		FROM  (select to_date(order_date, 'YY-MM-DD')as order_date,
 		              count(order_date) cnt
@@ -276,7 +268,7 @@
 	]]>	    
 	</select>		
 
-	<!-- 관리자 : 일주일 주문 취소/반품 카운트 -->		
+	<!-- 관리자 : 주간 주문 취소/반품 카운트 -->		
 	<select id="orderCancelDateCount" resultType="HashMap">
 	<![CDATA[
 		SELECT nvl(sum(a.cnt2), 0) cnt2
@@ -295,5 +287,46 @@
 		group by b.dt
 		order by b.dt  
 	]]>	    
-	</select>			
+	</select>
+	
+	
+	<!-- 월간 주문 카운트 -->
+	<select id="orderMlyDateCount" resultType="HashMap">
+	<![CDATA[	
+		SELECT  TO_CHAR(b.dt, 'YY-MM')as order_date, 
+		        nvl(sum(a.cnt), 0) cnt
+		FROM    (select to_date(order_date, 'YY-MM-DD')as order_date, 
+		               count(case when order_status between 0 and 3 AND 
+		                     to_date(order_date, 'YY-MM-DD') between to_date('220801', 'YY-MM-DD') AND 
+		                     to_date('230228', 'YY-MM-DD') then 1 end) cnt               
+		        from orders
+		        group by order_date) a,      
+		        (SELECT to_date(TO_DATE('220801','YY-MM-DD') + LEVEL - 1, 'YY-MM-DD') AS dt
+		        FROM dual 
+		        CONNECT BY LEVEL <= (TO_DATE('230228','YY-MM-DD') - TO_DATE('220801','YY-MM-DD') + 1)) b
+		WHERE b.dt = a.order_date(+) 
+		group by TO_CHAR(b.dt, 'YY-MM')
+		order by TO_CHAR(b.dt, 'YY-MM')	
+	]]>	
+	</select>
+	
+	<!-- 월간 주문 취소/반품 카운트 -->
+	<select id="orderMlyCancelDateCount" resultType="HashMap">
+	<![CDATA[		
+		SELECT  nvl(sum(a.cnt), 0) cnt2
+		FROM    (select to_date(cancel_date, 'YY-MM-DD')as order_date, 
+		                count(case when order_status between 10 and 13 AND 
+		                      to_date(cancel_date, 'YY-MM-DD') between to_date('220801', 'YY-MM-DD') AND 
+		                      to_date('230228', 'YY-MM-DD') then 1 end) cnt               
+		        from orders
+		        group by cancel_date) a,      
+		        (SELECT to_date(TO_DATE('220801','YY-MM-DD') + LEVEL - 1, 'YY-MM-DD') AS dt
+		        FROM dual 
+		        CONNECT BY LEVEL <= (TO_DATE('230228','YY-MM-DD') - TO_DATE('220801','YY-MM-DD') + 1)) b
+		WHERE b.dt = a.order_date(+) 
+		group by TO_CHAR(b.dt, 'YY-MM')
+		order by TO_CHAR(b.dt, 'YY-MM')	
+	]]>	
+	</select>
+					
 </mapper>

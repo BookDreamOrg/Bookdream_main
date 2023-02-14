@@ -51,8 +51,8 @@ public class OrderController {
 	    System.out.println("--->  배송상태 갱신 처리 <---");
 		orderService.cancelOrder(order);
 		
-		// 결제취소, 반품완료 일때만 처리 (반품문의는 안됨)
-		if (order.getOrder_status() == 10) {
+		// 결제취소, 반품완료 일때만 처리 
+		if (order.getOrder_status() == 11 || order.getOrder_status() == 13) {
 			
 		    System.out.println("---> 사용,적립 포인트 반환 <---");
 		    orderService.updateUserPoint(order);
