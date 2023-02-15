@@ -12,6 +12,9 @@
 		<result property="blacklist_yn" column="blacklist_yn"/>
 		<result property="flatform_type" column="flatform_type"/>		
 		<result property="user_email" column="user_email"/>
+		<result property="user_point" column="user_point"/>
+		<result property="user_regdate" column="user_regdate"/>
+		<result property="searchUserKeyword" column="searchUserKeyword"/>
 	</resultMap>
 
 	<insert id="insertUser">
@@ -29,9 +32,17 @@
 			where user_id=#{user_id} and user_password=#{user_password}
 	</select>
 	
-	<select id="getAllUserList" resultType="List">
-		select * from user;
-	</select> 
+	<select id="getAllUserList" resultType="user" parameterType="user">
+		select * 
+		from users
+		<if test="searchUserKeyword != null">
+			where user_no like '%' || #{searchUserKeyword} || '%' or user_id like '%' || #{searchUserKeyword} || '%' 
+			or user_password like '%' || #{searchUserKeyword} || '%' or user_name like '%' || #{searchUserKeyword} || '%' 
+			or user_tel like '%' || #{searchUserKeyword} || '%' or user_level like '%' || #{searchUserKeyword} || '%'
+			or blacklist_yn like '%' || #{searchUserKeyword} || '%' or user_email like '%' || #{searchUserKeyword} || '%' 
+			or user_point like '%' || #{searchUserKeyword} || '%' or user_regdate like '%' || #{searchUserKeyword} || '%'
+		</if>
+	</select>
 	
 	<select id="loginCheck" resultType="String">
 		select user_name

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -107,68 +109,66 @@
 						</li>
 					</ul>
 					<form class="d-flex">
-						<input class="form-control me-2" type="search"
-							placeholder="Search" aria-label="Search" />
-						<button class="btn btn-outline-success" type="submit">
-							Search</button>
+						<input class="form-control me-2" type="search" id="searchUserKeyword" placeholder="Search" aria-label="Search" />
+						<button class="btn btn-outline-success" type="button" onclick="searchUser()">Search</button>
 					</form>
 				</div>
 			</div>
 		</nav>
 	</header>
-	<div class="section_div">
-		<section class="today_state">
-			<div class="card">
-				<div class="card-body">
-					<h5 class="card-title">오늘의 할일</h5>
-					<p class="card-text">With supporting text below as a natural
-						lead-in to additional content.</p>
-				</div>
-			</div>
-		</section>
-		<section class="todo_list">
-			<div class="card">
-				<div class="card-header">Featured</div>
-				<div class="card-body">
-					<h5 class="card-title">Special title treatment</h5>
-					<p class="card-text">With supporting text below as a natural
-						lead-in to additional content.</p>
-				</div>
-			</div>
-		</section>
-		<section class="calandar">
-			<div class="card">
-				<div class="card-header">Featured</div>
-				<div class="card-body">
-					<h5 class="card-title">Special title treatment</h5>
-					<p class="card-text">With supporting text below as a natural
-						lead-in to additional content.</p>
-				</div>
-			</div>
-		</section>
-		<section class="qna">
-			<div class="card">
-				<div class="card-header">Featured</div>
-				<div class="card-body">
-					<h5 class="card-title">Special title treatment</h5>
-					<p class="card-text">With supporting text below as a natural
-						lead-in to additional content.</p>
-				</div>
-			</div>
-		</section>
-		<section class="content_review">
-			<div class="card">
-				<div class="card-header">Featured</div>
-				<div class="card-body">
-					<h5 class="card-title">Special title treatment</h5>
-					<p class="card-text">With supporting text below as a natural
-						lead-in to additional content.</p>
-				</div>
-			</div>
-		</section>
-	</div>
+	<a href="/admin/getAllUserList">유저목록</a>
+		<div>
+			<table class="table">
+				<tr>
+					<th>NO</th>
+					<th>아이디</th>
+					<th>비밀번호</th>
+					<th>이름</th>
+					<th>전화번호</th>
+					<th>이메일</th>
+					<th>포인트</th>
+					<th>레벨</th>
+					<th>블랙리스트</th>
+					<th>타입</th>
+					<th>회원 가입일</th>
+				</tr>
+				<c:forEach var="userList" items="${userAllList }">
+					<tr>
+						<td>${userList.getUser_no() }</td>
+						<td>${userList.getUser_id() }</td>
+						<td>${userList.getUser_password() }</td>
+						<td>${userList.getUser_name() }</td>
+						<td>${userList.getUser_tel() }</td>
+						<td>${userList.getUser_email() }</td>
+						<td>${userList.getUser_point() }</td>
+						<td>${userList.getUser_level() }</td>
+						<td>${userList.getBlacklist_yn() }</td>
+						<td>${userList.getFlatform_type() }</td>
+						<td>${userList.getUser_regdate() }</td>
+						
+					</tr>
+				</c:forEach>
+			</table>
+		</div>
 	</main>
 
+	<script type="text/javascript">
+		function searchUser(){
+			var searchUserKeyword = $('#searchUserKeyword').val();
+			$.ajax({
+				type : "GET",
+				url : "/admin/getSearchUserList",
+				data : {searchUserKeyword : searchUserKeyword},
+
+				success : function(result){	
+					location.href="/admin/getAllUserList?searchUserKeyword=" + result;
+				},
+				error : function(){
+					alert('서버 에러입니다.');
+				}
+			});
+		}
+	</script>
 	<!-- Script Bootstrap, jqurey-3.6.3 -->
 	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
 	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>

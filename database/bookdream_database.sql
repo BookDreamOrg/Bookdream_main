@@ -26,22 +26,24 @@ create table USERS (
   FLATFORM_TYPE           varchar2(50)  not null,
   USER_EMAIL              varchar2(50)  not null,
   USER_POINT              number(10)    default 10000,
+  USER_REGDATE            date default sysdate,
   constraint PK_USER primary key (USER_NO)
 );
 
 -- BookDream User_ADDRESS 제거
 alter table users drop column USER_ADDRESS;
 
-alter table  USERS add USER_POINT number(10) default '';
+-- USER_POINT 추가
+alter table USERS add USER_POINT number(10) default 10000;
+
+-- USER_REGDATE 추가
+alter table USERS add USER_REGDATE date default sysdate;
 
 desc users;
 
 drop sequence user_seq;
 -- 번호를 자동으로 1부터 1씩 증가하도록 만듦
 create sequence user_seq increment by 1 start with 1;
-
-update users set user_point = 10000;
-
 -- BookDream test 로그인 insert
 insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
    values(user_seq.nextval,'test','test','test','BD','test@test.com');
@@ -307,7 +309,6 @@ create table QNA(
     constraint PK_QNA primary key(QNA_NO),
     constraint FK_QNA_USER_NO foreign key(USER_NO) REFERENCES USERS (USER_NO)
 );
-
 insert into QNA(QNA_NO, USER_NO, QNA_TITLE, QNA_CONTENT, QNA_TYPE) 
 		values(qna_seq.nextval, 1 , '이게안돼','이게 왜 안될까요','QNA타입');
 delete from qna where user_no=1;
@@ -328,9 +329,9 @@ delete from answer;
 rollback;
 commit; 
 
-select * from qna q, answer a where q.user_no = a.user_no and ans_check='1';
-select distinct ans_content, qna_no from qna q, answer a where q.user_no = a.user_no and q.user_no = '1' and ans_check='1';
+select * from answer where user_no = '1';
 
+------------------------- ANSWER ----------------------
 drop table answer;
 create table ANSWER(
     ANS_NO NUMBER(10) NOT NULL,
@@ -347,7 +348,8 @@ desc answer;
 drop sequence answer_seq;
 -- 번호를 자동으로 1부터 1씩 증가하도록 만듦
 create sequence answer_seq increment by 1 start with 1;
-
+delete from answer where ans_no=3;
 select * from answer;
+
 rollback;
 commit;

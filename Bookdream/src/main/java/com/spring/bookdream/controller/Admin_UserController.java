@@ -1,5 +1,6 @@
 package com.spring.bookdream.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -80,4 +82,46 @@ public class Admin_UserController {
 			 
 			return "admin/admin_qnaanswer";
 		}	
+		
+		// 모든 유저 목록 가져오기
+		@RequestMapping(value="/getAllUserList")
+		public String getAllUserList(UserVO userVO, Model model) {
+			
+			System.out.println("getAllUserList실행");
+			System.out.println(userVO.getSearchUserKeyword());
+			
+			String key = userVO.getSearchUserKeyword();
+			
+			List<UserVO> userAllList = userService.getAllUserList(userVO);
+			
+			for(int i=0; i<userAllList.size(); i++) {
+				System.out.println(userAllList.get(i));
+			}
+			System.out.println();
+			
+			model.addAttribute("userAllList", userAllList);
+			return "/admin/user_search";
+		}
+		
+		// 검색 유저 목록 가져오기
+		@RequestMapping(value="/getSearchUserList")
+		@ResponseBody	
+		public String getSearchUserList(UserVO userVO, Model model) {
+			 
+			System.out.println("getSearchUserList실행");
+			System.out.println(userVO.getSearchUserKeyword());
+			
+			String key = userVO.getSearchUserKeyword();
+			
+			List<UserVO> userAllList = userService.getAllUserList(userVO);
+			
+			for(int i=0; i<userAllList.size(); i++) {
+				System.out.println(userAllList.get(i));
+			}
+			System.out.println();
+			
+			model.addAttribute("userAllList", userAllList);
+			return key;
+		}
+		
 }

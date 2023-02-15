@@ -24,8 +24,8 @@ public class UserDAO {
 		}
 	
 		//모든 유저 리스트 가져오기
-		public List<UserVO> getAllUserList(){
-			return mybatis.selectList("UserDAO.getAllUserList");
+		public List<UserVO> getAllUserList(UserVO vo){
+			return mybatis.selectList("UserDAO.getAllUserList", vo);
 		}	
 		
 		// 로그인 확인
