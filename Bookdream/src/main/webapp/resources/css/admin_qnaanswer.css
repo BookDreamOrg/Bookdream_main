@@ -1,0 +1,44 @@
+.user-btn {
+	color: var(- -main-color-shadow6);
+	font-size: 2rem;
+}
+
+.qna_title {
+	font-size: 30px;
+	float: left;
+}
+
+.qna_button {
+	float: right;
+}
+
+.qna_body {
+	margin-top: 100px;
+}
+
+.qna_list_title {
+	font-size: 20px;
+	margin-right: 20px;
+}
+
+.qna_list_date {
+	float: right;
+}
+
+.qna_sumbmit {
+	display: flex;
+	margin-top: 20px;
+}
+
+.qna_submit_btn {
+	display: flex;
+	margin-left: auto;
+}
+
+.qna_update_btn {
+	margin-right: 10px;
+}
+
+.drop_btn {
+	font-size: 2rem;
+}

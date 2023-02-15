@@ -1,6 +1,7 @@
 package com.spring.bookdream.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,8 +59,8 @@ public class QnADAO {
 	}
 	
 	//질문 번호에 따른 답변 가져오기
-	public AnswerVO getAnswer(QnAVO qnaVO) {
-		return mybatis.selectOne("QnADAO.getAnswer", qnaVO);
+	public List<AnswerVO> getAnswer(QnAVO qnaVO) {
+		return mybatis.selectList("QnADAO.getAnswer", qnaVO);
 	}
 	
 	//나의 문의 목록 리스트

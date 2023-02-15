@@ -3,6 +3,7 @@ package com.spring.bookdream.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -259,11 +260,12 @@ public class MypageController {
 		System.out.println(qnaVO.getUser_no());
 		System.out.println(qnaVO);
 		List<QnAVO> qnaMyList = qnaService.getMyQnAList(qnaVO);
+		List<AnswerVO> ansMyList = qnaService.getAnswer(qnaVO);
+		for(int i=0; i<ansMyList.size(); i++) {
+			System.out.println(ansMyList.get(i));
+		}
 		
-		AnswerVO answerVO = new AnswerVO();
-		answerVO = qnaService.getAnswer(qnaVO);
-		
-		model.addAttribute("answerVO", answerVO);
+		model.addAttribute("ansMyList",ansMyList);
 		model.addAttribute("myQnAList", qnaMyList);
 		model.addAttribute("qnaUrl", "/mypage/qna_write");
 		return "mypage/qna";
@@ -321,43 +323,6 @@ public class MypageController {
 		return "redirect:/mypage/getMyQnAList";
 	}
   
-	// 관리자의 전체 문의 리스트 가져오기
-		@RequestMapping(value="/getAllQnAList")
-		public String getAllQnAList(HttpSession session, Model model){
-			
-			System.out.println("getAllQnAList실행");
-			
-			
-			List<QnAVO> qnaAllList = qnaService.getAllQnAList();
-			
-			UserVO user = (UserVO)session.getAttribute("authUser");
-			
-			model.addAttribute("qna_user", user);
-			model.addAttribute("qnaAllList", qnaAllList);
-			
-			return "mypage/answer";
-		}
-
-		
-		// 답변 
-		@RequestMapping(value="/answerQnA")
-		@ResponseBody
-		public String answerQnA(HttpServletRequest request, AnswerVO answerVO, QnAVO qnaVO) {
-			
-			System.out.println("answerQnA실행");
-			//답변완료 표시
-			qnaVO.setAns_check("1");
-			
-			System.out.println(answerVO.getUser_no());
-			System.out.println(answerVO.getAns_content());
-			System.out.println(qnaVO.getQna_no());
-			System.out.println(qnaVO.getAns_check());
-			
-			qnaService.insertAnswer(answerVO);
-			qnaService.answerCheck(qnaVO);
-			 
-			return "mypage/answer";
-		}	
 }
 
 

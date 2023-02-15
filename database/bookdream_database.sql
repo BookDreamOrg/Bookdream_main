@@ -40,11 +40,17 @@ drop sequence user_seq;
 -- 번호를 자동으로 1부터 1씩 증가하도록 만듦
 create sequence user_seq increment by 1 start with 1;
 
+update users set user_point = 10000;
+
 -- BookDream test 로그인 insert
 insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
    values(user_seq.nextval,'test','test','test','BD','test@test.com');
 
-select * from users;    
+
+insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
+   values(user_seq.nextval,'sycha11','test','차승윤','BD','sycha112@naver.com');
+
+select * from users;
 commit;
 
 -- Review Table
@@ -166,16 +172,23 @@ CREATE sequence CART_SEQ increment by 1 START with 1;
 insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) 
 values(CART_SEQ.nextval, 1, 30, 3);
 
-SELECT  -- *
-        -- count(*)
-        row_number() over(order by c.cart_no desc) as num, -- 카트 추가 순서대로 밑에서부터 정렬
-        c.cart_no, c.user_no, b.book_img, b.title, b.book_price, c.product_count, b.stock
-		FROM 	cart c
-				INNER JOIN 	book b
-						ON	b.book_no = c.book_no
-		WHERE 	c.user_no = 1;
+insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(1, 1, 1, 1);
+insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(2, 1, 2, 1);
+insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(3, 1, 3, 2);
+insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(4, 1, 4, 1);
+insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(5, 1, 5, 1);
+
+insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(6, 2, 5, 1);
+
+select PRODUCT_COUNT from cart
+where user_no=1 and book_no = 20;
+
+insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) 
+            values(CART_SEQ.nextval, 1, 20, 2);
 
 
+-- if 조건 then 처리문 else if 조건2 then 처리문;     
+    
 UPDATE CART set PRODUCT_COUNT = (PRODUCT_COUNT + 5) where user_no=1 and book_no=20;
   
 select PRODUCT_COUNT from cart
@@ -191,6 +204,24 @@ select * from cart;
 
 commit; 
 
+SELECT  count(*) 
+		FROM cart 
+		WHERE user_no = 1
+        group by user_no;
+        
+SELECT  -- *
+        row_number() over(order by C.cart_no desc) as num, -- 등록 순서대로 칼럼 num(index) 지정.
+        C.cart_no, C.user_no, C.product_count, B.book_no, B.book_img, B.title, B.book_price, B.stock 
+from CART C
+        inner join BOOK B
+        on C.book_no = B.book_no   
+where c.user_no = 1 ;
+--AND product_count = 0;
+-- where c.user_no = #{user_no};
+
+DELETE 	CART
+	    WHERE 	book_no = 20
+	    AND 	user_no = 1;
 
 -------------------------------------------------------------------------------
 ---------------------------------- PARCHASE -----------------------------------
@@ -261,6 +292,8 @@ create table KEYWORD_HISTORY(
     SEARCH_DATE     date default sysdate,
     LOGIN_YN        varchar2(5) not null
 );
+
+
 -------------------------------- 1:1문의 테이블(QNA)------------------------------
 drop table QNA;
 create table QNA(
@@ -275,10 +308,6 @@ create table QNA(
     constraint FK_QNA_USER_NO foreign key(USER_NO) REFERENCES USERS (USER_NO)
 );
 
--- 번호를 자동으로 1부터 1씩 증가하도록 만듦
-drop sequence qna_seq;
-create sequence qna_seq increment by 1 start with 1;
-
 insert into QNA(QNA_NO, USER_NO, QNA_TITLE, QNA_CONTENT, QNA_TYPE) 
 		values(qna_seq.nextval, 1 , '이게안돼','이게 왜 안될까요','QNA타입');
 delete from qna where user_no=1;
@@ -286,28 +315,38 @@ delete from qna where user_no=1;
 ALTER TABLE QNA 
         ADD CONSTRAINT FK_QNA_USER_NO FOREIGN KEY(USER_NO) REFERENCES USERS(USER_NO);
 
+drop sequence qna_seq;
+-- 번호를 자동으로 1부터 1씩 증가하도록 만듦
+create sequence qna_seq increment by 1 start with 1;
+
 -- qna table fk user_no casecade
 alter table QNA drop constraint FK_QNA_USER_NO;
 alter table QNA add constraint FK_QNA_USER_NO foreign key (user_no) references users (user_no) on delete cascade;
 
 select * from qna;
-delete from QNA where qna_no=10;
+delete from answer;
 rollback;
 commit; 
 
+select * from qna q, answer a where q.user_no = a.user_no and ans_check='1';
+select distinct ans_content, qna_no from qna q, answer a where q.user_no = a.user_no and q.user_no = '1' and ans_check='1';
+
+drop table answer;
 create table ANSWER(
     ANS_NO NUMBER(10) NOT NULL,
     ANS_CONTENT VARCHAR(200) NOT NULL,
     USER_NO NUMBER(10) NOT NULL,
+    QNA_NO NUMBER(10) NOT NULL,
     constraint PK_ANSWER primary key(ANS_NO),
-    constraint FK_ANSWER foreign key(USER_NO) references USERS (USER_NO) 
+    constraint FK_ANSWER foreign key(USER_NO) references USERS (USER_NO),
+    constraint FK_ANSWER_QNA_NO foreign key(QNA_NO) references QNA (QNA_NO)
 );
 
--- 번호를 자동으로 1부터 1씩 증가하도록 만듦
-drop sequence answer_seq;
-create sequence answer_seq increment by 1 start with 1;
+desc answer;
 
-insert into ANSWER (ANS_NO, ANS_CONTENT, USER_NO) VALUES (answer_seq.nextval, 'zz', '1');
+drop sequence answer_seq;
+-- 번호를 자동으로 1부터 1씩 증가하도록 만듦
+create sequence answer_seq increment by 1 start with 1;
 
 select * from answer;
 rollback;

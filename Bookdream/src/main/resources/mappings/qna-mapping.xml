@@ -17,8 +17,16 @@
 		<result property="ans_no" column="ans_no"/>
 		<result property="ans_content" column="ans_content"/>
 		<result property="user_no" column="user_no"/>
+		<result property="qna_no" column="qna_no"/>
 	</resultMap>
 
+	<resultMap type="map" id="answerMapList">
+		<result property="qna_no" column="qna_no"/>
+     	<result property="ans_no" column="ans_no"/>
+		<result property="ans_content" column="ans_content"/>
+		<result property="user_no" column="user_no"/>
+    </resultMap>
+	
 	<!-- 문의 insert  -->	
 	<insert id="qnaInsert">
 		insert into QNA(QNA_NO, USER_NO, QNA_TITLE, QNA_CONTENT, QNA_TYPE) 
@@ -52,8 +60,8 @@
 
 	<!-- 답변 insert -->
 	<insert id="insertAnswer">
-		insert into ANSWER (ans_no, ans_content, user_no) 
-		values (answer_seq.nextval, #{ans_content}, #{user_no})
+		insert into ANSWER (ans_no, ans_content, user_no, qna_no) 
+		values (answer_seq.nextval, #{ans_content}, #{user_no}, #{qna_no})
 	</insert>
 	
 	<!-- 답변 체크 -->
@@ -62,7 +70,7 @@
 	</update>
 	
 	<!-- 답변 가져오기 -->
-	<select id="getAnswer" resultMap="answerResult">
+	<select id="getAnswer" resultMap="answerResult" parameterType="qna">
 		select * from answer where user_no = #{user_no}
 	</select>
 
