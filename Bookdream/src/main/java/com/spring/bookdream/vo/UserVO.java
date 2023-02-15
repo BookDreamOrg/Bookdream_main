@@ -22,4 +22,7 @@ public class UserVO {
 	private String user_email2; // @naver.com 도인
 	private String searchUserType; // 검색 타입
 	private String searchUserKeyword; // 검색어
+	
+	private int displayPost; 
+	private int postNum;
 }

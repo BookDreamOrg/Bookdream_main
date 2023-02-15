@@ -95,4 +95,29 @@ public class UserServiceImpl implements UserService {
 		userDAO.deleteUser(vo);
 	}
 
+	@Override
+	public List<UserVO> selectUser() {
+		return userDAO.selectUser();
+	}
+
+	@Override
+	public int countUser() {
+		return userDAO.countUser();
+	}
+
+	@Override
+	public List<UserVO> userListPage(UserVO vo) {
+		return userDAO.userListPage(vo);
+	}
+
+	@Override
+	public UserVO getUserByNo(int no) {
+		return userDAO.getUserByNo(no);
+	}
+
+	@Override
+	public void setBlack(int no) {
+		userDAO.setBlack(no);
+	}
+
 }
