@@ -287,8 +287,9 @@
 
 			if (num == 1) {
 				page[0].parentNode.classList.add("disabled");
-			}
-			;
+			} else if(num == (page.length - 2)) {
+				page[page.length-1].parentNode.classList.add("disabled");
+			};
 
 			$('#getUserModal').on('show.bs.modal',function(event) {
 								const btn = $(event.relatedTarget);
@@ -371,7 +372,7 @@
 
 				success : function(result){	
 					console.log(result);
-					location.href="/views/admin/user/userListPage.do?num="+num+"&searchUserKeyword=" + result;
+					location.href="/views/admin/user/userListPage.do?num=1"+"&searchUserKeyword=" + result;
 				},
 				error : function(){
 					alert('서버 에러입니다.');
