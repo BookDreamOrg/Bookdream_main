@@ -244,8 +244,9 @@
 								<li class="page-item"><a class="page-link"
 									onclick="return prev()" tabindex="-1">Previous</a></li>
 								<c:forEach begin="1" end="${ pageNum }" var="num">
-									<li class="page-item"><a class="page-link"
-										href="userListPage.do?num=${num }">${ num }</a></li>
+									<input type="hidden" id="SearchUserKeyword" value="${SearchUserKeyword }">
+											<li class="page-item"><a class="page-link"
+										href="userListPage.do?num=${num }&SearchUserKeyword=${SearchUserKeyword}">${ num }</a></li>
 								</c:forEach>
 								<li class="page-item"><a class="page-link"
 									onclick="return next()">Next</a></li>
@@ -273,7 +274,8 @@
 		const nextNum = parseInt(num) + 1;
 		const listUrl = "userListPage.do?num=";
 		const page = document.getElementsByClassName('page-link');
-
+		const SearchUserKeyword = $('#SearchUserKeyword').val();
+		
 		$(function() {
 
 			for (var i = 1; i < page.length - 1; i++) {
@@ -343,7 +345,11 @@
 		});
 
 		function prev() {
-			window.location = listUrl + prevNum;
+			if(SearchUserKeyword === null){
+				window.location = listUrl + prevNum;
+			} else{
+				window.location = listUrl + prevNum;
+			}
 		};
 		function next() {
 			window.location = listUrl + nextNum;

@@ -17,6 +17,7 @@
 		<result property="searchUserKeyword" column="searchUserKeyword"/>
 		<result property="displayPost" column="displayPost"/>
 		<result property="postNum" column="postNum"/>
+		<result property="countlistnum" column="countlistnum"/>
 	</resultMap>
 
 	<insert id="insertUser">
@@ -124,15 +125,31 @@
 	
 	<!-- User Paging -->
 	<select id="userListPage" parameterType="user" resultType="user">
- 		select * from (select ROW_NUMBER() over (order by user_no) NUM, A.* from users A order by user_no)
- 		where NUM between #{displayPost} AND (#{displayPost} + #{postNum})
- 		<if test="searchUserKeyword != null">
-			and user_no like '%' || #{searchUserKeyword} || '%' or user_id like '%' || #{searchUserKeyword} || '%' 
-			or user_password like '%' || #{searchUserKeyword} || '%' or user_name like '%' || #{searchUserKeyword} || '%' 
-			or user_tel like '%' || #{searchUserKeyword} || '%' or user_level like '%' || #{searchUserKeyword} || '%'
-			or blacklist_yn like '%' || #{searchUserKeyword} || '%' or user_email like '%' || #{searchUserKeyword} || '%' 
-			or user_point like '%' || #{searchUserKeyword} || '%' or user_regdate like '%' || #{searchUserKeyword} || '%'
-		</if> 
+ 		select * from 
+ 		<choose>
+ 			<when test="searchUserKeyword != null">
+				 (select ROW_NUMBER() over (order by user_no) NUM, A.* from users A 
+	         	 where 
+		            user_no like '%' || #{searchUserKeyword} || '%' or user_id like '%' || #{searchUserKeyword} || '%' 
+				or user_password like '%' || #{searchUserKeyword} || '%' or user_name like '%' || #{searchUserKeyword} || '%' 
+				or user_tel like '%' || #{searchUserKeyword} || '%' or user_level like '%' || #{searchUserKeyword} || '%'
+				or blacklist_yn like '%' || #{searchUserKeyword} || '%' or user_email like '%' || #{searchUserKeyword} || '%' 
+				or user_point like '%' || #{searchUserKeyword} || '%' or user_regdate like '%' || #{searchUserKeyword} || '%'
+				or flatform_type like '%' || #{searchUserKeyword} || '%'
+	             order by user_no)
+	             where NUM between #{displayPost} AND (#{displayPost} + #{postNum})
+	             and (user_no like '%' || #{searchUserKeyword} || '%' or user_id like '%' || #{searchUserKeyword} || '%' 
+				or user_password like '%' || #{searchUserKeyword} || '%' or user_name like '%' || #{searchUserKeyword} || '%' 
+				or user_tel like '%' || #{searchUserKeyword} || '%' or user_level like '%' || #{searchUserKeyword} || '%'
+				or blacklist_yn like '%' || #{searchUserKeyword} || '%' or user_email like '%' || #{searchUserKeyword} || '%' 
+				or user_point like '%' || #{searchUserKeyword} || '%' or user_regdate like '%' || #{searchUserKeyword} || '%'
+				or flatform_type like '%' || #{searchUserKeyword} || '%')
+			</when>
+			<when test="searchUserKeyword == null">
+				 (select ROW_NUMBER() over (order by user_no) NUM, A.* from users A order by user_no)
+ 					where NUM between #{displayPost} AND (#{displayPost} + #{postNum})
+			</when>
+ 		</choose>
 	</select>
 	
 	<!-- User Get By user_no -->
