@@ -20,4 +20,8 @@ public interface PayService {
 	
 	// 월간 결제금액 
 	List<Map<String, Object>> payMlyTotalPrice(PayVO vo);	
+	
+	// 총 결제 금액
+	Map<String, Object> totalPaymentAmount(PayVO vo);	
+	
 }

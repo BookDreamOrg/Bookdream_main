@@ -32,10 +32,10 @@ public interface OrderService {
 	OrderVO recentOrder(OrderVO vo);
 
 	/************ 관리자 부문************/
-	// 일주일 주문 카운트
+	// 금주 주문 카운트 리스트
 	List<Map<String, Object>> orderDateCount(OrderVO vo);
 
-	// 일주일 주문 취소/반품 카운트
+	// 금주 주문 취소/반품 카운트 리스트
 	List<Map<String, Object>> orderCancelDateCount(OrderVO vo);
 	
 	// 월간 주문 카운트
@@ -43,5 +43,15 @@ public interface OrderService {
 
 	// 월간 주문 취소/반품 카운트
 	List<Map<String, Object>> orderMlyCancelDateCount(OrderVO vo);	
+	
+	// 금주 취소/반품 현황
+	List<Map<String, Object>> cancelOrderWek(OrderVO vo);	
+	
+	// 금주 취소/반품 현황 카운트
+	int cancelOrderWekCount(OrderVO vo);
+	
+	// 결제취소/반품요청 승인
+	void orderAprvl(OrderVO vo);
+
 	
 }

@@ -1,7 +1,8 @@
 package com.spring.bookdream.vo;
 
 import java.util.Date;
-
+import java.util.List;
+import java.util.Map;
 
 import lombok.Data;
 
@@ -24,11 +25,17 @@ public class OrderVO {
     private int pageNum;
 	private int amount;	
 	
+	private List<Map<String, Object>> list;
+	private PageVO page;
+	
 	// 마이페이지 조회용
 	private int row;
 	private int search_date;
 	private int search_status;
 		
+	//관리자
+	private String admin;
+	
 	// JOIN
 	private PurchaseVO purchaseVO;
 	private BookVO bookVO;
@@ -44,4 +51,14 @@ public class OrderVO {
 	private int use_point;
 	private int address_no;
 		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

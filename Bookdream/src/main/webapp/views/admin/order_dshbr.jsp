@@ -38,11 +38,118 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <!-- CSS  -->
 <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap_icon.css">
+    
+<title>Admin Page</title>
+
+<style type="text/css">
+
+.shadow-sm {
+	background-color: white;
+}
+
+.center {
+	text-align: center;
+	display: inline-block;	
+}
+
+.test {
+	position: relative;
+	width: 610px;
+	height: 500px;
+	display: inline-block;
+	padding: 30px;
+	text-align: left;	
+}
+
+.myChart {
+	display: inline-block;
+}
+
+.chartbox_card {
+
+	height: 100px;
+}
+
+
+.chartbox_chart {
+
+	margin-top: 50px;
+
+}
+
+.chart_btn {
+	width: 50px;
+	height: 30px;
+	font-size: 12px;
+}
+
+.pay_radio {
+	position: absolute;
+	top: 140px;
+	left: 475px;
+}
+
+
+.buttom {
+	width: 1240px;
+	height: 300px;
+	margin: 0 auto;	
+	padding: 0px 30px ;
+}
+
+.today_box {
+	text-align: left;
+}
+
+.today_box_body {
+	margin: 10px 0px;
+	height: 200px;
+
+}
+
+.work_table {
+	width: 1180px;
+	border: 1px solid #dee2e6;
+}
+
+th {
+	height: 50px;
+	font-weight: bold;
+	vertical-align: middle;
+	text-align: center;
+	border-bottom: 1px solid #dee2e6;
+	background-color: #f7f7f7;
+	font-size: 14px;
+}
+
+td {
+	height: 50px;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 12px;	
+	width: 110px;
+}
+
+.work_table_col3 {
+	width: 520px;
+}
+
+.work_table_col6 {
+	font-weight: bold;
+}
+
+.work_table_col7 {
+	padding: 0px 0px 0px 42px;
+}
+</style>
+
+
+
+
+
 
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
-    
-<title>주문 관리</title>
 
 </head>
 <body class="admin_body">
@@ -143,17 +250,74 @@
 	
 	<div class="container">
 		
-		<div class="center">
-	
+	<div class="center">
+		<div class="test left">
+			<div class="card chartbox_card">
+			  <div class="card-header">
+			   주문 현황
+			  </div>
+			  <div class="card-body" id="card-body">
+
+			  </div>
+			</div>
+						
+			<div class="chartbox">
+				<!--   차트를 그릴 영역으로 canvas태그를 사용한다. -->
+				<div class="chartbox_chart">
+					<div class="btn-group pay_radio" role="group" aria-label="radio toggle button group">
+					  <input type="radio" class="btn-check" name="order_radio" id="wek_chart_btn" autocomplete="off" checked>
+					  <label class="btn btn-outline-secondary chart_btn" for="wek_chart_btn">주간</label>
+					  <input type="radio" class="btn-check" name="order_radio" id="mly_chart_btn" autocomplete="off">
+					  <label class="btn btn-outline-secondary chart_btn" for="mly_chart_btn">월간</label>
+					</div>				
+				</div>
+			</div>
+			<canvas class="myChart" id="orderChart"></canvas>
 		</div>
-		
-		
-		
+	
+		<div class="test right">
+			<div class="card chartbox_card">
+			  <div class="card-header">
+			    결제 현황
+			  </div>
+			  <div class="card-body">
+			    <p class="card-text"><span id="amount"></span></p>
+			  </div>
+			</div>
+			
+			<div class="chartbox">
+			
+				<!--   차트를 그릴 영역으로 canvas태그를 사용한다. -->					
+				<div class="chartbox_chart">
+					<div class="btn-group pay_radio" role="group" aria-label="radio toggle button group">
+					  <input type="radio" class="btn-check" name="pay_radio" id="wek_paychart_btn" autocomplete="off" checked>
+					  <label class="btn btn-outline-secondary chart_btn" for="wek_paychart_btn">주간</label>
+					  <input type="radio" class="btn-check" name="pay_radio" id="mly_paychart_btn" autocomplete="off">
+					  <label class="btn btn-outline-secondary chart_btn" for="mly_paychart_btn">월간</label>
+					</div>					
+					<canvas class="myChart" id="myChart"></canvas>
+				</div>	
+			</div>			
+		</div>
+						
+	</div>
+		<div class="center">
+			<div class="buttom">
+				<div class="card">
+				  <div class="card-header today_box">
+				   	금주 취소 / 반품 처리 	
+				  </div>
+				</div>
+				
+				<div class="today_box_body" id="today_box_body"></div>	
+				<span class="paging" id="paging"></span>							
+			</div>
+		</div>
 	</div>		
 	</main>
 
 
-	<script type="text/javascript" src="/resources/js/order_mngmn.js"></script>
+	<script type="text/javascript" src="/resources/js/order_dshbr.js"></script>
 	
 	<!-- Script Bootstrap, jqurey-3.6.3 -->
 	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>

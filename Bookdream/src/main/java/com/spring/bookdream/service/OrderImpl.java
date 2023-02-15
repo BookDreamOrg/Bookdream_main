@@ -92,6 +92,28 @@ public class OrderImpl implements OrderService {
 	public List<Map<String, Object>> orderMlyCancelDateCount(OrderVO vo) {
 
 		return orderDAO.orderMlyCancelDateCount(vo);
+	}
+
+	// 금주 취소/반품 현황
+	@Override
+	public List<Map<String, Object>> cancelOrderWek(OrderVO vo) {
+
+		return orderDAO.cancelOrderWek(vo);
+
+	}
+	// 금주 취소/반품 현황 카운트
+	@Override
+	public int cancelOrderWekCount(OrderVO vo) {
+
+		return orderDAO.cancelOrderWekCount(vo);
+	}
+
+	// 결제취소/반품요청 승인
+	@Override
+	public void orderAprvl(OrderVO vo) {
+		
+		orderDAO.orderAprvl(vo);
+		
 	}	
 	
 	

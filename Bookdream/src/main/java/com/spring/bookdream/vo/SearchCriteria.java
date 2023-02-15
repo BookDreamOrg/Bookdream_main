@@ -15,7 +15,7 @@ public class SearchCriteria {
 	
 	public SearchCriteria() {
 		this.pageNum = 1;
-		this.amount = 2;
+		this.amount = 1;
 		this.searchCondition = "TITLE";
 		this.searchKeyword = "";
 	}
@@ -31,7 +31,7 @@ public class SearchCriteria {
 
 	public void setAmount(int amount) {
 		if (amount <= 0 || amount > 100) { 
-			this.amount = 2; 
+			this.amount = amount; 
 			return;
 		}
 		this.amount = amount;

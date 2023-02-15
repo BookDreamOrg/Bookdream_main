@@ -117,4 +117,22 @@ public class OrderDAO {
 		
 		return mybatis.selectList("OrderDAO.orderMlyCancelDateCount", vo);
 	}
+
+	// 금주 취소/반품 현황
+	public List<Map<String, Object>> cancelOrderWek(OrderVO vo) {
+
+		return mybatis.selectList("OrderDAO.cancelOrderWek", vo);
+	}
+
+	// 금주 취소/반품 현황 카운트	
+	public int cancelOrderWekCount(OrderVO vo) {
+
+		return mybatis.selectOne("OrderDAO.cancelOrderWekCount", vo);
+	}
+
+	public void orderAprvl(OrderVO vo) {
+		
+		mybatis.update("OrderDAO.orderAprvl", vo);
+		
+	}
 }

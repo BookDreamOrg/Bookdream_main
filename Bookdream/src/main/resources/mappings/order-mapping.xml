@@ -242,7 +242,15 @@
 	<select id="orderStatusCount" resultType="HashMap">
 		SELECT order_status, count(order_status) as statusCount
 		FROM   orders
-		WHERE  user_no = #{user_no}
+		WHERE  
+		<choose>
+			<when test='admin.equals("admin")'>
+			1 = 1
+			</when>
+			<otherwise>
+			user_no = #{user_no}
+			</otherwise>
+		</choose>
 		group by order_status
 	</select>
 			
@@ -252,11 +260,10 @@
 		SELECT to_char(b.dt, 'MM-DD')as order_date,
 		       nvl(sum(a.cnt), 0) cnt
 		FROM  (select to_date(order_date, 'YY-MM-DD')as order_date,
-		              count(order_date) cnt
+		              count(case when order_status between 0 and 3 AND 
+              		  to_date(order_date, 'YY-MM-DD') between to_date(sysdate-4, 'YY-MM-DD') AND 
+              		  to_date(sysdate, 'YY-MM-DD') then 1 end) cnt
 		       from orders
-		       where order_date between to_date(sysdate-4, 'YY-MM-DD') AND 
-		             to_date(sysdate, 'YY-MM-DD') AND
-		             order_status between 0 and 3
 		       group by order_date) a,      
 		      
 		      (select to_date(TO_DATE(sysdate-6,'YY/MM/DD') + LEVEL - 1, 'YY/MM/DD') AS dt
@@ -328,5 +335,60 @@
 		order by TO_CHAR(b.dt, 'YY-MM')	
 	]]>	
 	</select>
-					
+	
+	<!-- 금주 취소/반품 현황 -->
+	<select id="cancelOrderWek" resultType="HashMap">
+		SELECT order_no, 
+			   order_name, 
+			   TO_CHAR(order_date, 'YY.MM.DD HH24:MI') order_date,
+			   order_status, 
+			   TO_CHAR(CANCEL_DATE, 'YY.MM.DD HH24:MI') cancel_date,
+			   user_id,
+			   user_no
+		FROM (SELECT rownum rnum, 
+					 order_no, 
+					 order_name, 
+					 ORDER_DATE, 
+					 order_status, 
+					 CANCEL_DATE,
+					 user_id,
+					 o.user_no
+		      FROM   orders o, users u
+		      WHERE (o.user_no = u.user_no and
+					 order_date between sysdate-6 and sysdate) AND
+				    (order_status = 12 or
+				     order_status = 10))
+		WHERE  rnum between ((#{pageNum}-1) * #{amount})+1 AND 
+		                     #{pageNum} * #{amount}	
+		ORDER BY CANCEL_DATE
+	</select>
+	
+
+	<!-- 금주 취소/반품 현황 -->
+	<select id="cancelOrderWekCount" resultType="int">
+		SELECT count(order_no) cnt
+		FROM   orders o, users u
+		WHERE  (o.user_no = u.user_no and
+			   order_date between sysdate-6 and sysdate) AND
+		       (order_status = 12 or
+		       order_status = 10) 
+	</select>					
+	
+	<!-- 결제취소/반품요청 승인 -->
+	<update id="orderAprvl">
+		UPDATE orders
+		SET
+		<if test="order_status == 10">
+			order_status = 11
+		</if> 
+		<if test="order_status == 12">
+			order_status = 13
+		</if>  		   
+		WHERE  order_no = #{order_no}
+	
+	
+	
+	</update>
+	
+	
 </mapper>

@@ -49,4 +49,10 @@ public class PayImpl implements PayService {
 		return payDAO.payMlyTotalPrice(vo);
 	}
 
+	@Override
+	public Map<String, Object> totalPaymentAmount(PayVO vo) {
+		
+		return payDAO.totalPaymentAmount(vo);
+	}
+
 }

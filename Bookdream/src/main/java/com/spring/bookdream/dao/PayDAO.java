@@ -45,6 +45,13 @@ public class PayDAO {
 	public List<Map<String, Object>> payMlyTotalPrice(PayVO vo) {
 		
 		return mybatis.selectList("PayDAO.payMlyTotalPrice", vo);	
+	}
+
+	// 총 결제 금액
+	public Map<String, Object> totalPaymentAmount(PayVO vo) {
+
+		return mybatis.selectOne("PayDAO.totalPaymentAmount", vo);	
+
 	}	
 
 }
