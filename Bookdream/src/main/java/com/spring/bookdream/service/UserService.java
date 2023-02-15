@@ -12,7 +12,8 @@ public interface UserService {
 	// 회원 정보 가져오기
 	public UserVO getUser(UserVO vo);
 	
-	public List<UserVO> getAllUserList();
+	//모든 유저 리스트 가져오기
+	public List<UserVO> getAllUserList(UserVO vo);
 	
 	public String findFlatform(UserVO vo);
 	
@@ -52,7 +53,7 @@ public interface UserService {
 	public int countUser();
 	
 	// 유저 List Paging
-	public List<UserVO> userListPage(int displayPost, int postNum);
+	public List<UserVO> userListPage(UserVO vo);
 	
 	// 유저 No로 get
 	public UserVO getUserByNo(int no);

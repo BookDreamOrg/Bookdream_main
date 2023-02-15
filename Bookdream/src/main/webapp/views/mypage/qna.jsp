@@ -33,15 +33,11 @@
 			<div class="main">
 
 				<jsp:include page="/views/inc/mypage_side.jsp" />
-
+				
 				<div class="rside">
 					<div class="qna_header">
-						<p class="qna_title">1:1 문의
-						<p>
-						<p>
-							<button class="qna_button btn btn-success" type="button"
-								onclick="location.href='/views/mypage/qna_write.jsp'">1:1문의하기</button>
-						</p>
+						<div class="qna_title">1:1 문의</div>
+						<button class="qna_button btn btn-success" type="button" onclick="location.href='/views/mypage/qna_write.jsp'">1:1문의하기</button>
 					</div>
 					
 					<div class="qna_body">
@@ -111,7 +107,15 @@
 												<div class="card card-body" id="qna_content" name="qna_content">${list.getQna_content() }</div>
 												<br>
 												<span class="ans_text">답변</span>
-												<div class="card card-body" id="ans_content" name="ans_content">${answerVO.getAns_content() }</div>
+												<div class="card card-body" id="ans_content" name="ans_content">
+													<c:forEach var="anslist" items="${ansMyList }">
+														<c:choose>
+															<c:when test="${list.getQna_no() eq anslist.getQna_no() }">
+															${anslist.getAns_content() }
+															</c:when>
+														</c:choose>
+													</c:forEach>
+												</div>
 												<hr>
 											</div>
 										</c:otherwise>

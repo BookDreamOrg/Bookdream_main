@@ -1,6 +1,7 @@
 package com.spring.bookdream.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,7 +62,7 @@ public class QnAServiceImpl implements QnAService{
 	}
 	
 	//질문 번호에 따른 답변 가져오기
-	public AnswerVO getAnswer(QnAVO qnaVO) {
+	public List<AnswerVO> getAnswer(QnAVO qnaVO) {
 		return qnaDAO.getAnswer(qnaVO);
 	}
 		

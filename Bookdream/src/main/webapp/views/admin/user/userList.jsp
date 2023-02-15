@@ -102,10 +102,8 @@
 							tabindex="-1" aria-disabled="true">Disabled</a></li>
 					</ul>
 					<form class="d-flex">
-						<input class="form-control me-2" type="search"
-							placeholder="Search" aria-label="Search" />
-						<button class="btn btn-outline-success" type="submit">
-							Search</button>
+						<input class="form-control me-2" type="search" id="searchUserKeyword" placeholder="Search" aria-label="Search" />
+						<button class="btn btn-outline-success" type="button" onclick="searchUser()">Search</button>
 					</form>
 				</div>
 			</div>
@@ -350,7 +348,26 @@
 		function next() {
 			window.location = listUrl + nextNum;
 		};
+		
 	</script>
+	
+	<script type="text/javascript">
+		function searchUser(){
+			var searchUserKeyword = $('#searchUserKeyword').val();
+			$.ajax({
+				type : "POST",
+				url : "/views/admin/user/getSearchUserList",
+				data : {searchUserKeyword : searchUserKeyword},
 
+				success : function(result){	
+					console.log(result);
+					location.href="/views/admin/user/userListPage.do?num="+num+"&searchUserKeyword=" + result;
+				},
+				error : function(){
+					alert('서버 에러입니다.');
+				}
+			});
+		}
+	</script>
 </body>
 </html>

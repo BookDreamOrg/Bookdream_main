@@ -24,8 +24,8 @@ public class UserDAO {
 		}
 	
 		//모든 유저 리스트 가져오기
-		public List<UserVO> getAllUserList(){
-			return mybatis.selectList("UserDAO.getAllUserList");
+		public List<UserVO> getAllUserList(UserVO vo){
+			return mybatis.selectList("UserDAO.getAllUserList", vo);
 		}	
 		
 		// 로그인 확인
@@ -138,14 +138,14 @@ public class UserDAO {
 		}
 		
 		// User list page
-		public List userListPage(int displayPost, int postNum) {
+		public List userListPage(UserVO userVO) {
 			
-			HashMap<String, Integer> data = new HashMap<String, Integer>();
+//			HashMap<String, Integer> data = new HashMap<String, Integer>();
+//			
+//			data.put("displayPost", displayPost);
+//			data.put("postNum", postNum);
 			
-			data.put("displayPost", displayPost);
-			data.put("postNum", postNum);
-			
-			return mybatis.selectList("UserDAO.userListPage", data);
+			return mybatis.selectList("UserDAO.userListPage", userVO);
 		}
 		
 		// User Get By user_no

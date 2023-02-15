@@ -140,10 +140,10 @@
 	    function saveid() {
 	        var expdate = new Date();
 	        if ($("#saveId").is(":checked")){
-	            expdate.setTime(expdate.getTime() + 1000 * 3600 * 24 * 30);
+	            expdate.setTime(expdate.getTime() + 1000 * 3600 * 24 * 3);
 	            setCookie("saveid", $("#user_id").val(), expdate);
             }else{
-	           expdate.setTime(expdate.getTime() - 1000 * 3600 * 24 * 30);
+	           expdate.setTime(expdate.getTime() - 1000 * 3600 * 24 * 3);
 	            setCookie("saveid", $("#user_id").val(), expdate);
 	             
 	        }
