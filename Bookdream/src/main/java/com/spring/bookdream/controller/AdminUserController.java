@@ -19,18 +19,7 @@ import com.spring.bookdream.vo.UserVO;
 public class AdminUserController {
 	
 	@Autowired
-	private UserService userService;
-	
-	@RequestMapping(value = "/uesrList.do", method = RequestMethod.GET)
-	public String getUserList(Model model) {
-		System.out.println("UserList Controller 진입");
-		
-		List<UserVO> userList = userService.selectUser();
-		model.addAttribute("userList", userList);
-		
-		return "/admin/user/userList";
-	};
-	
+	private UserService userService;	
 	
 	@RequestMapping(value = "/userListPage.do", method = RequestMethod.GET)
 	public String getListPage(Model model, @RequestParam("num") int num) {
