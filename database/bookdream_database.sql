@@ -52,7 +52,13 @@ insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USE
 insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
    values(user_seq.nextval,'sycha11','test','차승윤','BD','sycha112@naver.com');
 
+
+
+insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
+   values(user_seq.nextval,'test4545','test12eeewrer424','김도영','BD','kdy@naver.com');
+
 select * from users;
+
 commit;
 
 -- Review Table

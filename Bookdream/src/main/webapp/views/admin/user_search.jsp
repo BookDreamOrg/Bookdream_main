@@ -2,6 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%
+    request.setCharacterEncoding("UTF-8");
+	response.setCharacterEncoding("utf-8");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -156,11 +160,12 @@
 		function searchUser(){
 			var searchUserKeyword = $('#searchUserKeyword').val();
 			$.ajax({
-				type : "GET",
+				type : "POST",
 				url : "/admin/getSearchUserList",
 				data : {searchUserKeyword : searchUserKeyword},
 
 				success : function(result){	
+					console.log(result);
 					location.href="/admin/getAllUserList?searchUserKeyword=" + result;
 				},
 				error : function(){

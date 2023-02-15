@@ -1,15 +1,16 @@
 package com.spring.bookdream.controller;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -85,8 +86,9 @@ public class Admin_UserController {
 		
 		// 모든 유저 목록 가져오기
 		@RequestMapping(value="/getAllUserList")
-		public String getAllUserList(UserVO userVO, Model model) {
+		public String getAllUserList(UserVO userVO, Model model, HttpServletRequest request) throws ServletException, IOException {
 			
+			request.setCharacterEncoding("utf-8");
 			System.out.println("getAllUserList실행");
 			System.out.println(userVO.getSearchUserKeyword());
 			
@@ -106,10 +108,12 @@ public class Admin_UserController {
 		// 검색 유저 목록 가져오기
 		@RequestMapping(value="/getSearchUserList")
 		@ResponseBody	
-		public String getSearchUserList(UserVO userVO, Model model) {
+		public String getSearchUserList(UserVO userVO, Model model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			 
 			System.out.println("getSearchUserList실행");
 			System.out.println(userVO.getSearchUserKeyword());
+			request.setCharacterEncoding("utf-8");
+			response.setCharacterEncoding("utf-8");
 			
 			String key = userVO.getSearchUserKeyword();
 			
