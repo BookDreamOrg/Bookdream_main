@@ -245,7 +245,7 @@
 								<li class="page-item"><a class="page-link"
 									onclick="return prev()" tabindex="-1">Previous</a></li>
 								<c:forEach begin="1" end="${ pageNum }" var="num">
-									<li class="page-item"><a class="page-link" id="page-number" onclick="return pagingList(${num})">${ num }</a></li>
+									<li class="page-item"><a class="page-link" id="page-number" onclick="return pagingList(${num}, ${ SearchUserKeyword })">${ num }</a></li>
 								</c:forEach>
 								<li class="page-item"><a class="page-link" onclick="return next()">Next</a></li>
 							</ul>
@@ -271,7 +271,7 @@
 		const prevNum = parseInt(num) - 1;
 		const nextNum = parseInt(num) + 1;
 		const page = document.getElementsByClassName('page-link');
-		var searchUserKeyword = $('#searchUserKeyword').val();
+		
 
 		$(function() {
 
@@ -343,19 +343,10 @@
 			
 		});
 		
-		function pagingList(event) {
+		function pagingList(x, y) {
 			const pagingNum = event;
-			$.ajax({
-				type : "POST",
-				url : "/views/admin/user/getSearchUserList",
-				data : {searchUserKeyword : searchUserKeyword},
-				success : function(result){	
-					location.href="/views/admin/user/userListPage.do?num="+pagingNum+"&searchUserKeyword="+earchUserKeyword;
-				},
-				error : function(){
-					alert('서버 에러입니다.');
-				}
-			});
+			const searchUserKeyword = y;
+			window.location.href="/views/admin/user/userListPage.do?num="+pagingNum+"&searchUserKeyword="+searchUserKeyword;
 		};
 
 		function prev() {
