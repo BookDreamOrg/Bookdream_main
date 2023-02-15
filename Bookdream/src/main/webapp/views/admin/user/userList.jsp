@@ -244,11 +244,9 @@
 								<li class="page-item"><a class="page-link"
 									onclick="return prev()" tabindex="-1">Previous</a></li>
 								<c:forEach begin="1" end="${ pageNum }" var="num">
-									<li class="page-item"><a class="page-link"
-										href="userListPage.do?num=${num }">${ num }</a></li>
+									<li class="page-item"><a class="page-link" id="page-number" onclick="return pagingList(${num})">${ num }</a></li>
 								</c:forEach>
-								<li class="page-item"><a class="page-link"
-									onclick="return next()">Next</a></li>
+								<li class="page-item"><a class="page-link" onclick="return next()">Next</a></li>
 							</ul>
 						</nav>
 					</div>
@@ -271,7 +269,6 @@
 		const num = urlParams.get('num');
 		const prevNum = parseInt(num) - 1;
 		const nextNum = parseInt(num) + 1;
-		const listUrl = "userListPage.do?num=";
 		const page = document.getElementsByClassName('page-link');
 
 		$(function() {
@@ -280,13 +277,14 @@
 				if (page[i].innerText === num) {
 					page[i].parentNode.classList.add('active');
 				}
-			}
-			;
+			};
 
 			if (num == 1) {
 				page[0].parentNode.classList.add("disabled");
-			}
-			;
+			} else if( num == (page.length -2)) {
+				console.log("last")
+				page[(page.length - 1)].parentNode.classList.add("disabled");
+			}; 
 
 			$('#getUserModal').on('show.bs.modal',function(event) {
 								const btn = $(event.relatedTarget);
@@ -340,13 +338,30 @@
 					}
 				})
 			})
+			
 		});
+		
+		function pagingList(event) {
+			const pagingNum = event;
+			var searchUserKeyword = $('#searchUserKeyword').val();
+			$.ajax({
+				type : "POST",
+				url : "/views/admin/user/getSearchUserList",
+				data : {searchUserKeyword : searchUserKeyword},
+				success : function(result){	
+					location.href="/views/admin/user/userListPage.do?num="+pagingNum+"&searchUserKeyword="+result;
+				},
+				error : function(){
+					alert('서버 에러입니다.');
+				}
+			});
+		};
 
 		function prev() {
-			window.location = listUrl + prevNum;
+			window.location.href="/views/admin/user/userListPage.do?num="+prevNum+"&searchUserKeyword=";
 		};
 		function next() {
-			window.location = listUrl + nextNum;
+			window.location.href="/views/admin/user/userListPage.do?num="+nextNum+"&searchUserKeyword=";
 		};
 		
 	</script>

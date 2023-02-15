@@ -60,7 +60,7 @@
 						class="fa-solid fa-border-all"></i></span> <span class="list_text"><a href="#">대시보드</a></span>
 				</li>
 				<li class="list-group-item"><span class="list_icon"><i
-						class="fa-solid fa-user-gear"></i></span><span class="list_text"><a href="user/userListPage.do?num=1">사용자 관리</a></span></li>
+						class="fa-solid fa-user-gear"></i></span><span class="list_text"><a href="user/userListPage.do?num=1&searchUserKeyword=">사용자 관리</a></span></li>
 				<li class="list-group-item"><span class="list_icon"><i
 						class="fa-solid fa-pen-to-square"></i></span> <span class="list_text"><a href="#">제품 관리</a></span></li>
 				<li class="list-group-item"><span class="list_icon"><i

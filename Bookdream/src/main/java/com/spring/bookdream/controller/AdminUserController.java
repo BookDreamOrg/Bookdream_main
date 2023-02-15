@@ -48,7 +48,7 @@ public class AdminUserController {
 	@Autowired
 	private HttpSession session;
 		
-	@RequestMapping(value = "/userListPage.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/userListPage.do")
 	public String getListPage(Model model, @RequestParam("num") int num, UserVO userVO) {
 		
 		int count = userService.countUser();
@@ -68,7 +68,11 @@ public class AdminUserController {
 		userVO.setDisplayPost(displayPost);
 		userVO.setPostNum(postNum);
 		
+		System.out.println(displayPost);
+		System.out.println(postNum);
+		System.out.println(count);
 		System.out.println(userVO.getSearchUserKeyword());
+		
 		List<UserVO> userList = null;
 		
 		userList = userService.userListPage(userVO);
