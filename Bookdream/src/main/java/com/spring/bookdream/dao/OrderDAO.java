@@ -83,7 +83,8 @@ public class OrderDAO {
 		
 	}
 	
-	// 관리자
+	/************ 관리자 부문************/
+	
 	// 일주일 주문 카운트
 	public List<Map<String, Object>> orderDateCount(OrderVO vo) {
 		
@@ -130,9 +131,28 @@ public class OrderDAO {
 		return mybatis.selectOne("OrderDAO.cancelOrderWekCount", vo);
 	}
 
+	// 결제취소/반품 승인
 	public void orderAprvl(OrderVO vo) {
 		
 		mybatis.update("OrderDAO.orderAprvl", vo);
 		
+	}
+
+	// 주문 총 관리 리스트
+	public List<Map<String, Object>> orderMngmn(OrderVO vo) {
+
+		return mybatis.selectList("OrderDAO.orderMngmn", vo);
+	}
+
+	// 주문 총 관리 카운트
+	public int orderMngmnCount(OrderVO vo) {
+
+		return mybatis.selectOne("OrderDAO.orderMngmnCount", vo);
+	}
+
+	// 주문 총 관리 세부내역
+	public List<Map<String, Object>> orderMngmnDtls(OrderVO vo) {
+
+		return mybatis.selectList("OrderDAO.orderMngmnDtls", vo);
 	}
 }

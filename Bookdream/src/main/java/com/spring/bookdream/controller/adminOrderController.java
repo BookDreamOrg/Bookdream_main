@@ -1,5 +1,7 @@
 package com.spring.bookdream.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,14 +32,25 @@ public class adminOrderController {
 	@Autowired
 	private PayService payService;
 	
-
-	// 결제현황 페이지 이동
+	// 주문현황 페이지 이동
 	@RequestMapping(value="/order")
-	public String order(OrderVO order, Model model) {
+	public String orderDshbr(OrderVO order, Model model) {
+
+		return "admin/order_dshbr";
+		
+		}	
+	
+	// 주문관리 페이지 이동
+	@RequestMapping(value="/orderMngmn")
+	public String orderMngmn(OrderVO order, Model model) {
 
 		return "admin/order_mngmn";
 		
-		}	
+		}		
+	
+	/*********************************************************/
+	/********************  주문현황 페이지시작  *******************/	
+	/*********************************************************/
 	
 	@RequestMapping(value="/orderStatusCount")
 	@ResponseBody
@@ -57,9 +70,23 @@ public class adminOrderController {
 		List<Map<String, Object>> dt = orderService.orderDateCount(order);
 		List<Map<String, Object>> cdt = orderService.orderCancelDateCount(order);
 		
-		dt.addAll(cdt);
+		List<Map<String, Object>> combinedList = new ArrayList<>();
+		
+		// 두 리스트 중 작은 크기만큼 순회하면서 같은 인덱스에 있는 Map을 합칩니다.
+		int minSize = Math.min(dt.size(), cdt.size());
+		for (int i = 0; i < minSize; i++) {
+		    Map<String, Object> map1 = dt.get(i);
+		    Map<String, Object> map2 = cdt.get(i);
 
-		return dt;
+		    // 두 Map을 합쳐서 새로운 Map을 만듭니다.
+		    Map<String, Object> combinedMap = new HashMap<>(map1);
+		    combinedMap.putAll(map2);
+
+		    // 합쳐진 Map을 결과 리스트에 추가합니다.
+		    combinedList.add(combinedMap);
+		}
+		
+		return combinedList;
 		
 		}
 	
@@ -71,9 +98,23 @@ public class adminOrderController {
 		List<Map<String, Object>> dt = orderService.orderMlyDateCount(order);
 		List<Map<String, Object>> cdt = orderService.orderMlyCancelDateCount(order);
 
-		dt.addAll(cdt);
+		List<Map<String, Object>> combinedList = new ArrayList<>();
 		
-		return dt;
+		// 두 리스트 중 작은 크기만큼 순회하면서 같은 인덱스에 있는 Map을 합칩니다.
+		int minSize = Math.min(dt.size(), cdt.size());
+		for (int i = 0; i < minSize; i++) {
+		    Map<String, Object> map1 = dt.get(i);
+		    Map<String, Object> map2 = cdt.get(i);
+
+		    // 두 Map을 합쳐서 새로운 Map을 만듭니다.
+		    Map<String, Object> combinedMap = new HashMap<>(map1);
+		    combinedMap.putAll(map2);
+
+		    // 합쳐진 Map을 결과 리스트에 추가합니다.
+		    combinedList.add(combinedMap);
+		}
+		
+		return combinedList;
 		
 		}
 
@@ -110,7 +151,7 @@ public class adminOrderController {
 		
 		}	
 	
-	// 금주 취소.반품 처리 테이블
+	// 금주 취소.반품 처리 테이블 (페이징 처리)
 	@RequestMapping(value="/cancelOrderWek")
 	@ResponseBody
 	public OrderVO cancelOrderWek(@RequestParam("no")int no, OrderVO order, SearchCriteria cri) {
@@ -148,6 +189,53 @@ public class adminOrderController {
 		System.out.println("---> 도서 재고 반환 <---");
 		orderService.updateBookStock(order);			
 		
-		}		
+		}
+	
+	
+	/*********************************************************/
+	/********************  주문관리 페이지시작  *******************/	
+	/*********************************************************/
 		
+	// 주문 총 관리 페이지
+	@RequestMapping(value="/mngmn")
+	@ResponseBody
+	public OrderVO orderMngmn(@RequestParam("pageNum")  int pageNum, 
+							  @RequestParam("srchCrtr") String srchCrtr, 
+							  @RequestParam("srchKey")  String srchKey, 
+							  OrderVO order, SearchCriteria cri) {
+		
+		order.setSrchCrtr(srchCrtr);
+		order.setSrchKey(srchKey);
+		order.setPageNum(pageNum);
+		cri.setPageNum(pageNum);		
+		
+		order.setAmount(5);
+		cri.setAmount(5);	
+		
+		int cnt = orderService.orderMngmnCount(order);	
+	
+		List<Map<String, Object>> list = orderService.orderMngmn(order);
+		
+		PageVO pageMaker = new PageVO(cri, cnt);
+		
+		OrderVO result = new OrderVO();
+		result.setPage(pageMaker);
+		result.setList(list);	
+				
+		return result;			
+		
+	}
+	
+	// 주문 총 관리 페이지 : 상세조회
+	@RequestMapping(value="/mngmnDtls")
+	@ResponseBody
+	public List<Map<String, Object>> orderMngmn(@RequestParam("order_no") int order_no, OrderVO order) {
+		
+		order.setOrder_no(order_no);
+		
+		List<Map<String, Object>> list = orderService.orderMngmnDtls(order);
+		
+		return list;			
+		
+	}		
 }

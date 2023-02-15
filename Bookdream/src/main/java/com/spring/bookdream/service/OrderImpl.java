@@ -65,6 +65,8 @@ public class OrderImpl implements OrderService {
 		
 		return orderDAO.recentOrder(vo);
 	}
+	
+	/************ 관리자 부문************/	
 
 	// 일주일 주문 카운트
 	@Override
@@ -114,6 +116,25 @@ public class OrderImpl implements OrderService {
 		
 		orderDAO.orderAprvl(vo);
 		
+	}
+
+	// 주문 총 관리 리스트
+	@Override
+	public List<Map<String, Object>> orderMngmn(OrderVO vo) {
+		return orderDAO.orderMngmn(vo);
+	}
+
+	// 주문 총 관리 개수
+	public int orderMngmnCount(OrderVO vo) {
+
+		return orderDAO.orderMngmnCount(vo);
+	}
+
+	// 주문 총 관리 세부내역
+	@Override
+	public List<Map<String, Object>> orderMngmnDtls(OrderVO vo) {
+		
+		return orderDAO.orderMngmnDtls(vo);
 	}	
 	
 	

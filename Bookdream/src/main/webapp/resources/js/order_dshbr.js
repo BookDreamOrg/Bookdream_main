@@ -129,31 +129,7 @@ function countChart(data) {
 	}
 	
 	console.log(data)
-	
-	let day6 = date[0]
-	let day5 = date[1]
-	let day4 = date[2]
-	let day3 = date[3]
-	let day2 = date[4]
-	let day1 = date[5]
-	let today = date[6]
-	
-	let cnt6 = cnt[0]
-	let cnt5 = cnt[1]
-	let cnt4 = cnt[2]
-	let cnt3 = cnt[3]
-	let cnt2 = cnt[4]
-	let cnt1 = cnt[5]
-	let tocnt = cnt[6]
-
-	let ccnt6 = ccnt[7]
-	let ccnt5 = ccnt[8]
-	let ccnt4 = ccnt[9]
-	let ccnt3 = ccnt[10]
-	let ccnt2 = ccnt[11]
-	let ccnt1 = ccnt[12]
-	let toccnt = ccnt[13]	
-	
+		
 		// 차트를 그럴 영역을 dom요소로 가져온다.
 		var chartArea = document.getElementById('orderChart').getContext('2d');
 							
@@ -169,7 +145,7 @@ function countChart(data) {
 		    data: {
 		    	
 		        // ③x축에 들어갈 이름들(Array)
-		        labels: [ day6, day5, day4, day3, day2, day1, today],
+		        labels: date,
 		        
 		        // ④실제 차트에 표시할 데이터들(Array), dataset객체들을 담고 있다.
 		        datasets: [{
@@ -180,7 +156,7 @@ function countChart(data) {
 		            label: '주문',
 		            
 		            // ⑥dataset값(Array)
-		            data: [cnt6, cnt5, cnt4, cnt3, cnt2, cnt1, tocnt],
+		            data: cnt,
 		            
 		            // ⑦dataset의 배경색(rgba값을 String으로 표현)
 		            backgroundColor: 'rgba(103,104,171, 0.2)',
@@ -202,7 +178,7 @@ function countChart(data) {
 		            type:'line',
 		            
 		            // ⑥dataset값(Array)
-		            data: [ccnt6, ccnt5, ccnt4, ccnt3, ccnt2, ccnt1, toccnt],
+		            data: ccnt,
 		            
 		            // ⑦dataset의 배경색(rgba값을 String으로 표현)
 		            backgroundColor: 'rgba(255, 0, 0, 0.2)',
@@ -391,22 +367,6 @@ function payChart(data) {
 		price.push(pay.PRICE)
 	}	
 	
-	let day6 = date[0]
-	let day5 = date[1]
-	let day4 = date[2]
-	let day3 = date[3]
-	let day2 = date[4]
-	let day1 = date[5]
-	let today = date[6]
-
-	let toprice = price[0]
-	let price1 = price[1]
-	let price2 = price[2]
-	let price3 = price[3]
-	let price4 = price[4]
-	let price5 = price[5]
-	let price6 = price[6]
-	
 		// 차트를 그럴 영역을 dom요소로 가져온다.
 		var chartArea = document.getElementById('myChart').getContext('2d');
 							
@@ -422,7 +382,7 @@ function payChart(data) {
 		    data: {
 		    	
 		        // ③x축에 들어갈 이름들(Array)
-		        labels: [ day6, day5, day4, day3, day2, day1, today],
+		        labels: date,
 		        
 		        // ④실제 차트에 표시할 데이터들(Array), dataset객체들을 담고 있다.
 		        datasets: [{
@@ -433,7 +393,7 @@ function payChart(data) {
 		            label: '금액',
 		            
 		            // ⑥dataset값(Array)
-		            data: [toprice, price1, price2, price3, price4, price5, price6],
+		            data: price,
 		            
 		            // ⑦dataset의 배경색(rgba값을 String으로 표현)
 		            backgroundColor: 'rgba(103,104,171, 0.8)',

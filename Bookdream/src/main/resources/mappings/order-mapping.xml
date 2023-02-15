@@ -297,7 +297,7 @@
 	</select>
 	
 	
-	<!-- 월간 주문 카운트 -->
+	<!-- 관리자 : 월간 주문 카운트 -->
 	<select id="orderMlyDateCount" resultType="HashMap">
 	<![CDATA[	
 		SELECT  TO_CHAR(b.dt, 'YY-MM')as order_date, 
@@ -317,7 +317,7 @@
 	]]>	
 	</select>
 	
-	<!-- 월간 주문 취소/반품 카운트 -->
+	<!-- 관리자 : 월간 주문 취소/반품 카운트 -->
 	<select id="orderMlyCancelDateCount" resultType="HashMap">
 	<![CDATA[		
 		SELECT  nvl(sum(a.cnt), 0) cnt2
@@ -336,7 +336,7 @@
 	]]>	
 	</select>
 	
-	<!-- 금주 취소/반품 현황 -->
+	<!-- 관리자 : 금주 취소/반품 현황 -->
 	<select id="cancelOrderWek" resultType="HashMap">
 		SELECT order_no, 
 			   order_name, 
@@ -364,7 +364,7 @@
 	</select>
 	
 
-	<!-- 금주 취소/반품 현황 -->
+	<!-- 관리자 : 금주 취소/반품 현황 페이징처리용 카운트 -->
 	<select id="cancelOrderWekCount" resultType="int">
 		SELECT count(order_no) cnt
 		FROM   orders o, users u
@@ -374,7 +374,7 @@
 		       order_status = 10) 
 	</select>					
 	
-	<!-- 결제취소/반품요청 승인 -->
+	<!-- 관리자 : 결제취소/반품요청 승인 -->
 	<update id="orderAprvl">
 		UPDATE orders
 		SET
@@ -385,10 +385,113 @@
 			order_status = 13
 		</if>  		   
 		WHERE  order_no = #{order_no}
-	
-	
-	
 	</update>
 	
+	<!--  관리자 : 주문 총 관리 -->
+	<select id="orderMngmn" resultType="HashMap">
+		SELECT order_no, 
+			   user_id, 
+			   order_name, 
+			   final_price, 
+			   pay_method, 
+			   TO_CHAR(order_date, 'YY.MM.DD HH24:MI') AS order_date, 
+			   order_status
+		FROM  (SELECT ROWNUM rnum, 
+					  order_no, 
+					  user_id, 
+					  order_name, 
+					  final_price, 
+					  pay_method, 
+					  order_date, 
+					  order_status
+		        FROM  (SELECT o.order_no, 
+		       				 u.user_id, 
+		       				 o.order_name, 
+		       				 y.final_price, 
+		       				 y.pay_method, 
+		       				 o.order_date, 
+		       				 o.order_status
+		           	  FROM   orders o, 
+		           	         pay y, 
+		           	         users u
+		              WHERE  o.pay_no = y.pay_no AND
+		                     o.user_no = u.user_no
+							  <if test='srchCrtr.equals("all")'>
+						      AND (order_no   LIKE '%' || #{srchKey}  || '%' OR
+						           user_id    LIKE '%' || #{srchKey}  || '%' OR
+						           order_name LIKE '%' || #{srchKey}  || '%' OR
+						           pay_method LIKE '%' || #{srchKey}  || '%')
+						      </if>
+						      <if test='srchCrtr.equals("order_no")'>
+						      AND  order_no   LIKE '%' || #{srchKey}  || '%'	  
+						      </if>  						      
+						      <if test='srchCrtr.equals("user_id")'>
+						      AND  user_id    LIKE '%' || #{srchKey}  || '%'	  
+						      </if>    
+						      <if test='srchCrtr.equals("order_name")'>
+						      AND  order_name LIKE '%' || #{srchKey}  || '%'	   
+						      </if>  		         
+						      <if test='srchCrtr.equals("pay_method")'>
+						      AND  pay_method LIKE '%' || #{srchKey}  || '%'	   		         		      
+						      </if> 
+		              ORDER BY order_no DESC)
+		      )
+		WHERE rnum BETWEEN ((#{pageNum}-1) * #{amount})+1 AND 
+		                     #{pageNum} * #{amount} 
+                             
+		ORDER BY rnum
+	</select>
 	
+	<!--  관리자 : 주문 총 관리 개수 -->	
+	<select id="orderMngmnCount" resultType="int">
+		SELECT COUNT(*) cnt
+		FROM   orders o, pay y, users u
+		WHERE  (o.pay_no = y.pay_no AND
+		       o.user_no = u.user_no)
+		      <if test='srchCrtr.equals("all")'>
+		      AND (order_no   LIKE '%' || #{srchKey}  || '%' OR
+		           user_id    LIKE '%' || #{srchKey}  || '%' OR
+		           order_name LIKE '%' || #{srchKey}  || '%' OR
+		           pay_method LIKE '%' || #{srchKey}  || '%')
+		      </if>
+			  <if test='srchCrtr.equals("order_no")'>
+			  AND  order_no   LIKE '%' || #{srchKey}  || '%'	  
+			  </if>  			      
+		      <if test='srchCrtr.equals("user_id")'>
+		      AND  user_id    LIKE '%' || #{srchKey}  || '%'	  
+		      </if>    
+		      <if test='srchCrtr.equals("order_name")'>
+		      AND  order_name LIKE '%' || #{srchKey}  || '%'	   
+		      </if>  		         
+		      <if test='srchCrtr.equals("pay_method")'>
+		      AND  pay_method LIKE '%' || #{srchKey}  || '%'	   		         		      
+		      </if>  		       
+	</select>	
+	
+	
+	<!-- 관리자 : 주문 총 관리 세부내역 -->
+	<select id="orderMngmnDtls" resultType="HashMap">
+		SELECT o.order_no, 
+		       p.product_count,
+		       b.title,
+		       b.book_price, 
+		       y.final_price,
+		       y.use_point,
+		       y.save_point,
+		       y.pay_fee,
+		       o.cancel_date,
+		       o.order_date,
+		       o.order_address,
+		       o.order_comment,
+		       o.order_status
+		FROM   purchase P, 
+		       orders o, 
+		       pay y, 
+		       book b
+		WHERE  o.order_no = p.order_no AND
+		       o.pay_no = y.pay_no AND
+		       p.book_no = b.book_no AND
+		       o.order_no = #{order_no}
+	</select>	
+		
 </mapper>

@@ -36,13 +36,162 @@
     
 <!-- jQuery -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
 <!-- CSS  -->
 <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap_icon.css">
-
-<!-- Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
-    
+      
 <title>주문 관리</title>
+
+<style type="text/css">
+
+.container {
+	height:auto;
+	min-height: 800px;
+}
+
+
+.btn_box {
+	position: relative;
+	width: 1240px;
+	margin: 0 auto;
+	margin-top: 50px;
+	margin-bottom: 10px;
+
+}
+.paging {
+	display: inline-block;
+}
+
+.paging_btn {
+	height: 30px;
+	font-size: 12px;
+
+}
+.srch_crtr {
+	width: 100px;
+	height: 30px;
+	font-size: 12px;
+	display: inline-block;
+
+}
+
+.srch_key {
+	width: 150px;
+	height: 30px;
+	font-size: 12px;
+	display: inline-block;	
+}
+
+.srch_btn {
+	width: 30px;
+	height: 30px;
+	font-size: 12px;
+	margin: 0px 0px 2px -13px;
+	text-align: center;
+	padding: 0px;	
+}
+
+
+
+.right {
+	float: right;
+}
+
+.mngmn_table {
+	margin: 0 auto;
+	width: 1240px;	
+	border: 1px solid black;
+}
+
+tr:hover {
+	background-color: #ececec;	
+}
+
+th {
+	height: 50px;
+	text-align:center;
+	vertical-align:middle;	
+	border-bottom: 1px solid black;
+	background-color: #f7f7f7;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+td {
+	height: 70px;
+	font-size: 12px;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+.mngmn_table tr:nth-child(odd) {
+	background-color: #f7f7f7;
+}
+
+.mngmn_table_th1 {
+	width: 70px;
+}
+
+.mngmn_table_th2 {
+	width: 140px;
+}
+
+.mngmn_table_th3 {
+	width: 470px;
+}
+
+.mngmn_table_th4, .mngmn_table_th5, .mngmn_table_th6, .mngmn_table_th7 {
+	width: 140px;
+}
+
+.mngmn_table_col3 {
+	line-height: 150%;
+	text-align: left;
+}
+
+.mngmn_table_col7 {
+	font-weight: bold;
+}
+
+/*  */
+
+.order_mngmn_dtls {
+	width: 550px;
+	height: 350px;
+	overflow-y: scroll;	
+	display: inline-block;		
+}
+
+.order_mngmn_dtls{
+   -ms-overflow-style: none;
+}
+.order_mngmn_dtls::-webkit-scrollbar{
+  display:none;
+}
+
+.mngmn_dtls_table {
+	width: 500px;	
+	border: 1px solid black;
+	margin-top: 20px;
+	margin-left: 22px;
+
+}
+
+.mngmn_dtls_table_col1 {
+	width: 350px;
+	line-height: 150%;	
+	text-align: left;
+	padding-left: 10px;	
+}
+
+.order_mngmn_dtls_info {
+	width: 600px;
+	height: 350px;
+	display: inline-block;		
+	
+}
+</style>
 
 </head>
 <body class="admin_body">
@@ -143,13 +292,34 @@
 	
 	<div class="container">
 		
-		<div class="center">
-	
+		<div class="btn_box">
+			<div class="paging" id="paging"></div>
+			
+			<div class="right">
+				<select class="form-select srch_crtr" id="srch_crtr" aria-label="Default select example">
+				  <option selected value="all">전체</option>
+				  <option value="order_no">주문번호</option>
+				  <option value="user_id">아이디</option>
+				  <option value="order_name">주문명</option>
+				  <option value="pay_method">결제수단</option>
+				</select>
+				
+				<input class="form-control srch_key" id="srch_key" type="search" placeholder="Search..." aria-label="Search">
+		        <button class="btn btn-primary srch_btn" id="srch_btn" type="button"><i class="bi bi-search"></i></button>
+	        </div>
 		</div>
 		
+		<div class="order_mngmn" id="order_mngmn"></div>
+		
+		
+		
+		<div class="order_mngmn_dtls" id="order_mngmn_dtls"></div>
+		
+		<div class="order_mngmn_dtls_info" id="order_mngmn_dtls_info"></div>
 		
 		
 	</div>		
+	
 	</main>
 
 

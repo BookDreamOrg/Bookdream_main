@@ -24,6 +24,8 @@ public class OrderVO {
 	private int status_count;
     private int pageNum;
 	private int amount;	
+	private String srchCrtr;
+	private String srchKey;	
 	
 	private List<Map<String, Object>> list;
 	private PageVO page;

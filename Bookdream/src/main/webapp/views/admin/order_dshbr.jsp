@@ -39,7 +39,7 @@
 <!-- CSS  -->
 <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap_icon.css">
     
-<title>Admin Page</title>
+<title>주문 현황</title>
 
 <style type="text/css">
 
@@ -132,6 +132,7 @@ td {
 
 .work_table_col3 {
 	width: 520px;
+	text-align: left;
 }
 
 .work_table_col6 {
