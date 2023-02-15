@@ -114,4 +114,18 @@
  		select * from (select ROW_NUMBER() over (order by user_no) NUM, A.* from users A order by user_no)
  		where NUM between #{displayPost} AND (#{displayPost} + #{postNum}) 
 	</select>
+	
+	<!-- User Get By user_no -->
+	<select id="getUserByNo" resultType = "user">
+		select * from users where user_no = #{user_no}
+	</select>
+	
+	<!-- blackList Set -->
+	<update id="setBlack">
+		update users set blacklist_yn = case 
+					when blacklist_yn = 'N' then 'Y'
+					when blacklist_yn = 'Y' then 'N'
+                    end where user_no = #{user_no}
+	</update>
+	
 </mapper>

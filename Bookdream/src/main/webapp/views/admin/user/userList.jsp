@@ -130,6 +130,7 @@
 									<th scope="col">레벨</th>
 									<th scope="col">블랙리스트</th>
 									<th scope="col">타입</th>
+									<th scope="col">관리</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -144,24 +145,112 @@
 										<td>${ userList.user_email }</td>
 										<td>${ userList.user_point }</td>
 										<td>${ userList.user_level }</td>
-										<td>
-											<span class = "blacklist-value">${ userList.blacklist_yn }</span>
-											<input type="checkbox" class="blacklist-check" onclick = "checkBlackList()"/>
-										</td>
+										<td>${ userList.blacklist_yn }</td>
 										<td>${ userList.flatform_type }</td>
+										<td>
+											<!-- Button trigger modal -->
+											<button type="button" class="btn" data-bs-toggle="modal"
+												data-bs-target="#getUserModal">더보기</button>
+										</td>
 									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
+						<!-- GetUserModal -->
+						<div class="modal fade" id="getUserModal" tabindex="-1">
+							<div class="modal-dialog modal-dialog-centered modal-lg">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title">회원 정보</h5>
+										<button type="button" class="btn-close"
+											data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<div class="admin-user-modal-body">
+											<div class="admin-user-modal-profile-box">
+												<div class="admin-user-modal-profile">
+													<i class="fa-solid fa-user fa-2x admin-user-modal-icon"></i>
+												</div>
+												<span id="getUSerByNoTitle"></span>
+											</div>
+											<div>
+												<table class="table admin-user-modal-table">
+													<thead>
+														<tr>
+															<th scope="col">NO</th>
+															<th scope="col">이름</th>
+															<th scope="col">전화번호</th>
+															<th scope="col">이메일</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td id="getUSerByNoNo"></td>
+															<td id="getUSerByNoName"></td>
+															<td id="getUSerByNoTel"></td>
+															<td id="getUSerByNoEmail"></td>
+														</tr>
+														<tr>
+															<th scope="col">포인트</th>
+															<th scope="col">레벨</th>
+															<th scope="col">블랙리스트</th>
+															<th scope="col">타입</th>
+														</tr>
+														<tr>
+															<td id="getUSerByNoPoint"></td>
+															<td id="getUSerByNoLevel"></td>
+															<td id="getUSerByNoBlack"></td>
+															<td id="getUSerByNoType"></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+										<nav class="nav nav-tabs" id="nav-tab" role="tablist">
+											<a class="nav-link active" id="nav-home-tab"
+												data-bs-toggle="tab" href="#nav-home" role="tab"
+												aria-controls="nav-home" aria-selected="true">회원이 쓴 글</a> <a
+												class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
+												href="#nav-profile" role="tab" aria-controls="nav-profile"
+												aria-selected="false">블랙리스트</a>
+										</nav>
+										<div class="tab-content admin-user-modal-nav"
+											id="nav-tabContent">
+											<div
+												class="tab-pane fade show active adimn-user-modal-nav-content"
+												id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+												@유저 댓글 리뷰 확인</div>
+											<div class="tab-pane fade adimn-user-modal-nav-content"
+												id="nav-profile" role="tabpanel"
+												aria-labelledby="nav-profile-tab">
+												<div class="blacklist-content">
+													<span>해당 유저를 블랙리스트로 등록 또는 해제 하시겠습니까?</span> 
+													<span>'블랙리스트'는 리뷰, 댓글 등 본사가 제공하는 서비스를 이용할 수 없습니다.</span>
+													<div>
+														<button type="button" id="blackListChange" class="btn btn-danger">블랙리스트 수정</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary"
+											data-bs-dismiss="modal">닫기</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
 						<nav aria-label="Page navigation example">
 							<ul class="pagination justify-content-center">
 								<li class="page-item"><a class="page-link"
-									onclick = "return prev()" tabindex="-1">Previous</a></li>
-								<c:forEach begin = "1" end = "${ pageNum }" var = "num">
-									<li class="page-item"><a class="page-link" href="userListPage.do?num=${num }">${ num }</a></li>
+									onclick="return prev()" tabindex="-1">Previous</a></li>
+								<c:forEach begin="1" end="${ pageNum }" var="num">
+									<li class="page-item"><a class="page-link"
+										href="userListPage.do?num=${num }">${ num }</a></li>
 								</c:forEach>
-								 <li class="page-item"><a class="page-link" onclick = "return next()">Next</a>
-								</li>
+								<li class="page-item"><a class="page-link"
+									onclick="return next()">Next</a></li>
 							</ul>
 						</nav>
 					</div>
@@ -178,7 +267,7 @@
 	<!-- Script FontAwesome-->
 	<script src="https://kit.fontawesome.com/4bf42f841a.js"
 		crossorigin="anonymous"></script>
-	
+
 	<script>
 		const urlParams = new URL(location.href).searchParams;
 		const num = urlParams.get('num');
@@ -186,45 +275,82 @@
 		const nextNum = parseInt(num) + 1;
 		const listUrl = "userListPage.do?num=";
 		const page = document.getElementsByClassName('page-link');
-		const blacklistValue = document.getElementsByClassName("blacklist-value");
-		
+
 		$(function() {
-			
-			for(var i = 1; i < page.length - 1; i++ ) {
-				if(page[i].innerText === num) {
+
+			for (var i = 1; i < page.length - 1; i++) {
+				if (page[i].innerText === num) {
 					page[i].parentNode.classList.add('active');
 				}
-			};
-			
-			if(num == 1) {
+			}
+			;
+
+			if (num == 1) {
 				page[0].parentNode.classList.add("disabled");
 			}
-			if(num == ${ pageNum }) {
-				page[(page.length - 1)].parentNode.classList.add("disabled");
-			}
-			
-			for(i = 0; i < blacklistValue.length; i++) {
-				if(blacklistValue[i].innerText === "N" || blacklistValue[i].innerText === "n") {
-					blacklistValue[i].nextElementSibling.setAttribute('checked', true);
-				}
-			}
-			
+			;
+
+			$('#getUserModal').on('show.bs.modal',function(event) {
+								const btn = $(event.relatedTarget);
+								const getUserNo = parseInt(btn[0].parentNode.parentNode.childNodes[1].innerText);
+								$.ajax({
+									url : "/views/admin/user/getUserByNo.do",
+									type : "POST",
+									data : {
+										user_no : getUserNo
+									},
+									success : function(data) {
+										console.log(data);
+										$('#getUSerByNoTitle').html(
+												data.user_name);
+										$('#getUSerByNoNo').html(data.user_no);
+										$('#getUSerByNoName').html(
+												data.user_name);
+										$('#getUSerByNoTel')
+												.html(data.user_tel);
+										$('#getUSerByNoEmail').html(
+												data.user_email);
+										$('#getUSerByNoPoint').html(
+												data.user_point);
+										$('#getUSerByNoLevel').html(
+												data.user_level);
+										$('#getUSerByNoBlack').html(
+												data.blacklist_yn);
+										$('#getUSerByNoType').html(
+												data.flatform_type);
+									},
+									error : function() {
+										alert("error");
+									}
+								})
+							});
+			$('#blackListChange').click(function(event) {
+				const val = $('#getUSerByNoNo');
+				const blackNum = parseInt(val[0].innerText);
+				$.ajax({
+					url : "/views/admin/user/blackList.do",
+					type : "POST",
+					data : {
+						user_no : blackNum
+					},
+					success : function(data) {
+						alert("블랙리스트 수정 성공!");
+						window.location.reload();
+					},
+					error : function() {
+						alert("error");
+					}
+				})
+			})
 		});
-		
+
 		function prev() {
 			window.location = listUrl + prevNum;
 		};
 		function next() {
 			window.location = listUrl + nextNum;
 		};
-		
-		function checkBlackList() {
-			console.log(this);
-			
-			
-		};
-		
-	</script>	
-		
+	</script>
+
 </body>
 </html>

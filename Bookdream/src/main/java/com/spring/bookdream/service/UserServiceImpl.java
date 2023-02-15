@@ -110,4 +110,14 @@ public class UserServiceImpl implements UserService {
 		return userDAO.userListPage(displayPost, postNum);
 	}
 
+	@Override
+	public UserVO getUserByNo(int no) {
+		return userDAO.getUserByNo(no);
+	}
+
+	@Override
+	public void setBlack(int no) {
+		userDAO.setBlack(no);
+	}
+
 }

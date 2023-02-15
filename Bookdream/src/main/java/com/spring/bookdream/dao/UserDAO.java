@@ -147,4 +147,14 @@ public class UserDAO {
 			
 			return mybatis.selectList("UserDAO.userListPage", data);
 		}
+		
+		// User Get By user_no
+		public UserVO getUserByNo(int no) {
+			return (UserVO) mybatis.selectOne("UserDAO.getUserByNo", no);
+		}
+		
+		// Set BlackList
+		public void setBlack(int no) {
+			mybatis.update("UserDAO.setBlack", no);
+		}
 }

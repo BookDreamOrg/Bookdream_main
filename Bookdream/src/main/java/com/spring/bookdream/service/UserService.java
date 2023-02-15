@@ -53,4 +53,10 @@ public interface UserService {
 	
 	// 유저 List Paging
 	public List<UserVO> userListPage(int displayPost, int postNum);
+	
+	// 유저 No로 get
+	public UserVO getUserByNo(int no);
+	
+	// 블랙리스트 수정
+	public void setBlack(int no);
 }

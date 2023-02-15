@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.bookdream.service.UserService;
 import com.spring.bookdream.vo.UserVO;
@@ -55,5 +56,22 @@ public class AdminUserController {
 		
 		return "/admin/user/userList";
 	}
+	
+	@RequestMapping(value = "/getUserByNo.do", method = RequestMethod.POST)
+	@ResponseBody
+	public UserVO getUserById(@RequestParam("user_no") int num, Model model) {
+		
+		UserVO getUserById = userService.getUserByNo(num);
+		model.addAttribute("getUserById", getUserById);
+		
+		return getUserById;
+	}
+	
+	@RequestMapping(value = "/blackList.do", method = RequestMethod.POST)
+	@ResponseBody
+	public void setBlack(@RequestParam("user_no") int num) {
+		userService.setBlack(num);
+	}
+	
 }
 
