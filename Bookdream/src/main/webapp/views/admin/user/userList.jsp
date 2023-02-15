@@ -240,14 +240,16 @@
 						</div>
 
 						<nav aria-label="Page navigation example">
-							<input type="hidden" id="SearchUserKeyword" value="${ SearchUserKeyword }">
 							<ul class="pagination justify-content-center">
 								<li class="page-item"><a class="page-link"
 									onclick="return prev()" tabindex="-1">Previous</a></li>
 								<c:forEach begin="1" end="${ pageNum }" var="num">
-									<li class="page-item"><a class="page-link" id="page-number" onclick="return pagingList(${num}, ${ SearchUserKeyword })">${ num }</a></li>
+									<input type="hidden" id="SearchUserKeyword" value="${SearchUserKeyword }">
+											<li class="page-item"><a class="page-link"
+										href="userListPage.do?num=${num }&SearchUserKeyword=${SearchUserKeyword}">${ num }</a></li>
 								</c:forEach>
-								<li class="page-item"><a class="page-link" onclick="return next()">Next</a></li>
+								<li class="page-item"><a class="page-link"
+									onclick="return next()">Next</a></li>
 							</ul>
 						</nav>
 					</div>
@@ -270,23 +272,23 @@
 		const num = urlParams.get('num');
 		const prevNum = parseInt(num) - 1;
 		const nextNum = parseInt(num) + 1;
+		const listUrl = "userListPage.do?num=";
 		const page = document.getElementsByClassName('page-link');
+		const SearchUserKeyword = $('#SearchUserKeyword').val();
 		
-
 		$(function() {
 
 			for (var i = 1; i < page.length - 1; i++) {
 				if (page[i].innerText === num) {
 					page[i].parentNode.classList.add('active');
 				}
-			};
+			}
+			;
 
 			if (num == 1) {
 				page[0].parentNode.classList.add("disabled");
-			} else if( num == (page.length -2)) {
-				console.log("last")
-				page[(page.length - 1)].parentNode.classList.add("disabled");
-			}; 
+			}
+			;
 
 			$('#getUserModal').on('show.bs.modal',function(event) {
 								const btn = $(event.relatedTarget);
@@ -340,20 +342,21 @@
 					}
 				})
 			})
-			
 		});
-		
-		function pagingList(x, y) {
-			const pagingNum = event;
-			const searchUserKeyword = y;
-			window.location.href="/views/admin/user/userListPage.do?num="+pagingNum+"&searchUserKeyword="+searchUserKeyword;
-		};
 
 		function prev() {
-			window.location.href="/views/admin/user/userListPage.do?num="+prevNum+"&searchUserKeyword="+searchUserKeyword;
+			if(SearchUserKeyword === null){
+				window.location = listUrl + prevNum;	
+			} else{
+				window.location = listUrl + prevNum + "&SearchUserKeyword=" + SearchUserKeyword;
+			}
 		};
 		function next() {
-			window.location.href="/views/admin/user/userListPage.do?num="+nextNum+"&searchUserKeyword="+searchUserKeyword;
+			if(SearchUserKeyword == null){
+				window.location = listUrl + nextNum;
+			} else{
+				window.location = listUrl + nextNum + "&SearchUserKeyword=" + SearchUserKeyword;
+			}
 		};
 		
 	</script>
@@ -367,7 +370,8 @@
 				data : {searchUserKeyword : searchUserKeyword},
 
 				success : function(result){	
-					location.href="/views/admin/user/userListPage.do?num="+num+"&searchUserKeyword=" + searchUserKeyword;
+					console.log(result);
+					location.href="/views/admin/user/userListPage.do?num="+num+"&searchUserKeyword=" + result;
 				},
 				error : function(){
 					alert('서버 에러입니다.');
