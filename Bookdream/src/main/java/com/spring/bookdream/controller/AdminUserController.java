@@ -47,18 +47,7 @@ public class AdminUserController {
 	
 	@Autowired
 	private HttpSession session;
-	
-	@RequestMapping(value = "/uesrList.do", method = RequestMethod.GET)
-	public String getUserList(Model model) {
-		System.out.println("UserList Controller 진입");
 		
-		List<UserVO> userList = userService.selectUser();
-		model.addAttribute("userList", userList);
-		
-		return "/admin/user/userList";
-	};
-	
-	
 	@RequestMapping(value = "/userListPage.do", method = RequestMethod.GET)
 	public String getListPage(Model model, @RequestParam("num") int num, UserVO userVO) {
 		
