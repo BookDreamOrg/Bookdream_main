@@ -25,4 +25,5 @@ public class UserVO {
 	
 	private int displayPost; 
 	private int postNum;
+	private int countlistnum; // 검색시 목록 갯수
 }

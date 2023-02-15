@@ -48,11 +48,16 @@ public class AdminUserController {
 	@Autowired
 	private HttpSession session;
 		
-	@RequestMapping(value = "/userListPage.do")
+	@RequestMapping(value = "/userListPage.do", method = RequestMethod.GET)
 	public String getListPage(Model model, @RequestParam("num") int num, UserVO userVO) {
-		
-		int count = userService.countUser();
-		
+		System.out.println("userListPage.do실행");
+		List<UserVO> userAllList = userService.getAllUserList(userVO);
+		for(int i=0; i<userAllList.size(); i++) {
+			System.out.println(userAllList.get(i));
+		}
+		System.out.println();
+		int count = userAllList.size();
+		System.out.println(count);
 		// 페이지에 보이는 수(변경 가능)
 		int postNum = 5;
 		
@@ -67,17 +72,24 @@ public class AdminUserController {
 		
 		userVO.setDisplayPost(displayPost);
 		userVO.setPostNum(postNum);
+		userVO.setCountlistnum(count);
 		
-		System.out.println(displayPost);
-		System.out.println(postNum);
-		System.out.println(count);
+		System.out.println("num: " + num);
 		System.out.println(userVO.getSearchUserKeyword());
+		System.out.println(userVO.getDisplayPost());
+		System.out.println(userVO.getPostNum());
+		String key = userVO.getSearchUserKeyword();
 		
 		List<UserVO> userList = null;
 		
 		userList = userService.userListPage(userVO);
+		System.out.println("userList");
+		for(int i=0; i<userList.size(); i++) {
+			System.out.println(userList.get(i));
+		}
 		model.addAttribute("userList", userList);
 		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("SearchUserKeyword",key);
 		
 		return "/admin/user/userList";
 	}

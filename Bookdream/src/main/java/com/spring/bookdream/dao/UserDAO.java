@@ -138,7 +138,7 @@ public class UserDAO {
 		}
 		
 		// User list page
-		public List userListPage(UserVO userVO) {
+		public List<UserVO> userListPage(UserVO userVO) {
 			
 //			HashMap<String, Integer> data = new HashMap<String, Integer>();
 //			

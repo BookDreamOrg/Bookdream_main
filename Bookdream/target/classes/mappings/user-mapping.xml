@@ -1,234 +1,168 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-<mapper namespace="UserDAO">
+ 
+<mapper namespace="UserDAO"> 
 
 	<resultMap type="user" id="userResult">
-		<result property="user_id" column="user_id" />
-		<result property="user_password" column="user_password" />
-		<result property="user_name" column="user_name" />
-		<result property="user_tel" column="user_tel" />
-		<result property="user_level" column="user_level" />
-		<result property="blacklist_yn" column="blacklist_yn" />
-		<result property="flatform_type" column="flatform_type" />
-		<result property="user_email" column="user_email" />
-		<result property="user_point" column="user_point" />
-		<result property="user_regdate" column="user_regdate" />
-		<result property="searchUserKeyword" column="searchUserKeyword" />
-		<result property="displayPost" column="displayPost" />
-		<result property="postNum" column="postNum" />
+		<result property="user_id" column="user_id"/>
+		<result property="user_password" column="user_password"/>
+		<result property="user_name" column="user_name"/>
+		<result property="user_tel" column="user_tel"/>
+		<result property="user_level" column="user_level"/>
+		<result property="blacklist_yn" column="blacklist_yn"/>
+		<result property="flatform_type" column="flatform_type"/>		
+		<result property="user_email" column="user_email"/>
+		<result property="user_point" column="user_point"/>
+		<result property="user_regdate" column="user_regdate"/>
+		<result property="searchUserKeyword" column="searchUserKeyword"/>
+		<result property="displayPost" column="displayPost"/>
+		<result property="postNum" column="postNum"/>
+		<result property="countlistnum" column="countlistnum"/>
 	</resultMap>
 
 	<insert id="insertUser">
-		insert into users(USER_NO, USER_ID, USER_PASSWORD,
-		USER_NAME, FLATFORM_TYPE, USER_EMAIL)
+		insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
 		values(user_seq.nextval,#{user_id},#{user_password},#{user_name},'BD',#{user_email})
 	</insert>
-
+	
 	<select id="idCheck" resultType="int">
-		select count(user_id) from users
-		where user_id = #{user_id}
+		select count(user_id) from users where user_id = #{user_id}
 	</select>
-
+	
 	<select id="getUser" resultType="user">
-		select *
-		from users
-		where
-		user_id=#{user_id} and user_password=#{user_password}
+			select * 
+			from users 
+			where user_id=#{user_id} and user_password=#{user_password}
 	</select>
-
-	<select id="getAllUserList" resultType="user"
-		parameterType="user">
-		select *
+	
+	<select id="getAllUserList" resultType="user" parameterType="user">
+		select * 
 		from users
 		<if test="searchUserKeyword != null">
-			where user_no like '%' || #{searchUserKeyword} || '%' or
-			user_id like '%' || #{searchUserKeyword} || '%'
-			or user_password like
-			'%' || #{searchUserKeyword} || '%' or user_name
-			like '%' ||
-			#{searchUserKeyword} || '%'
-			or user_tel like '%' ||
-			#{searchUserKeyword} || '%' or user_level like
-			'%' ||
-			#{searchUserKeyword} || '%'
-			or blacklist_yn like '%' ||
-			#{searchUserKeyword} || '%' or user_email like '%' ||
-			#{searchUserKeyword} || '%'
-			or user_point like '%' ||
-			#{searchUserKeyword} || '%' or user_regdate
-			like '%' ||
-			#{searchUserKeyword} || '%'
+			where user_no like '%' || #{searchUserKeyword} || '%' or user_id like '%' || #{searchUserKeyword} || '%' 
+			or user_password like '%' || #{searchUserKeyword} || '%' or user_name like '%' || #{searchUserKeyword} || '%' 
+			or user_tel like '%' || #{searchUserKeyword} || '%' or user_level like '%' || #{searchUserKeyword} || '%'
+			or blacklist_yn like '%' || #{searchUserKeyword} || '%' or user_email like '%' || #{searchUserKeyword} || '%' 
+			or user_point like '%' || #{searchUserKeyword} || '%' or user_regdate like '%' || #{searchUserKeyword} || '%'
 		</if>
 	</select>
-
+	
 	<select id="loginCheck" resultType="String">
 		select user_name
 		from users
 		where user_id=#{user_id} and user_password=#{user_password}
 	</select>
-
+	
 	<!-- 카카오 정보 찾기 -->
 	<select id="findKakao" resultType="user">
-		select * from users where
-		flatform_type='KAKAO' and user_email=#{user_email}
+		select * from users where flatform_type='KAKAO' and user_email=#{user_email}
 	</select>
-
+	
 	<!-- 네이버 정보 찾기 -->
 	<select id="findNaver" parameterType="user" resultType="user">
-		select *
-		from users where flatform_type='naver' and user_email=#{user_email}
+		select * from users where flatform_type='naver' and user_email=#{user_email}
 	</select>
-
+	
 	<!-- 구글 정보 찾기 -->
 	<select id="findGoogle" parameterType="user" resultType="user">
-		select *
-		from users where flatform_type='google' and user_email=#{user_email}
+		select * from users where flatform_type='google' and user_email=#{user_email}
 	</select>
-
+	
 	<!-- 플랫폼 정보 가져오기ㅡ -->
 	<select id="findFlatform" resultType="String">
-		select flatform_type from
-		users where user_id=#{user_id} and user_password=#{user_password}
+		select flatform_type from users where user_id=#{user_id} and user_password=#{user_password}
 	</select>
 
 	<!--카카오 정보 저장 -->
 	<insert id="kakaoInsert" parameterType="java.util.HashMap">
-		insert into
-		users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_TEL,
-		FLATFORM_TYPE, USER_EMAIL)
+		insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_TEL, FLATFORM_TYPE, USER_EMAIL) 
 		values(user_seq.nextval,'','',#{nickname},'','KAKAO',#{email})
 	</insert>
-
-
-	<!-- 구글 정보 저장 -->
+	
+		
+	<!-- 구글 정보 저장 --> 
 	<insert id="googleInsert">
-		insert into users(USER_NO, USER_ID, USER_PASSWORD,
-		USER_NAME, USER_TEL, FLATFORM_TYPE, USER_EMAIL)
-		values(user_seq.nextval,'','',#{user_name},'',#{flatform_type},
-		#{user_email})
+		insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_TEL, FLATFORM_TYPE, USER_EMAIL)
+		values(user_seq.nextval,'','',#{user_name},'',#{flatform_type}, #{user_email})
 	</insert>
 
-
-	<!-- 네이버 정보 저장 -->
+	
+	<!-- 네이버 정보 저장 --> 
 	<insert id="naverInsert">
-		insert into users(USER_NO, USER_ID, USER_PASSWORD,
-		USER_NAME, USER_TEL, FLATFORM_TYPE, USER_EMAIL)
-		values(user_seq.nextval,'','',#{user_name}, #{user_tel},
-		#{flatform_type}, #{user_email})
+		insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_TEL, FLATFORM_TYPE, USER_EMAIL)
+		values(user_seq.nextval,'','',#{user_name}, #{user_tel}, #{flatform_type}, #{user_email})
 	</insert>
-
-
+	
+	
 	<!-- 이름 이메일로 아이디 찾기 -->
 	<select id="idFind" resultType="String">
-		select user_id from users where
-		user_name=#{user_name} and user_email=#{user_email}
+		select user_id from users where user_name=#{user_name} and user_email=#{user_email} 
 	</select>
-
+	
 	<!-- 아이디 이름 이메일로 비밀번호 찾기 -->
 	<select id="pwFind" resultType="String">
-		select user_password from users
-		where user_id=#{user_id} and user_name=#{user_name} and
-		user_email=#{user_email}
+		select user_password from users where user_id=#{user_id} and user_name=#{user_name} and user_email=#{user_email} 
 	</select>
-
+	
 	<!-- 회원정보 수정 -->
 	<update id="updateUser">
-		update users set user_password=#{user_password},
-		user_name=#{user_name}, user_email=#{user_email} where user_id =
-		#{user_id}
+		update users set user_password=#{user_password}, user_name=#{user_name}, user_email=#{user_email} where user_id = #{user_id}
 	</update>
-
+	
 	<delete id="deleteUser">
-		delete from users where user_id = #{user_id} and
-		user_password = #{user_password}
+		delete from users where user_id = #{user_id} and user_password = #{user_password}
 	</delete>
-
+	
 	<!-- 전체조회 -->
-	<select id="selectUser" resultType="user">
+	<select id="selectUser" resultType = "user">
 		select * from users
 	</select>
-
+	
 	<!-- User Count -->
-	<select id="countUser" resultType="int">
+	<select id="countUser" resultType = "int">
 		select count(user_no) from users
 	</select>
-
+	
 	<!-- User Paging -->
 	<select id="userListPage" parameterType="user" resultType="user">
-		select * from
-		<choose>
-			<when test="searchUserKeyword != null">
-				(select ROW_NUMBER() over (order by user_no) NUM, A.*
-				from users A
-				where
-				user_no like '%' || #{searchUserKeyword} || '%' or
-				user_id like '%' ||
-				#{searchUserKeyword} || '%'
-				or user_password like
-				'%' || #{searchUserKeyword} || '%' or user_name
-				like '%' ||
-				#{searchUserKeyword} || '%'
-				or user_tel like '%' ||
-				#{searchUserKeyword} || '%' or user_level like
-				'%' ||
-				#{searchUserKeyword} || '%'
-				or blacklist_yn like '%' ||
-				#{searchUserKeyword} || '%' or user_email
-				like '%' ||
-				#{searchUserKeyword} || '%'
-				or user_point like '%' ||
-				#{searchUserKeyword} || '%' or user_regdate
-				like '%' ||
-				#{searchUserKeyword} || '%'
-				order by user_no)
-				where NUM between
-				#{displayPost} AND (#{displayPost} + #{postNum})
-				and (user_no like
-				'%' || #{searchUserKeyword} || '%' or user_id like
-				'%' ||
-				#{searchUserKeyword} || '%'
-				or user_password like '%' ||
-				#{searchUserKeyword} || '%' or user_name
-				like '%' ||
-				#{searchUserKeyword} || '%'
-				or user_tel like '%' ||
-				#{searchUserKeyword} || '%' or user_level like
-				'%' ||
-				#{searchUserKeyword} || '%'
-				or blacklist_yn like '%' ||
-				#{searchUserKeyword} || '%' or user_email
-				like '%' ||
-				#{searchUserKeyword} || '%'
-				or user_point like '%' ||
-				#{searchUserKeyword} || '%' or user_regdate
-				like '%' ||
-				#{searchUserKeyword} || '%')
+ 		select * from 
+ 		<choose>
+ 			<when test="searchUserKeyword != null">
+				 (select ROW_NUMBER() over (order by user_no) NUM, A.* from users A 
+	         	 where 
+		            user_no like '%' || #{searchUserKeyword} || '%' or user_id like '%' || #{searchUserKeyword} || '%' 
+				or user_password like '%' || #{searchUserKeyword} || '%' or user_name like '%' || #{searchUserKeyword} || '%' 
+				or user_tel like '%' || #{searchUserKeyword} || '%' or user_level like '%' || #{searchUserKeyword} || '%'
+				or blacklist_yn like '%' || #{searchUserKeyword} || '%' or user_email like '%' || #{searchUserKeyword} || '%' 
+				or user_point like '%' || #{searchUserKeyword} || '%' or user_regdate like '%' || #{searchUserKeyword} || '%'
+				or flatform_type like '%' || #{searchUserKeyword} || '%'
+	             order by user_no)
+	             where NUM between #{displayPost} AND (#{displayPost} + #{postNum})
+	             and (user_no like '%' || #{searchUserKeyword} || '%' or user_id like '%' || #{searchUserKeyword} || '%' 
+				or user_password like '%' || #{searchUserKeyword} || '%' or user_name like '%' || #{searchUserKeyword} || '%' 
+				or user_tel like '%' || #{searchUserKeyword} || '%' or user_level like '%' || #{searchUserKeyword} || '%'
+				or blacklist_yn like '%' || #{searchUserKeyword} || '%' or user_email like '%' || #{searchUserKeyword} || '%' 
+				or user_point like '%' || #{searchUserKeyword} || '%' or user_regdate like '%' || #{searchUserKeyword} || '%'
+				or flatform_type like '%' || #{searchUserKeyword} || '%')
 			</when>
 			<when test="searchUserKeyword == null">
-				(select ROW_NUMBER() over (order by user_no) NUM, A.*
-				from users A order by
-				user_no)
-				where NUM between #{displayPost} AND
-				(#{displayPost} + #{postNum})
+				 (select ROW_NUMBER() over (order by user_no) NUM, A.* from users A order by user_no)
+ 					where NUM between #{displayPost} AND (#{displayPost} + #{postNum})
 			</when>
-		</choose>
+ 		</choose>
 	</select>
-
+	
 	<!-- User Get By user_no -->
-	<select id="getUserByNo" resultType="user">
-		select * from users where
-		user_no = #{user_no}
+	<select id="getUserByNo" resultType = "user">
+		select * from users where user_no = #{user_no}
 	</select>
-
+	
 	<!-- blackList Set -->
 	<update id="setBlack">
-		update users set blacklist_yn = case
-		when blacklist_yn
-		= 'N' then 'Y'
-		when blacklist_yn = 'Y' then 'N'
-		end where user_no =
-		#{user_no}
+		update users set blacklist_yn = case 
+					when blacklist_yn = 'N' then 'Y'
+					when blacklist_yn = 'Y' then 'N'
+                    end where user_no = #{user_no}
 	</update>
-
+	
 </mapper>
