@@ -240,6 +240,7 @@
 						</div>
 
 						<nav aria-label="Page navigation example">
+							<input type="hidden" id="SearchUserKeyword" value="${ SearchUserKeyword }">
 							<ul class="pagination justify-content-center">
 								<li class="page-item"><a class="page-link"
 									onclick="return prev()" tabindex="-1">Previous</a></li>
@@ -270,6 +271,7 @@
 		const prevNum = parseInt(num) - 1;
 		const nextNum = parseInt(num) + 1;
 		const page = document.getElementsByClassName('page-link');
+		var searchUserKeyword = $('#searchUserKeyword').val();
 
 		$(function() {
 
@@ -343,13 +345,12 @@
 		
 		function pagingList(event) {
 			const pagingNum = event;
-			var searchUserKeyword = $('#searchUserKeyword').val();
 			$.ajax({
 				type : "POST",
 				url : "/views/admin/user/getSearchUserList",
 				data : {searchUserKeyword : searchUserKeyword},
 				success : function(result){	
-					location.href="/views/admin/user/userListPage.do?num="+pagingNum+"&searchUserKeyword="+result;
+					location.href="/views/admin/user/userListPage.do?num="+pagingNum+"&searchUserKeyword="+earchUserKeyword;
 				},
 				error : function(){
 					alert('서버 에러입니다.');
@@ -358,10 +359,10 @@
 		};
 
 		function prev() {
-			window.location.href="/views/admin/user/userListPage.do?num="+prevNum+"&searchUserKeyword=";
+			window.location.href="/views/admin/user/userListPage.do?num="+prevNum+"&searchUserKeyword="+searchUserKeyword;
 		};
 		function next() {
-			window.location.href="/views/admin/user/userListPage.do?num="+nextNum+"&searchUserKeyword=";
+			window.location.href="/views/admin/user/userListPage.do?num="+nextNum+"&searchUserKeyword="+searchUserKeyword;
 		};
 		
 	</script>
@@ -375,8 +376,7 @@
 				data : {searchUserKeyword : searchUserKeyword},
 
 				success : function(result){	
-					console.log(result);
-					location.href="/views/admin/user/userListPage.do?num="+num+"&searchUserKeyword=" + result;
+					location.href="/views/admin/user/userListPage.do?num="+num+"&searchUserKeyword=" + searchUserKeyword;
 				},
 				error : function(){
 					alert('서버 에러입니다.');
