@@ -346,13 +346,17 @@
 
 		function prev() {
 			if(SearchUserKeyword === null){
-				window.location = listUrl + prevNum;
+				window.location = listUrl + prevNum;	
 			} else{
-				window.location = listUrl + prevNum;
+				window.location = listUrl + prevNum + "&SearchUserKeyword=" + SearchUserKeyword;
 			}
 		};
 		function next() {
-			window.location = listUrl + nextNum;
+			if(SearchUserKeyword == null){
+				window.location = listUrl + nextNum;
+			} else{
+				window.location = listUrl + nextNum + "&SearchUserKeyword=" + SearchUserKeyword;
+			}
 		};
 		
 	</script>
