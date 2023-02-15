@@ -44,7 +44,29 @@ create sequence user_seq increment by 1 start with 1;
 insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
    values(user_seq.nextval,'test','test','test','BD','test@test.com');
 
-select * from users;
+-- User adim 게시판 test
+insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
+   values(user_seq.nextval,'test1','test','test','BD','test@test.com');   
+
+insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
+   values(user_seq.nextval,'test2','test','test','BD','test@test.com');
+   
+insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
+   values(user_seq.nextval,'test3','test','test','BD','test@test.com');
+   
+insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
+   values(user_seq.nextval,'test4','test','test','BD','test@test.com');
+
+insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
+   values(user_seq.nextval,'test5','test','test','BD','test@test.com');   
+
+insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
+   values(user_seq.nextval,'test6','test','test','BD','test@test.com');
+   
+insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
+   values(user_seq.nextval,'test7','test','test','BD','test@test.com');
+
+select * from users;   
 commit;
 
 -- Review Table
@@ -261,8 +283,6 @@ create table KEYWORD_HISTORY(
     SEARCH_DATE     date default sysdate,
     LOGIN_YN        varchar2(5) not null
 );
-
-
 -------------------------------- 1:1문의 테이블(QNA)------------------------------
 drop table QNA;
 create table QNA(

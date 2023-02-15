@@ -18,52 +18,7 @@
 <link rel="stylesheet" href="/resources/css/styles.css" />
 <link rel="stylesheet" href="/resources/css/unregister.css" />
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
-<style>
-
-/* password */
-.pw_ok {
-	color: #008000;
-	display: none;
-}
-
-.pw_no {
-	color: #6A82FB;
-	display: none;
-}
-/* side */
-.side {
-	position: relative;
-	width: 220px;
-	min-height: 500px;
-	margin-top: 130px;
-	border-radius: 20px;
-	float: left;
-	background-color: #d1d1e5;
-	text-align: center;
-}
-
-.rside {
-	height: auto;
-	width: 950px;
-	min-height: 1200px;
-	float: right;
-	margin-top: 130px;
-}
-
-.main {
-	line-height: 180%;
-	position: relative;
-	margin: 0 auto;
-	width: 1240px;
-	height: auto;
-	min-height: 1000px;
-}
-
-.user_info_title {
-	font-size: 30px;
-	margin-bottom: 10px;
-}
-</style>
+<link rel="stylesheet" href="/resources/css/edit.css" />
 
 <title>회원정보 수정</title>
 </head>
@@ -75,6 +30,9 @@
 	<jsp:include page="/views/inc/header.jsp" />
 	<div class="container">
 		<div class="main">
+		
+			<jsp:include page="/views/inc/mypage_side.jsp" />
+			
 			<div class="rside">
 				<div class="user_info_title">
 					<p>회원정보 수정
@@ -125,10 +83,13 @@
 						<button type="button" class="btn btn-light " id="modal_reg_check"
 							onclick="updateUser()">저장</button>
 					</div>
-					
+			<!--------------------------- 회원탈퇴 --------------------------->		
 			<!-- Button trigger modal -->
-			<button type="button" class="btn" id="deleteUserBtn" data-bs-toggle="modal"
+			<div class="user_delete_info_list">
+				<span class="user_delete_title">회원탈퇴 후 동일 아이디로 재가입이 불가합니다. </span>
+				<button type="button" class="btn btn-light" id="deleteUserBtn" data-bs-toggle="modal"
 				data-bs-target="#unregisterModal">회원탈퇴</button>
+			</div>
 
 			<!-- Modal -->
 			<div class="modal fade" id="unregisterModal" tabindex="-1"
@@ -231,130 +192,10 @@
 				</div>
 			</div>
 
-			<div class="side">
-				<div>
-					<a href="/views/mypage/mypage.jsp">${authUser.getUser_name() }</a>님
-					환영합니다.
-				</div>
-				<h1>
-					<a href="/mypage/edit">회원정보 관리</a>
-				</h1>
-				<!-- Button trigger modal -->
-				<button type="button" class="btn" data-bs-toggle="modal"
-					data-bs-target="#exampleModal">회원탈퇴</button>
-
-				<div>
-					<a href="/mypage/address">배송지 관리</a>
-				</div>
-				<div>
-					<a href="/mypage/tracking">배송 조회</a>
-				</div>
-				<div>
-					<a href="#">나의 구매내역</a>
-				</div>
-				<div>
-					<a href="/mypage/getMyQnAList">1:1문의</a>
-				</div>
-				<div>
-					<a href="#">상품문의</a>
-				</div>
-			</div>
 		</div>
 	</div>
-	<script>
-		function updateUser() {
-			var id = $('#user_id').val();
-			var password = $('#user_password').val();
-			var password_check = $('#user_passwordcheck').val();
-			var name = $('#user_name').val();
-			var email = $('#user_email').val();
-
-			$.ajax({
-				url : '/mypage/updateUser',
-				type : 'post',
-				data : {
-					id : id,
-					password : password,
-					password_check : password_check,
-					name : name,
-					email : email
-				},
-				success : function(data) {
-					console.log(data);
-					if (data === "error") {
-						alert('입력칸을 확인해주세요!');
-					} else if (data === "password_error") {
-						alert('비밀번호가 달라요!');
-					} else {
-						$('#modal').fadeOut();
-						document.location.href(data);
-					}
-
-				},
-				error : function() {
-					alert('서버 에러입니다.');
-				}
-			});
-
-		}
-
-		function PasswordCheck() {
-			var pw = $('#user_password').val();
-			var pwCheck = $('#user_passwordcheck').val();
-
-			if (pw != pwCheck) { // 비밀번호가 일치하지 않는다면
-				$('.pw_no').css("display", "inline-block");
-				$('.pw_ok').css("display", "none");
-			} else { // 비밀번호가 일치한다면
-				$('.pw_no').css("display", "none");
-				$('.pw_ok').css("display", "inline-block");
-			}
-		};
-		
-		function unregisterCheck() {
-			const checkbox = document.getElementById('unregister_agree');
-			const agree = checkbox.checked;
-			var unregisterBtn = document.getElementById('unregister_btn');
-			
-			if(agree) {
-				unregisterBtn.toggleAttribute('disabled');
-			} else {
-				unregisterBtn.setAttribute('disabled', true);
-			}
-		};
-		
-		
-		function deleteUser() {
-			const id = $('#unregister_id').val();
-			const password = $('#unregister_password').val();
-
-			// 패스워드 맞는지 확인
-			$.ajax({
-				url : "/mypage/deleteUser",
-				type : "POST",
-				data : {
-					id : id,
-					password : password
-				},
-				success : function(data) {
-					console.log(data);
-					if (data === "error") {
-						alert('비밀번호를 입력해주세요');
-					} else if (data === "password_error") {
-						alert('회원 비밀번호가 일치하지 않습니다.');
-					} else {
-						$('#unregisterCheckModal').modal('hide');
-						document.location.replace(data);
-					}
-				},
-				error : function() {
-					alert("서버 에러.");
-				}
-			});
-
-		};
-	</script>
-
+	<script src="/resources/js/edit.js"></script>
+	
 	<jsp:include page="/views/inc/footer.jsp" />
 	</div>
 	</div>

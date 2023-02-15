@@ -51,8 +51,6 @@ public class OrderitemController {
 		
 		int user_no = (int) session.getAttribute("user_no");		
 		vo.setUser_no(user_no);
-		
-		System.out.println("user_no : " + user_no);
 		pay.setUser_no(user_no);
 			
 		

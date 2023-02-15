@@ -13,25 +13,23 @@
 	min-height: 1000px;
 }
 
-.side {
-	position:relative;
-	width: 220px;
-	min-height: 500px;
-	margin-top: 130px;
-	border-radius: 20px;
-	float: left;
-	background-color: #d1d1e5;
-}
-
 .address {
 	position: relative;
-	width: 950px;
+	width: 870px;
 	height: auto;
 	min-height: 400px;
 }
 
+.main_address {
+	height: auto;
+	min-height: 1200px;
+	width: 950px;	
+	float: right;
+	padding: 0px 40px;
+}
+
 .address_title {
-    padding: 40px;
+    padding: 30px;
     vertical-align: middle;
     height: 100px;
 	margin-top: 30px;    
@@ -54,11 +52,7 @@
 	font-size: 12px;
 }
 
-.main_address {
-	height: auto;
-	min-height: 1200px;
-	float: right;
-}
+
 
 .addresslist {
 	height:auto;
@@ -81,7 +75,7 @@
 }
 
 .addresslist_table {
-	width: 100%;
+	width: 870px;
 	height: 150px;
 }
 
@@ -92,7 +86,7 @@
 }
 
 .addresslist_table_col2 {
-	max-width: 700px;
+	max-width: 620px;
 	vertical-align: middle;
 }
 

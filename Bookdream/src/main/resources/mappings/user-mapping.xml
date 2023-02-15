@@ -29,6 +29,10 @@
 			where user_id=#{user_id} and user_password=#{user_password}
 	</select>
 	
+	<select id="getAllUserList" resultType="List">
+		select * from user;
+	</select> 
+	
 	<select id="loginCheck" resultType="String">
 		select user_name
 		from users
@@ -94,4 +98,34 @@
 	<delete id="deleteUser">
 		delete from users where user_id = #{user_id} and user_password = #{user_password}
 	</delete>
+	
+	<!-- 전체조회 -->
+	<select id="selectUser" resultType = "user">
+		select * from users
+	</select>
+	
+	<!-- User Count -->
+	<select id="countUser" resultType = "int">
+		select count(user_no) from users
+	</select>
+	
+	<!-- User Paging -->
+	<select id="userListPage" parameterType="hashMap" resultType="user">
+ 		select * from (select ROW_NUMBER() over (order by user_no) NUM, A.* from users A order by user_no)
+ 		where NUM between #{displayPost} AND (#{displayPost} + #{postNum}) 
+	</select>
+	
+	<!-- User Get By user_no -->
+	<select id="getUserByNo" resultType = "user">
+		select * from users where user_no = #{user_no}
+	</select>
+	
+	<!-- blackList Set -->
+	<update id="setBlack">
+		update users set blacklist_yn = case 
+					when blacklist_yn = 'N' then 'Y'
+					when blacklist_yn = 'Y' then 'N'
+                    end where user_no = #{user_no}
+	</update>
+	
 </mapper>

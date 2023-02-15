@@ -31,15 +31,15 @@ public class OrderDAO {
 	}
 
 	// 결제 취소, 반품요청
-	public void cencelOrder(OrderVO vo) {
+	public void cancelOrder(OrderVO vo) {
 		
-		System.out.println("---> OrderDAO cencelOrder 실행 <---");
+		System.out.println("---> OrderDAO cancelOrder 실행 <---");
 		
 		// 결제 취소
-		mybatis.update("OrderDAO.cencelOrder", vo);
+		mybatis.update("OrderDAO.cancelOrder", vo);
 		
 		// 반품 요청중
-		mybatis.update("OrderDAO.cencelOrder2", vo);
+		mybatis.update("OrderDAO.cancelOrder2", vo);
 		
 	}
 	
@@ -77,4 +77,33 @@ public class OrderDAO {
 		return mybatis.selectList("OrderDAO.orderStatusCount", vo);	
 		
 	}		
+	
+	// 최근 주문 조회
+	public OrderVO recentOrder(OrderVO vo) {
+		
+		System.out.println("---> OrderDAO recentOrder 실행 <---");
+		
+		return mybatis.selectOne("OrderDAO.recentOrder", vo);	
+		
+	}
+	
+	// 관리자
+	// 일주일 주문 카운트
+	public List<Map<String, Object>> orderDateCount(OrderVO vo) {
+		
+		System.out.println("---> OrderDAO orderDateCount 실행 <---");
+		
+		return mybatis.selectList("OrderDAO.orderDateCount", vo);	
+		
+	}
+
+	// 관리자
+	// 일주일 주문 카운트
+	public List<Map<String, Object>> orderCancelDateCount(OrderVO vo) {
+		
+		System.out.println("---> OrderDAO orderCancelDateCount 실행 <---");
+		
+		return mybatis.selectList("OrderDAO.orderCancelDateCount", vo);	
+		
+	}
 }

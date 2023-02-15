@@ -16,13 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.spring.bookdream.service.AddressService;
 import com.spring.bookdream.service.OrderService;
-import com.spring.bookdream.service.PurchaseService;
 import com.spring.bookdream.service.QnAService;
+import com.spring.bookdream.service.SearchKeywordService;
 import com.spring.bookdream.service.UserService;
+import com.spring.bookdream.vo.AddressVO;
 import com.spring.bookdream.vo.AnswerVO;
+import com.spring.bookdream.vo.KeywordHistoryVO;
 import com.spring.bookdream.vo.OrderVO;
-import com.spring.bookdream.vo.PurchaseVO;
 import com.spring.bookdream.vo.QnAVO;
 import com.spring.bookdream.vo.SearchCriteria;
 import com.spring.bookdream.vo.UserVO;
@@ -32,24 +34,77 @@ import com.spring.bookdream.vo.UserVO;
 public class MypageController {
 
 	@Autowired
-	private OrderService orderService;	
-	
-	@Autowired
 	private UserService userService;
 
 	@Autowired
-	private PurchaseService purchaseService;	
+	private OrderService orderService;	
 	
 	@Autowired
-	private HttpSession session;
+	private AddressService addressService;	
 
+	@Autowired
+	private SearchKeywordService keywordService;
+	
 	@Autowired
 	private QnAService qnaService;
 	
+	@Autowired
+	private HttpSession session;	
+	
+	
+	// 마이페이지 - 메인 
+	@RequestMapping(value="/main")
+	public String mypage(HttpServletResponse response, AddressVO address, OrderVO order, QnAVO qna, Model model) {
+
+		// 로그인해야 진입됨
+		if (session.getAttribute("user_no") == null) {
+			String msg = "로그인 후 이용해주세요";
+			String url ="/views/user/login.jsp";	
+		    try {
+		        response.setContentType("text/html; charset=utf-8");
+		        PrintWriter w = response.getWriter();
+		        w.write("<script>alert('"+msg+"');location.href='"+url+"';</script>");
+		        w.flush();
+		        w.close();
+		    } catch(Exception e) {
+		        e.printStackTrace();
+		    }
+					
+		}
+		
+		int user_no = (int) session.getAttribute("user_no");
+		
+		address.setDefault_add("Y");
+		address.setUser_no(user_no);
+		order.setUser_no(user_no);
+		qna.setUser_no(user_no);
+
+		model.addAttribute("address", addressService.getDefaultAddress(address));
+		model.addAttribute("order", orderService.recentOrder(order));		
+		model.addAttribute("qna", qnaService.getRecentMyQnAList(qna));
+
+		return "mypage/mypage";
+				
+	}	
+	
+	// 마이페이지 사이드 맞춤도서 표시
+	@RequestMapping(value="/rcmndBookList")
+	@ResponseBody
+	public List<KeywordHistoryVO> rcmndBookList(KeywordHistoryVO key) {
+
+		String user_id = (String) session.getAttribute("user_id");
+		key.setUser_id(user_id);
+		
+		List<KeywordHistoryVO> list = keywordService.rcmndBooklist(key);
+		
+		return list;
+				
+	}		
+	
+
 	// 마이페이지 - 주문목록 조회 (간단)
 	@RequestMapping(value="/tracking")
-	public String mypageTracking(HttpServletResponse response, OrderVO order, 
-								 SearchCriteria cri, Model model) {
+	public String mypageTracking(HttpServletResponse response, OrderVO order, SearchCriteria cri, Model model) {
 
 		// 로그인해야 진입됨
 		if (session.getAttribute("user_no") == null) {
@@ -67,31 +122,6 @@ public class MypageController {
 					    
 		}
 
-
-//		cri.setUser_no(user_no);
-//      @RequestParam(value="p") int pageNum		
-//		//********** 페이징 처리 시작 **********//
-//		
-//		// 1. 주문 총 개수  
-//		int count = orderService.orderCount(order).getOrder_count();
-//		
-//		// 2. URL파라미터
-//		cri.setPageNum(pageNum);
-//		
-//		// 3. 페이징버튼 
-//		PageVO pageMaker = new PageVO(cri, count);
-//		
-//		model.addAttribute("pageMaker", pageMaker);
-//		
-//		//********** 페이징 처리 끝 **********//
-//		
-//		// 배송상태 업데이트
-//		// 결제 1일뒤 = 배송중, 2일뒤 = 배송완료
-//		orderService.trackingUpdate(order);			
-//		
-//		// 주문 목록 표시
-//		model.addAttribute("orderlist", orderService.searchOrder(cri));
-		
 		return "mypage/mypage_tracking";
 			
 	}
@@ -154,7 +184,7 @@ public class MypageController {
 		System.out.println(name);
 		userService.updateUser(userVO);
 		
-		return "/mypage/mypage";
+		return "/mypage/main";
 	}
 	
 	// 회원탈퇴
@@ -230,6 +260,10 @@ public class MypageController {
 		System.out.println(qnaVO);
 		List<QnAVO> qnaMyList = qnaService.getMyQnAList(qnaVO);
 		
+		AnswerVO answerVO = new AnswerVO();
+		answerVO = qnaService.getAnswer(qnaVO);
+		
+		model.addAttribute("answerVO", answerVO);
 		model.addAttribute("myQnAList", qnaMyList);
 		model.addAttribute("qnaUrl", "/mypage/qna_write");
 		return "mypage/qna";
@@ -273,7 +307,7 @@ public class MypageController {
 		qnaService.updateQnA(qnaVO);
 		return "mypage/qna";
 	}
-	
+	 
 	// 1:1문의 삭제
 	@RequestMapping(value="/deleteQnA")
 	public String deleteQnA(HttpServletRequest request, HttpServletResponse response, QnAVO qnaVO, Model model) throws IOException {
@@ -286,15 +320,19 @@ public class MypageController {
 		
 		return "redirect:/mypage/getMyQnAList";
 	}
-
+  
 	// 관리자의 전체 문의 리스트 가져오기
 		@RequestMapping(value="/getAllQnAList")
-		public String getAllQnAList(HttpServletResponse response, Model model){
+		public String getAllQnAList(HttpSession session, Model model){
 			
 			System.out.println("getAllQnAList실행");
 			
+			
 			List<QnAVO> qnaAllList = qnaService.getAllQnAList();
 			
+			UserVO user = (UserVO)session.getAttribute("authUser");
+			
+			model.addAttribute("qna_user", user);
 			model.addAttribute("qnaAllList", qnaAllList);
 			
 			return "mypage/answer";
@@ -304,14 +342,19 @@ public class MypageController {
 		// 답변 
 		@RequestMapping(value="/answerQnA")
 		@ResponseBody
-		public String answerQnA(HttpServletRequest request, AnswerVO answerVO, Model model) {
+		public String answerQnA(HttpServletRequest request, AnswerVO answerVO, QnAVO qnaVO) {
 			
 			System.out.println("answerQnA실행");
+			//답변완료 표시
+			qnaVO.setAns_check("1");
 			
 			System.out.println(answerVO.getUser_no());
 			System.out.println(answerVO.getAns_content());
+			System.out.println(qnaVO.getQna_no());
+			System.out.println(qnaVO.getAns_check());
 			
 			qnaService.insertAnswer(answerVO);
+			qnaService.answerCheck(qnaVO);
 			 
 			return "mypage/answer";
 		}	
