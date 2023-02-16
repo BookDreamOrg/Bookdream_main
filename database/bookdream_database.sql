@@ -26,35 +26,39 @@ create table USERS (
   FLATFORM_TYPE           varchar2(50)  not null,
   USER_EMAIL              varchar2(50)  not null,
   USER_POINT              number(10)    default 10000,
+  USER_REGDATE            date default sysdate,
   constraint PK_USER primary key (USER_NO)
 );
 
 -- BookDream User_ADDRESS 제거
 alter table users drop column USER_ADDRESS;
 
-alter table  USERS add USER_POINT number(10) default '';
+-- USER_POINT 추가
+alter table USERS add USER_POINT number(10) default 10000;
 
-
+-- USER_REGDATE 추가(02/16추가)
+alter table USERS add USER_REGDATE date default sysdate;
 
 desc users;
 
 drop sequence user_seq;
 -- 번호를 자동으로 1부터 1씩 증가하도록 만듦
 create sequence user_seq increment by 1 start with 1;
-
--- 카카오 로그인 insert
-insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_ADDRESS, USER_TEL, FLATFORM_TYPE, USER_EMAIL) 
-		values(user_seq.nextval,'','','이름','','','KAKAO','이메일');    
--- BookDream 회원 로그인 insert
-insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
-	values(user_seq.nextval,'sycha','1234','이름','BD','이메일');
 -- BookDream test 로그인 insert
 insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
    values(user_seq.nextval,'test','test','test','BD','test@test.com');
 
 
+insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
+   values(user_seq.nextval,'sycha11','test','차승윤','BD','sycha112@naver.com');
+
+
+
+insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
+   values(user_seq.nextval,'test8151','tes434','차윤','BD','cy@naver.com');
 
 select * from users;
+
 commit;
 
 -- Review Table
@@ -176,16 +180,23 @@ CREATE sequence CART_SEQ increment by 1 START with 1;
 insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) 
 values(CART_SEQ.nextval, 1, 30, 3);
 
-SELECT  -- *
-        -- count(*)
-        row_number() over(order by c.cart_no desc) as num, -- 카트 추가 순서대로 밑에서부터 정렬
-        c.cart_no, c.user_no, b.book_img, b.title, b.book_price, c.product_count, b.stock
-		FROM 	cart c
-				INNER JOIN 	book b
-						ON	b.book_no = c.book_no
-		WHERE 	c.user_no = 1;
+insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(1, 1, 1, 1);
+insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(2, 1, 2, 1);
+insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(3, 1, 3, 2);
+insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(4, 1, 4, 1);
+insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(5, 1, 5, 1);
+
+insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(6, 2, 5, 1);
+
+select PRODUCT_COUNT from cart
+where user_no=1 and book_no = 20;
+
+insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) 
+            values(CART_SEQ.nextval, 1, 20, 2);
 
 
+-- if 조건 then 처리문 else if 조건2 then 처리문;     
+    
 UPDATE CART set PRODUCT_COUNT = (PRODUCT_COUNT + 5) where user_no=1 and book_no=20;
   
 select PRODUCT_COUNT from cart
@@ -201,6 +212,24 @@ select * from cart;
 
 commit; 
 
+SELECT  count(*) 
+		FROM cart 
+		WHERE user_no = 1
+        group by user_no;
+        
+SELECT  -- *
+        row_number() over(order by C.cart_no desc) as num, -- 등록 순서대로 칼럼 num(index) 지정.
+        C.cart_no, C.user_no, C.product_count, B.book_no, B.book_img, B.title, B.book_price, B.stock 
+from CART C
+        inner join BOOK B
+        on C.book_no = B.book_no   
+where c.user_no = 1 ;
+--AND product_count = 0;
+-- where c.user_no = #{user_no};
+
+DELETE 	CART
+	    WHERE 	book_no = 20
+	    AND 	user_no = 1;
 
 -------------------------------------------------------------------------------
 ---------------------------------- PARCHASE -----------------------------------
@@ -272,4 +301,58 @@ create table KEYWORD_HISTORY(
     LOGIN_YN        varchar2(5) not null
 );
 
+
+-------------------------------- 1:1문의 테이블(QNA)------------------------------
+drop table QNA;
+create table QNA(
+    QNA_NO NUMBER(10) NOT NULL,
+    USER_NO NUMBER(10) NOT NULL,
+    QNA_TITLE VARCHAR2(100) NOT NULL,
+    QNA_CONTENT VARCHAR2(500) NOT NULL,
+    QNA_TYPE VARCHAR2(200) NOT NULL,
+    REG_DATE DATE default sysdate,
+    ANS_CHECK VARCHAR2(5) default '0' check(ans_check in ('0','1')),
+    constraint PK_QNA primary key(QNA_NO),
+    constraint FK_QNA_USER_NO foreign key(USER_NO) REFERENCES USERS (USER_NO)
+);
+
+ALTER TABLE QNA 
+        ADD CONSTRAINT FK_QNA_USER_NO FOREIGN KEY(USER_NO) REFERENCES USERS(USER_NO);
+        
+drop sequence qna_seq;
+-- 번호를 자동으로 1부터 1씩 증가하도록 만듦
+create sequence qna_seq increment by 1 start with 1;
+
+insert into QNA(QNA_NO, USER_NO, QNA_TITLE, QNA_CONTENT, QNA_TYPE) 
+		values(qna_seq.nextval, 1, '이게안돼','이게 왜 안될까요','QNA타입');
+
+-- qna table fk user_no casecade
+alter table QNA drop constraint FK_QNA_USER_NO;
+alter table QNA add constraint FK_QNA_USER_NO foreign key (user_no) references users (user_no) on delete cascade;
+
+select * from qna;
+rollback;
 commit; 
+
+------------------------- ANSWER ----------------------
+drop table answer;
+create table ANSWER(
+    ANS_NO NUMBER(10) NOT NULL,
+    ANS_CONTENT VARCHAR(200) NOT NULL,
+    USER_NO NUMBER(10) NOT NULL,
+    QNA_NO NUMBER(10) NOT NULL,
+    constraint PK_ANSWER primary key(ANS_NO),
+    constraint FK_ANSWER foreign key(USER_NO) references USERS (USER_NO),
+    constraint FK_ANSWER_QNA_NO foreign key(QNA_NO) references QNA (QNA_NO)
+);
+
+desc answer;
+
+drop sequence answer_seq;
+-- 번호를 자동으로 1부터 1씩 증가하도록 만듦
+create sequence answer_seq increment by 1 start with 1;
+
+select * from answer;
+
+rollback;
+commit;

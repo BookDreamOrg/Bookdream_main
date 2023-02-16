@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<footer>
+		<footer>
 			<div>
 				<a class="footer-logo" href="#"> <img class="footer-logo-img"
 					src="/resources/images/logo/logo_white.png" alt="logo_white" /> <img

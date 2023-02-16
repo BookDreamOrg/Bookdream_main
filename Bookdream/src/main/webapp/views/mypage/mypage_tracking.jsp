@@ -45,7 +45,7 @@
 		
 	<div class="main">
 	
-		<div class="side"></div>
+		<jsp:include page="/views/inc/mypage_side.jsp" />	
 	
 		<div class="main_tracking">
 			
@@ -154,13 +154,13 @@
 									
 								<c:choose>
 									<c:when test="${order.order_status == 0}">
-										<button type="button" class="btn btn-primary pay_cencel cencel_btn" 
-										 		data-bs-toggle="modal" data-bs-target="#pay_cencel" 
+										<button type="button" class="btn btn-primary pay_cancel cancel_btn" 
+										 		data-bs-toggle="modal" data-bs-target="#pay_cancel" 
 										 		value="${order.order_no}">결제취소</button>									
 									</c:when>
 									
 									<c:when test="${order.order_status == 2}">
-										<button type="button" class="btn btn-primary return_request cencel_btn" 
+										<button type="button" class="btn btn-primary return_request cancel_btn" 
 												data-bs-toggle="modal" data-bs-target="#return_reqeust" 
 												value="${order.order_no}">반품신청</button>									
 									</c:when>								
@@ -276,9 +276,9 @@
 
  
 <!----------------------------------------- 결제취소 -------------------------------------->
-	<div class="modal fade" id="pay_cencel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="pay_cancel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   		<div class="modal-dialog modal-sm modal-dialog-centered">
-   			<div class="modal-content modal_pay_cencel">
+   			<div class="modal-content modal_pay_cancel">
       			<div class="modal-header">
        		 		<h5 class="modal-title" id="exampleModalLabel">결제 취소</h5>
        		 		<button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close"></button>
@@ -289,7 +289,7 @@
       			</div>
       			
       			<div class="modal-footer">
-  					<button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="modal_pay_cencel">결제취소</button>         			
+  					<button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="modal_pay_cancel">결제취소</button>         			
       			</div>			
     		</div>
   		</div>
@@ -298,7 +298,7 @@
 <!----------------------------------------- 반품요청 -------------------------------------->
 	<div class="modal fade" id="return_reqeust" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   		<div class="modal-dialog modal-sm modal-dialog-centered">
-   			<div class="modal-content modal_pay_cencel">
+   			<div class="modal-content modal_pay_cancel">
       			<div class="modal-header">
        		 		<h5 class="modal-title" id="exampleModalLabel">반품 요청</h5>
        		 		<button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close"></button>

@@ -12,6 +12,12 @@
 		<result property="blacklist_yn" column="blacklist_yn"/>
 		<result property="flatform_type" column="flatform_type"/>		
 		<result property="user_email" column="user_email"/>
+		<result property="user_point" column="user_point"/>
+		<result property="user_regdate" column="user_regdate"/>
+		<result property="searchUserKeyword" column="searchUserKeyword"/>
+		<result property="displayPost" column="displayPost"/>
+		<result property="postNum" column="postNum"/>
+		<result property="countlistnum" column="countlistnum"/>
 	</resultMap>
 
 	<insert id="insertUser">
@@ -27,6 +33,19 @@
 			select * 
 			from users 
 			where user_id=#{user_id} and user_password=#{user_password}
+	</select>
+	
+	<select id="getAllUserList" resultType="user" parameterType="user">
+		select * 
+		from users
+		<if test="searchUserKeyword != null">
+			where user_no like '%' || #{searchUserKeyword} || '%' or user_id like '%' || #{searchUserKeyword} || '%' 
+			or user_password like '%' || #{searchUserKeyword} || '%' or user_name like '%' || #{searchUserKeyword} || '%' 
+			or user_tel like '%' || #{searchUserKeyword} || '%' or user_level like '%' || #{searchUserKeyword} || '%'
+			or blacklist_yn like '%' || #{searchUserKeyword} || '%' or user_email like '%' || #{searchUserKeyword} || '%' 
+			or user_point like '%' || #{searchUserKeyword} || '%' or user_regdate like '%' || #{searchUserKeyword} || '%'
+			or flatform_type like '%' || #{searchUserKeyword} || '%'
+		</if>
 	</select>
 	
 	<select id="loginCheck" resultType="String">
@@ -92,6 +111,59 @@
 	</update>
 	
 	<delete id="deleteUser">
-		delete from users where user_id = #{user_id}
+		delete from users where user_id = #{user_id} and user_password = #{user_password}
 	</delete>
+	
+	<!-- 전체조회 -->
+	<select id="selectUser" resultType = "user">
+		select * from users
+	</select>
+	
+	<!-- User Count -->
+	<select id="countUser" resultType = "int">
+		select count(user_no) from users
+	</select>
+	
+	<!-- User Paging -->
+	<select id="userListPage" parameterType="user" resultType="user">
+ 		select * from 
+ 		<choose>
+ 			<when test="searchUserKeyword != null">
+				 (select ROW_NUMBER() over (order by user_no) NUM, A.* from users A 
+	         	 where 
+		            user_no like '%' || #{searchUserKeyword} || '%' or user_id like '%' || #{searchUserKeyword} || '%' 
+				or user_password like '%' || #{searchUserKeyword} || '%' or user_name like '%' || #{searchUserKeyword} || '%' 
+				or user_tel like '%' || #{searchUserKeyword} || '%' or user_level like '%' || #{searchUserKeyword} || '%'
+				or blacklist_yn like '%' || #{searchUserKeyword} || '%' or user_email like '%' || #{searchUserKeyword} || '%' 
+				or user_point like '%' || #{searchUserKeyword} || '%' or user_regdate like '%' || #{searchUserKeyword} || '%'
+				or flatform_type like '%' || #{searchUserKeyword} || '%'
+	             order by user_no)
+	             where NUM between #{displayPost} AND (#{displayPost} + #{postNum})
+	             and (user_no like '%' || #{searchUserKeyword} || '%' or user_id like '%' || #{searchUserKeyword} || '%' 
+				or user_password like '%' || #{searchUserKeyword} || '%' or user_name like '%' || #{searchUserKeyword} || '%' 
+				or user_tel like '%' || #{searchUserKeyword} || '%' or user_level like '%' || #{searchUserKeyword} || '%'
+				or blacklist_yn like '%' || #{searchUserKeyword} || '%' or user_email like '%' || #{searchUserKeyword} || '%' 
+				or user_point like '%' || #{searchUserKeyword} || '%' or user_regdate like '%' || #{searchUserKeyword} || '%'
+				or flatform_type like '%' || #{searchUserKeyword} || '%')
+			</when>
+			<when test="searchUserKeyword == null">
+				 (select ROW_NUMBER() over (order by user_no) NUM, A.* from users A order by user_no)
+ 					where NUM between #{displayPost} AND (#{displayPost} + #{postNum})
+			</when>
+ 		</choose>
+	</select>
+	
+	<!-- User Get By user_no -->
+	<select id="getUserByNo" resultType = "user">
+		select * from users where user_no = #{user_no}
+	</select>
+	
+	<!-- blackList Set -->
+	<update id="setBlack">
+		update users set blacklist_yn = case 
+					when blacklist_yn = 'N' then 'Y'
+					when blacklist_yn = 'Y' then 'N'
+                    end where user_no = #{user_no}
+	</update>
+	
 </mapper>

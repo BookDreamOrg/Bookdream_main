@@ -1,5 +1,7 @@
 package com.spring.bookdream.service;
 
+import java.util.List;
+
 import org.springframework.ui.Model;
 
 import com.spring.bookdream.vo.UserVO;
@@ -9,6 +11,9 @@ public interface UserService {
 	// CRUD 기능의 메소드 구현
 	// 회원 정보 가져오기
 	public UserVO getUser(UserVO vo);
+	
+	//모든 유저 리스트 가져오기
+	public List<UserVO> getAllUserList(UserVO vo);
 	
 	public String findFlatform(UserVO vo);
 	
@@ -40,4 +45,19 @@ public interface UserService {
 	
 	// 회원 탈퇴
 	public void deleteUser(UserVO vo);
+	
+	// 회원조회
+	public List<UserVO> selectUser();
+	
+	// 유저 Count
+	public int countUser();
+	
+	// 유저 List Paging
+	public List<UserVO> userListPage(UserVO vo);
+	
+	// 유저 No로 get
+	public UserVO getUserByNo(int no);
+	
+	// 블랙리스트 수정
+	public void setBlack(int no);
 }

@@ -49,7 +49,7 @@ public class OrderController {
 	    session.removeAttribute("search_status");
 		
 	    System.out.println("--->  배송상태 갱신 처리 <---");
-		orderService.cencelOrder(order);
+		orderService.cancelOrder(order);
 		
 		// 결제취소, 반품완료 일때만 처리 (반품문의는 안됨)
 		if (order.getOrder_status() == 10) {

@@ -1,5 +1,7 @@
 package com.spring.bookdream.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -19,6 +21,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserVO getUser(UserVO vo) {
 		return userDAO.getUser(vo);
+	}
+	
+	//모든 유저 리스트 가져오기
+	public List<UserVO> getAllUserList(UserVO vo){
+		return userDAO.getAllUserList(vo);
 	}
 	
 	public String findFlatform(UserVO vo) {
@@ -86,6 +93,31 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteUser(UserVO vo) {
 		userDAO.deleteUser(vo);
+	}
+
+	@Override
+	public List<UserVO> selectUser() {
+		return userDAO.selectUser();
+	}
+
+	@Override
+	public int countUser() {
+		return userDAO.countUser();
+	}
+
+	@Override
+	public List<UserVO> userListPage(UserVO vo) {
+		return userDAO.userListPage(vo);
+	}
+
+	@Override
+	public UserVO getUserByNo(int no) {
+		return userDAO.getUserByNo(no);
+	}
+
+	@Override
+	public void setBlack(int no) {
+		userDAO.setBlack(no);
 	}
 
 }

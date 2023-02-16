@@ -117,7 +117,7 @@
 	        var search = Name + "=";
 	        console.log("search : " + search);
 	        
-	        if (document.cookie.length > 0) { // 쿠키가 설정\되어 있다면 
+	        if (document.cookie.length > 0) { // 쿠키가 설정되어 있다면 
 	            offset = document.cookie.indexOf(search);
 	            console.log("offset : " + offset);
 	            if (offset != -1) { // 쿠키가 존재하면 
@@ -140,10 +140,10 @@
 	    function saveid() {
 	        var expdate = new Date();
 	        if ($("#saveId").is(":checked")){
-	            expdate.setTime(expdate.getTime() + 1000 * 3600 * 24 * 30);
+	            expdate.setTime(expdate.getTime() + 1000 * 3600 * 24 * 3);
 	            setCookie("saveid", $("#user_id").val(), expdate);
             }else{
-	           expdate.setTime(expdate.getTime() - 1000 * 3600 * 24 * 30);
+	           expdate.setTime(expdate.getTime() - 1000 * 3600 * 24 * 3);
 	            setCookie("saveid", $("#user_id").val(), expdate);
 	             
 	        }
