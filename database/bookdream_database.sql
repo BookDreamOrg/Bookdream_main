@@ -133,6 +133,7 @@ create table BOOK (
     book_CONTENT varchar2(3000),
     STOCK        number(20),
     BOOK_PRICE   number(10),
+    discount     number(10) DEFAULT 0,
     BOOK_IMG     varchar(500) not null,
     PBLIC_DATE   date not null,
     BOOK_CATEGORY varchar(500) not null,
@@ -141,6 +142,12 @@ create table BOOK (
 
 select * from BOOK;
 
+alter table BOOK add discount  number(10) DEFAULT 0; -- 10이면 10% 할인
+
+select book_no,BOOK_PRICE,discount from BOOK where book_no=500 or book_no=501 ;
+update BOOK set discount = 10  where book_no=500;
+update BOOK set discount = 15  where book_no=501;
+  
 commit;
 
 
@@ -173,7 +180,14 @@ SELECT  -- *
 		FROM 	cart c
 				INNER JOIN 	book b
 						ON	b.book_no = c.book_no
-		WHERE 	c.user_no = 1;
+		WHERE 	c.user_no = 2;
+
+SELECT  c.cart_no , b.book_price *c.product_count cntPrice 
+		FROM 	cart c
+				INNER JOIN 	book b
+						ON	b.book_no = c.book_no
+		WHERE 	c.user_no = 2;
+
 
 
 UPDATE CART set PRODUCT_COUNT = (PRODUCT_COUNT + 5) where user_no=1 and book_no=20;
