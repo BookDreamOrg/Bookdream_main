@@ -22,11 +22,9 @@
 	</h1>
 
 	<h1>
-		<a href="/mypage/tracking">마이페이지-배송조회</a>
+		<a href="/admin/order">관리자</a>
 	</h1>
-	<h1>
-		<a href="/mypage/address">마이페이지-배송지관리</a>
-	</h1>
+
 
 	<button id="cart">배열넘기기~</button>
 	

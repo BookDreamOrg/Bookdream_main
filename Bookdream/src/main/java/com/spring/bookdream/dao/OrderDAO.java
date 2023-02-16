@@ -35,11 +35,7 @@ public class OrderDAO {
 		
 		System.out.println("---> OrderDAO cancelOrder 실행 <---");
 		
-		// 결제 취소
 		mybatis.update("OrderDAO.cancelOrder", vo);
-		
-		// 반품 요청중
-		mybatis.update("OrderDAO.cancelOrder2", vo);
 		
 	}
 	
@@ -87,7 +83,8 @@ public class OrderDAO {
 		
 	}
 	
-	// 관리자
+	/************ 관리자 부문************/
+	
 	// 일주일 주문 카운트
 	public List<Map<String, Object>> orderDateCount(OrderVO vo) {
 		
@@ -98,12 +95,64 @@ public class OrderDAO {
 	}
 
 	// 관리자
-	// 일주일 주문 카운트
+	// 주간 취소/반품 카운트
 	public List<Map<String, Object>> orderCancelDateCount(OrderVO vo) {
 		
 		System.out.println("---> OrderDAO orderCancelDateCount 실행 <---");
 		
 		return mybatis.selectList("OrderDAO.orderCancelDateCount", vo);	
 		
+	}
+
+	// 월간 주문 카운트
+	public List<Map<String, Object>> orderMlyDateCount(OrderVO vo) {
+
+		System.out.println("---> OrderDAO orderMlyDateCount 실행 <---");
+		
+		return mybatis.selectList("OrderDAO.orderMlyDateCount", vo);	
+	}
+
+	public List<Map<String, Object>> orderMlyCancelDateCount(OrderVO vo) {
+		
+		System.out.println("---> OrderDAO orderMlyCancelDateCount 실행 <---");
+		
+		return mybatis.selectList("OrderDAO.orderMlyCancelDateCount", vo);
+	}
+
+	// 금주 취소/반품 현황
+	public List<Map<String, Object>> cancelOrderWek(OrderVO vo) {
+
+		return mybatis.selectList("OrderDAO.cancelOrderWek", vo);
+	}
+
+	// 금주 취소/반품 현황 카운트	
+	public int cancelOrderWekCount(OrderVO vo) {
+
+		return mybatis.selectOne("OrderDAO.cancelOrderWekCount", vo);
+	}
+
+	// 결제취소/반품 승인
+	public void orderAprvl(OrderVO vo) {
+		
+		mybatis.update("OrderDAO.orderAprvl", vo);
+		
+	}
+
+	// 주문 총 관리 리스트
+	public List<Map<String, Object>> orderMngmn(OrderVO vo) {
+
+		return mybatis.selectList("OrderDAO.orderMngmn", vo);
+	}
+
+	// 주문 총 관리 카운트
+	public int orderMngmnCount(OrderVO vo) {
+
+		return mybatis.selectOne("OrderDAO.orderMngmnCount", vo);
+	}
+
+	// 주문 총 관리 세부내역
+	public List<Map<String, Object>> orderMngmnDtls(OrderVO vo) {
+
+		return mybatis.selectList("OrderDAO.orderMngmnDtls", vo);
 	}
 }

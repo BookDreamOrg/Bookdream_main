@@ -7,17 +7,13 @@ import lombok.Data;
 
 @Data
 public class SearchCriteria {
-	private int user_no;
     private int pageNum;
 	private int amount;
-	private String searchCondition;
-	private String searchKeyword;
 	
 	public SearchCriteria() {
 		this.pageNum = 1;
-		this.amount = 2;
-		this.searchCondition = "TITLE";
-		this.searchKeyword = "";
+		this.amount = 1;
+
 	}
 	
 	public void setPageNum(int pageNum) {
@@ -31,7 +27,7 @@ public class SearchCriteria {
 
 	public void setAmount(int amount) {
 		if (amount <= 0 || amount > 100) { 
-			this.amount = 2; 
+			this.amount = amount; 
 			return;
 		}
 		this.amount = amount;
@@ -45,8 +41,6 @@ public class SearchCriteria {
 				UriComponentsBuilder.newInstance()
 				.queryParam("pageNum", this.pageNum)
 				.queryParam("amount", this.amount)
-				.queryParam("searchCondition", this.searchCondition)
-				.queryParam("searchKeyword", this.searchKeyword)
 				.build();
 		
 		return uriComponents.toUriString();

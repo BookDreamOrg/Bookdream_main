@@ -33,6 +33,7 @@ public class SearchKeywordServiceImpl implements SearchKeywordService {
 	public List<String> bestSearchKeyword() {
 		return searchingKeywordDAO.bestSearchKeyword();
 	}
+	
 	// 상위 누적 키워드 랜덤 5개 추천도서로 표시
 	@Override
 	public List<KeywordHistoryVO> rcmndBooklist(KeywordHistoryVO vo) {

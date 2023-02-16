@@ -53,9 +53,65 @@
 		       rownum = 1
 		order by pay_no desc		
 	</select>
+	
+	<!-- 주간 결제금액 -->
+	<select id="payWekTotalPrice" resultType="HashMap">
+	<![CDATA[		
+		SELECT to_char(b.dt, 'MM-DD')as pay_date, 
+               nvl(sum(a.total_prcie), 0) price
+		FROM  (select to_date(pay_date, 'YY-MM-DD') as pay_date,
+		              sum(final_price) total_prcie
+		       from pay p, orders o
+		       where (to_date(pay_date, 'YY-MM-DD') between to_date(sysdate-4, 'YY-MM-DD') AND to_date(sysdate, 'YY-MM-DD') AND
+                      p.pay_no = o.order_no) and
+                      (o.order_status between 0 and 3 or
+                      o.order_status = 10 or
+                      o.order_status = 12)
+		       group by pay_date) a,      
+		       
+		      (select to_date(TO_DATE(sysdate-6,'YY/MM/DD') + LEVEL - 1, 'YY/MM/DD') AS dt
+		       from dual 
+		       CONNECT BY LEVEL <= (TO_DATE(sysdate,'YY/MM/DD') - TO_DATE(sysdate-6,'YY/MM/DD') + 1)) b
+		WHERE b.dt = pay_date(+)
+		group by b.dt
+		order by b.dt 		
+	]]>	
+	</select>
 
+	<!-- 월간 결제금액 -->
+	<select id="payMlyTotalPrice" resultType="HashMap">
+	<![CDATA[		
+		SELECT TO_CHAR(b.dt, 'YY-MM')as pay_date, 
+               nvl(sum(a.total_price), 0) price
+		FROM  (select to_date(pay_date, 'YY-MM-DD') as pay_date,
+		              sum(final_price) total_price
+		       from pay p, orders o
+		       where (to_date(pay_date, 'YY-MM-DD') between to_date('220801', 'YY-MM-DD') AND to_date('230228', 'YY-MM-DD') AND
+                      p.pay_no = o.order_no) and
+                     (o.order_status between 0 and 3 or
+                      o.order_status = 10 or
+                      o.order_status = 12)
+		       group by pay_date) a,      
+		       
+		      (select to_date(TO_DATE('220801','YY/MM/DD') + LEVEL - 1, 'YY/MM/DD') AS dt
+		       from dual 
+		       CONNECT BY LEVEL <= (TO_DATE('230228','YY/MM/DD') - TO_DATE('220801','YY/MM/DD') + 1)) b
+		WHERE b.dt = pay_date(+)
+		group by TO_CHAR(b.dt, 'YY-MM')
+		order by TO_CHAR(b.dt, 'YY-MM') 		
+	]]>	
+	</select>
 
-
+	<!-- 총 결제 금액 -->
+	<select id="totalPaymentAmount" resultType="HashMap">
+		SELECT sum(final_price) total_price
+		FROM   pay y, orders o
+		WHERE  (y.pay_no = o.pay_no) AND
+			   (o.order_status between 0 and 3 OR
+			   o.order_status = 10 OR
+			    o.order_status = 12)
+	
+	</select>
 
 
 	

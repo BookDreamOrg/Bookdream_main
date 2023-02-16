@@ -170,23 +170,15 @@
 	</select>	
 	
 	-->	
-		
-	<!-- 결제취소 -->
+
+	<!-- 주문취소/반품요청시 배송상태 변경, 취소시간등록-->
 	<update id="cancelOrder">
 		UPDATE orders
-		SET	   order_status = 10
-		WHERE  order_no = #{order_no} AND
-			   order_status = 0
-	</update>	
-
-	<!-- 반품신청 -->
-	<update id="cancelOrder2">
-		UPDATE orders
-		SET	   order_status = 11
-		WHERE  order_no = #{order_no} AND
-		       order_status = 2
-	</update>	
-			
+		SET	   order_status = #{order_status},
+			   cancel_date = sysdate
+		WHERE  order_no = #{order_no} 
+	</update>
+								
 	<!-- 도서반환 -->	
 	<update id="updateBookStock">	
 		UPDATE book b
@@ -250,21 +242,28 @@
 	<select id="orderStatusCount" resultType="HashMap">
 		SELECT order_status, count(order_status) as statusCount
 		FROM   orders
-		WHERE  user_no = #{user_no}
+		WHERE  
+		<choose>
+			<when test='admin.equals("admin")'>
+			1 = 1
+			</when>
+			<otherwise>
+			user_no = #{user_no}
+			</otherwise>
+		</choose>
 		group by order_status
 	</select>
 			
-	<!-- 관리자 : 일주일 주문 카운트 -->		
+	<!-- 관리자 : 주간 주문 카운트 -->		
 	<select id="orderDateCount" resultType="HashMap">
 	<![CDATA[
-		SELECT to_date(b.dt, 'YY-MM-DD')as order_date,
+		SELECT to_char(b.dt, 'MM-DD')as order_date,
 		       nvl(sum(a.cnt), 0) cnt
 		FROM  (select to_date(order_date, 'YY-MM-DD')as order_date,
-		              count(order_date) cnt
+		              count(case when order_status between 0 and 3 AND 
+              		  to_date(order_date, 'YY-MM-DD') between to_date(sysdate-4, 'YY-MM-DD') AND 
+              		  to_date(sysdate, 'YY-MM-DD') then 1 end) cnt
 		       from orders
-		       where order_date between to_date(sysdate-4, 'YY-MM-DD') AND 
-		             to_date(sysdate, 'YY-MM-DD') AND
-		             order_status between 0 and 3
 		       group by order_date) a,      
 		      
 		      (select to_date(TO_DATE(sysdate-6,'YY/MM/DD') + LEVEL - 1, 'YY/MM/DD') AS dt
@@ -276,7 +275,7 @@
 	]]>	    
 	</select>		
 
-	<!-- 관리자 : 일주일 주문 취소/반품 카운트 -->		
+	<!-- 관리자 : 주간 주문 취소/반품 카운트 -->		
 	<select id="orderCancelDateCount" resultType="HashMap">
 	<![CDATA[
 		SELECT nvl(sum(a.cnt2), 0) cnt2
@@ -295,5 +294,207 @@
 		group by b.dt
 		order by b.dt  
 	]]>	    
-	</select>			
+	</select>
+	
+	
+	<!-- 관리자 : 월간 주문 카운트 -->
+	<select id="orderMlyDateCount" resultType="HashMap">
+	<![CDATA[	
+		SELECT  TO_CHAR(b.dt, 'YY-MM')as order_date, 
+		        nvl(sum(a.cnt), 0) cnt
+		FROM    (select to_date(order_date, 'YY-MM-DD')as order_date, 
+		               count(case when order_status between 0 and 3 AND 
+		                     to_date(order_date, 'YY-MM-DD') between to_date('220801', 'YY-MM-DD') AND 
+		                     to_date('230228', 'YY-MM-DD') then 1 end) cnt               
+		        from orders
+		        group by order_date) a,      
+		        (SELECT to_date(TO_DATE('220801','YY-MM-DD') + LEVEL - 1, 'YY-MM-DD') AS dt
+		        FROM dual 
+		        CONNECT BY LEVEL <= (TO_DATE('230228','YY-MM-DD') - TO_DATE('220801','YY-MM-DD') + 1)) b
+		WHERE b.dt = a.order_date(+) 
+		group by TO_CHAR(b.dt, 'YY-MM')
+		order by TO_CHAR(b.dt, 'YY-MM')	
+	]]>	
+	</select>
+	
+	<!-- 관리자 : 월간 주문 취소/반품 카운트 -->
+	<select id="orderMlyCancelDateCount" resultType="HashMap">
+	<![CDATA[		
+		SELECT  nvl(sum(a.cnt), 0) cnt2
+		FROM    (select to_date(cancel_date, 'YY-MM-DD')as order_date, 
+		                count(case when order_status between 10 and 13 AND 
+		                      to_date(cancel_date, 'YY-MM-DD') between to_date('220801', 'YY-MM-DD') AND 
+		                      to_date('230228', 'YY-MM-DD') then 1 end) cnt               
+		        from orders
+		        group by cancel_date) a,      
+		        (SELECT to_date(TO_DATE('220801','YY-MM-DD') + LEVEL - 1, 'YY-MM-DD') AS dt
+		        FROM dual 
+		        CONNECT BY LEVEL <= (TO_DATE('230228','YY-MM-DD') - TO_DATE('220801','YY-MM-DD') + 1)) b
+		WHERE b.dt = a.order_date(+) 
+		group by TO_CHAR(b.dt, 'YY-MM')
+		order by TO_CHAR(b.dt, 'YY-MM')	
+	]]>	
+	</select>
+	
+	<!-- 관리자 : 금주 취소/반품 현황 -->
+	<select id="cancelOrderWek" resultType="HashMap">
+		SELECT order_no, 
+			   order_name, 
+			   TO_CHAR(order_date, 'YY.MM.DD HH24:MI') order_date,
+			   order_status, 
+			   TO_CHAR(CANCEL_DATE, 'YY.MM.DD HH24:MI') cancel_date,
+			   user_id,
+			   user_no
+		FROM (SELECT rownum rnum, 
+					 order_no, 
+					 order_name, 
+					 ORDER_DATE, 
+					 order_status, 
+					 CANCEL_DATE,
+					 user_id,
+					 o.user_no
+		      FROM   orders o, users u
+		      WHERE (o.user_no = u.user_no and
+					 order_date between sysdate-6 and sysdate) AND
+				    (order_status = 12 or
+				     order_status = 10))
+		WHERE  rnum between ((#{pageNum}-1) * #{amount})+1 AND 
+		                     #{pageNum} * #{amount}	
+		ORDER BY CANCEL_DATE
+	</select>
+	
+
+	<!-- 관리자 : 금주 취소/반품 현황 페이징처리용 카운트 -->
+	<select id="cancelOrderWekCount" resultType="int">
+		SELECT count(order_no) cnt
+		FROM   orders o, users u
+		WHERE  (o.user_no = u.user_no and
+			   order_date between sysdate-6 and sysdate) AND
+		       (order_status = 12 or
+		       order_status = 10) 
+	</select>					
+	
+	<!-- 관리자 : 결제취소/반품요청 승인 -->
+	<update id="orderAprvl">
+		UPDATE orders
+		SET
+		<if test="order_status == 10">
+			order_status = 11
+		</if> 
+		<if test="order_status == 12">
+			order_status = 13
+		</if>  		   
+		WHERE  order_no = #{order_no}
+	</update>
+	
+	<!--  관리자 : 주문 총 관리 -->
+	<select id="orderMngmn" resultType="HashMap">
+		SELECT order_no, 
+			   user_id, 
+			   order_name, 
+			   final_price, 
+			   pay_method, 
+			   TO_CHAR(order_date, 'YY.MM.DD HH24:MI') AS order_date, 
+			   order_status
+		FROM  (SELECT ROWNUM rnum, 
+					  order_no, 
+					  user_id, 
+					  order_name, 
+					  final_price, 
+					  pay_method, 
+					  order_date, 
+					  order_status
+		        FROM  (SELECT o.order_no, 
+		       				 u.user_id, 
+		       				 o.order_name, 
+		       				 y.final_price, 
+		       				 y.pay_method, 
+		       				 o.order_date, 
+		       				 o.order_status
+		           	  FROM   orders o, 
+		           	         pay y, 
+		           	         users u
+		              WHERE  o.pay_no = y.pay_no AND
+		                     o.user_no = u.user_no
+							  <if test='srchCrtr.equals("all")'>
+						      AND (order_no   LIKE '%' || #{srchKey}  || '%' OR
+						           user_id    LIKE '%' || #{srchKey}  || '%' OR
+						           order_name LIKE '%' || #{srchKey}  || '%' OR
+						           pay_method LIKE '%' || #{srchKey}  || '%')
+						      </if>
+						      <if test='srchCrtr.equals("order_no")'>
+						      AND  order_no   LIKE '%' || #{srchKey}  || '%'	  
+						      </if>  						      
+						      <if test='srchCrtr.equals("user_id")'>
+						      AND  user_id    LIKE '%' || #{srchKey}  || '%'	  
+						      </if>    
+						      <if test='srchCrtr.equals("order_name")'>
+						      AND  order_name LIKE '%' || #{srchKey}  || '%'	   
+						      </if>  		         
+						      <if test='srchCrtr.equals("pay_method")'>
+						      AND  pay_method LIKE '%' || #{srchKey}  || '%'	   		         		      
+						      </if> 
+		              ORDER BY order_no DESC)
+		      )
+		WHERE rnum BETWEEN ((#{pageNum}-1) * #{amount})+1 AND 
+		                     #{pageNum} * #{amount} 
+                             
+		ORDER BY rnum
+	</select>
+	
+	<!--  관리자 : 주문 총 관리 개수 -->	
+	<select id="orderMngmnCount" resultType="int">
+		SELECT COUNT(*) cnt
+		FROM   orders o, pay y, users u
+		WHERE  (o.pay_no = y.pay_no AND
+		       o.user_no = u.user_no)
+		      <if test='srchCrtr.equals("all")'>
+		      AND (order_no   LIKE '%' || #{srchKey}  || '%' OR
+		           user_id    LIKE '%' || #{srchKey}  || '%' OR
+		           order_name LIKE '%' || #{srchKey}  || '%' OR
+		           pay_method LIKE '%' || #{srchKey}  || '%')
+		      </if>
+			  <if test='srchCrtr.equals("order_no")'>
+			  AND  order_no   LIKE '%' || #{srchKey}  || '%'	  
+			  </if>  			      
+		      <if test='srchCrtr.equals("user_id")'>
+		      AND  user_id    LIKE '%' || #{srchKey}  || '%'	  
+		      </if>    
+		      <if test='srchCrtr.equals("order_name")'>
+		      AND  order_name LIKE '%' || #{srchKey}  || '%'	   
+		      </if>  		         
+		      <if test='srchCrtr.equals("pay_method")'>
+		      AND  pay_method LIKE '%' || #{srchKey}  || '%'	   		         		      
+		      </if>  		       
+	</select>	
+	
+	
+	<!-- 관리자 : 주문 총 관리 세부내역 -->
+	<select id="orderMngmnDtls" resultType="HashMap">
+		SELECT o.order_no, 
+		       p.product_count,
+		       b.title,
+		       b.book_price, 
+		       y.total_price,
+		       y.final_price,
+		       y.use_point,
+		       y.save_point,
+		       y.pay_fee,
+		       TO_CHAR(o.cancel_date, 'YY.MM.DD HH24:MI') AS cancel_date,
+		       TO_CHAR(o.order_date, 'YY.MM.DD HH24:MI') AS order_date,
+		       o.order_address,
+		       o.order_comment,
+		       o.order_receiver,
+		       o.order_tel,
+		       o.order_status
+		FROM   purchase P, 
+		       orders o, 
+		       pay y, 
+		       book b
+		WHERE  o.order_no = p.order_no AND
+		       o.pay_no = y.pay_no AND
+		       p.book_no = b.book_no AND
+		       o.order_no = #{order_no}
+	</select>	
+		
 </mapper>
