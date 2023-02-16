@@ -486,15 +486,18 @@
 		       o.order_comment,
 		       o.order_receiver,
 		       o.order_tel,
-		       o.order_status
+		       o.order_status,
+		       u.user_no
 		FROM   purchase P, 
 		       orders o, 
 		       pay y, 
-		       book b
+		       book b,
+		       users u
 		WHERE  o.order_no = p.order_no AND
 		       o.pay_no = y.pay_no AND
 		       p.book_no = b.book_no AND
-		       o.order_no = #{order_no}
+		       o.user_no = u.user_no AND
+		       o.order_no = #{order_no} 
 	</select>	
 		
 </mapper>
