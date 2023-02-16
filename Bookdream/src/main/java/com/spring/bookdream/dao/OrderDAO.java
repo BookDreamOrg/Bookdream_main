@@ -1,5 +1,7 @@
 package com.spring.bookdream.dao;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
@@ -155,4 +157,13 @@ public class OrderDAO {
 
 		return mybatis.selectList("OrderDAO.orderMngmnDtls", vo);
 	}
+	
+	/*[관리자] 일주일 도서 주문량 -------------------------------------------------------------*/
+	public List<Map<String, Object>> orderBy7DaysBook(){
+		System.out.println("---> OrderDAO orderBy7DaysBook() 실행 <---");
+		
+		return mybatis.selectList("OrderDAO.Order_BY_7DAYS");
+		
+	}
+
 }

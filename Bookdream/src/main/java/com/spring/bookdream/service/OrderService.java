@@ -2,7 +2,7 @@ package com.spring.bookdream.service;
 
 import java.util.List;
 import java.util.Map;
-
+import java.time.LocalDate;
 import com.spring.bookdream.vo.OrderVO;
 
 public interface OrderService {
@@ -64,4 +64,6 @@ public interface OrderService {
 	List<Map<String, Object>> orderMngmnDtls(OrderVO vo);		
 	
 
+	// 일주일 도서주문 수량 카운트
+	List<Map<String, Object>> orderBy7DaysBook();
 }

@@ -45,23 +45,12 @@
 		<jsp:include page="/views/inc/header.jsp" />
 		
 		<main>
-		<div class="banner">
-			<div class="banner-text">Banner Title Text</div>
-			<div class="banner-img"></div>
-			<div class="banner-books">
-				<div class="banner-book"></div>
-				<div class="banner-book banner-book-lg"></div>
-				<div class="banner-book banner-book-xl"></div>
-			</div>
-		</div>
-		<ul class="nav nav-tabs book-section-nav">
-			<li class="nav-item"><a class="nav-link active"
-				aria-current="page" href="#">베스트</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">신상품</a></li>
-		</ul>
+
+		
 		<div class="book-section">
-				<div class="container-fluid">
-				<div class="banner-text">${book.title }</div>
+				<div class="container-fluid text-center">
+					<div class="h1 mt-5 mb-5">${book.title }</div>
+				</div>
 	<div class="row">
 		<div class="col-md-4">
 			<div class="row">
@@ -95,15 +84,35 @@
 		</div>
 		<div class="col-md-4 mt-5 pt-5">
 			<div class="row">
-				<div class="col-md-4">
+				<div class="col-md-2">
 				</div>
-				<div class="col-md-5" id="detail-price">
+				<div class="col-md-7" id="detail-price">
 
 				<c:choose>
 					<c:when test="${book.stock > 0 }">
-						<input class=" form-control text-center border-0 " type="number" id="product_cnt" min="1" max="${book.stock}" value="1" >
-						<div class="mt-3 text-center"><fmt:formatNumber value="${book.book_price}" pattern="#,###" />원</div>
-						<div class="mt-5 text-center h5"><a style="color: red;">3만원 이상 무료배송</a></div>
+					<div class="row">
+						<div class="col-5"><span class="h5">정가</span></div>
+						<div class="col-7"><div class="text-center"><fmt:formatNumber value="${book.book_price}" pattern="###,###,###원" /></div></div>
+						<c:choose>
+						
+						<c:when test="${ book.discount eq 0 }">
+						<div class="col-5"><span class="h5">판매가 </span></div>
+						<div class="col-7"><div class="text-center"><fmt:formatNumber value="${book.book_price}" pattern="###,###,###원" /></div></div>
+						</c:when>
+
+						<c:otherwise>
+						<div class="col-5"><span class="h5">판매가</span> </div>
+							 <div class="col-7">
+							 <span><fmt:formatNumber type="currency" pattern="###,###,###원" value="${book.book_price - (book.book_price*book.discount/100)} " /></span>
+							 <span>(<fmt:formatNumber type="percent"  value="${book.discount/100} " /> 할인)</span>
+							 </div>
+						</c:otherwise>
+						</c:choose>
+						<div class="col-5"><span class="h5">배송</span></div> <div class="col-7"><div class="text-center h5"><a style="color: red;">3만원 이상 무료배송</a></div></div>
+						
+						<div class="col-5"><span class="h5">수량</span></div> <div class="col-7"><input class=" form-control text-center border-0 " type="number" id="product_cnt" min="1" max="${book.stock}" value="1" >
+						</div>
+					</div>
 					</c:when>
 					<c:otherwise>
 						<div class="h1"> 품절  </div>					
@@ -150,7 +159,6 @@
 				</div>
 				</div>
 					
-				</div>
 				</div>
 				</div>
 
@@ -310,7 +318,7 @@
 /* ------------------------바로구매 버튼 클릭  ----------------------------*/
 function now_buy(){
 	let book_no = ${book.book_no};
-	let user_id = '<%=session.getAttribute("user_id")%>';
+	let user_id = '<%=session.getAttribute("user_id") %>';
 	let product_cnt  = document.getElementById("product_cnt").value;
 	console.log("book_no : " + book_no + "user_id :  " + user_id + "product : " + product_cnt )
 	if(user_id === null ||user_id === "" || user_id === "null"){
@@ -413,7 +421,7 @@ $(function(){
 $(document).on("click", "#btn_review", function(e) {
 		let user_id = '<%=session.getAttribute("user_id")%>';
 		
-    	//리뷰 버튼 클릭 시 가져오는 리뷰 정보  		
+    	//리뷰 등록 버튼 클릭 시 가져오는 리뷰 정보  		
 		let review_json = {
 		        "review_star" : star.val(),
 		        "book_no" : ${book.book_no}, 
@@ -462,20 +470,21 @@ $(document).on("click", "#btn_review", function(e) {
 					dataType: "text",
 					contentType:"application/json;charset=UTF-8",
 					success: function (data){
-						alert('리뷰를 등록하였습니다.');
-						getReview();
+						if(star.val() ==='별점 선택'){
+							alert('별점 선택은 필수입니다.');
+						}else if($('#review_content').val() === null || $('#review_content').val() === ""){
+							alert('내용을 입력하세요. ');
+						}else{
+							alert('리뷰를 등록하였습니다.');
+							getReview();
+						}
 					},
 					
 					error:function(request, status, error){
 						console.log("code: " + request.status)
 			        	console.log("message: " + request.responseText)
 			        	console.log("error: " + error);
-						if(star.val() ==='별점 선택'){
-							alert('별점 선택은 필수입니다.');
-						}
-						if($('#review_content').val() === null || $('#review_content').val() === "" ){
-							alert('내용을 입력하세요. ');
-						}
+						
 					}		
 						  			
 			});
