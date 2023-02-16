@@ -78,7 +78,7 @@ function orderMngmn(pageNum, srchCrtr, srchKey) {
 				let PRICE = comma(order.FINAL_PRICE)
 				let STATUS = switchCase(order.ORDER_STATUS)
 				
-				html +=		`<tr class="mngmn_table_tr" value="${order.ORDER_NO}">
+				html +=		`<tr class="mngmn_table_tr">
 								<td class="mngmn_table_col1">${order.ORDER_NO}</td>
 								<td class="mngmn_table_col2">${order.USER_ID}</td>
 								<td class="mngmn_table_col3">${order.ORDER_NAME}</td>
@@ -138,6 +138,8 @@ function orderMngmn(pageNum, srchCrtr, srchKey) {
 /***************************** 페이징 버튼 클릭 *****************************/
 $(document).on("click", "button.paging_btn", function(e) {	
 	
+	ById('dtls-box').style.display = "none"	
+			
 	let pageNum = e.currentTarget.value	
 
 	// 페이지 이동시 검색조건,검색키워드 유지됨
@@ -164,6 +166,8 @@ $(document).on("keyup", "#srch_key", function(e) {
 /***************************** 조건검색 FUNCTION *****************************/
 function srchOrders() {
 	
+	ById('dtls-box').style.display = "none"	
+		
 	let srchCrtr = ById('srch_crtr').value
 	let srchkey = ById('srch_key').value
 	
@@ -183,6 +187,8 @@ function srchOrders() {
 $(document).on("click", "tr.mngmn_table_tr", function(e) {	
 	
 	let order_no = e.currentTarget.cells[0].innerText
+	
+	ById('dtls-box').style.display = "block"
 	
 	orderMngmnDtls(order_no)
 })
@@ -204,23 +210,100 @@ function orderMngmnDtls(order_no) {
 			console.log(data)
 			
 			let html = `<table class="mngmn_dtls_table">
-							<tr>
-								<th>상품명</th>
-								<th>개수</th>
-								<th>가격</th>
-							<tr>`	
+							<thead>
+								<tr>
+									<th class="mngmn_dtls_table_th1">상품명</th>
+									<th class="mngmn_dtls_table_th2">개수</th>
+									<th class="mngmn_dtls_table_th3">가격</th>
+								</tr>
+							</thead>`	
 								
 			for (order of data) {
 				
-				html += `<tr>
-							<td class="mngmn_dtls_table_col1">${order.TITLE}</td>
-							<td class="mngmn_dtls_table_col2">${order.PRODUCT_COUNT}</td>
-							<td class="mngmn_dtls_table_col3">${order.BOOK_PRICE}</td>
-						 </tr>`	
+				let PRICE = comma(order.BOOK_PRICE)
+				
+				html += `<tbody>
+							  <tr>
+								<td class="mngmn_dtls_table_col1">${order.TITLE}</td>
+								<td class="mngmn_dtls_table_col2">${order.PRODUCT_COUNT}</td>
+								<td class="mngmn_dtls_table_col3">${PRICE}</td>
+							 </tr>
+						</tbody>`							 
 			}
 			
 			html += `</table>`
-			ById('order_mngmn_dtls').innerHTML = html
+							
+			let TOTAL_PRICE = comma(order.TOTAL_PRICE)				
+			let PAY_FEE = comma(order.PAY_FEE)				
+			let USE_POINT = comma(order.USE_POINT)				
+			let FINAL_PRICE = comma(order.FINAL_PRICE)				
+			let SAVE_POINT = comma(order.SAVE_POINT)				
+				
+			let STATUS = switchCase(data[0].ORDER_STATUS)		
+			let CANCEL_DATE = data[0].CANCEL_DATE === undefined ? 'N' : data[0].CANCEL_DATE
+			let BTN = data[0].ORDER_STATUS == (10 || 12) ? `<a class="btns">요청승인</a>` : '' 	
+					
+					
+			let info = `<div class="info-box_title">주문정보</div>
+			
+						<ul class="info-box_ul1">
+							<li class="text-left">상품금액</li>
+							<li class="text-left"><span class="text-right">${TOTAL_PRICE}</span></li>
+							<li class="text-left">배송비</li>
+							<li class="text-left"><span class="text-right">${PAY_FEE}</span></li>							
+							<li class="text-left">사용포인트</li>
+							<li class="text-left"><span class="text-right">${USE_POINT}</span></li>	
+							<hr>
+							<li style="height: 0px;"></li>
+							<li class="text-left">적립포인트</li>
+							<li class="text-left"><span class="text-right">${SAVE_POINT}</span></li>								
+							<li class="text-left">결제금액</li>
+							<li class="text-left"><span class="text-right fianl_price">${FINAL_PRICE}</span></li>							
+						</ul>	
+						
+						<table class="info-box_table">
+							<tr>
+								<th>받는사람</th>
+								<td>${data[0].ORDER_RECEIVER}</td>
+								<th>전화번호</th>
+								<td>${data[0].ORDER_TEL}</td>
+							</tr>
+							
+							<tr>
+								<th colspan="4">주소</th>
+							</tr>
+							
+							<tr>
+								<td colspan="4">${data[0].ORDER_ADDRESS}</td>
+							</tr>
+							<tr>
+								<th colspan="4">배송요청사항</th>
+							</tr>	
+							<tr>
+								<td colspan="4">${data[0].ORDER_COMMENT}</td>
+							</tr>		
+							
+							<tr>
+								<th>결제시간</th>
+								<td>${data[0].ORDER_DATE}</td>
+								<th>배송상태</th>
+								<td>${STATUS}</td>
+							</tr>
+							
+							<tr>
+								<th>요청시간</th>
+								<td>${CANCEL_DATE}</td>
+								<th>승인</th>
+
+	
+			
+								<td>${BTN}</td>
+							</tr>												
+						</table>`	
+				
+								
+			ById('table-box').innerHTML = html
+			ById('info-box').innerHTML = info
 		},
 		
 		error : function(request, status, error) {
@@ -233,7 +316,21 @@ function orderMngmnDtls(order_no) {
 	})
 }
 
+/***************************** 세부내역 확인 *****************************/
+$(document).on("click", ".mngmn_table_tr", function(e) {	
 
+	const rows = document.getElementsByClassName("mngmn_table_tr");
+
+	for (let i = 0; i < rows.length; i++) {
+	  rows[i].addEventListener("click", function() {
+	    for (let j = 0; j < rows.length; j++) {
+	      rows[j].style.backgroundColor = "";
+	    }
+	    this.style.backgroundColor = "#e0e0ee";
+	  });
+	}
+	
+})
 
 
 

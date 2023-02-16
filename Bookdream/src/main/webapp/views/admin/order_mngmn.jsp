@@ -91,8 +91,6 @@
 	padding: 0px;	
 }
 
-
-
 .right {
 	float: right;
 }
@@ -103,11 +101,9 @@
 	border: 1px solid black;
 }
 
-tr:hover {
-	background-color: #ececec;	
-}
 
-th {
+
+.mngmn_table th {
 	height: 50px;
 	text-align:center;
 	vertical-align:middle;	
@@ -117,7 +113,7 @@ th {
 	font-weight: bold;
 }
 
-td {
+.mngmn_table td {
 	height: 70px;
 	font-size: 12px;
 	text-align: center;
@@ -127,6 +123,10 @@ td {
 
 .mngmn_table tr:nth-child(odd) {
 	background-color: #f7f7f7;
+}
+
+tr:hover {
+	background-color: #ececec;	
 }
 
 .mngmn_table_th1 {
@@ -156,41 +156,199 @@ td {
 
 /*  */
 
-.order_mngmn_dtls {
-	width: 550px;
-	height: 350px;
-	overflow-y: scroll;	
-	display: inline-block;		
+
+/* ------- */ 
+.dtls-box {
+	display: none;
+	width: 1240px;
+	height: 350x;
+	margin: 0 auto;	
+	margin-top: 20px;
+
 }
 
-.order_mngmn_dtls{
-   -ms-overflow-style: none;
+.info-box {
+	width: 700px;
+	height: 300px;
+	border: 1px solid black;
+	float: left;
 }
-.order_mngmn_dtls::-webkit-scrollbar{
-  display:none;
+
+.info-box_title {
+	height: 40px;
+	background-color: #f7f7f7;
+	text-align: center;
+	font-size: 12px;
+	padding-top: 14px;
+	font-weight: bold;
+	border-bottom: 1px solid black;
+}
+
+.info-box_ul1 {
+	width: 200px;	
+	height: 220px;
+	margin: 20px 0px 20px 20px;	
+	float: left;	
+
+}
+
+.text-left {
+	float: left;
+	margin: 12px 0px;
+}
+
+.text-right {
+	width: 90px;
+	text-align: right;
+}
+
+.info-box_ul1 li:nth-child(odd) {
+	font-size: 12px;
+
+}
+
+.info-box_ul1 li:nth-child(even) {
+	font-size: 14px;
+	font-weight: bold;	
+}
+
+.fianl_price {
+	font-size: 16px;
+	font-weight: bold;
+	color: #5c5d99;
+}
+
+.info-box_ul1 li {
+	width: 90px;
+}
+
+.info-box_ul1 hr {
+	width: 180px;
+
+}
+
+.info-box_table {
+	width: 455px;
+	height: 220px;
+	margin: 20px 20px 20px 0px;
+	float: right;
+	border-left: 1px solid #ccc;
+
+}
+
+.info-box_table td {
+	vertical-align: middle;		
+	font-size: 12px;	
+	padding-left: 20px;		
+}
+
+.info-box_table th {
+	vertical-align: middle;	
+	font-size: 12px;
+	font-weight: 900;
+	padding-left: 20px;		
+}
+
+.btns {
+	width: 100px;
+	height: 15px;
+	cursor: pointer;
+	color: #5c5d99;
+	font-weight: bold;
+}
+
+/*  */
+
+.table-box-wrap {
+	float: right;
+	position: relative;
+	width: 500px;    
+    padding-top: 40px;  
+    border: 1px solid black;
+
+}
+.table-box-wrap .table-box {
+    max-height: 260px;
+    overflow: auto;
+    overflow-x: hidden;
+
+}
+
+.table-box{
+	-ms-overflow-style: none;
+}
+
+.table-box::-webkit-scrollbar{
+	display:none;
+}
+
+.table-box-wrap .table-box table {
+    table-layout: fixed;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.table-box-wrap .table-box table thead tr {
+    position: absolute;
+    top: 0;
+}
+.table-box-wrap .table-box table thead tr th {
+    background: #f7f7f7;
+    height: 40px;    
+    font-weight: bold;
+    vertical-align: middle;
+    text-align: center;	
+    border-bottom: 1px solid black;    
+}
+
+.table-box-wrap .table-box table thead tr th:nth-child(1) {
+	width: 350px;
+}
+
+.table-box-wrap .table-box table thead tr th:nth-child(2) {
+	width: 50px;
+}
+
+.table-box-wrap .table-box table thead tr th:nth-child(3) {
+	width: 100px;
+}
+
+.table-box-wrap .table-box table td {
+    vertical-align: middle;  
+    border-top: 1px solid #ccc; 
+}
+
+.table-box-wrap .table-box table tbody tr {
+   display: table-row;
 }
 
 .mngmn_dtls_table {
-	width: 500px;	
-	border: 1px solid black;
-	margin-top: 20px;
-	margin-left: 22px;
-
+	font-size: 12px;
 }
 
 .mngmn_dtls_table_col1 {
 	width: 350px;
-	line-height: 150%;	
+	height: 60px;
 	text-align: left;
-	padding-left: 10px;	
+	padding-left: 10px;
+	line-height: 150%;
+	font-size: 12px;	
 }
 
-.order_mngmn_dtls_info {
-	width: 600px;
-	height: 350px;
-	display: inline-block;		
-	
+.mngmn_dtls_table_col2 {
+	width: 50px;
+	text-align: center;	
 }
+
+.mngmn_dtls_table_col3 {
+	width: 100px;
+	text-align: center;	
+}
+
+
+/* */
+
+
 </style>
 
 </head>
@@ -311,11 +469,14 @@ td {
 		
 		<div class="order_mngmn" id="order_mngmn"></div>
 		
-		
-		
-		<div class="order_mngmn_dtls" id="order_mngmn_dtls"></div>
-		
-		<div class="order_mngmn_dtls_info" id="order_mngmn_dtls_info"></div>
+		<div class="dtls-box" id="dtls-box">
+			<div class="info-box" id="info-box"></div>
+					
+			<div class="table-box-wrap" id="table-box-wrap">
+				<div class="table-box" id="table-box"></div>
+			</div>
+		</div>
+
 		
 		
 	</div>		
