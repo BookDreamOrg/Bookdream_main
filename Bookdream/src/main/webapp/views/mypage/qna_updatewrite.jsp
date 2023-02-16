@@ -46,7 +46,7 @@
 												<option value="배송/수령일정일안내">배송/수령일정일안내</option>
 												<option value="주문/결제">주문/결제</option>
 												<option value="검색기능관련">검색기능관련</option>
-												<option value="반품/교롼/환불">반품/교롼/환불</option>
+												<option value="반품/교환/환불">반품/교환/환불</option>
 												<option value="도서/상품정보">도서/상품정보</option>
 												<option value="회원정보서비스">회원정보서비스</option>
 										</select>
