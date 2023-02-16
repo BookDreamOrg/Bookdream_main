@@ -153,6 +153,8 @@ create table BOOK (
     constraint PK_BOOK primary key (BOOK_NO)
 );
 
+--할인율 컬럼 추가
+alter table BOOK add discount  number(10) DEFAULT 0;
 select * from BOOK;
 
 commit;
