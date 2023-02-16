@@ -43,10 +43,28 @@
 			margin: 0;
 		}
 		
+		input[type="checkbox"]:checked ,
+		.color_badge,
+		.color_btn {
+			background-color:var(--main-color);
+			color: white;
+		}
 		
 		input[type='checkbox'] {
 			width: 20px;
 			height: 20px;
+		}
+		
+		a:hover{
+			color: var(--main-color);
+		}
+		a:hover::after{
+			color: var(--main-color);
+		}
+		
+		.color_btn:hover{
+			background-color:var(--main-color-tint5);
+			color: white;
 		}
 	</style>
 
@@ -102,7 +120,7 @@
 										</span>
 										<span class="delBtn">
 											 <button type="button" 
-											 		class="selectDelete_btn btn btn-sm btn-secondary rounded-pill" >선택 삭제</button> 
+											 		class="selectDelete_btn btn btn-sm rounded-pill color_btn" >선택 삭제</button> 
 										</span>
 									</div>
 								</th></tr></thead>
@@ -308,8 +326,8 @@
 			<!-- ------------------slide box---------------------- -->
 			<div class="slideBox col-md-3 col-lg-3">
 				<h4 class="d-flex justify-content-between align-items-center mb-3">
-					<span class="fw-bold text-primary">Total</span> 
-					<span class="badge bg-primary rounded-pill">${cartListCount}</span>
+					<span class="fw-bold">Total</span> 
+					<span class="badge rounded-pill color_badge">${cartListCount}</span>
 				</h4>
 					
 				<ul class="list-group mb-3 reload">
@@ -392,7 +410,7 @@
 				<!-- 결제 버튼 -->
 				<form class="card p-0 border-0">
 					<div class="input-group">
-						<button class="payNow_btn w-100 btn btn-primary btn-lg fw-bold" type="submit"> 결제하기</button>
+						<button class="payNow_btn w-100 btn btn-lg fw-bold color_btn" type="submit"> 결제하기</button>
 					</div>
 				</form>
 			</div>
