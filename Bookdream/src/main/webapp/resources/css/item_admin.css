@@ -11,10 +11,15 @@
 	background-color: var(--main-color-tint2);
 }
 #bookList{
-	width: 90%;
 	float:center;
 	
 }
+
+
+div.col-md-2{
+	font-weight: 800;
+}
+
 
 #book_list_section{
 border:1px solid gray;
@@ -43,50 +48,47 @@ height: auto;
 vertical-align:middle;
 background-color: #F7F7FA;
 color: black;
-
- 
- }
+}
  
  
  #modal_text{
 	color:var(--main-color-shadow2);
-	font: bold;
+	font-weight: 900;
 	
 }
 
 #section_title1{
 color:var(--main-color-shadow2);
-	font: bold;
+font-weight: 800;
 }
 
 .col-md-2{
 	font: bold;
 }
 
-
-#bookList img{
-	width: 150px;
-	height: 200px;
+#count{
+width: 3em;	
+}
+#bookNo,#check,#sale_rate {
+width: 4em;
 }
 
-li.count{
-width: 100px;	
+#book_title {
+width: 25em;
 }
-li.bookNo,li.stock{
-width: 120px;
+#book_author{
+width:15em;
+}
+#category {
+width: 7em;
 }
 
-li.img{
-width: 200px;
+#stock, #delete,#org_price{ 
+width: 6em;
 }
-li.title{
-width: 390px;
-}
-li.author{
-width:200px;
-}
-li.category,li.ch_stock{
-width: 150px;
+
+#sale_price{ 
+width: 7em;
 }
 
 

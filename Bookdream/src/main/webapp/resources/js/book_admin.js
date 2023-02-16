@@ -75,7 +75,7 @@ $(document).on("click", "#stock_upd_btn", function(e) {
 		
 		$.ajax({
 			type: 'post',
-			url: '/upd_Stock_Modal_Detail',
+			url: '/Modal_Detail',
 			data : {
 				book_no : book_no
 			},
@@ -129,11 +129,67 @@ $(document).on("click", "#stock_upd_btn", function(e) {
 }); // end modal.show
 
 
+/* ------------------------ [모달] 상품 삭제   ----------------------------*/
+
+$(document).on('click', "#delete_btn", function(e) { 
+	$('#book_delete_modal').modal('show');
+	let book_no = $(this).val();
+	console.log("book_no : " + book_no);
+	
+	$.ajax({
+		type: 'post',
+		url: '/Modal_Detail',
+		data : {
+			book_no : book_no
+		},
+		
+		success: function (data){
+			let title = data.title;
+			let img = data.book_img;
+			
+			document.getElementById('modal_book_title2').innerHTML = title;
+			document.getElementById("modal_book_img2").setAttribute("src",img);
+
+		},
+		error:function(request, status, error){
+			console.log("code: " + request.status)
+	    	console.log("message: " + request.responseText)
+	    	console.log("error: " + error);
+		}
+	}); //end ajax
+	
+	/* --- [모달 ] 도서 삭제 버튼 클릭  -----*/
+	$(document).on("click", "#btn_modal_delete", function(e) {
+		$.ajax({
+			type: 'post',
+			url: '/dlt_Modal_Detail',
+			data : {
+				book_no : book_no
+			},
+			
+			success: function (data){
+				$('#book_delete_modal').modal('hide');
+				alert('상품이 정상적으로 삭제되었습니다.');
+				location.reload();
+			},
+			error:function(request, status, error){
+				console.log("code: " + request.status)
+		    	console.log("message: " + request.responseText)
+		    	console.log("error: " + error);
+			}
+		}); //end ajax
+
+	});
+
+}); // end modal.show
+
+
 
 
 /* --- [모달 ] 닫기 -----*/
 function modal_close(){
 	$('#my-modal').modal('hide');
+	$('#book_delete_modal').modal('hide');
 }
 
 

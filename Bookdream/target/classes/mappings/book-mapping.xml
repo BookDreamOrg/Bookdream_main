@@ -104,6 +104,13 @@
 	   ]]>  
 	</update>
 	
+	<!-- [어드민/모달] 도서 삭제 -->
+	<delete id="deleteBook">
+	 DELETE FROM book WHERE book_no = #{book_no}
+		
+	</delete>
+	
+	
 	
 </mapper>
 
