@@ -335,7 +335,7 @@ $(document).on("click", "#side_pay_now_btn", function(e) {
 					  orderId: random,
 					  orderName: "test",
 					  customerName: "test",
-					  successUrl: 'http://localhost:8000/detail/cart/orderitem/pay',
+					  successUrl: fastpay(),
 					  failUrl: 'http://localhost:8000/main',
 				})
 				.catch(function (error) {
@@ -355,6 +355,12 @@ $(document).on("click", "#side_pay_now_btn", function(e) {
 	});
 
 })
+
+function fastpay() {
+
+	return location.herf="http://localhost:8000/detail/cart/orderitem/pay";
+}
+
 
 /***************************** 포인트 전액사용 버튼 클릭 function *****************************/
 function max_point_toggle(btn) {

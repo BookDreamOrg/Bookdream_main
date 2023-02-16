@@ -36,320 +36,121 @@
     
 <!-- jQuery -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-
 <!-- CSS  -->
 <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap_icon.css">
-      
-<title>주문 관리</title>
+    
+<title>주문 현황</title>
 
 <style type="text/css">
 
-.container {
-	height:auto;
-	min-height: 800px;
+.shadow-sm {
+	background-color: white;
 }
 
-
-.btn_box {
-	position: relative;
-	width: 1240px;
-	margin: 0 auto;
-	margin-top: 50px;
-	margin-bottom: 10px;
-
-}
-.paging {
-	display: inline-block;
-}
-
-.paging_btn {
-	height: 30px;
-	font-size: 12px;
-
-}
-.srch_crtr {
-	width: 100px;
-	height: 30px;
-	font-size: 12px;
-	display: inline-block;
-
-}
-
-.srch_key {
-	width: 150px;
-	height: 30px;
-	font-size: 12px;
+.center {
+	text-align: center;
 	display: inline-block;	
 }
 
-.srch_btn {
-	width: 30px;
+.test {
+	position: relative;
+	width: 610px;
+	height: 500px;
+	display: inline-block;
+	padding: 30px;
+	text-align: left;	
+}
+
+.myChart {
+	display: inline-block;
+}
+
+.chartbox_card {
+
+	height: 100px;
+}
+
+
+.chartbox_chart {
+
+	margin-top: 50px;
+
+}
+
+.chart_btn {
+	width: 50px;
 	height: 30px;
 	font-size: 12px;
-	margin: 0px 0px 2px -13px;
-	text-align: center;
-	padding: 0px;	
 }
 
-.right {
-	float: right;
-}
-
-.mngmn_table {
-	margin: 0 auto;
-	width: 1240px;	
-	border: 1px solid black;
+.pay_radio {
+	position: absolute;
+	top: 140px;
+	left: 475px;
 }
 
 
-
-.mngmn_table th {
-	height: 50px;
-	text-align:center;
-	vertical-align:middle;	
-	border-bottom: 1px solid black;
-	background-color: #f7f7f7;
-	font-size: 14px;
-	font-weight: bold;
-}
-
-.mngmn_table td {
-	height: 70px;
-	font-size: 12px;
-	text-align: center;
-	vertical-align: middle;
-	cursor: pointer;
-}
-
-.mngmn_table tr:nth-child(odd) {
-	background-color: #f7f7f7;
-}
-
-tr:hover {
-	background-color: #ececec;	
-}
-
-.mngmn_table_th1 {
-	width: 70px;
-}
-
-.mngmn_table_th2 {
-	width: 140px;
-}
-
-.mngmn_table_th3 {
-	width: 470px;
-}
-
-.mngmn_table_th4, .mngmn_table_th5, .mngmn_table_th6, .mngmn_table_th7 {
-	width: 140px;
-}
-
-.mngmn_table_col3 {
-	line-height: 150%;
-	text-align: left;
-}
-
-.mngmn_table_col7 {
-	font-weight: bold;
-}
-
-/*  */
-
-
-/* ------- */ 
-.dtls-box {
-	display: none;
+.buttom {
 	width: 1240px;
-	height: 350x;
-	margin: 0 auto;	
-	margin-top: 20px;
-
-}
-
-.info-box {
-	width: 700px;
 	height: 300px;
-	border: 1px solid black;
-	float: left;
+	margin: 0 auto;	
+	padding: 0px 30px ;
 }
 
-.info-box_title {
-	height: 40px;
-	background-color: #f7f7f7;
-	text-align: center;
-	font-size: 12px;
-	padding-top: 14px;
-	font-weight: bold;
-	border-bottom: 1px solid black;
-}
-
-.info-box_ul1 {
-	width: 200px;	
-	height: 220px;
-	margin: 20px 0px 20px 20px;	
-	float: left;	
-
-}
-
-.text-left {
-	float: left;
-	margin: 12px 0px;
-}
-
-.text-right {
-	width: 90px;
-	text-align: right;
-}
-
-.info-box_ul1 li:nth-child(odd) {
-	font-size: 12px;
-
-}
-
-.info-box_ul1 li:nth-child(even) {
-	font-size: 14px;
-	font-weight: bold;	
-}
-
-.fianl_price {
-	font-size: 16px;
-	font-weight: bold;
-	color: #5c5d99;
-}
-
-.info-box_ul1 li {
-	width: 90px;
-}
-
-.info-box_ul1 hr {
-	width: 180px;
-
-}
-
-.info-box_table {
-	width: 455px;
-	height: 220px;
-	margin: 20px 20px 20px 0px;
-	float: right;
-	border-left: 1px solid #ccc;
-
-}
-
-.info-box_table td {
-	vertical-align: middle;		
-	font-size: 12px;	
-	padding-left: 20px;		
-}
-
-.info-box_table th {
-	vertical-align: middle;	
-	font-size: 12px;
-	font-weight: 900;
-	padding-left: 20px;		
-}
-
-.btns {
-	width: 100px;
-	height: 15px;
-	cursor: pointer;
-	color: #5c5d99;
-	font-weight: bold;
-}
-
-/*  */
-
-.table-box-wrap {
-	float: right;
-	position: relative;
-	width: 500px;    
-    padding-top: 40px;  
-    border: 1px solid black;
-
-}
-.table-box-wrap .table-box {
-    max-height: 260px;
-    overflow: auto;
-    overflow-x: hidden;
-
-}
-
-.table-box{
-	-ms-overflow-style: none;
-}
-
-.table-box::-webkit-scrollbar{
-	display:none;
-}
-
-.table-box-wrap .table-box table {
-    table-layout: fixed;
-    border-spacing: 0;
-    border-collapse: collapse;
-}
-
-.table-box-wrap .table-box table thead tr {
-    position: absolute;
-    top: 0;
-}
-.table-box-wrap .table-box table thead tr th {
-    background: #f7f7f7;
-    height: 40px;    
-    font-weight: bold;
-    vertical-align: middle;
-    text-align: center;	
-    border-bottom: 1px solid black;    
-}
-
-.table-box-wrap .table-box table thead tr th:nth-child(1) {
-	width: 350px;
-}
-
-.table-box-wrap .table-box table thead tr th:nth-child(2) {
-	width: 50px;
-}
-
-.table-box-wrap .table-box table thead tr th:nth-child(3) {
-	width: 100px;
-}
-
-.table-box-wrap .table-box table td {
-    vertical-align: middle;  
-    border-top: 1px solid #ccc; 
-}
-
-.table-box-wrap .table-box table tbody tr {
-   display: table-row;
-}
-
-.mngmn_dtls_table {
-	font-size: 12px;
-}
-
-.mngmn_dtls_table_col1 {
-	width: 350px;
-	height: 60px;
+.today_box {
 	text-align: left;
-	padding-left: 10px;
-	line-height: 150%;
+}
+
+.today_box_body {
+	margin: 10px 0px;
+	height: 200px;
+
+}
+
+.work_table {
+	width: 1180px;
+	border: 1px solid #dee2e6;
+}
+
+th {
+	height: 50px;
+	font-weight: bold;
+	vertical-align: middle;
+	text-align: center;
+	border-bottom: 1px solid #dee2e6;
+	background-color: #f7f7f7;
+	font-size: 14px;
+}
+
+td {
+	height: 50px;
+	vertical-align: middle;
+	text-align: center;
 	font-size: 12px;	
+	width: 110px;
 }
 
-.mngmn_dtls_table_col2 {
-	width: 50px;
-	text-align: center;	
+.work_table_col3 {
+	width: 520px;
+	text-align: left;
 }
 
-.mngmn_dtls_table_col3 {
-	width: 100px;
-	text-align: center;	
+.work_table_col6 {
+	font-weight: bold;
 }
 
-
-/* */
-
-
+.work_table_col7 {
+	padding: 0px 0px 0px 42px;
+}
 </style>
+
+
+
+
+
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
 
 </head>
 <body class="admin_body">
@@ -450,41 +251,74 @@ tr:hover {
 	
 	<div class="container">
 		
-		<div class="btn_box">
-			<div class="paging" id="paging"></div>
-			
-			<div class="right">
-				<select class="form-select srch_crtr" id="srch_crtr" aria-label="Default select example">
-				  <option selected value="all">전체</option>
-				  <option value="order_no">주문번호</option>
-				  <option value="user_id">아이디</option>
-				  <option value="order_name">주문명</option>
-				  <option value="pay_method">결제수단</option>
-				</select>
-				
-				<input class="form-control srch_key" id="srch_key" type="search" placeholder="Search..." aria-label="Search">
-		        <button class="btn btn-primary srch_btn" id="srch_btn" type="button"><i class="bi bi-search"></i></button>
-	        </div>
+	<div class="center">
+		<div class="test left">
+			<div class="card chartbox_card">
+			  <div class="card-header">
+			   주문 현황
+			  </div>
+			  <div class="card-body" id="card-body">
+
+			  </div>
+			</div>
+						
+			<div class="chartbox">
+				<!--   차트를 그릴 영역으로 canvas태그를 사용한다. -->
+				<div class="chartbox_chart">
+					<div class="btn-group pay_radio" role="group" aria-label="radio toggle button group">
+					  <input type="radio" class="btn-check" name="order_radio" id="wek_chart_btn" autocomplete="off" checked>
+					  <label class="btn btn-outline-secondary chart_btn" for="wek_chart_btn">주간</label>
+					  <input type="radio" class="btn-check" name="order_radio" id="mly_chart_btn" autocomplete="off">
+					  <label class="btn btn-outline-secondary chart_btn" for="mly_chart_btn">월간</label>
+					</div>				
+				</div>
+			</div>
+			<canvas class="myChart" id="orderChart"></canvas>
 		</div>
-		
-		<div class="order_mngmn" id="order_mngmn"></div>
-		
-		<div class="dtls-box" id="dtls-box">
-			<div class="info-box" id="info-box"></div>
-					
-			<div class="table-box-wrap" id="table-box-wrap">
-				<div class="table-box" id="table-box"></div>
+	
+		<div class="test right">
+			<div class="card chartbox_card">
+			  <div class="card-header">
+			    결제 현황
+			  </div>
+			  <div class="card-body">
+			    <p class="card-text"><span id="amount"></span></p>
+			  </div>
+			</div>
+			
+			<div class="chartbox">
+			
+				<!--   차트를 그릴 영역으로 canvas태그를 사용한다. -->					
+				<div class="chartbox_chart">
+					<div class="btn-group pay_radio" role="group" aria-label="radio toggle button group">
+					  <input type="radio" class="btn-check" name="pay_radio" id="wek_paychart_btn" autocomplete="off" checked>
+					  <label class="btn btn-outline-secondary chart_btn" for="wek_paychart_btn">주간</label>
+					  <input type="radio" class="btn-check" name="pay_radio" id="mly_paychart_btn" autocomplete="off">
+					  <label class="btn btn-outline-secondary chart_btn" for="mly_paychart_btn">월간</label>
+					</div>					
+					<canvas class="myChart" id="myChart"></canvas>
+				</div>	
+			</div>			
+		</div>
+						
+	</div>
+		<div class="center">
+			<div class="buttom">
+				<div class="card">
+				  <div class="card-header today_box">
+				   	금주 취소 / 반품 처리 	
+				  </div>
+				</div>
+				
+				<div class="today_box_body" id="today_box_body"></div>	
+				<span class="paging" id="paging"></span>							
 			</div>
 		</div>
-
-		
-		
 	</div>		
-	
 	</main>
 
 
-	<script type="text/javascript" src="/resources/js/order_mngmn.js"></script>
+	<script type="text/javascript" src="/resources/js/order_dshbr.js"></script>
 	
 	<!-- Script Bootstrap, jqurey-3.6.3 -->
 	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>

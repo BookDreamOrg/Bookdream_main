@@ -1,32 +1,11 @@
 $(function(){
 	
-	//인기검색어 가져오기
-	bestSearchKeywordList();
 	//메인 상품 목록 가져오기
 	mainBookList();
 	
 
-
-
-
 });
 
-
-function bestSearchKeywordList(){
-	$.ajax({
-		   url : "/bestSearchKeyword",
-		   type : "get",
-		   data : "",
-		   dataType : "json",
-		   contentType : "application/json",
-		   success : function(data){
-			  console.log(data);
-			},
-			error : function(){
-			     alert("에러 발생 ");
-			}		
-		 });
-}
 
 
 function mainBookList(){

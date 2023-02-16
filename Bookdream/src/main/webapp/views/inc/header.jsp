@@ -29,6 +29,43 @@
 .ui-menu-item-wrapper:hover,.ui-state-active {
  background-color: var(--main-color-tint1);
 }
+
+#block {
+ border:1px #6768ab;
+ padding:0 5px;
+ height:22px;
+ overflow:hidden; 
+ background:#fff; 
+ width:300px;
+ font-size:18px;
+ }
+ 
+#block ul, #block li {
+ margin:0;
+ padding:0;
+ list-style:none;
+ font-size: 18px;
+ text-overflow: ellipsis;
+ display: -webkit-box;
+ -webkit-line-clamp:1;
+ -webkit-box-orient:vertical;
+ }
+#block li a {
+display:block;
+height:20px;
+line-height:30px; 
+text-decoration:none;
+}
+
+#block li span {
+padding:2px 5px; 
+background:#7677b3; 
+color:#fff; 
+font-weight:bold;
+margin-right:3px;
+}
+
+
 </style>
 
 
@@ -98,7 +135,7 @@
                </div>
             </div>
             </form>
-            
+
          </div>
       
    <% 
@@ -220,8 +257,21 @@
                <div class="dot"></div>
                <li class="nav-item"><a class="nav-link menu-link disabled"
                   href="#" tabindex="-1" aria-disabled="true">Disabled</a></li>
+                <!---------------------------검색 상위 키워드 10개-------------------------------->
+                   <div>
+      				 <span class="small">인기 검색어 </span>
+        				<div class="mt-1" id="block">
+         				 <ul class="list-group" id="bestKeyword">
+         					 </ul>
+       					 </div>
+      				</div>  
+                  
             </ul>
          </div>
+                    
+	
+  
+            
       </header>
       </div>
       

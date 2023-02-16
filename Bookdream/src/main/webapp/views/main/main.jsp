@@ -152,16 +152,7 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
  	<main>
 	<div class="book-section">
 	
-  <!---------------------------검색 상위 키워드 10개-------------------------------->
-	
-      <div class="mt-5">
-        <div id="bestKeywordList">
-          <ul class="list-group">
-            <li class="list-group-item list-group-item-action">//</li>
-          </ul>
-        </div>
-      </div>
-      
+
 
       <!---------------------------베스트 셀러 상품 5개-------------------------------->
       <div class="mt-5">

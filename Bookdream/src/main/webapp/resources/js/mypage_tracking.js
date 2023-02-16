@@ -51,8 +51,8 @@ function order_list(search_date, search_status) {
 					let date = timestamp(order.order_date)
 					let status = switchCase(order.order_status) 	
 					
-					let red = order.order_status == 10 ? `style="color: red"` : ''
-					let	blue = order.order_status == (11 || 12) ? `style="color: blue"` : ''
+					let red = order.order_status == (10 || 11) ? `style="color: red"` : ''
+					let	blue = order.order_status == (12 || 13) ? `style="color: blue"` : ''
 
 					html += `<table class="trackinglist_table">
 							 	<tr>
@@ -130,7 +130,7 @@ function orderHistory() {
 			
 			for(order of data) {
 						
-				if (order.ORDER_STATUS == 11 || order.ORDER_STATUS == 12 ) {
+				if (order.ORDER_STATUS == 11 || order.ORDER_STATUS == 12 || order.ORDER_STATUS == 13 ) {
 					order.ORDER_STATUS = 10
 				} 
 				
@@ -169,9 +169,10 @@ function switchCase(data) {
 	    case  0: return "결제완료"    
 	    case  1: return "배송중"	
 	    case  2: return "배송완료"
-	    case 10: return "결제취소"
-	    case 11: return "반품요청"	 
-	    case 12: return "반품완료"
+	    case 10: return "결제취소중"
+	    case 11: return "결제취소"
+	    case 12: return "반품요청중"	 
+	    case 13: return "반품완료"
 	}
 
 }
@@ -305,7 +306,7 @@ $(document).on("click", "#modal_pay_cancel", function(e) {
 $(document).on("click", "#modal_return_request", function(e) {	
 	
 	var order_no = e.currentTarget.value
-	orderTrackingUpdate(order_no, 11);
+	orderTrackingUpdate(order_no, 12);
 
 })
 
