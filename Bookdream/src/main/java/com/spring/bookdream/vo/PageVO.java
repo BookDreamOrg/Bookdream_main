@@ -8,7 +8,7 @@ public class PageVO {
 	  private int endPage;
 	  private boolean prev, next;
 	  private int totalPage;
-	  private int displayPageItems = 3;
+	  private int displayPageItems = 5; // 슷자블럭 개수
 
 	  private SearchCriteria cri;
 	  

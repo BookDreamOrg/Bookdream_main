@@ -12,9 +12,7 @@
 		
 		<result property="listCount" column="LISTCOUNT" />	
 		<result property="initCount" column="INITCOUNT" />	
-		<!-- 
-		<result property="num" column="NUM" /> 
-				 -->
+	
 		<collection property="userVO" resultMap="userList"></collection>
 		<collection property="bookVO" resultMap="bookList"></collection>
 	</resultMap>	
@@ -28,6 +26,9 @@
 		<id property="book_no" column="BOOK_NO"/>
 		<result property="title" column="TITLE" />
 		<result property="book_price" column="BOOK_PRICE" />
+		<!-- 
+		--><!-- 책 할인율 -->			
+		<result property="discount" column="discount" /> 
 		<result property="book_img" column="BOOK_IMG" />		
 		<result property="stock" column="STOCK" />	
 	</resultMap>
@@ -35,7 +36,8 @@
 	<!-- 장바구니 목록 조회 -->
 	<select id="getCartList" parameterType="cart" resultMap="cartList">		
 		SELECT  row_number() over(order by C.cart_no desc) as num,
-        		C.cart_no, C.user_no, C.product_count, B.book_no, B.book_img, B.title, B.book_price, B.stock 
+        		C.cart_no, C.user_no, C.product_count, B.book_no, B.book_img, B.title, B.book_price, B.stock
+				,B.discount
 		FROM 	CART C
 		        INNER JOIN BOOK B
 		        ON C.book_no = B.book_no   
@@ -78,13 +80,12 @@
 	    AND 	user_no = #{user_no}
 	</delete>
 
-	<!-- 장바구니 수량 수정  
+	<!-- 장바구니 수량 수정  -->
 	<update  id="modifyCount">
 		UPDATE 	CART 
 		SET 	product_count = #{product_count} 
-		WHERE	cart_no = #{cart_no} AND user_no = #{user_no}
+		WHERE	cart_no=#{cart_no} AND user_no = #{user_no}
 	</update>
-	-->
 	
 </mapper>
 
