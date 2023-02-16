@@ -128,10 +128,14 @@ function orderHistory() {
 			
 		success : function(data) {
 			
+			var num = 0
+			
 			for(order of data) {
 						
-				if (order.ORDER_STATUS == 11 || order.ORDER_STATUS == 12 || order.ORDER_STATUS == 13 ) {
-					order.ORDER_STATUS = 10
+				if (order.ORDER_STATUS == 10 || order.ORDER_STATUS == 11 ||
+					order.ORDER_STATUS == 12 || order.ORDER_STATUS == 13 ) {
+					
+					num += Number(order.STATUSCOUNT)
 				} 
 				
 				switch (order.ORDER_STATUS) {
@@ -145,7 +149,7 @@ function orderHistory() {
 		            case  2: ById('order_count2').innerHTML = order.STATUSCOUNT
 		            		 break;		            		
 		           
-		            case 10: ById('order_count10').innerHTML = order.STATUSCOUNT
+		            case 10: ById('order_count10').innerHTML = num
 	        				 break;
 
 				}

@@ -91,9 +91,10 @@
 									  <option value="0">결제완료</option>
 									  <option value="1">배송중</option>
 									  <option value="2">배송완료</option>
-									  <option value="10">결제취소</option>
-									  <option value="11">반품요청</option>
-									  <option value="12">반품완료</option>
+									  <option value="10">결제취소중</option>
+									  <option value="11">결제취소</option>
+									  <option value="12">반품요청중</option>
+									  <option value="13">반품완료</option>
 									</select>
 
 							</div>							

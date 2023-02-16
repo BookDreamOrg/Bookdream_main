@@ -90,6 +90,7 @@ public class OrderController {
 		
 		List<Map<String, Object>> list  = orderService.orderStatusCount(order);
 
+		System.out.println("list : " + list);
 		return list;
 	}	
 	
