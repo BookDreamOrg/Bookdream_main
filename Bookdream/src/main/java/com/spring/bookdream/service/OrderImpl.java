@@ -136,7 +136,10 @@ public class OrderImpl implements OrderService {
 	@Override
 	public List<Map<String, Object>> orderMngmnDtls(OrderVO vo) {
 		
-		return orderDAO.orderMngmnDtls(vo);
+	return orderDAO.orderMngmnDtls(vo);
+	
+	}
+	
 	//일주일 도서 주문량 카운트 
 	@Override
 	public List<Map<String,Object>> orderBy7DaysBook() {

@@ -496,8 +496,7 @@
 		       p.book_no = b.book_no AND
 		       o.order_no = #{order_no}
 	</select>	
-		
-	</select>			
+				
 	
 	<!-- 일주일치 일일 판매량 -->
 	<select id="Order_BY_7DAYS" resultType="HashMap">
