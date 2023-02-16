@@ -249,7 +249,7 @@ tr:hover {
 	padding-left: 20px;		
 }
 
-.btns {
+.aprvl_btn {
 	width: 100px;
 	height: 15px;
 	cursor: pointer;

@@ -188,6 +188,9 @@ $(document).on("click", "tr.mngmn_table_tr", function(e) {
 	
 	let order_no = e.currentTarget.cells[0].innerText
 	
+	// 세션 저장
+	sessionStorage.setItem("order_no", order_no);
+	
 	ById('dtls-box').style.display = "block"
 	
 	orderMngmnDtls(order_no)
@@ -241,7 +244,7 @@ function orderMngmnDtls(order_no) {
 				
 			let STATUS = switchCase(data[0].ORDER_STATUS)		
 			let CANCEL_DATE = data[0].CANCEL_DATE === undefined ? 'N' : data[0].CANCEL_DATE
-			let BTN = data[0].ORDER_STATUS == (10 || 12) ? `<a class="btns">요청승인</a>` : '' 	
+			let BTN = data[0].ORDER_STATUS == (10 || 12) ? `<a class="aprvl_btn" id="aprvl_btn" value="1">요청승인</a>` : '' 	
 					
 					
 			let info = `<div class="info-box_title">주문정보</div>
@@ -294,13 +297,12 @@ function orderMngmnDtls(order_no) {
 								<th>요청시간</th>
 								<td>${CANCEL_DATE}</td>
 								<th>승인</th>
-
-	
-			
 								<td>${BTN}</td>
 							</tr>												
-						</table>`	
-				
+						</table>	
+						<input type="hidden" id="order_no" value="${data[0].ORDER_NO}">
+						<input type="hidden" id="user_no" value="${data[0].USER_NO}">
+						<input type="hidden" id="order_status" value="${data[0].ORDER_STATUS}">`
 								
 			ById('table-box').innerHTML = html
 			ById('info-box').innerHTML = info
@@ -333,9 +335,58 @@ $(document).on("click", ".mngmn_table_tr", function(e) {
 })
 
 
+/***************************** 승인버튼 클릭 *****************************/
+$(document).on("click", "a.aprvl_btn", function(e) {	
+	
+	let order_no = ById('order_no').value
+	let user_no = ById('user_no').value
+	let status = ById('order_status').value	
+	
+	orderAprvl(order_no, status, user_no)
+})
 
+/***************************** 취소/반품 승인 FUNCTION *****************************/
+function orderAprvl(order_no, status, user_no) {
+	
+	let data = {
+				"order_no" : order_no,
+				"order_status" : status,
+				"user_no" : user_no
+	}
+	
+	$.ajax({
+		type : "POST",                              
+		url : "/admin/orderAprvl",
+		data : JSON.stringify(data),  
+		dataType : "text",
+		contentType : "application/json",		
+			
+		success : function() {
+				
+			alert("해당 요청을 승인하였습니다.");
+			
+			let pageNum = sessionStorage.getItem("pageNum");	
+			let srchCrtr = sessionStorage.getItem("srchCrtr");	
+			let srchkey = sessionStorage.getItem("srchKey");
 
-
+			orderMngmn(pageNum, srchCrtr, srchkey)
+			
+			let order_no = sessionStorage.getItem("order_no");	
+			
+			orderMngmnDtls(order_no)
+			
+		},
+			
+		error: function(request, status, error) {
+		       console.log("code: " + request.status)
+		       console.log("message: " + request.responseText)
+		       console.log("error: " + error);
+		        
+		}	
+				
+	})		
+	
+}
 
 
 
