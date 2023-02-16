@@ -58,7 +58,8 @@
 	height: 500px;
 	display: inline-block;
 	padding: 30px;
-	text-align: left;	
+	text-align: left;
+	 	
 }
 
 .myChart {
