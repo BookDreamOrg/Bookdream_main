@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.spring.bookdream.vo.AnswerVO;
 import com.spring.bookdream.vo.QnAVO;
+import com.spring.bookdream.vo.UserVO;
 
 @Repository
 public class QnADAO {
@@ -67,5 +68,10 @@ public class QnADAO {
 	public List<QnAVO> getRecentMyQnAList(QnAVO qnaVO){
 		System.out.println("MyList 3개");
 		return mybatis.selectList("QnADAO.getRecentMyQnAList", qnaVO);
+	}
+	
+	// 유저번호에 맞는 유저정보 가져오기
+	public List<UserVO> getQnAUser() {
+		return mybatis.selectList("QnADAO.getQnAUser");
 	}
 }

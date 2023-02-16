@@ -36,7 +36,7 @@ alter table users drop column USER_ADDRESS;
 -- USER_POINT 추가
 alter table USERS add USER_POINT number(10) default 10000;
 
--- USER_REGDATE 추가
+-- USER_REGDATE 추가(02/16추가)
 alter table USERS add USER_REGDATE date default sysdate;
 
 desc users;
@@ -48,34 +48,16 @@ create sequence user_seq increment by 1 start with 1;
 insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
    values(user_seq.nextval,'test','test','test','BD','test@test.com');
 
+
 insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
    values(user_seq.nextval,'sycha11','test','차승윤','BD','sycha112@naver.com');
 
+
+
+insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
+   values(user_seq.nextval,'test8151','tes434','차윤','BD','cy@naver.com');
+
 select * from users;
-
--- User adim 게시판 test
-insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
-   values(user_seq.nextval,'test1','test','test','BD','test@test.com');   
-
-insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
-   values(user_seq.nextval,'test2','test','test','BD','test@test.com');
-   
-insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
-   values(user_seq.nextval,'test3','test','test','BD','test@test.com');
-   
-insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
-   values(user_seq.nextval,'test4','test','test','BD','test@test.com');
-
-insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
-   values(user_seq.nextval,'test5','test','test','BD','test@test.com');   
-
-insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
-   values(user_seq.nextval,'test6','test','test','BD','test@test.com');
-   
-insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
-   values(user_seq.nextval,'test7','test','test','BD','test@test.com');
-
-select * from users;   
 
 commit;
 
@@ -333,27 +315,24 @@ create table QNA(
     constraint PK_QNA primary key(QNA_NO),
     constraint FK_QNA_USER_NO foreign key(USER_NO) REFERENCES USERS (USER_NO)
 );
-insert into QNA(QNA_NO, USER_NO, QNA_TITLE, QNA_CONTENT, QNA_TYPE) 
-		values(qna_seq.nextval, 1 , '이게안돼','이게 왜 안될까요','QNA타입');
-delete from qna where user_no=1;
 
 ALTER TABLE QNA 
         ADD CONSTRAINT FK_QNA_USER_NO FOREIGN KEY(USER_NO) REFERENCES USERS(USER_NO);
-
+        
 drop sequence qna_seq;
 -- 번호를 자동으로 1부터 1씩 증가하도록 만듦
 create sequence qna_seq increment by 1 start with 1;
+
+insert into QNA(QNA_NO, USER_NO, QNA_TITLE, QNA_CONTENT, QNA_TYPE) 
+		values(qna_seq.nextval, 1, '이게안돼','이게 왜 안될까요','QNA타입');
 
 -- qna table fk user_no casecade
 alter table QNA drop constraint FK_QNA_USER_NO;
 alter table QNA add constraint FK_QNA_USER_NO foreign key (user_no) references users (user_no) on delete cascade;
 
 select * from qna;
-delete from answer;
 rollback;
 commit; 
-
-select * from answer where user_no = '1';
 
 ------------------------- ANSWER ----------------------
 drop table answer;
@@ -372,7 +351,7 @@ desc answer;
 drop sequence answer_seq;
 -- 번호를 자동으로 1부터 1씩 증가하도록 만듦
 create sequence answer_seq increment by 1 start with 1;
-delete from answer where ans_no=3;
+
 select * from answer;
 
 rollback;

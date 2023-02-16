@@ -1,6 +1,8 @@
 package com.spring.bookdream.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -27,7 +29,7 @@ import com.spring.bookdream.vo.UserVO;
 
 
 @Controller
-@RequestMapping("/views/admin/user/*")
+@RequestMapping("/admin/user/*")
 public class AdminUserController {
 	
 	@Autowired
@@ -52,12 +54,9 @@ public class AdminUserController {
 	public String getListPage(Model model, @RequestParam("num") int num, UserVO userVO) {
 		System.out.println("userListPage.do실행");
 		List<UserVO> userAllList = userService.getAllUserList(userVO);
-		for(int i=0; i<userAllList.size(); i++) {
-			System.out.println(userAllList.get(i));
-		}
-		System.out.println();
+
 		int count = userAllList.size();
-		System.out.println(count);
+		
 		// 페이지에 보이는 수(변경 가능)
 		int postNum = 5;
 		
@@ -72,21 +71,13 @@ public class AdminUserController {
 		
 		userVO.setDisplayPost(displayPost);
 		userVO.setPostNum(postNum);
-		userVO.setCountlistnum(count);
 		
-		System.out.println("num: " + num);
-		System.out.println(userVO.getSearchUserKeyword());
-		System.out.println(userVO.getDisplayPost());
-		System.out.println(userVO.getPostNum());
 		String key = userVO.getSearchUserKeyword();
 		
 		List<UserVO> userList = null;
 		
 		userList = userService.userListPage(userVO);
-		System.out.println("userList");
-		for(int i=0; i<userList.size(); i++) {
-			System.out.println(userList.get(i));
-		}
+		
 		model.addAttribute("userList", userList);
 		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("SearchUserKeyword",key);
@@ -111,22 +102,36 @@ public class AdminUserController {
 	}
 	
 	
+	// 검색 유저 목록 가져오기
+	@RequestMapping(value="/getSearchUserList")
+	@ResponseBody	
+	public String getSearchUserList(UserVO userVO, Model model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		 
+		System.out.println("getSearchUserList실행");
+		System.out.println(userVO.getSearchUserKeyword());
+		request.setCharacterEncoding("utf-8");
+		response.setCharacterEncoding("utf-8");
+		
+		String key = userVO.getSearchUserKeyword();
+		
+		return key;
+	}
+	
 	// 관리자의 전체 문의 리스트 가져오기
 	@RequestMapping(value="/getAllQnAList")
-	public String getAllQnAList(HttpSession session, Model model){
+	public String getAllQnAList(HttpSession session, Model model, UserVO userVO){
 		
 		System.out.println("getAllQnAList실행");
 		
 		
 		List<QnAVO> qnaAllList = qnaService.getAllQnAList();
 		
+		List<UserVO> user = qnaService.getQnAUser();
 		
-		UserVO user = (UserVO)session.getAttribute("authUser");
-		
-		model.addAttribute("qna_user", user);
+		model.addAttribute("userList", user);
 		model.addAttribute("qnaAllList", qnaAllList);
 		
-		return "admin/admin_qnaanswer";
+		return "admin/user/admin_qnaanswer";
 	}
 
 	
@@ -147,30 +152,8 @@ public class AdminUserController {
 		qnaService.insertAnswer(answerVO);
 		qnaService.answerCheck(qnaVO);
 		 
-		return "admin/admin_qnaanswer";
+		return "admin/user/admin_qnaanswer";
 	}	
 	
-	// 검색 유저 목록 가져오기
-	@RequestMapping(value="/getSearchUserList")
-	@ResponseBody	
-	public String getSearchUserList(UserVO userVO, Model model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 
-		System.out.println("getSearchUserList실행");
-		System.out.println(userVO.getSearchUserKeyword());
-		request.setCharacterEncoding("utf-8");
-		response.setCharacterEncoding("utf-8");
-		
-		String key = userVO.getSearchUserKeyword();
-		
-		List<UserVO> userAllList = userService.getAllUserList(userVO);
-		
-		for(int i=0; i<userAllList.size(); i++) {
-			System.out.println(userAllList.get(i));
-		}
-		System.out.println();
-		
-		model.addAttribute("userAllList", userAllList);
-		return key;
-	}
 }
 

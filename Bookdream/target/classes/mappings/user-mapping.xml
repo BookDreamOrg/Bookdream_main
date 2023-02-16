@@ -44,6 +44,7 @@
 			or user_tel like '%' || #{searchUserKeyword} || '%' or user_level like '%' || #{searchUserKeyword} || '%'
 			or blacklist_yn like '%' || #{searchUserKeyword} || '%' or user_email like '%' || #{searchUserKeyword} || '%' 
 			or user_point like '%' || #{searchUserKeyword} || '%' or user_regdate like '%' || #{searchUserKeyword} || '%'
+			or flatform_type like '%' || #{searchUserKeyword} || '%'
 		</if>
 	</select>
 	

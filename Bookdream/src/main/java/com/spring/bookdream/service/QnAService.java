@@ -1,10 +1,10 @@
 package com.spring.bookdream.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.spring.bookdream.vo.AnswerVO;
 import com.spring.bookdream.vo.QnAVO;
+import com.spring.bookdream.vo.UserVO;
 
 public interface QnAService {
 	
@@ -37,4 +37,7 @@ public interface QnAService {
 	
 	//마이페이지 나의 문의 목록 리스트 (3개)
 	public List<QnAVO> getRecentMyQnAList(QnAVO qnaVO);	
+	
+	// 유저번호에 맞는 유저정보 가져오기
+	public List<UserVO> getQnAUser();
 }

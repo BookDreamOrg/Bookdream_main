@@ -32,7 +32,7 @@
 					<div>
 						<img src="/resources/images/logo/logo_white.png"
 							alt="user_profile" class="user_profile" />
-					</div> <span class="list_text"> <a href="#">관리자</a></span>
+					</div> <span class="list_text"> <a href="/views/admin/admin.jsp">관리자</a></span>
 				</li>
 				<li class="list-group-item"><span class="list_icon"><i
 						class="fa-solid fa-user"></i></span> <span class="list_text"><a
@@ -53,7 +53,7 @@
 						href="#">대시보드</a></span></li>
 				<li class="list-group-item"><span class="list_icon"><i
 						class="fa-solid fa-user-gear"></i></span><span class="list_text"><a
-						href="#">사용자 관리</a></span></li>
+						href="/admin/user/userListPage.do?num=1">사용자 관리</a></span></li>
 				<li class="list-group-item"><span class="list_icon"><i
 						class="fa-solid fa-pen-to-square"></i></span> <span class="list_text"><a
 						href="#">제품 관리</a></span></li>
@@ -73,7 +73,7 @@
 						href="#">버그 및 신고</a></span></li>
 				<li class="list-group-item"><span class="list_icon"><i
 						class="fa-solid fa-comment"></i></span> <span class="list_text"><a
-						href="#">문의 사항</a></span></li>
+						href="/admin/user/getAllQnAList">문의 사항</a></span></li>
 			</ul>
 		</div>
 		<!-- <div class="thema">
@@ -295,7 +295,7 @@
 								const btn = $(event.relatedTarget);
 								const getUserNo = parseInt(btn[0].parentNode.parentNode.childNodes[1].innerText);
 								$.ajax({
-									url : "/views/admin/user/getUserByNo.do",
+									url : "/admin/user/getUserByNo.do",
 									type : "POST",
 									data : {
 										user_no : getUserNo
@@ -329,7 +329,7 @@
 				const val = $('#getUSerByNoNo');
 				const blackNum = parseInt(val[0].innerText);
 				$.ajax({
-					url : "/views/admin/user/blackList.do",
+					url : "/admin/user/blackList.do",
 					type : "POST",
 					data : {
 						user_no : blackNum
@@ -367,12 +367,12 @@
 			var searchUserKeyword = $('#searchUserKeyword').val();
 			$.ajax({
 				type : "POST",
-				url : "/views/admin/user/getSearchUserList",
+				url : "/admin/user/getSearchUserList",
 				data : {searchUserKeyword : searchUserKeyword},
 
 				success : function(result){	
 					console.log(result);
-					location.href="/views/admin/user/userListPage.do?num=1"+"&searchUserKeyword=" + result;
+					location.href="/admin/user/userListPage.do?num=1"+"&searchUserKeyword=" + result;
 				},
 				error : function(){
 					alert('서버 에러입니다.');

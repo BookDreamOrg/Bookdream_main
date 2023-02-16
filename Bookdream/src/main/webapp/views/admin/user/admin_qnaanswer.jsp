@@ -45,7 +45,7 @@
 							alt="user_profile" class="user_profile" />
 					</div>
 					<span class="list_text">
-					<a href="#">관리자</a></span>
+					<a href="/views/admin/admin.jsp">관리자</a></span>
 				</li>
 				<li class="list-group-item"><span class="list_icon"><i
 						class="fa-solid fa-user"></i></span> <span class="list_text"><a href="#">프로필 관리</a></span></li>
@@ -64,7 +64,7 @@
 						class="fa-solid fa-border-all"></i></span> <span class="list_text"><a href="#">대시보드</a></span>
 				</li>
 				<li class="list-group-item"><span class="list_icon"><i
-						class="fa-solid fa-user-gear"></i></span><span class="list_text"><a href="#">사용자 관리</a></span></li>
+						class="fa-solid fa-user-gear"></i></span><span class="list_text"><a href="/admin/user/userListPage.do?num=1">사용자 관리</a></span></li>
 				<li class="list-group-item"><span class="list_icon"><i
 						class="fa-solid fa-pen-to-square"></i></span> <span class="list_text"><a href="#">제품 관리</a></span></li>
 				<li class="list-group-item"><span class="list_icon"><i
@@ -80,7 +80,7 @@
 				<li class="list-group-item"><span class="list_icon"><i
 						class="fa-solid fa-bug"></i></span> <span class="list_text"><a href="#">버그 및 신고</a></span></li>
 				<li class="list-group-item"><span class="list_icon"><i
-						class="fa-solid fa-comment"></i></span> <span class="list_text"><a href="/admin/getAllQnAList">문의 사항</a></span>
+						class="fa-solid fa-comment"></i></span> <span class="list_text"><a href="/admin/user/getAllQnAList">문의 사항</a></span>
 				</li>
 			</ul>
 		</div>
@@ -147,7 +147,24 @@
 														${list.getReg_date() }
 													</td>
 													<td width="20%">
-														문의한 유저: <span class="qna_list_title" id="user_id" name="user_id">${qna_user.getUser_id() }</span>
+														문의한 유저: <span class="qna_list_title" id="user_id" name="user_id">
+															<c:set var="flag" value="false"/>
+																<c:forEach var="userlist" items="${userList }">
+																		<c:choose>
+																			<c:when test="${list.getUser_no() eq userlist.getUser_no() && not flag}">
+																				<c:set var="flag" value="true"/>
+																				<c:choose>
+																					<c:when test="${userlist.getUser_id() eq null }">
+																						${userlist.getUser_name() }
+																					</c:when>
+																					 <c:otherwise>
+																					 		${userlist.getUser_id() }
+																					 </c:otherwise>
+																				</c:choose>
+																			</c:when>
+																		</c:choose>
+																</c:forEach>
+														</span>
 													</td>
 													<td width="65%">
 														<span class="qna_list_title" id="qna_title" name="qna_title">${list.getQna_title() }</span> 
