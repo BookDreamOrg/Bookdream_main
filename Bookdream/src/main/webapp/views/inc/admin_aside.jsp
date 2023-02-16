@@ -5,6 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<!-- Bootstrap icons-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+
 </head>
 <body>
 
@@ -41,8 +45,8 @@
 				</li>
 				<li class="list-group-item"><span class="list_icon"><i
 						class="fa-solid fa-user-gear"></i></span><span class="list_text"><a href="/admin/user/userListPage.do?num=1&searchUserKeyword=">사용자 관리</a></span></li>
-				<li class="list-group-item"><span class="list_icon"><i
-						class="fa-solid fa-pen-to-square"></i></span> <span class="list_text"><a href="#">제품 관리</a></span></li>
+				<li class="list-group-item"><span class="list_icon">
+				<i class="bi bi-book"></i></span> <span class="list_text"><a href='/views/admin/item_mngmn.jsp'>상품 관리</a></span></li>
 				<li class="list-group-item"><span class="list_icon"><i
 						class="fa-solid fa-bullhorn"></i></span> <span class="list_text"><a href="#">결제 관리</a></span></li>
 			</ul>
