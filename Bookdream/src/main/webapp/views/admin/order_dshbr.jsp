@@ -58,7 +58,8 @@
 	height: 500px;
 	display: inline-block;
 	padding: 30px;
-	text-align: left;	
+	text-align: left;
+	 	
 }
 
 .myChart {
@@ -143,11 +144,6 @@ td {
 	padding: 0px 0px 0px 42px;
 }
 </style>
-
-
-
-
-
 
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
