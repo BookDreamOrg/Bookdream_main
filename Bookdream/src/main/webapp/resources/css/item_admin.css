@@ -1,0 +1,93 @@
+@charset "utf-8";
+
+
+.modal-header {
+	background-color: var(--main-color-tint2);
+}
+.modal-body{
+	color: black;
+}
+.modal-footer {
+	background-color: var(--main-color-tint2);
+}
+#bookList{
+	width: 90%;
+	float:center;
+	
+}
+
+#book_list_section{
+border:1px solid gray;
+}
+
+#group_list,#bookList_title ul li{
+background-color : var(--main-color-tint2);
+color: 	white;
+font: bold;
+}
+
+#bookList ul {
+float:left;
+text-align:center;
+align-items: center;
+height: auto;
+background-color: #F7F7FA;
+border-bottom: 1px solid gray;
+border-radius: 0;
+ 
+}
+ #bookList li{
+float:left;
+text-align:center;
+height: auto;
+vertical-align:middle;
+background-color: #F7F7FA;
+color: black;
+
+ 
+ }
+ 
+ 
+ #modal_text{
+	color:var(--main-color-shadow2);
+	font: bold;
+	
+}
+
+#section_title1{
+color:var(--main-color-shadow2);
+	font: bold;
+}
+
+.col-md-2{
+	font: bold;
+}
+
+
+#bookList img{
+	width: 150px;
+	height: 200px;
+}
+
+li.count{
+width: 100px;	
+}
+li.bookNo,li.stock{
+width: 120px;
+}
+
+li.img{
+width: 200px;
+}
+li.title{
+width: 390px;
+}
+li.author{
+width:200px;
+}
+li.category,li.ch_stock{
+width: 150px;
+}
+
+
+

@@ -16,6 +16,7 @@
 		<result property="book_img" column="BOOK_IMG" />
 		<result property="pblic_date" column="PBLIC_DATE" />
 		<result property="book_category" column="BOOK_CATEGORY" />
+		<result property="discount" column="DISCOUNT" />
 	</resultMap>
 
 	<!-- 책 한권 정보 가져오기 -->
@@ -26,7 +27,7 @@
 	
 	<!-- 검색한 책 정보 가져오기 -->
 	<select id="getBookKeyword" resultMap="bookResult">
-		select * from book where title like '%' ||  #{keyword} || '%'
+		select * from book where title like '%' ||  #{keyword} || '%' 
 	</select>
 	
 	<!-- 구매수량이 많은 상위 5개 도서 정보 가져오기 -->
@@ -70,6 +71,38 @@
          order by rank
 	   ]]>  
 	</select>
+	
+	
+	<!-- [어드민] 필터링 된 도서 정보 가져오기 -->
+	<select id="adminBookList" resultMap="bookResult">
+			SELECT * 
+			FROM book  
+			<where>
+			<if test="title != null || title != ''  ">
+			AND title like '%' ||  #{title} || '%' 
+			</if>	
+			<if test="author != null || author != '' ">
+			AND  author  like '%' ||  #{author} || '%' 
+			</if>
+			<if test="publisher != null || publisher !='' ">
+			AND  publisher like '%' ||  #{publisher} || '%'
+			</if>
+			<if test="!book_category.equals('all')">
+			AND book_category = #{book_category}
+			</if>
+			</where>
+
+	</select>
+	
+	<!-- [어드민/모달] 기존 재고에 수량 추가-->
+	<update id="updateBookStock">
+	   <![CDATA[ 
+	   UPDATE book SET stock = ((SELECT stock 
+	   							FROM book 
+	   							WHERE book_no = #{book_no} ) + #{stock}) 
+	   WHERE book_no = #{book_no}
+	   ]]>  
+	</update>
 	
 	
 </mapper>

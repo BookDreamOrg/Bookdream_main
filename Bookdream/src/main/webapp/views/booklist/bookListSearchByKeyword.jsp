@@ -81,7 +81,7 @@
 						<div class="row">
 							<div class="col-md-4 mt-2">${book.author }</div>
 							<div class="col-md-8 mt-2">
-							<fmt:formatDate pattern="yyyy년 MM월 dd일" value="${book.public_date }"/></div>
+							<fmt:formatDate pattern="yyyy년 MM월 dd일" value="${book.pblic_date }"/></div>
 							<div id="book_content">${book.book_content }</div>
 						</div>
 						</div>

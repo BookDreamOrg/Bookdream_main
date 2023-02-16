@@ -17,9 +17,8 @@ public class BookServiceImpl implements BookService {
 	private BookDAO bookDAO;
 
 	@Override
-	public List<BookVO> getBookList(BookVO vo) {
-		
-		return bookDAO.getBookList(vo);
+	public List<BookVO> AdmingetBookList(BookVO vo) {
+		return bookDAO.AdmingetBookList(vo);
 	}
 
 	@Override
@@ -30,6 +29,11 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public List<BookVO> getBookList(String keyword) {
 		return bookDAO.getBookList(keyword);
+	}
+
+	@Override
+	public void updateBookStock(BookVO vo) {
+		bookDAO.updateBookStock(vo);
 	}
 
 

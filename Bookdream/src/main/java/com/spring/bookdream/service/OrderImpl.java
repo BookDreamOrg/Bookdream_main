@@ -1,5 +1,7 @@
 package com.spring.bookdream.service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
@@ -78,7 +80,14 @@ public class OrderImpl implements OrderService {
 	public List<Map<String, Object>> orderCancelDateCount(OrderVO vo) {
 		// TODO Auto-generated method stub
 		return orderDAO.orderCancelDateCount(vo);
+	}
+
+	//일주일 도서 주문량 카운트 
+	@Override
+	public List<Map<String,Object>> orderBy7DaysBook() {
+		return orderDAO.orderBy7DaysBook();
 	}	
+	
 	
 	
 
