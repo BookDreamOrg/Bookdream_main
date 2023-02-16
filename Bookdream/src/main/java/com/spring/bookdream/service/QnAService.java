@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.spring.bookdream.vo.AnswerVO;
 import com.spring.bookdream.vo.QnAVO;
+import com.spring.bookdream.vo.UserVO;
 
 public interface QnAService {
 	
@@ -32,8 +33,11 @@ public interface QnAService {
 	public void answerCheck(QnAVO qnaVO);
 	
 	//질문 번호에 따른 답변 가져오기
-	public AnswerVO getAnswer(QnAVO qnaVO);
+	public List<AnswerVO> getAnswer(QnAVO qnaVO);
 	
 	//마이페이지 나의 문의 목록 리스트 (3개)
 	public List<QnAVO> getRecentMyQnAList(QnAVO qnaVO);	
+	
+	// 유저번호에 맞는 유저정보 가져오기
+	public List<UserVO> getQnAUser();
 }
