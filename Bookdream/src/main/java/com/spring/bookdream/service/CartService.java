@@ -20,12 +20,13 @@ public interface CartService {
 	int addCart(CartVO cart);
 	int addCart_init(CartVO cart);
 	int selectInitCount(CartVO cart);
+	List<CartVO> totalPrice(CartVO cart);
 	
 	// 장바구니 삭제
 	int deleteCart(CartVO cart);
 	
 	// 카트 수량 수정 
-//	int modifyCount(CartVO cart);
+	int modifyCount(CartVO cart);
 	
 
 	

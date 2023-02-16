@@ -147,6 +147,7 @@ create table BOOK (
     book_CONTENT varchar2(3000),
     STOCK        number(20),
     BOOK_PRICE   number(10),
+    discount     number(10) DEFAULT 0,
     BOOK_IMG     varchar(500) not null,
     PBLIC_DATE   date not null,
     BOOK_CATEGORY varchar(500) not null,
@@ -157,6 +158,12 @@ create table BOOK (
 alter table BOOK add discount  number(10) DEFAULT 0;
 select * from BOOK;
 
+alter table BOOK add discount  number(10) DEFAULT 0; -- 10이면 10% 할인
+
+select book_no,BOOK_PRICE,discount from BOOK where book_no=500 or book_no=501 ;
+update BOOK set discount = 10  where book_no=500;
+update BOOK set discount = 15  where book_no=501;
+  
 commit;
 
 
@@ -181,20 +188,6 @@ CREATE sequence CART_SEQ increment by 1 START with 1;
 -- sequence적용 cart inert 예시
 insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) 
 values(CART_SEQ.nextval, 1, 30, 3);
-
-insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(1, 1, 1, 1);
-insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(2, 1, 2, 1);
-insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(3, 1, 3, 2);
-insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(4, 1, 4, 1);
-insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(5, 1, 5, 1);
-
-insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(6, 2, 5, 1);
-
-select PRODUCT_COUNT from cart
-where user_no=1 and book_no = 20;
-
-insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) 
-            values(CART_SEQ.nextval, 1, 20, 2);
 
 
 -- if 조건 then 처리문 else if 조건2 then 처리문;     
