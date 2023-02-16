@@ -82,6 +82,10 @@ alter table review add constraint fk_review_user_id foreign key (user_id) refere
 
 select * from review;
 
+-- review table fk book_no casecade
+alter table REVIEW drop constraint FK_REVIEW_BOOK_NO;
+alter table REVIEW add constraint FK_REVIEW_BOOK_NO foreign key (book_no) references book (book_no) on delete cascade;
+
 --------------------------------------------------------------------------------
 ------------------------------------ PAY ---------------------------------------
 --------------------------------------------------------------------------------
