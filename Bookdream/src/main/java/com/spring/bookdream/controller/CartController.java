@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -123,23 +124,31 @@ public class CartController {
 		
 		return result;
 		
-		/*
-		else {
-			System.out.println("N");// do 로그인 no
-			
-			
-			int book_no = (int) session.getAttribute("book_no");
-			int product_count = (int) session.getAttribute("product_count");
-			
-			session.setAttribute("book_no", book_no);
-			session.setAttribute("product_count", product_count);
-			
-			result = 0; // 1 : 로그인 완료, 0 : 로그인 미완 
-			return result;
-		}
-		 */
+	}	
+	
+	
+	/* [[ 장바구니 수량 업데이트  ]] */
+	@ResponseBody
+	@RequestMapping(value="/modifyCount", method = RequestMethod.POST)
+	public int modifyCount(CartVO cart, Model model, HttpSession session) {
+		
+		System.out.println("\n>>>>>>>>> CartController <<<<<<<<< ");
+		System.out.println("---> [장바구니] modifyCount() 실행...");
+		
+		UserVO user = (UserVO)session.getAttribute("authUser");
+		cart.setUser_no(user.getUser_no());
+		
+		int result = 0; // 1 : 장바구니 추가 성공, 0 : 장바구니 추가 실패
+		
+		System.out.println("---> [장바구니] cartService.modifyCount() 장바구니 업데이트 실행... ");
+		cartService.modifyCount(cart);
+				
+		result = 1;	// 1 : 장바구니 추가 성공
+		
+		return result;
 		
 	}	
+	
 	
 	/* [[user의 카트 아이템  중복 boolean]]
 	 * cart table에서 book_no가 존재하면 true, 없으면 false*/
@@ -161,6 +170,7 @@ public class CartController {
 		}
 		
 	}
+	
 	
 	/* [[선택한 장바구니 삭제]]
 	 * if 	-> session에서 user_no가 있으면(=로그인 상태) 바로 DB에 delete 
@@ -202,6 +212,43 @@ public class CartController {
 		
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/payNow")
+	public int payNow(@RequestParam(name = "chbox[]") List<String> chArr,
+							CartVO cart, HttpSession session) {
+		
+		System.out.println("\n>>>>>>>>> CartController <<<<<<<<< ");
+		System.out.println("---> [장바구니] payNow() 실행...");	
+		
+		UserVO user = (UserVO)session.getAttribute("authUser");
+		int user_no = user.getUser_no();
+		
+		int result = 0; // 1 : 장바구니 삭제 성공, 0 : 장바구니 삭제 실패
+		int cart_no = 0;
+		
+		System.out.print("[장바구니] 로그인 check : ");
+		if (user != null) {
+			System.out.println("Y");// do 로그인 yes
+			System.out.println(">> user_no : " + user_no);
+			
+			cart.setUser_no(user_no);
+			
+			System.out.println(">> ajax로 받아온 데이터 chArr[] : " + chArr);
+			
+			System.out.println("---> [장바구니] List<String> chArr 데이터 분리하기 for문 실행... ");
+			for (String i : chArr) {
+				cart_no = Integer.parseInt(i); // dataType변환 : string to int
+				cart.setCart_no(cart_no);
+				//cartService.deleteCart(cart);
+			}
+			result = 1;	 // 1 : 장바구니 삭제 성공, 0 : 장바구니 삭제 실패
+			
+		}	
+		return result;
+		
+	}
+	
+	
 	/* [[user의 카트 아이템 갯수]]
 	 * cart table에서 item 갯수를  count함.*/
 	@ResponseBody
@@ -218,4 +265,26 @@ public class CartController {
 		
 		return cnt;
 	}
+
+	
+	/* [[user의 카트 아이템 갯수]]
+	 * cart table에서 item 갯수를  count함.*/
+	@ResponseBody
+	@RequestMapping(value = "/totalPrice" , method = RequestMethod.POST)
+	public void countTotalPrice(CartVO cart, Model model, HttpSession session ) {
+		
+		System.out.println("\n>>>>>>>>> CartController <<<<<<<<< ");
+		System.out.println("---> [장바구니] countCartLsits() 실행... ");
+		
+		UserVO user = (UserVO)session.getAttribute("authUser");
+		cart.setUser_no(user.getUser_no());
+		
+		// user_no의 장바구니 리스트 갯수 (뱃지)
+		cartService.totalPrice(cart);
+		
+		
+		
+	}
+
+	
 }

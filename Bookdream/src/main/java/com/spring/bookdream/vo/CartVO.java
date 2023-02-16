@@ -17,7 +17,7 @@ public class CartVO {
 	
 	private int listCount;
 	private int initCount;
-
+	
 	private UserVO userVO;
 	private BookVO bookVO;
 	

@@ -44,6 +44,11 @@ public class CartDAO {
 		System.out.println("\t---> [장바구니] selectInitCount() 아이템 중복 확인");
 		return mybatis.selectOne("CartDAO.selectInitCount", cart);
 	}
+	public List<CartVO> totalPrice(CartVO cart){
+		System.out.println("\n\t>>>>> CartDAO <<<<<< ");
+		System.out.println("\t---> [장바구니] totalPrice() 목록 조회");
+		return mybatis.selectList("CartDAO.totalPrice", cart);
+	}
 	
 	// 장바구니 삭제
 	public int deleteCart(CartVO cart) {
@@ -54,13 +59,11 @@ public class CartDAO {
 	 
 	
 	// 장바구니 수량 수정
-	/*
-	public int modifyCount(CartVO vo) {
+	public int modifyCount(CartVO cart) {
 		System.out.println("\n >>>>> CartDAO <<<<<< ");
-		System.out.println("---> [장바구니] 아이템 수량 수정 <---");
-		return mybatis.update("CartDAO.modifyCount", vo);
+		System.out.println("---> [장바구니] modifyCount() 아이템 수량 수정 ");
+		return mybatis.update("CartDAO.modifyCount", cart);
 	}
-	 */
 	
 	
 }
