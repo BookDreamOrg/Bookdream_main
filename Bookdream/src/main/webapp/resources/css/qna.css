@@ -31,11 +31,15 @@
 }
 
 .qna_body {
-	margin-top: 100px;
+	margin-top: 30px;
+}
+
+.qna_header{
+	display: flex;
+	justify-content: space-between;
 }
 
 .qna_list_title {
-	
 	font-size: 16px;
 }
 

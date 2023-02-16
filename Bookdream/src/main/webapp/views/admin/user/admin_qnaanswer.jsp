@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,6 +27,8 @@
     <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
     <link rel="stylesheet" href="/resources/css/styles.css" />
     <link rel="stylesheet" href="/resources/css/admin_screen.css" />
+    <link rel="stylesheet" href="/resources/css/admin_qnaanswer.css" />
+    
 <title>Admin Page</title>
 </head>
 <body class="admin_body">
@@ -41,7 +45,7 @@
 							alt="user_profile" class="user_profile" />
 					</div>
 					<span class="list_text">
-					<a href="#">관리자</a></span>
+					<a href="/views/admin/admin.jsp">관리자</a></span>
 				</li>
 				<li class="list-group-item"><span class="list_icon"><i
 						class="fa-solid fa-user"></i></span> <span class="list_text"><a href="#">프로필 관리</a></span></li>
@@ -60,7 +64,7 @@
 						class="fa-solid fa-border-all"></i></span> <span class="list_text"><a href="#">대시보드</a></span>
 				</li>
 				<li class="list-group-item"><span class="list_icon"><i
-						class="fa-solid fa-user-gear"></i></span><span class="list_text"><a href="#">사용자 관리</a></span></li>
+						class="fa-solid fa-user-gear"></i></span><span class="list_text"><a href="/admin/user/userListPage.do?num=1">사용자 관리</a></span></li>
 				<li class="list-group-item"><span class="list_icon"><i
 						class="fa-solid fa-pen-to-square"></i></span> <span class="list_text"><a href="#">제품 관리</a></span></li>
 				<li class="list-group-item"><span class="list_icon"><i
@@ -76,7 +80,7 @@
 				<li class="list-group-item"><span class="list_icon"><i
 						class="fa-solid fa-bug"></i></span> <span class="list_text"><a href="#">버그 및 신고</a></span></li>
 				<li class="list-group-item"><span class="list_icon"><i
-						class="fa-solid fa-comment"></i></span> <span class="list_text"><a href="#">문의 사항</a></span>
+						class="fa-solid fa-comment"></i></span> <span class="list_text"><a href="/admin/user/getAllQnAList">문의 사항</a></span>
 				</li>
 			</ul>
 		</div>
@@ -116,63 +120,122 @@
 			</div>
 		</nav>
 	</header>
+	<!------------------------------------- Main --------------------------------------------->
 	<div class="section_div">
-		<section class="today_state">
-			<div class="card">
 				<div class="card-body">
-					<h5 class="card-title">오늘의 할일</h5>
-					<p class="card-text">With supporting text below as a natural
-						lead-in to additional content.</p>
+					<div class="admin_answer_title card-title">1:1문의 답변</div>
 				</div>
-			</div>
-		</section>
-		<section class="todo_list">
-			<div class="card">
-				<div class="card-header">Featured</div>
-				<div class="card-body">
-					<h5 class="card-title">Special title treatment</h5>
-					<p class="card-text">With supporting text below as a natural
-						lead-in to additional content.</p>
-				</div>
-			</div>
-		</section>
-		<section class="calandar">
-			<div class="card">
-				<div class="card-header">Featured</div>
-				<div class="card-body">
-					<h5 class="card-title">Special title treatment</h5>
-					<p class="card-text">With supporting text below as a natural
-						lead-in to additional content.</p>
-				</div>
-			</div>
-		</section>
-		<section class="qna">
-			<div class="card">
-				<div class="card-header">Featured</div>
-				<div class="card-body">
-					<h5 class="card-title">Special title treatment</h5>
-					<p class="card-text">With supporting text below as a natural
-						lead-in to additional content.</p>
-				</div>
-			</div>
-		</section>
-		<section class="content_review">
-			<div class="card">
-				<div class="card-header">Featured</div>
-				<div class="card-body">
-					<h5 class="card-title">Special title treatment</h5>
-					<p class="card-text">With supporting text below as a natural
-						lead-in to additional content.</p>
-				</div>
-			</div>
-		</section>
 	</div>
+	
+	
+		<div class="container">
+
+			<div class="main">
+
+					<div class="qna_body">
+						<c:choose>
+							<c:when test="${empty qnaAllList }">
+								<p class="ans_main_content">답변 받은 내역이 없습니다.</p>
+							</c:when>
+							<c:when test="${!empty qnaAllList }">
+								<c:forEach var="list" items="${ qnaAllList}" varStatus="vs">
+									<div>
+										<div>
+											<table class="table table-borderless">
+												<tr>
+													<td width="10%">
+														${list.getReg_date() }
+													</td>
+													<td width="20%">
+														문의한 유저: <span class="qna_list_title" id="user_id" name="user_id">
+															<c:set var="flag" value="false"/>
+																<c:forEach var="userlist" items="${userList }">
+																		<c:choose>
+																			<c:when test="${list.getUser_no() eq userlist.getUser_no() && not flag}">
+																				<c:set var="flag" value="true"/>
+																				<c:choose>
+																					<c:when test="${userlist.getUser_id() eq null }">
+																						${userlist.getUser_name() }
+																					</c:when>
+																					 <c:otherwise>
+																					 		${userlist.getUser_id() }
+																					 </c:otherwise>
+																				</c:choose>
+																			</c:when>
+																		</c:choose>
+																</c:forEach>
+														</span>
+													</td>
+													<td width="65%">
+														<span class="qna_list_title" id="qna_title" name="qna_title">${list.getQna_title() }</span> 
+													</td>
+													<td width="5%">
+														<i class="drop_btn bi bi-arrow-down-short"data-bs-toggle="collapse" data-bs-target="#collapseEx${list.getQna_no() }" 
+														aria-expanded="false" aria-controls="collapseEx${list.getQna_no() }"></i>
+													</td>
+												</tr>
+											</table>
+											
+										</div>
+									</div>
+
+									<div class="collapse" id="collapseEx${list.getQna_no() }">
+										<div class="card card-body" id="qna_content"
+											name="qna_content">${list.getQna_content() }</div>
+										<div class="qna_sumbmit">
+											<div class="qna_submit_btn">
+												<button type="button" class="btn btn-primary"
+													data-bs-toggle="modal"
+													data-bs-target="#ModalQnA${vs.index }">답변</button>
+												<input class="qna_nocls" type="hidden" value="${list.getQna_no() }">
+
+												<!------------------------- Modal ------------------------------>
+												<div class="modal fade" id="ModalQnA${vs.index }"
+													tabindex="-1" aria-labelledby="ModalLabel"
+													aria-hidden="true">
+													
+													<div class="modal-dialog modal-dialog-centered">
+														<div class="modal-content">
+															<div class="modal-header">
+																<h5 class="modal-title" id="ModalLabel">답변하기</h5>
+																<button type="button" class="btn-close"
+																	data-bs-dismiss="modal" aria-label="Close"></button>
+															</div>
+															<div class="modal-body">
+																<textarea class="form_textarea" id="ans_content${vs.index }"
+																	name="ans_content" maxlength="500"
+																	style="width: 465px; height: 246px"></textarea>
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-primary" id="ans_btn${list.getQna_no() }"
+																	data-bs-dismiss="modal" onclick='answer_btn(${list.getUser_no() },${vs.index })'>답변</button>
+															</div>
+														</div>
+													</div>
+											
+												</div>
+											</div>
+										</div>
+										<hr>
+									</div>
+
+								</c:forEach>
+							</c:when>
+						</c:choose>
+					</div>
+				
+			</div>
+		</div>
 	</main>
+	<script src="/resources/js/admin_qnaanswer.js"></script>
 
 	<!-- Script Bootstrap, jqurey-3.6.3 -->
 	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
 	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 
+	<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css" />
+	
 	<!-- Script FontAwesome-->
 	<script src="https://kit.fontawesome.com/4bf42f841a.js"
 		crossorigin="anonymous"></script>

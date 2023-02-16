@@ -167,3 +167,13 @@ header nav:first-child {
   box-sizing: border-box;
   display: flex;
 }
+
+
+.admin_answer_title{
+	font-size: 25px;
+}
+
+.ans_main_content{
+	text-align: center;
+}
+

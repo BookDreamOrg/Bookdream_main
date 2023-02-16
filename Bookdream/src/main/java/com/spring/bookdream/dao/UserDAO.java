@@ -24,8 +24,8 @@ public class UserDAO {
 		}
 	
 		//모든 유저 리스트 가져오기
-		public List<UserVO> getAllUserList(){
-			return mybatis.selectList("UserDAO.getAllUserList");
+		public List<UserVO> getAllUserList(UserVO vo){
+			return mybatis.selectList("UserDAO.getAllUserList", vo);
 		}	
 		
 		// 로그인 확인
@@ -124,5 +124,37 @@ public class UserDAO {
 		public void deleteUser(UserVO vo) {
 			mybatis.delete("UserDAO.deleteUser", vo);
 		}
-
+		
+		// 회원조회
+		public List<UserVO> selectUser() {
+			System.out.println("Uesr List 불러오는중...");
+			
+			return mybatis.selectList("UserDAO.selectUser");
+		}
+		
+		// 유저 count
+		public int countUser() {
+			return mybatis.selectOne("UserDAO.countUser");
+		}
+		
+		// User list page
+		public List<UserVO> userListPage(UserVO userVO) {
+			
+//			HashMap<String, Integer> data = new HashMap<String, Integer>();
+//			
+//			data.put("displayPost", displayPost);
+//			data.put("postNum", postNum);
+			
+			return mybatis.selectList("UserDAO.userListPage", userVO);
+		}
+		
+		// User Get By user_no
+		public UserVO getUserByNo(int no) {
+			return (UserVO) mybatis.selectOne("UserDAO.getUserByNo", no);
+		}
+		
+		// Set BlackList
+		public void setBlack(int no) {
+			mybatis.update("UserDAO.setBlack", no);
+		}
 }

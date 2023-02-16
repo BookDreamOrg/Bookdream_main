@@ -41,7 +41,10 @@ public class CartServiceImpl implements CartService {
 	public int selectInitCount(CartVO cart) {
 		return cartDAO.selectInitCount(cart);
 	}
-
+	@Override
+	public List<CartVO> totalPrice(CartVO cart) {
+		return cartDAO.totalPrice(cart);
+	}
 	
 	
 	/*-------------------- 장바구니 삭제 --------------------*/
@@ -52,11 +55,9 @@ public class CartServiceImpl implements CartService {
 	
 	
 	/*-------------------- 장바구니 수정 --------------------*/
-	/*
 	@Override // 카트 수량 수정
 	public int modifyCount(CartVO cart) {
 		return cartDAO.modifyCount(cart);
 	}
-	*/
 	 
 }

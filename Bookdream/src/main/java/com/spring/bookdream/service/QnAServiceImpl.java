@@ -1,6 +1,7 @@
 package com.spring.bookdream.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.spring.bookdream.dao.QnADAO;
 import com.spring.bookdream.vo.AnswerVO;
 import com.spring.bookdream.vo.QnAVO;
+import com.spring.bookdream.vo.UserVO;
 
 @Service("QnAService")
 public class QnAServiceImpl implements QnAService{
@@ -61,8 +63,12 @@ public class QnAServiceImpl implements QnAService{
 	}
 	
 	//질문 번호에 따른 답변 가져오기
-	public AnswerVO getAnswer(QnAVO qnaVO) {
+	public List<AnswerVO> getAnswer(QnAVO qnaVO) {
 		return qnaDAO.getAnswer(qnaVO);
 	}
 		
+	// 유저번호에 맞는 유저정보 가져오기
+	public List<UserVO> getQnAUser() {
+		return qnaDAO.getQnAUser();
+	}
 }

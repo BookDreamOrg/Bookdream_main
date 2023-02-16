@@ -499,5 +499,21 @@
 		       o.user_no = u.user_no AND
 		       o.order_no = #{order_no} 
 	</select>	
-		
+				
+	
+	<!-- 일주일치 일일 판매량 -->
+	<select id="Order_BY_7DAYS" resultType="HashMap">
+	<![CDATA[
+		SELECT SUM(product_count) as pc, TO_CHAR(orders.order_date,'YYYY-MM-dd') AS dt 
+		FROM purchase 
+		RIGHT JOIN orders 
+		ON purchase.order_no = orders.order_no
+		WHERE TO_DATE(TO_CHAR(orders.order_date,'YYYY-MM-dd')) <= (sysdate) AND to_date(to_char(orders.order_date,'YYYY-MM-dd')) > (sysdate-7)
+		GROUP BY TO_CHAR(orders.order_date,'YYYY-MM-dd')
+	]]>	    
+	</select>		
+	
+	
+	
+	
 </mapper>

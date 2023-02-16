@@ -66,7 +66,7 @@ public class BookController {
 				
 				//출판 날짜 포맷 변경
 				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-				String strDate = simpleDateFormat.format(bookService.getBook(book_no).getPublic_date()); 
+				String strDate = simpleDateFormat.format(bookService.getBook(book_no).getPblic_date()); 
 				model.addAttribute("strdate",strDate);
 				
 				//review정보 매핑
