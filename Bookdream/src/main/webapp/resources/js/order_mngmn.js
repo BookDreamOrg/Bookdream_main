@@ -244,7 +244,7 @@ function orderMngmnDtls(order_no) {
 				
 			let STATUS = switchCase(data[0].ORDER_STATUS)		
 			let CANCEL_DATE = data[0].CANCEL_DATE === undefined ? 'N' : data[0].CANCEL_DATE
-			let BTN = data[0].ORDER_STATUS == (10 || 12) ? `<a class="aprvl_btn" id="aprvl_btn" value="1">요청승인</a>` : '' 	
+			let BTN = (data[0].ORDER_STATUS == 10 || data[0].ORDER_STATUS == 12) ? `<a class="aprvl_btn" id="aprvl_btn" value="1">요청승인</a>` : '' 	
 					
 					
 			let info = `<div class="info-box_title">주문정보</div>
