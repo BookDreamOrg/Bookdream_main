@@ -42,7 +42,7 @@
 						class="fa-solid fa-user"></i></span> <span class="list_text"><a href="#">프로필 관리</a></span></li>
 				<li class="list-group-item"><span class="list_icon"><i
 						class="fa-solid fa-arrow-up-right-from-square"></i></span> <span
-					class="list_text"><a href="#">사이트 바로가기</a></span></li>
+					class="list_text"><a href="/views/main/main.jsp">사이트 바로가기</a></span></li>
 			</ul>
 		</div>
 		<div class="aside_product">

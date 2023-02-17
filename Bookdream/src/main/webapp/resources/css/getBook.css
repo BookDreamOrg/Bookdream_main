@@ -9,7 +9,6 @@ body{
 }
 
 
-
 #detail-img {
 	
   width : 380px;
@@ -33,9 +32,11 @@ section{
 	font-size:  20px;
 }
 
-#detail-price{
-	font-size: 30px;
+#book_title{
+	font-weight: 400;
+	color: var(--main-color-shadow3);
 }
+
 
 #reviewList{
 	width: 80%;
