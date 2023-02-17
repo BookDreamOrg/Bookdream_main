@@ -92,7 +92,7 @@ public class Admin_BookController {
 	}	
 	
 	/*[관리자] 모달 도서 정보조회 ------------------------------------------------------------*/
-	@PostMapping("/upd_Stock_Modal_Detail")
+	@PostMapping("/Modal_Detail")
 	@ResponseBody
 	public BookVO stock_Modal(int book_no) {
 		return bookService.getBook(book_no);
@@ -106,10 +106,13 @@ public class Admin_BookController {
 		bookService.updateBookStock(vo);
 	}
 	
-	
-	
-	
-	
+	/*[관리자] 모달 도서 삭제 ------------------------------------------------------------*/
+	@PostMapping("/dlt_Modal_Detail")
+	@ResponseBody
+	public void delete_Book(int book_no) {
+		bookService.deleteBook(book_no);
+	}
+
 	
 
 

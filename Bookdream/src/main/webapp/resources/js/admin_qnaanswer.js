@@ -13,7 +13,7 @@ function answer_btn(value,index) {
 			
 			$.ajax({
 				type : "POST",
-				url : "/views/admin/user/answerQnA",
+				url : "/admin/user/answerQnA",
 				data : {
 					user_no : user_num,
 					ans_content : ans_content,
@@ -21,7 +21,7 @@ function answer_btn(value,index) {
 				},
 				success : function(data) {
 					alert('답변완료 되었습니다.');
-					location.href='/views/admin/user/getAllQnAList';
+					location.href='/admin/user/getAllQnAList';
 				},
 				error : function() {
 					alert('서버에러입니다.');

@@ -18,4 +18,7 @@ public interface BookService {
 	//[어드민] 도서 재고 추가
 	void updateBookStock(BookVO vo);
 	
+	//[어드민] 도서 삭제
+	void deleteBook (int book_no);
+	
 }

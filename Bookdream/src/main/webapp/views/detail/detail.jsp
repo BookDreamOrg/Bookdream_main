@@ -46,84 +46,92 @@
 		
 		<main>
 
-		
 		<div class="book-section">
 				<div class="container-fluid text-center">
-					<div class="h1 mt-5 mb-5">${book.title }</div>
+					<div class="display-4 mt-5 mb-5" id="book_title">${book.title }</div>
 				</div>
 	<div class="row">
-		<div class="col-md-4">
-			<div class="row">
-				<div class="col-md-6 pt-4">
-				<span id="detail-badge" class="badge bg-primary rounded-pill">Author</span>
-				</div>
-				<div class="col-md-6 pt-4 h5">
-					${book.author }
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6 pt-4">
-					<span  id="detail-badge" class="badge bg-primary rounded-pill">Publisher</span>
-				</div>
-				<div class="col-md-6 pt-4 h5" >
-				${book.publisher}
-				</div>
-			</div>
+		<div class="col-6 text-center ">
+			<img id="detail-img" alt="${book.title }" src="${book.book_img }" class="img-thumbnail" />
+		</div>
+		<div class="col-6 mt-5">
 				<div class="row">
-				<div class="col-md-6 pt-4">
-					 <span id="detail-badge" class="badge bg-primary rounded-pill"> publication date</span>
-				</div>
-				<div class="col-md-6 pt-4 h5">
-				${strdate}
-				</div>
-			</div>
-		</div>
-		<div class="col-md-4 text-center ">
-			<h3 class="text-center">
-			</h3><img id="detail-img" alt="${book.title }" src="${book.book_img }" class="rounded" />
-		</div>
-		<div class="col-md-4 mt-5 pt-5">
-			<div class="row">
-				<div class="col-md-2">
-				</div>
-				<div class="col-md-7" id="detail-price">
-
+				<div class="col-1"></div>
+				<div class="col-5 ">
+				<ul class=" list-group-horizontal mt-3">
+					<li ><span id="detail-badge" class="badge bg-warning rounded-pill">작 &nbsp;&nbsp;가</span></li>
+					<li ><span id="detail-badge" class="badge bg-warning rounded-pill mt-2">출판사</span></li>
+					<li ><span id="detail-badge" class="badge bg-warning rounded-pill mt-2">출간일</span></li>
 				<c:choose>
 					<c:when test="${book.stock > 0 }">
-					<div class="row">
-						<div class="col-5"><span class="h5">정가</span></div>
-						<div class="col-7"><div class="text-center"><fmt:formatNumber value="${book.book_price}" pattern="###,###,###원" /></div></div>
-						<c:choose>
-						
-						<c:when test="${ book.discount eq 0 }">
-						<div class="col-5"><span class="h5">판매가 </span></div>
-						<div class="col-7"><div class="text-center"><fmt:formatNumber value="${book.book_price}" pattern="###,###,###원" /></div></div>
-						</c:when>
-
-						<c:otherwise>
-						<div class="col-5"><span class="h5">판매가</span> </div>
-							 <div class="col-7">
-							 <span><fmt:formatNumber type="currency" pattern="###,###,###원" value="${book.book_price - (book.book_price*book.discount/100)} " /></span>
-							 <span>(<fmt:formatNumber type="percent"  value="${book.discount/100} " /> 할인)</span>
-							 </div>
-						</c:otherwise>
-						</c:choose>
-						<div class="col-5"><span class="h5">배송</span></div> <div class="col-7"><div class="text-center h5"><a style="color: red;">3만원 이상 무료배송</a></div></div>
-						
-						<div class="col-5"><span class="h5">수량</span></div> <div class="col-7"><input class=" form-control text-center border-0 " type="number" id="product_cnt" min="1" max="${book.stock}" value="1" >
-						</div>
-					</div>
+					<c:choose>
+					<c:when test="${ book.discount eq 0 }">
+							<li class="mt-4"><span class="h3">정&nbsp;&nbsp;가</span></li>
+							<li class="mt-4"><span class="h3">판매가 </span></li>
 					</c:when>
 					<c:otherwise>
-						<div class="h1"> 품절  </div>					
+							<li class="mt-4"><span class="h3">정&nbsp;&nbsp;가</span></li>	
+							<li class="mt-4"><span class="h3">판매가</span> </li>
 					</c:otherwise>
-				</c:choose>
+					</c:choose>
+						<li class="mt-4"><span class="h3">배&nbsp;&nbsp;송</span></li>
+						<li class="mt-4"><span class="h3">수&nbsp;&nbsp;량</span></li>
+					</c:when>
+					<c:otherwise>
+					</c:otherwise>
+				</c:choose>	 
+				</ul>
 				</div>
-				<div class="col-md-3">
+				
+				<div class="col-6">
+				<ul class=" list-group-horizontal">
+					<li class="mt-3"><span class="h4">${book.author } </span></li>
+					<li class="mt-3"><span class="h4">${book.publisher} </span></li>
+					<li class="mt-3"><span class="h4">${strdate}</span></li>
+					<c:choose>
+					<c:when test="${book.stock > 0 }">
+					<c:choose>
+						<c:when test="${ book.discount eq 0 }">
+							<li class="mt-4"><span class="h5"><fmt:formatNumber value="${book.book_price}" pattern="###,###,###원" /></span></li>
+							<li class="mt-4"><span class="h3 mark"><fmt:formatNumber value="${book.book_price}" pattern="###,###,###원" /></span></li>
+						</c:when>
+						<c:otherwise>
+							<li class="mt-4"><div class=" h5 mt-5 text-muted text-decoration-line-through "><fmt:formatNumber value="${book.book_price}" pattern="###,###,###원" /></div></li>
+							<li class="mt-4">
+							 <span class="h3 mark"><fmt:formatNumber type="currency" pattern="###,###,###원" value="${book.book_price - (book.book_price*book.discount/100)} " /></span>
+							 <span class="h6">(<fmt:formatNumber type="percent"  value="${book.discount/100} " /> 할인)</span>
+							 </li>
+						</c:otherwise>
+						</c:choose>	
+							 <li><div class=" h4 mt-4"><a style="color: red;">3만원 이상 무료배송</a></div></li>
+							 <li class="mt-4"><input class=" form-control text-center border-0 " type="number" id="product_cnt" min="1" max="${book.stock}" value="1" ></li>
+				<!-- 장바구니/결제 버튼 -->
+						<div class="container-fluid mt-5">
+							<div class="text-center">
+								<button id="btn_buy_now" class="text-center btn btn-outline-dark flex-shrink-0 btn-lg" onclick="now_buy()">
+									<i class="bi bi-basket2"></i> 바로구매
+								</button>
+								<button id="btn_cart" class="text-center btn btn-outline-dark flex-shrink-0  btn-lg me-3" onclick="cart()">
+									<i class="bi-cart-fill me-1"></i>장바구니
+								</button>
+							<input id="book_no" type="hidden" value="${book.book_no}">
+							</div>
+						</div>
+						</c:when>
+						<c:otherwise>
+						<div class="h1 mt-5"> 품&nbsp;&nbsp;절  </div>					
+						</c:otherwise>
+				</c:choose>	 
+						 
+				</ul>
 				</div>
-			</div>
-		</div>
+		</div>		
+	</div>					
+
+					
 	</div>
+
+	
 	<div class="row  mt-5">
 		<div class="col-md-1">
 		</div>
@@ -138,29 +146,10 @@
 		</div>
 	</div>
 	
-			<div class="container-fluid mt-5">
-			
-				<div class="mt-5" id="btn-buy">
-				<div class="row">
-				<div class="col-md-6">
-				
-				</div>
-				<c:if test="${book.stock > 0 }">
-				<div class="col-md-6 text-end">
-					<button id="btn_buy_now" class="text-center btn btn-outline-dark flex-shrink-0 btn-lg" onclick="now_buy()">
-						<i class="bi bi-basket2"></i> 바로구매
-					</button>
-						<button id="btn_cart" class="text-center btn btn-outline-dark flex-shrink-0  btn-lg me-3" onclick="cart()">
-						<i class="bi-cart-fill me-1"></i>장바구니
-					</button>
-					<input id="book_no" type="hidden" value="${book.book_no}">
-				</div>
-				</c:if>
-				</div>
-				</div>
-					
-				</div>
-				</div>
+	
+	
+		
+</div>
 
 		
 </main>

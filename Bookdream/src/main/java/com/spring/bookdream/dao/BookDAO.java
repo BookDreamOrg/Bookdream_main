@@ -65,7 +65,11 @@ public class BookDAO {
 			mybatis.update("BookDAO.updateBookStock",vo);
 		}
 		
-	
+		//[어드민] 도서 삭제
+		public void deleteBook (int book_no) {
+			System.out.println("---> JDBC로 deleteBook() 처리");
+			mybatis.delete("BookDAO.deleteBook",book_no);
+		}
 	
 	
 }
