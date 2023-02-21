@@ -82,11 +82,11 @@
 				<!-- dummy -->
 			</div>
 
-		<!-- ---------------------------top------------------------- -->
+		<!-- ---------------------------top------------------------- /detail/cart/orderitem-->
 		<div class="top py-3 text-center fw-bold fs-1">
 		</div>
 
-		<section class="row g-4 justify-content-md-evenly">
+		<form class="row g-4 justify-content-md-evenly" method="POST" action="/detail/cart/orderitem" >
 		
 		
 		
@@ -151,7 +151,7 @@
 										<td class="align-middle">
 											<div class="checkBox form-check checkBox">
 												<input class="chBox chBox${cart.cart_no} form-check-input border rounded-circle"
-														type="checkbox" name="chBox" data-cartNo="${cart.cart_no}"> 
+														type="checkbox" name="chBox[]" value="${cart.cart_no}" data-cartNo="${cart.cart_no}"> 
 												<!-- 체크 ----------------- -->
 												<script>
 													$(".chBox").click(function(){
@@ -257,10 +257,10 @@
 															
 														<div class="input-group input-group-sm w-75 m-auto
 																	border border-dark-subtle rounded-3 border-2">
-															<input type="hidden" class="book_pirce${cart.cart_no}" value="${cart.bookVO.book_price }">
-															<input type="hidden" class="stock${cart.cart_no}" value="${cart.bookVO.stock }">
+															<input type="hidden" class="book_pirce${cart.cart_no}" value="${cart.bookVO.book_price }" disabled>
+															<input type="hidden" class="stock${cart.cart_no}" value="${cart.bookVO.stock }" disabled>
 															<input  class="product_cnt${cart.cart_no} qty form-control text-center border-0 " type="number" min="1" max="${cart.bookVO.stock}"  
-																	value="${cart.product_count}" readonly="readonly">
+																	value="${cart.product_count}" readonly="readonly" disabled>
 
 															<button class="minus${cart.cart_no} btn fw-bold order-first" type="button" data-cartNo="${cart.cart_no}">-</button>
 															<script >
@@ -408,18 +408,18 @@
 				</ul>
 					
 				<!-- 결제 버튼 -->
-				<form class="card p-0 border-0">
+				<div class="card p-0 border-0">
 					<div class="input-group">
 						<button class="payNow_btn w-100 btn btn-lg fw-bold color_btn" type="submit"> 결제하기</button>
 					</div>
-				</form>
+				</div>
 			</div>
 		
 		
 		
 		
 		
-		</section>
+		</form>
 
 		<!-- dummy box -->
 		<div style="height: 100px">
@@ -432,58 +432,21 @@
 	</div>
 	
 	<!-- ------------------------장바구니 선택(체크) 결제------------------------------- -->
-	<script type="text/javascript">/* 장바구니  선택 결제 */
-		$(".payNow_btn").click(function(){
-			
-			// 선택(체크)된 아이템 갯수
-			let i = $('input:checkbox[name=chBox]:checked').length; 
-			
-			if (i > 0) {
-				var confirm_val = confirm("정말 결제하시겠습니까?");
-				
-				if(confirm_val) {
-					var checkArr = [];
-					$('input:checkbox[name=chBox]').each(function() {
-						if($(this).is(":checked")==true){
-					    	checkArr.push($(this).attr("data-cartNo"));
-					    }
-					});
-					console.log("checkArr : " + checkArr)
-														  	    
-					$.ajax({
-						url : "/itemorder/cart/payNow",
-						type : "POST",
-						data : { chbox : checkArr },
-						success : function(result){
-							if(result != 1) {          
-								 alert("결제 실패");
-							}
-						},complete: function(){
-							location.href = "/detail/cart/orderitem";
-						},error : function(){
-							alert("error : 결제 실패");
-						}
-					});
-				}
-			} else {
-				alert("결제 선택된 품목이 없습니다.");
-			}
-		});
-	</script>
-	
+
+
 	<!-- ------------------------장바구니 선택(체크) 삭제------------------------------- -->
 	<script type="text/javascript">/* 장바구니  삭제 */
 		$(".selectDelete_btn").click(function(){
 			
 			// 선택(체크)된 아이템 갯수
-			let i = $('input:checkbox[name=chBox]:checked').length; 
+			let i = $('input:checkbox[name="chBox[]"]:checked').length; 
 			
 			if (i > 0) {
 				var confirm_val = confirm("정말 삭제하시겠습니까?");
 				
 				if(confirm_val) {
 					var checkArr = [];
-					$('input:checkbox[name=chBox]').each(function() {
+					$('input:checkbox[name="chBox[]"]').each(function() {
 						if($(this).is(":checked")==true){
 					    	checkArr.push($(this).attr("data-cartNo"));
 					    }
