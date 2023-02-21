@@ -1,6 +1,7 @@
 package com.spring.bookdream.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,11 @@ public class PurchaseDAO {
 		System.out.println("---> 구매목록 조회 <---");
 		
 		return mybatis.selectList("PurchaseDAO.getPurchaseList", vo);
+	}
+
+
+	public Map<String, Object> purchaseBookRatio() {
+
+		return mybatis.selectOne("PurchaseDAO.purchaseBookRatio");
 	}
 }

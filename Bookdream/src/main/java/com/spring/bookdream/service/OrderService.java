@@ -22,34 +22,29 @@ public interface OrderService {
 	// 사용, 적립 포인트 반환
 	int updateUserPoint(OrderVO vo);
 	
-	// 배송상태 업데이트
-	void trackingUpdate(OrderVO vo);
 	
 	// 마이페이지 배송상태 카운터
-	List<Map<String, Object>> orderStatusCount(OrderVO vo);	
+	List<Map<String, Object>> orderStatusCount(OrderVO order);	
 
 	// 마이페이지 최근주문 1개 출력
 	OrderVO recentOrder(OrderVO vo);
 
 	/************ 관리자 부문************/
 	
-	// 금주 주문 카운트 리스트
+	// 금주 주문 개수 리스트
 	List<Map<String, Object>> orderDateCount(OrderVO vo);
 
-	// 금주 주문 취소/반품 카운트 리스트
+	// 금주 주문 취소/반품 개수 리스트
 	List<Map<String, Object>> orderCancelDateCount(OrderVO vo);
 	
-	// 월간 주문 카운트
+	// 월간 주문 개수 리스트
 	List<Map<String, Object>> orderMlyDateCount(OrderVO vo);
 
-	// 월간 주문 취소/반품 카운트
+	// 월간 주문 취소/반품 개수 리스트
 	List<Map<String, Object>> orderMlyCancelDateCount(OrderVO vo);	
+		
 	
-	// 금주 취소/반품 현황
-	List<Map<String, Object>> cancelOrderWek(OrderVO vo);	
-	
-	// 금주 취소/반품 현황 카운트
-	int cancelOrderWekCount(OrderVO vo);
+	/*주문 관리*/
 	
 	// 결제취소/반품요청 승인
 	void orderAprvl(OrderVO vo);
@@ -63,7 +58,6 @@ public interface OrderService {
 	// 주문 총 관리 세부내역 
 	List<Map<String, Object>> orderMngmnDtls(OrderVO vo);		
 	
-
 	// 일주일 도서주문 수량 카운트
 	List<Map<String, Object>> orderBy7DaysBook();
 }

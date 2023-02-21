@@ -8,9 +8,9 @@
 <meta charset="UTF-8">
 
 <!-- bootstrap -->
-
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Favicon -->
     <link
@@ -39,362 +39,81 @@
 
 <!-- CSS  -->
 <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap_icon.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/order_mngmn.css">
+ 
+<!-- 달력 -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />      
       
 <title>주문 관리</title>
 
 <style type="text/css">
 
-.container {
-	height:auto;
-	min-height: 800px;
+/* 기간검색 */
+.daterangepicker {
+  color: black;
 }
-
-
-.btn_box {
-	position: relative;
-	width: 1240px;
-	margin: 0 auto;
-	margin-top: 50px;
-	margin-bottom: 10px;
-
-}
-.paging {
-	display: inline-block;
-}
-
-.paging_btn {
-	height: 30px;
-	font-size: 12px;
-
-}
-.srch_crtr {
-	width: 100px;
-	height: 30px;
-	font-size: 12px;
-	display: inline-block;
-
-}
-
-.srch_key {
-	width: 150px;
-	height: 30px;
-	font-size: 12px;
-	display: inline-block;	
-}
-
-.srch_btn {
-	width: 30px;
-	height: 30px;
-	font-size: 12px;
-	margin: 0px 0px 2px -13px;
-	text-align: center;
-	padding: 0px;	
-}
-
-.right {
-	float: right;
-}
-
-.mngmn_table {
-	margin: 0 auto;
-	width: 1240px;	
-	border: 1px solid black;
-}
-
-
-
-.mngmn_table th {
-	height: 50px;
-	text-align:center;
-	vertical-align:middle;	
-	border-bottom: 1px solid black;
-	background-color: #f7f7f7;
-	font-size: 14px;
-	font-weight: bold;
-}
-
-.mngmn_table td {
-	height: 70px;
-	font-size: 12px;
-	text-align: center;
-	vertical-align: middle;
-	cursor: pointer;
-}
-
-.mngmn_table tr:nth-child(odd) {
-	background-color: #f7f7f7;
-}
-
-tr:hover {
-	background-color: #ececec;	
-}
-
-.mngmn_table_th1 {
-	width: 70px;
-}
-
-.mngmn_table_th2 {
-	width: 140px;
-}
-
-.mngmn_table_th3 {
-	width: 470px;
-}
-
-.mngmn_table_th4, .mngmn_table_th5, .mngmn_table_th6, .mngmn_table_th7 {
-	width: 140px;
-}
-
-.mngmn_table_col3 {
-	line-height: 150%;
-	text-align: left;
-}
-
-.mngmn_table_col7 {
-	font-weight: bold;
-}
-
-/*  */
-
-
-/* ------- */ 
-.dtls-box {
-	display: none;
-	width: 1240px;
-	height: 350x;
-	margin: 0 auto;	
-	margin-top: 20px;
-
-}
-
-.info-box {
-	width: 700px;
-	height: 300px;
-	border: 1px solid black;
-	float: left;
-}
-
-.info-box_title {
-	height: 40px;
-	background-color: #f7f7f7;
-	text-align: center;
-	font-size: 12px;
-	padding-top: 14px;
-	font-weight: bold;
-	border-bottom: 1px solid black;
-}
-
-.info-box_ul1 {
-	width: 200px;	
-	height: 220px;
-	margin: 20px 0px 20px 20px;	
-	float: left;	
-
-}
-
-.text-left {
-	float: left;
-	margin: 12px 0px;
-}
-
-.text-right {
-	width: 90px;
-	text-align: right;
-}
-
-.info-box_ul1 li:nth-child(odd) {
-	font-size: 12px;
-
-}
-
-.info-box_ul1 li:nth-child(even) {
-	font-size: 14px;
-	font-weight: bold;	
-}
-
-.fianl_price {
-	font-size: 16px;
-	font-weight: bold;
-	color: #5c5d99;
-}
-
-.info-box_ul1 li {
-	width: 90px;
-}
-
-.info-box_ul1 hr {
-	width: 180px;
-
-}
-
-.info-box_table {
-	width: 455px;
-	height: 220px;
-	margin: 20px 20px 20px 0px;
-	float: right;
-	border-left: 1px solid #ccc;
-
-}
-
-.info-box_table td {
-	vertical-align: middle;		
-	font-size: 12px;	
-	padding-left: 20px;		
-}
-
-.info-box_table th {
-	vertical-align: middle;	
-	font-size: 12px;
-	font-weight: 900;
-	padding-left: 20px;		
-}
-
-.aprvl_btn {
-	width: 100px;
-	height: 15px;
-	cursor: pointer;
-	color: #5c5d99;
-	font-weight: bold;
-}
-
-/*  */
-
-.table-box-wrap {
-	float: right;
-	position: relative;
-	width: 500px;    
-    padding-top: 40px;  
-    border: 1px solid black;
-
-}
-.table-box-wrap .table-box {
-    max-height: 260px;
-    overflow: auto;
-    overflow-x: hidden;
-
-}
-
-.table-box{
-	-ms-overflow-style: none;
-}
-
-.table-box::-webkit-scrollbar{
-	display:none;
-}
-
-.table-box-wrap .table-box table {
-    table-layout: fixed;
-    border-spacing: 0;
-    border-collapse: collapse;
-}
-
-.table-box-wrap .table-box table thead tr {
-    position: absolute;
-    top: 0;
-}
-.table-box-wrap .table-box table thead tr th {
-    background: #f7f7f7;
-    height: 40px;    
-    font-weight: bold;
-    vertical-align: middle;
-    text-align: center;	
-    border-bottom: 1px solid black;    
-}
-
-.table-box-wrap .table-box table thead tr th:nth-child(1) {
-	width: 350px;
-}
-
-.table-box-wrap .table-box table thead tr th:nth-child(2) {
-	width: 50px;
-}
-
-.table-box-wrap .table-box table thead tr th:nth-child(3) {
-	width: 100px;
-}
-
-.table-box-wrap .table-box table td {
-    vertical-align: middle;  
-    border-top: 1px solid #ccc; 
-}
-
-.table-box-wrap .table-box table tbody tr {
-   display: table-row;
-}
-
-.mngmn_dtls_table {
-	font-size: 12px;
-}
-
-.mngmn_dtls_table_col1 {
-	width: 350px;
-	height: 60px;
-	text-align: left;
-	padding-left: 10px;
-	line-height: 150%;
-	font-size: 12px;	
-}
-
-.mngmn_dtls_table_col2 {
-	width: 50px;
-	text-align: center;	
-}
-
-.mngmn_dtls_table_col3 {
-	width: 100px;
-	text-align: center;	
-}
-
-
-/* */
-
 
 </style>
+
 
 </head>
 <body class="admin_body">
 
-
 	<jsp:include page="/views/inc/admin_aside.jsp"/>
-	<main class="container-fluid main_container"> <header
-		class="shadow-sm">
-		<nav class="navbar navbar-expand-xl navbar-light bg-white">
-			<div class="container-fluid">
-				<a class="navbar-brand" href="#">관리자</a>
-				<button class="navbar-toggler" type="button"
-					data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo2"
-					aria-controls="navbarTogglerDemo2" aria-expanded="false"
-					aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse show" id="navbarTogglerDemo2">
-					<ul class="navbar-nav me-auto mb-2 mb-xl-0">
-						<li class="nav-item"><a class="nav-link" aria-current="page"
-							href="#">Home</a></li>
-						<li class="nav-item"><a class="nav-link" href="/views/main/main.jsp">Logout</a>
-						</li>
-						<li class="nav-item"><a class="nav-link disabled" href="#"
-							tabindex="-1" aria-disabled="true">Disabled</a>
-						</li>
-					</ul>
-					<form class="d-flex">
-						<input class="form-control me-2" type="search"
-							placeholder="Search" aria-label="Search" />
-						<button class="btn btn-outline-success" type="submit">
-							Search</button>
-					</form>
+	<main class="container-fluid main_container">
+	
+	<div class="container" >
+		
+		<div class="test">
+			<div class="btn-group " role="group" aria-label="Basic radio toggle button group">
+			  <input type="radio" class="btn-check " name="orderclsfc_btn" id="all" value="100" autocomplete="off" checked>
+			  <label class="btn btn-outline-primary orderclsfc_btn" for="all">전체</label>
+			
+			  <input type="radio" class="btn-check" name="orderclsfc_btn" id="pymntCmplt" value="0" autocomplete="off">
+			  <label class="btn btn-outline-primary orderclsfc_btn" for="pymntCmplt">결제완료</label>
+			
+			  <input type="radio" class="btn-check" name="orderclsfc_btn" id="delivery" value="1" autocomplete="off">
+			  <label class="btn btn-outline-primary orderclsfc_btn" for="delivery">배송중</label>
+			  
+			  <input type="radio" class="btn-check" name="orderclsfc_btn" id="cmpltDlvry" value="2" autocomplete="off">
+			  <label class="btn btn-outline-primary orderclsfc_btn" for="cmpltDlvry">배송완료</label>
+			  
+			  <input type="radio" class="btn-check" name="orderclsfc_btn" id="test" value="3" autocomplete="off">
+			  <label class="btn btn-outline-primary orderclsfc_btn" for="test">구매확정</label>
+			  
+			  <input type="radio" class="btn-check" name="orderclsfc_btn" id="pymcnRqst" value="10" autocomplete="off">
+			  <label class="btn btn-outline-primary orderclsfc_btn" for="pymcnRqst">결제취소요청</label>
+	
+			  <input type="radio" class="btn-check" name="orderclsfc_btn" id="cnclPymnt" value="11" autocomplete="off">
+			  <label class="btn btn-outline-primary orderclsfc_btn" for="cnclPymnt">결제취소</label>
+			  			  
+			  <input type="radio" class="btn-check" name="orderclsfc_btn" id="rqstRtrn" value="12" autocomplete="off">
+			  <label class="btn btn-outline-primary orderclsfc_btn" for="rqstRtrn">반품요청</label>
+			  
+			  <input type="radio" class="btn-check" name="orderclsfc_btn" id="cmpltRtrn" value="13" autocomplete="off">
+			  <label class="btn btn-outline-primary orderclsfc_btn" for="cmpltRtrn">반품완료</label>
+			</div>
+		</div>
+		<br>
+
+			<div style="text-align: right; width: 1240px; height:30px; margin: auto;">
+				<button class="btn btn-outline-secondary reset_btn" id="reset_btn">
+				<i class="fas fa-undo"></i></button>
+
+				<div class="srch_date" id="reportrange">
+					<i class="fa fa-calendar" style="float: left;"></i>&nbsp;
+					<span id="scrh_date"></span> <i class="fa fa-caret-down" style="float: right;"></i>
 				</div>
 			</div>
-		</nav>
-	</header>
-	
-	
-	<div class="container">
-		
+					
 		<div class="btn_box">
+							
 			<div class="paging" id="paging"></div>
-			
+												
 			<div class="right">
+
+	
+			
 				<select class="form-select srch_crtr" id="srch_crtr" aria-label="Default select example">
 				  <option selected value="all">전체</option>
 				  <option value="order_no">주문번호</option>
@@ -403,39 +122,54 @@ tr:hover {
 				  <option value="pay_method">결제수단</option>
 				</select>
 				
+				
 				<input class="form-control srch_key" id="srch_key" type="search" placeholder="Search..." aria-label="Search">
 		        <button class="btn btn-primary srch_btn" id="srch_btn" type="button"><i class="bi bi-search"></i></button>
 	        </div>
 		</div>
-		
+				
 		<div class="order_mngmn" id="order_mngmn"></div>
 		
 		<div class="dtls-box" id="dtls-box">
 			<div class="info-box" id="info-box"></div>
-					
-			<div class="table-box-wrap" id="table-box-wrap">
-				<div class="table-box" id="table-box"></div>
+
+
+			<div class="dummy">
+				<div class="table-box-wrap" id="table-box-wrap">
+					<div class="table-box" id="table-box"></div>
+				</div>
 			</div>
+			
+			<div class="dlvy-box" id="dlvy-box"></div>
+
 		</div>
 
 		
 		
 	</div>		
 	
+
 	</main>
 
 
+
 	<script type="text/javascript" src="/resources/js/order_mngmn.js"></script>
+
+
+
+
 	
 	<!-- Script Bootstrap, jqurey-3.6.3 -->
 	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
 	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
-	
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Script FontAwesome-->
-	<script src="https://kit.fontawesome.com/4bf42f841a.js"
-		crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/4bf42f841a.js" crossorigin="anonymous"></script>
+		
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
 			
 </body>
 </html>

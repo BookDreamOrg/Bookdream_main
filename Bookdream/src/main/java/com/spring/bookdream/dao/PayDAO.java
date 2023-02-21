@@ -52,6 +52,12 @@ public class PayDAO {
 
 		return mybatis.selectOne("PayDAO.totalPaymentAmount", vo);	
 
+	}
+
+	// 결제수단 비율
+	public Map<String, Object> payMethodRate() {
+		
+		return mybatis.selectOne("PayDAO.payMethodRate");	
 	}	
 
 }

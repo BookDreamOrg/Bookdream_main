@@ -55,4 +55,11 @@ public class PayImpl implements PayService {
 		return payDAO.totalPaymentAmount(vo);
 	}
 
+	// 결제수단 비율
+	@Override
+	public Map<String, Object> payMethodRate() {
+
+		return payDAO.payMethodRate();
+	}
+
 }

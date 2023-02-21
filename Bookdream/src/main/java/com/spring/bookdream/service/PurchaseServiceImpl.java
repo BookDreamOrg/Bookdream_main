@@ -2,6 +2,7 @@ package com.spring.bookdream.service;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,12 @@ public class PurchaseServiceImpl implements PurchaseService {
 	@Override
 	public List<PurchaseVO> getPurchaseList(PurchaseVO vo) {
 		return purchaseDAO.getPurchaseList(vo);
+	}
+
+	@Override
+	public Map<String, Object> purchaseBookRatio() {
+
+		return purchaseDAO.purchaseBookRatio();
 	}
 
 

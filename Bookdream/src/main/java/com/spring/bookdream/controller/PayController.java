@@ -20,11 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.spring.bookdream.service.DeliveryService;
 import com.spring.bookdream.service.OrderService;
 import com.spring.bookdream.service.OrderitemService;
 import com.spring.bookdream.service.PayService;
 import com.spring.bookdream.service.PurchaseService;
-
+import com.spring.bookdream.vo.DeliveryVO;
 import com.spring.bookdream.vo.OrderVO;
 import com.spring.bookdream.vo.OrderitemVO;
 import com.spring.bookdream.vo.PayVO;
@@ -46,6 +47,9 @@ public class PayController {
 
 	@Autowired
 	private PurchaseService PurchaseService;		
+
+	@Autowired
+	private DeliveryService deliveryService;	
 	
 	@Autowired
 	private HttpSession session;	
@@ -62,7 +66,9 @@ public class PayController {
 	
 	// 결제 후 처리
 	@RequestMapping(value="/pay")
-	public String insertPay(@SessionAttribute("order") OrderVO order, PayVO pay, OrderitemVO orderitem, PurchaseVO purchase, HttpServletRequest request, Model model) throws IOException, InterruptedException {
+	public String insertPay(@SessionAttribute("order") OrderVO order, PayVO pay, 
+							OrderitemVO orderitem, PurchaseVO purchase, 
+							DeliveryVO delivery, HttpServletRequest request, Model model) throws IOException, InterruptedException {
 		
 		// 결제정보 값을 url에서 추출
 		String paymentKey = request.getParameter("paymentKey");
@@ -129,10 +135,15 @@ public class PayController {
 	    order.setPay_no(payData.getPay_no());
 	    order.setOrder_date(payData.getPay_date());
 	    purchase.setOrder_no(payData.getPay_no());	    
-	    orderitem.setPay_no(payData.getPay_no());	   
+	    orderitem.setPay_no(payData.getPay_no());	 
+	    delivery.setOrder_no(payData.getPay_no());
 	    
 	    System.out.println("---> 주문 DB 등록 <---");
 	    orderService.insertOrder(order);			
+	    
+	    
+	    System.out.println("---> 배송 DB 등록 <---");
+	    deliveryService.insertDelivery(delivery);
 	    
 	    System.out.println("---> 사용자 포인트 갱신 <---");
 	    orderitemService.updateUserPoint(orderitem);
@@ -182,6 +193,9 @@ public class PayController {
 	    
 	    return "redirect:/detail/cart/orderitem/success";
 	}		
+	
+	
+	
 	
 		// 새로고침 DB중복 방지
 		// 방금 구매한 상품을 조회함

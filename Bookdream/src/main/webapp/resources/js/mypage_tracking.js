@@ -51,8 +51,8 @@ function order_list(search_date, search_status) {
 					let date = timestamp(order.order_date)
 					let status = switchCase(order.order_status) 	
 					
-					let red = order.order_status == (10 || 11) ? `style="color: red"` : ''
-					let	blue = order.order_status == (12 || 13) ? `style="color: blue"` : ''
+					let red = ((order.order_status == 10) || (order.order_status == 11)) ? `style="color: red"` : ''
+					let	blue = ((order.order_status == 12) || (order.order_status == 13)) ? `style="color: blue"` : ''
 
 					html += `<table class="trackinglist_table">
 							 	<tr>
@@ -130,12 +130,16 @@ function orderHistory() {
 			
 			var num = 0
 			
+			console.log(data)
+			
 			for(order of data) {
 						
 				if (order.ORDER_STATUS == 10 || order.ORDER_STATUS == 11 ||
 					order.ORDER_STATUS == 12 || order.ORDER_STATUS == 13 ) {
 					
+					order.ORDER_STATUS = 10
 					num += Number(order.STATUSCOUNT)
+
 				} 
 				
 				switch (order.ORDER_STATUS) {

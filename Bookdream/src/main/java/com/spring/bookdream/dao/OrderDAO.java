@@ -1,7 +1,5 @@
 package com.spring.bookdream.dao;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
@@ -57,15 +55,6 @@ public class OrderDAO {
 		
 	}	
 	
-	// 배송상태 갱신
-	public void trackingUpdate(OrderVO vo) {
-		
-		System.out.println("---> OrderDAO trackingUpdate 실행 <---");
-		// 결제완료 -> 배송중 
-		mybatis.update("OrderDAO.trackingUpdate", vo);		
-		// 배송중 -> 배송완료
-		mybatis.update("OrderDAO.trackingUpdate2", vo);		
-	}	
 	
 	// 주문 개수 확인
 	public List<Map<String, Object>> orderStatusCount(OrderVO vo) {
@@ -120,19 +109,7 @@ public class OrderDAO {
 		
 		return mybatis.selectList("OrderDAO.orderMlyCancelDateCount", vo);
 	}
-
-	// 금주 취소/반품 현황
-	public List<Map<String, Object>> cancelOrderWek(OrderVO vo) {
-
-		return mybatis.selectList("OrderDAO.cancelOrderWek", vo);
-	}
-
-	// 금주 취소/반품 현황 카운트	
-	public int cancelOrderWekCount(OrderVO vo) {
-
-		return mybatis.selectOne("OrderDAO.cancelOrderWekCount", vo);
-	}
-
+	
 	// 결제취소/반품 승인
 	public void orderAprvl(OrderVO vo) {
 		

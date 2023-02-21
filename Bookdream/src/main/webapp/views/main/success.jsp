@@ -180,7 +180,7 @@
 	$(document).on("click", "#shopping_btn", function(e) {	
 		e.preventDefault();	
 		
-		location.href="/views/main/main_teset.jsp";
+		location.href="/views/main/main.jsp";
 	})
 	
 	

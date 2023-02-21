@@ -21,6 +21,7 @@
 		<typeAlias alias="keywordHistory" type="com.spring.bookdream.vo.KeywordHistoryVO"></typeAlias> 		
 		<typeAlias alias="qna" type="com.spring.bookdream.vo.QnAVO"></typeAlias>
 		<typeAlias alias="answer" type="com.spring.bookdream.vo.AnswerVO"></typeAlias>  		
+		<typeAlias alias="delivery" type="com.spring.bookdream.vo.DeliveryVO"></typeAlias>  		
 	</typeAliases> 
 	
 
@@ -37,6 +38,7 @@
 		<mapper resource="mappings/purchase-mapping.xml" />
 		<mapper resource="mappings/keywordHistory-mapping.xml" />  	
 		<mapper resource="mappings/qna-mapping.xml" />  	
+		<mapper resource="mappings/delivery-mapping.xml" />  	
 	</mappers>
 	
 	

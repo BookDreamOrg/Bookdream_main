@@ -43,37 +43,104 @@
 
 <style type="text/css">
 
-.shadow-sm {
-	background-color: white;
+/* */
+.order_dshbr {
+	width: 1240px;
+	height: 110px;
+	margin: auto;
+	margin-top: 30px;
+	border: 1px solid #ccc;
+	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);	
 }
+
+.order_dshbr_table {
+	display: inline-block;
+	height: 60px;
+	margin: 25px 0px;
+}
+
+.order_dshbr_table th {
+	width: 125px;
+	height: 30px;
+	padding-left: 40px;
+	vertical-align:middle;
+	font-size: 12px;
+}
+
+
+.order_dshbr_table td {
+	width: 125px;
+	height: 30px;
+	padding-left: 40px;	
+	vertical-align:middle;	
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.pay_dshbr_table {
+	display: inline-block;
+	height: 60px;
+	margin: 25px 0px;
+	border-left: 1px solid #ccc;
+}
+
+.pay_dshbr_table th {
+	height: 30px;
+	padding-left: 75px;		
+	vertical-align:middle;
+	font-size: 12px;
+
+}
+
+.pay_dshbr_table td {
+	height: 30px;
+	padding-left: 75px;		
+	vertical-align:middle;	
+	font-size: 20px;
+	font-weight: 600;	
+	color: #484877;
+
+}
+
+/* */
 
 .center {
-	text-align: center;
-	display: inline-block;	
+	margin: auto;
+	width: 1240px;	
+	height: 350px;	
+	margin-top: 30px;
+	
 }
 
-.test {
-	position: relative;
-	width: 610px;
-	height: 500px;
-	display: inline-block;
-	padding: 30px;
-	text-align: left;
-	 	
+.order_chartbox, .pay_chartbox {
+	width: 605px;
+	height: 350px;
+	border: 1px solid #ccc;		
+	padding: 0px 50px 0px 50px;
+	float: left;	
+
+}
+
+.order_charbox_shbr, .pay_charbox_shbr {
+	width: 605px;
+	height: 350px;
+	border: 1px solid #ccc;		
+	margin-left: 30px;
+	padding: 10px 30px 10px 10px;
+	float: left;
+}
+
+/* */
+.shadow-sm {
+	background-color: white;
 }
 
 .myChart {
 	display: inline-block;
 }
 
-.chartbox_card {
-
-	height: 100px;
-}
-
 
 .chartbox_chart {
-
 	margin-top: 50px;
 
 }
@@ -85,146 +152,83 @@
 }
 
 .pay_radio {
-	position: absolute;
-	top: 140px;
-	left: 475px;
+	top: -30px;
+	left: 430px;
 }
 
-
-.buttom {
-	width: 1240px;
-	height: 300px;
-	margin: 0 auto;	
-	padding: 0px 30px ;
-}
-
-.today_box {
-	text-align: left;
-}
-
-.today_box_body {
-	margin: 10px 0px;
-	height: 200px;
-
-}
-
-.work_table {
-	width: 1180px;
-	border: 1px solid #dee2e6;
-}
-
-th {
-	height: 50px;
-	font-weight: bold;
-	vertical-align: middle;
-	text-align: center;
-	border-bottom: 1px solid #dee2e6;
-	background-color: #f7f7f7;
-	font-size: 14px;
-}
-
-td {
-	height: 50px;
-	vertical-align: middle;
-	text-align: center;
-	font-size: 12px;	
-	width: 110px;
-}
-
-.work_table_col3 {
-	width: 520px;
-	text-align: left;
-}
-
-.work_table_col6 {
-	font-weight: bold;
-}
-
-.work_table_col7 {
-	padding: 0px 0px 0px 42px;
-}
 </style>
 
-<!-- Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+
+
+
+
+
 
 </head>
 <body class="admin_body">
 
 <jsp:include page="/views/inc/admin_aside.jsp"/>
-	<main class="container-fluid main_container"> <header
-		class="shadow-sm">
-		<nav class="navbar navbar-expand-xl navbar-light bg-white">
-			<div class="container-fluid">
-				<a class="navbar-brand" href="#">관리자</a>
-				<button class="navbar-toggler" type="button"
-					data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo2"
-					aria-controls="navbarTogglerDemo2" aria-expanded="false"
-					aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse show" id="navbarTogglerDemo2">
-					<ul class="navbar-nav me-auto mb-2 mb-xl-0">
-						<li class="nav-item"><a class="nav-link" aria-current="page"
-							href="#">Home</a></li>
-						<li class="nav-item"><a class="nav-link" href="/views/main/main.jsp">Logout</a>
-						</li>
-						<li class="nav-item"><a class="nav-link disabled" href="#"
-							tabindex="-1" aria-disabled="true">Disabled</a>
-						</li>
-					</ul>
-					<form class="d-flex">
-						<input class="form-control me-2" type="search"
-							placeholder="Search" aria-label="Search" />
-						<button class="btn btn-outline-success" type="submit">
-							Search</button>
-					</form>
-				</div>
-			</div>
-		</nav>
-	</header>
 	
+	<main class="container-fluid main_container"> 
 	
 	<div class="container">
 		
-	<div class="center">
-		<div class="test left">
-			<div class="card chartbox_card">
-			  <div class="card-header">
-			   주문 현황
-			  </div>
-			  <div class="card-body" id="card-body">
+		<div class="order_dshbr">
+			<table class="order_dshbr_table">
+				<tr>
+					<th>결제완료</th>
+					<th>배송중</th>
+					<th>배송완료</th>
+					<th>구매확정</th>
+					<th>결제취소요청</th>
+					<th>결제취소</th>
+					<th>반품요청</th>
+					<th>반품완료</th>
+				</tr>
+				
+				<tr id="order_dshbr_table_count">
+				
+				</tr>
+			</table>
+			
+			<table class="pay_dshbr_table">
+				<tr>
+					<th>총 매출액</th>
+				</tr>
+				<tr >
+					<td id="total_price"></td>
+				</tr>
+			</table>
+			
+		</div>	
+		
 
-			  </div>
+		<div class="center">
+			<div class="order_chartbox">
+
+					<div class="chartbox_chart">
+						<div class="btn-group pay_radio" role="group" aria-label="radio toggle button group">
+						  <input type="radio" class="btn-check" name="order_radio" id="wek_chart_btn" autocomplete="off" checked>
+						  <label class="btn btn-outline-secondary chart_btn" for="wek_chart_btn">주간</label>
+						  <input type="radio" class="btn-check" name="order_radio" id="mly_chart_btn" autocomplete="off">
+						  <label class="btn btn-outline-secondary chart_btn" for="mly_chart_btn">월간</label>
+						</div>				
+					</div>
+				<canvas class="myChart" id="orderChart"></canvas>
 			</div>
-						
-			<div class="chartbox">
-				<!--   차트를 그릴 영역으로 canvas태그를 사용한다. -->
-				<div class="chartbox_chart">
-					<div class="btn-group pay_radio" role="group" aria-label="radio toggle button group">
-					  <input type="radio" class="btn-check" name="order_radio" id="wek_chart_btn" autocomplete="off" checked>
-					  <label class="btn btn-outline-secondary chart_btn" for="wek_chart_btn">주간</label>
-					  <input type="radio" class="btn-check" name="order_radio" id="mly_chart_btn" autocomplete="off">
-					  <label class="btn btn-outline-secondary chart_btn" for="mly_chart_btn">월간</label>
-					</div>				
-				</div>
+			
+			<div class="order_charbox_shbr">
+			<div style="width: 380px; height:330px; float: right;">
+				<canvas class="myChart" id="rateChart"></canvas>
 			</div>
-			<canvas class="myChart" id="orderChart"></canvas>
+			</div>
+					
 		</div>
-	
-		<div class="test right">
-			<div class="card chartbox_card">
-			  <div class="card-header">
-			    결제 현황
-			  </div>
-			  <div class="card-body">
-			    <p class="card-text"><span id="amount"></span></p>
-			  </div>
-			</div>
 			
-			<div class="chartbox">
+		<div class="center">
 			
-				<!--   차트를 그릴 영역으로 canvas태그를 사용한다. -->					
+			<div class="pay_chartbox">
+							
 				<div class="chartbox_chart">
 					<div class="btn-group pay_radio" role="group" aria-label="radio toggle button group">
 					  <input type="radio" class="btn-check" name="pay_radio" id="wek_paychart_btn" autocomplete="off" checked>
@@ -232,25 +236,20 @@ td {
 					  <input type="radio" class="btn-check" name="pay_radio" id="mly_paychart_btn" autocomplete="off">
 					  <label class="btn btn-outline-secondary chart_btn" for="mly_paychart_btn">월간</label>
 					</div>					
-					<canvas class="myChart" id="myChart"></canvas>
 				</div>	
+				<canvas class="myChart" id="myChart"></canvas>				
 			</div>			
+
+			<div class="pay_charbox_shbr">
+			<div style="width: 380px; height:330px; float: right;">
+				<canvas class="myChart" id="paymethodChart"></canvas>
+			</div>
+			</div>
+						
 		</div>
 						
 	</div>
-		<div class="center">
-			<div class="buttom">
-				<div class="card">
-				  <div class="card-header today_box">
-				   	금주 취소 / 반품 처리 	
-				  </div>
-				</div>
-				
-				<div class="today_box_body" id="today_box_body"></div>	
-				<span class="paging" id="paging"></span>							
-			</div>
-		</div>
-	</div>		
+	
 	</main>
 
 
@@ -265,6 +264,11 @@ td {
 	<!-- Script FontAwesome-->
 	<script src="https://kit.fontawesome.com/4bf42f841a.js"
 		crossorigin="anonymous"></script>
+
+	<!-- Chart.js -->
+	
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>		
 			
 </body>
 </html>

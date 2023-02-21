@@ -24,4 +24,6 @@ public interface PayService {
 	// 총 결제 금액
 	Map<String, Object> totalPaymentAmount(PayVO vo);	
 	
+	// 결제수단 비율
+	Map<String, Object> payMethodRate();
 }

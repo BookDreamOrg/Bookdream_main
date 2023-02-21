@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.spring.bookdream.service.DeliveryService;
 import com.spring.bookdream.service.OrderService;
 import com.spring.bookdream.service.PayService;
+import com.spring.bookdream.service.PurchaseService;
+import com.spring.bookdream.vo.DeliveryVO;
 import com.spring.bookdream.vo.OrderVO;
 import com.spring.bookdream.vo.PageVO;
 import com.spring.bookdream.vo.PayVO;
@@ -32,9 +35,15 @@ public class adminOrderController {
 	@Autowired
 	private PayService payService;
 	
+	@Autowired
+	private PurchaseService purchaseService;	
+
+	@Autowired
+	private DeliveryService deliveryService;
+	
 	// 주문현황 페이지 이동
 	@RequestMapping(value="/order")
-	public String orderDshbr(OrderVO order, Model model) {
+	public String orderDshbr() {
 
 		return "admin/order_dshbr";
 		
@@ -42,7 +51,7 @@ public class adminOrderController {
 	
 	// 주문관리 페이지 이동
 	@RequestMapping(value="/orderMngmn")
-	public String orderMngmn(OrderVO order, Model model) {
+	public String orderMngmn() {
 
 		return "admin/order_mngmn";
 		
@@ -54,7 +63,10 @@ public class adminOrderController {
 	
 	@RequestMapping(value="/orderStatusCount")
 	@ResponseBody
-	public List<Map<String, Object>> orderStatusCount(OrderVO order) {
+	public List<Map<String, Object>> orderStatusCount(OrderVO order, DeliveryVO delivery) {
+
+		// 배송중 -> 배송완료 갱신
+		deliveryService.cmpltDelivery(delivery);		
 		
 		order.setAdmin("admin");	
 		List<Map<String, Object>> cnt = orderService.orderStatusCount(order);
@@ -129,7 +141,7 @@ public class adminOrderController {
 		
 		}
 	
-	// 주간 결제 금액
+	// 월간 결제 금액
 	@RequestMapping(value="/MlyPay")
 	@ResponseBody
 	public List<Map<String, Object>> payMlyTotalPrice(PayVO pay) {
@@ -138,7 +150,7 @@ public class adminOrderController {
 
 		return tp;
 		
-		}	
+	}	
 	
 	// 총 결제 금액
 	@RequestMapping(value="/totalPayment")
@@ -149,33 +161,36 @@ public class adminOrderController {
 
 		return tpa;
 		
-		}	
+	}	
 	
-	// 금주 취소.반품 처리 테이블 (페이징 처리)
-	@RequestMapping(value="/cancelOrderWek")
+	// 구매도서수 비율
+	@RequestMapping(value="/purchaseBookRatio")
 	@ResponseBody
-	public OrderVO cancelOrderWek(@RequestParam("no")int no, OrderVO order, SearchCriteria cri) {
-	
-		int cnt = orderService.cancelOrderWekCount(order);
+	public Map<String, Object> purchaseBookRatio() {
+		
+		Map<String, Object> data = purchaseService.purchaseBookRatio();
 
-		order.setPageNum(no);
-		order.setAmount(3);
-		cri.setPageNum(no);
-		cri.setAmount(3);		
+		return data;
 		
-		List<Map<String, Object>> tpa = orderService.cancelOrderWek(order);
+	}				
+
+	// 결제수단 비율
+	@RequestMapping(value="/payMethodRate")
+	@ResponseBody
+	public Map<String, Object> payMethodRate() {
 		
-		PageVO pageMaker = new PageVO(cri, cnt);
+		Map<String, Object> data = payService.payMethodRate();
+
+		return data;
 		
-		OrderVO result = new OrderVO();
-		result.setPage(pageMaker);
-		result.setList(tpa);
-		
-		return result;
-		
-		}		
+	}	
 	
-	// 총 결제 금액
+	
+	/*********************************************************/
+	/********************  주문관리 페이지시작  *******************/	
+	/*********************************************************/
+
+	// 취소/반품 승인
 	@RequestMapping(value="/orderAprvl")
 	@ResponseBody
 	public void orderAprvl(@RequestBody OrderVO order) {
@@ -189,26 +204,29 @@ public class adminOrderController {
 		System.out.println("---> 도서 재고 반환 <---");
 		orderService.updateBookStock(order);			
 		
-		}
+	}
 	
-	
-	/*********************************************************/
-	/********************  주문관리 페이지시작  *******************/	
-	/*********************************************************/
-		
 	// 주문 총 관리 페이지
 	@RequestMapping(value="/mngmn")
 	@ResponseBody
 	public OrderVO orderMngmn(@RequestParam("pageNum")  int pageNum, 
 							  @RequestParam("srchCrtr") String srchCrtr, 
 							  @RequestParam("srchKey")  String srchKey, 
-							  OrderVO order, SearchCriteria cri) {
+							  @RequestParam("order_status") int orderStatus,
+							  OrderVO order, SearchCriteria cri,
+							  DeliveryVO delivery) {
+		
+		// 배송중 -> 배송완료 갱신
+		deliveryService.cmpltDelivery(delivery);
 		
 		order.setSrchCrtr(srchCrtr);
 		order.setSrchKey(srchKey);
 		order.setPageNum(pageNum);
+		order.setOrder_status(orderStatus);
+		
 		cri.setPageNum(pageNum);		
 		
+		// 한 페이지의 표시 개수
 		order.setAmount(5);
 		cri.setAmount(5);	
 		
@@ -237,5 +255,16 @@ public class adminOrderController {
 		
 		return list;			
 		
-	}		
+	}	
+	
+	// 송장번호 및 택배사 등록후 등록버튼 클릭
+	@RequestMapping(value="/updateDelivery")
+	@ResponseBody
+	public void insertDelivery(@RequestBody DeliveryVO delivery) {
+					
+		// 송장번호 및 택배사 등록
+		// 결제완료 -> 배송중으로 변경
+		deliveryService.updateDelivery(delivery);
+		
+	}	
 }

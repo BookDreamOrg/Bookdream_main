@@ -64,8 +64,8 @@ public class OrderController {
 		order.setUser_no(user_no);
 	
 		// 배송상태 업데이트
-		// 결제 1일뒤 = 배송중, 2일뒤 = 배송완료
-		orderService.trackingUpdate(order);
+		// 결제 1일뒤 = 배송중, 2일뒤 = 배송완료 (보류.)
+		// orderService.trackingUpdate(order);
 		
 		// 세션등록
 		// 결제취소, 반품등 변화가 생겨도 조회상태 유지함
@@ -90,7 +90,6 @@ public class OrderController {
 		
 		List<Map<String, Object>> list  = orderService.orderStatusCount(order);
 
-		System.out.println("list : " + list);
 		return list;
 	}	
 	

@@ -78,28 +78,6 @@
 							  #{order_address})
 	</insert>
 
-<!-- 	
-	<select id="getPurchaseList" parameterType="purchase" resultMap="purchaseList">
-		SELECT b.book_img, 
-			   b.title, 
-			   b.book_price, 
-			   p.product_count,
-			   p.purchase_no,
-			   o.order_no,
-			   TO_CHAR(SYSDATE, 'YYYY.MM.DD') as order_enroll
-		FROM   
-			   book b, 
-			   orders o, 
-			   purchase p
-		WHERE  b.book_no = p.book_no AND 
-      		   o.order_no = p.order_no AND 
-               o.order_no = #{order_no} AND 
-     		   p.user_no = #{user_no} 	
-     		   
-		order by o.order_no desc, b.book_no      		   
-	</select> -->
-
-
 	<!-- 마이페이지에서 확인하는 제품 상세 표기 -->	
 	<select id="getPurchaseList" parameterType="purchase" resultMap="purchaseList">
 		SELECT b.book_img, 
@@ -130,8 +108,66 @@
 			   p.user_no = #{user_no} AND
       		   p.order_no = #{order_no}      		   	   
 	</select>
+	
+	<select id="purchaseBookRatio" resultType="HashMap">
+		SELECT	COUNT(*) as total_orders,
+		  		SUM(CASE WHEN product_count = 1 THEN 1 ELSE 0 END) as pq1,
+				SUM(CASE WHEN product_count = 2 THEN 1 ELSE 0 END) as pq2,
+			    SUM(CASE WHEN product_count = 3 THEN 1 ELSE 0 END) as pq3,
+			    SUM(CASE WHEN product_count >= 4 THEN 1 ELSE 0 END) as pq4more,
+			    ROUND(SUM(CASE WHEN product_count = 1 THEN 1 ELSE 0 END) / COUNT(*) * 100, 2) as pq1rate,
+			    ROUND(SUM(CASE WHEN product_count = 2 THEN 1 ELSE 0 END) / COUNT(*) * 100, 2) as pq2rate,
+			    ROUND(SUM(CASE WHEN product_count = 3 THEN 1 ELSE 0 END) / COUNT(*) * 100, 2) as pq3rate,
+			    ROUND(SUM(CASE WHEN product_count >= 4 THEN 1 ELSE 0 END) / COUNT(*) * 100, 2) as pq4morerate
+		
+		FROM	(SELECT COUNT(product_count) as product_count, 
+				 		order_no
+		 		 FROM   purchase
+				 GROUP BY order_no)
+	</select>	
 
-
+	<!-- 마이페이지 주문조회 (간단) (관리자 페이지로 넘길예정 : 페이징처리추가됨)
+		
+	<select id="searchOrder" parameterType="order" resultMap="orderList">		
+		select order_no,
+			   order_name,
+			   book_img, 
+      		   order_date,
+			   final_price,
+			   order_status				   
+		FROM  (SELECT  ROW_NUMBER() OVER (ORDER BY rnum DESC) AS rnum,
+		              order_no, 
+		              order_name, 
+		              book_img,
+		              order_date,	
+		              final_price, 
+		              order_status
+		      from   (select rownum rnum, 
+		      				 o.order_no, 
+		                     o.order_name, 
+		                     b.book_img, 
+		                     o.order_date,
+		                     y.final_price,
+		                     o.order_status,
+		                     ROW_NUMBER() OVER(PARTITION BY o.order_no ORDER BY o.order_name DESC) AS rn                       
+		              from   orders o, 
+		                     purchase p, 
+		                     book b,
+		                     pay y
+		              where  p.book_no = b.book_no   AND
+		                     p.order_no = o.order_no AND
+		                     y.pay_no = o.order_no   AND
+		                     o.user_no = #{user_no}
+		              )
+		     where rn = 1
+		     order by rnum desc)
+		     
+		WHERE rnum between ((#{pageNum}-1) * #{amount})+1 AND 
+		                     #{pageNum} * #{amount}	
+		order by order_no desc                     
+	</select>	
+	
+	-->	
 	
 	
 </mapper>

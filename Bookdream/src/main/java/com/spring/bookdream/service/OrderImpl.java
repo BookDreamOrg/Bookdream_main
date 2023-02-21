@@ -1,7 +1,5 @@
 package com.spring.bookdream.service;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
@@ -49,12 +47,6 @@ public class OrderImpl implements OrderService {
 		return orderDAO.updateUserPoint(vo);
 	}
 
-	@Override
-	public void trackingUpdate(OrderVO vo) {
-		
-		orderDAO.trackingUpdate(vo);
-		
-	}
 
 	@Override
 	public List<Map<String, Object>> orderStatusCount(OrderVO vo) {
@@ -97,21 +89,7 @@ public class OrderImpl implements OrderService {
 
 		return orderDAO.orderMlyCancelDateCount(vo);
 	}
-
-	// 금주 취소/반품 현황
-	@Override
-	public List<Map<String, Object>> cancelOrderWek(OrderVO vo) {
-
-		return orderDAO.cancelOrderWek(vo);
-
-	}
-	// 금주 취소/반품 현황 카운트
-	@Override
-	public int cancelOrderWekCount(OrderVO vo) {
-
-		return orderDAO.cancelOrderWekCount(vo);
-	}
-
+	
 	// 결제취소/반품요청 승인
 	@Override
 	public void orderAprvl(OrderVO vo) {
@@ -144,7 +122,9 @@ public class OrderImpl implements OrderService {
 	@Override
 	public List<Map<String,Object>> orderBy7DaysBook() {
 		return orderDAO.orderBy7DaysBook();
-	}	
+	}
+
+
 	
 	
 	
