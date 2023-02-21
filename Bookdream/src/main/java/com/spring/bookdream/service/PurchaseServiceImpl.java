@@ -41,6 +41,20 @@ public class PurchaseServiceImpl implements PurchaseService {
 		return purchaseDAO.purchaseBookRatio();
 	}
 
+	// 배송출발시 재고 차감
+	@Override
+	public void updateBookStock(PurchaseVO vo) {
+		
+		purchaseDAO.updateBookStock(vo);
+		
+	}
+
+	// 반품완료시 재고 반환
+	@Override
+	public void bookStockReturn(PurchaseVO vo) {
+		purchaseDAO.bookStockReturn(vo);	
+	}
+
 
 
 	

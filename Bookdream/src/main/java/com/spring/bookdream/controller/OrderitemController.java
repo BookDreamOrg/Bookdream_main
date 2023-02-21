@@ -54,7 +54,6 @@ public class OrderitemController {
 		pay.setUser_no(user_no);
 			
 		
-			
 		// 바로 가기 구매시
 		if ("Y".equals(vo.getBuy_now())) {
 
@@ -74,22 +73,23 @@ public class OrderitemController {
 
 			model.addAttribute("orderitem", buy_now);				 
 			model.addAttribute("orderitemCount", buy_now);		
-			model.addAttribute("userPoint", orderitemService.userPoint(vo));
+
 			
 		} else {
 
 			session.setAttribute("buy_now", "N");
+			
 			// (장바구니)주문된 상품 목록 조회
 			model.addAttribute("orderitemList", orderitemService.getOrderitemList(vo));	
 
 			// 주문된 상품의 개수, 종류, 상품금액 조회
 			model.addAttribute("orderitemCount", orderitemService.getOrderitemCount(vo));	
 
-			// 사용자 포인트 조회
-			model.addAttribute("userPoint", orderitemService.userPoint(vo));
-
 		}
+		// 사용자 포인트
+		model.addAttribute("userPoint", orderitemService.userPoint(vo));
 		
+		// 최근결제수단
 		model.addAttribute("lastPayment", payService.lastPayment(pay));
 
 		return "itemorder/orderitem";

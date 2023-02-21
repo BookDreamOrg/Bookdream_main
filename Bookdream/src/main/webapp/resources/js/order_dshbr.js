@@ -6,12 +6,10 @@ $(function() {
 	// 결제차트
 	payWekDateChart()
 	
-
-	
 	// 주문 총 카운트
 	orderStatusCount()
 
-		// 결제 총 금액
+	// 결제 총 금액
 	totalPaymentAmount()
 	
 	// 구매비율차트
@@ -44,90 +42,33 @@ function switchCase(data) {
 
 }
 
-/***************************** 주문 현황 총 카운트 function ****************************/
-function orderStatusCount() {
-	
-	let data = 'admin'
-	
-	$.ajax({
-		type : "GET",                              
-		url : "/admin/orderStatusCount",
-		data : data,
-		dataType : "json",
-		contentType : "application/json",		
+/* 주간 주문 카운트 */
+function orderDateChart() {
+						
+		$.ajax({
+			type : "POST",                              
+			url : "/admin/wekOrder",
+			dataType : "json",
+			contentType : "application/json",		
+				
+			success : function(data) {
 			
-		success : function(data) {
-		
-			let html = ''
-			let pymntCmplt
-			let delivery
-			let cmpltDlvry
-			let test
-			let pymcnRqst
-			let cnclPymnt
-			let rqstRtrn
-			let cmpltRtrn
+				countChart(data)
+				console.log("주간차트 로딩");
 				
-			for(order of data) {
+			},
 				
-				statusCheck(order.ORDER_STATUS, order.STATUSCOUNT)
-				
-				function statusCheck(key, value) {
-					if(key == 0) {
-						return pymntCmplt = value						
-					} else if (key == 1) {
-						return delivery = value
-					} else if (key == 2) {
-						return cmpltDlvry = value
-					} else if (key == 3) {
-						return test = value
-					} else if (key == 10) {
-						return pymcnRqst = value
-					} else if (key == 11) {
-						return cnclPymnt = value
-					} else if (key == 12) {
-						return rqstRtrn = value
-					} else if (key == 13) {
-						return cmpltRtrn = value
-					}
-				}
-			}
-					pymntCmplt = statusCount(pymntCmplt)
-					delivery = statusCount(delivery)
-					cmpltDlvry = statusCount(cmpltDlvry)
-					test = statusCount(test)
-					pymcnRqst = statusCount(pymcnRqst)
-					cnclPymnt = statusCount(cnclPymnt)
-					rqstRtrn = statusCount(rqstRtrn)
-					cmpltRtrn = statusCount(cmpltRtrn)
-
-					function statusCount(count) {
-						return count = count === undefined ? 0 : count							
-					}
+			error: function(request, status, error) {
+			       console.log("code: " + request.status)
+			       console.log("message: " + request.responseText)
+			       console.log("error: " + error);
+			        
+			}	
 					
-			html = 	   `<td>${pymntCmplt}</td>
-						<td>${delivery}</td>
-						<td>${cmpltDlvry}</td>
-						<td>${test}</td>
-						<td>${pymcnRqst}</td>
-						<td>${cnclPymnt}</td>
-						<td>${rqstRtrn}</td>
-						<td>${cmpltRtrn}</td>`
-				
-			ById('order_dshbr_table_count').innerHTML = html	
-												
-		},
-					
-		error: function(request, status, error) {
-		       console.log("code: " + request.status)
-		       console.log("message: " + request.responseText)
-		       console.log("error: " + error);
-		        
-		}	
-				
-})	
-} 
+	})
+	
 
+}
 
 /***************************** 주문/주문취소/반품 차트 카운트 function *****************************/
 function countChart(data) {
@@ -257,19 +198,20 @@ function countChart(data) {
 }
 
 
-/* 주간 주문 카운트 */
-function orderDateChart() {
+/* 주간 결제 금액 */
+function payWekDateChart() {
 						
 		$.ajax({
 			type : "POST",                              
-			url : "/admin/wekOrder",
+			url : "/admin/wekPay",
 			dataType : "json",
 			contentType : "application/json",		
 				
 			success : function(data) {
 			
-				countChart(data)
-				console.log("주간차트 로딩");
+				payChart(data)
+				
+				console.log("주간결제 로딩");
 				
 			},
 				
@@ -285,45 +227,204 @@ function orderDateChart() {
 
 }
 
-/* 월간 주문 카운트 */
-function orderMlyDateChart() {
-						
-		$.ajax({
-			type : "POST",                              
-			url : "/admin/mlyOrder",
-			dataType : "json",
-			contentType : "application/json",		
-				
-			success : function(data) {
+function payChart(data) {
 
-				console.log(data)
-				countChart(data)
-				console.log("월간차트 로딩");
-									
-			},
-				
-			error: function(request, status, error) {
-			       console.log("code: " + request.status)
-			       console.log("message: " + request.responseText)
-			       console.log("error: " + error);
-			        
-			}	
+	let date = []
+	let price = []
+	
+
+
+	for (pay of data) {
+		date.push(pay.PAY_DATE)
+		price.push(pay.PRICE)
+	}	
+	
+		// 차트를 그럴 영역을 dom요소로 가져온다.
+		var chartArea = document.getElementById('myChart').getContext('2d');
+							
+		// 차트를 생성한다. 
+		Chart.defaults.font.size = 10;
+		
+		var payChart = new Chart(chartArea, {
 			
-			
+		    type: 'bar',
+		    data: {
+		        labels: date,
+		        datasets: [{
+		
+		        	pointRadius: 0,
+		            label: '금액',
+		            
+		            data: price,
+		            
+		            backgroundColor: 'rgba(103,104,171, 1)',
+		            
+		            borderColor: 'rgba(103, 104, 171, 1)',
+		            
+		            borderWidth: 1
+		            
+		            
+		        }],
+		        		        
+		    },
+		    
+		  
+		    options: {
+		    	
+		    	plugins: {
+		    	    legend: {
+		    	      position: 'bottom',
+		    	      align: 'end',
+		    	          
+		    	      		labels: {
+		    	              usePointStyle: false,
+		    	              fontSize: 12,
+		    	              boxWidth: 12
+		    	            }
+		    	    }
+		    	  },
+		    	  
+		    	/*
+		    	plugins: {
+		    	    datalabels: {
+		    	      align: 'end',
+		    	      anchor: 'end',
+		    	      formatter: function(value) {
+		    	        return comma(value);
+		    	      }
+		    	    }
+		    	  }, */
+		    	  
+	                scales: {
+	                    x: {
+	                        grid: {
+	                          display: false
+	                        }
+	                    },	                	
+	                	y: {
+			            	suggestedMin: 0,
+			                suggestedMax: 300000
+			            }
+	                }  
+		    },
+
+
 		})	
-	}
+	
+}
 
-/***************************** 월간 카운트 차트 버튼 *****************************/
-$(document).on("click", "#mly_chart_btn", function(e) {
-	Chart.getChart(orderChart).destroy(); 
-	orderMlyDateChart()
-})
+/***************************** 주문 현황 총 카운트 function ****************************/
+function orderStatusCount() {
+	
+	let data = 'admin'
+	
+	$.ajax({
+		type : "GET",                              
+		url : "/admin/orderStatusCount",
+		data : data,
+		dataType : "json",
+		contentType : "application/json",		
+			
+		success : function(data) {
+		
+			let html = ''
+			let pymntCmplt
+			let delivery
+			let cmpltDlvry
+			let test
+			let pymcnRqst
+			let cnclPymnt
+			let rqstRtrn
+			let cmpltRtrn
+				
+			for(order of data) {
+				
+				statusCheck(order.ORDER_STATUS, order.STATUSCOUNT)
+				
+				function statusCheck(key, value) {
+					if(key == 0) {
+						return pymntCmplt = value						
+					} else if (key == 1) {
+						return delivery = value
+					} else if (key == 2) {
+						return cmpltDlvry = value
+					} else if (key == 3) {
+						return test = value
+					} else if (key == 10) {
+						return pymcnRqst = value
+					} else if (key == 11) {
+						return cnclPymnt = value
+					} else if (key == 12) {
+						return rqstRtrn = value
+					} else if (key == 13) {
+						return cmpltRtrn = value
+					}
+				}
+			}
+					pymntCmplt = statusCount(pymntCmplt)
+					delivery = statusCount(delivery)
+					cmpltDlvry = statusCount(cmpltDlvry)
+					test = statusCount(test)
+					pymcnRqst = statusCount(pymcnRqst)
+					cnclPymnt = statusCount(cnclPymnt)
+					rqstRtrn = statusCount(rqstRtrn)
+					cmpltRtrn = statusCount(cmpltRtrn)
 
-/***************************** 주간 카운트 차트 버튼 *****************************/
-$(document).on("click", "#wek_chart_btn", function(e) {
-	Chart.getChart(orderChart).destroy(); 
-	orderDateChart()
-})
+					function statusCount(count) {
+						return count = count === undefined ? 0 : count							
+					}
+					
+			html = 	   `<td>${pymntCmplt}</td>
+						<td>${delivery}</td>
+						<td>${cmpltDlvry}</td>
+						<td>${test}</td>
+						<td>${pymcnRqst}</td>
+						<td>${cnclPymnt}</td>
+						<td>${rqstRtrn}</td>
+						<td>${cmpltRtrn}</td>`
+				
+			ById('order_dshbr_table_count').innerHTML = html	
+												
+		},
+					
+		error: function(request, status, error) {
+		       console.log("code: " + request.status)
+		       console.log("message: " + request.responseText)
+		       console.log("error: " + error);
+		        
+		}	
+				
+})	
+} 
+
+
+/***************************** 총 결제금액 FUNCTION *****************************/
+function totalPaymentAmount() {
+	
+	$.ajax({
+		type : "POST",                              
+		url : "/admin/totalPayment",
+		dataType : "json",
+		contentType : "application/json",		
+			
+		success : function(data) {
+			
+			let price = comma(data.TOTAL_PRICE)
+			
+			console.log(data.TOTAL_PRICE)			
+			ById('total_price').innerHTML = price
+		},
+			
+		error: function(request, status, error) {
+		       console.log("code: " + request.status)
+		       console.log("message: " + request.responseText)
+		       console.log("error: " + error);
+		        
+		}	
+				
+	})	
+
+}
 
 /***************************** 1회주문당 구매도서수 비율차트 로딩 *****************************/
 function purchaseBookRatio() {
@@ -412,190 +513,6 @@ function purchaseBookRatioChart(data) {
 
 }
 
-/* 주간 결제 금액 */
-function payWekDateChart() {
-						
-		$.ajax({
-			type : "POST",                              
-			url : "/admin/wekPay",
-			dataType : "json",
-			contentType : "application/json",		
-				
-			success : function(data) {
-			
-				payChart(data)
-				
-				console.log("주간결제 로딩");
-				
-			},
-				
-			error: function(request, status, error) {
-			       console.log("code: " + request.status)
-			       console.log("message: " + request.responseText)
-			       console.log("error: " + error);
-			        
-			}	
-					
-	})
-	
-
-}
-
-function payMlyDateChart(){
-	
-	$.ajax({
-		type : "POST",                              
-		url : "/admin/MlyPay",
-		dataType : "json",
-		contentType : "application/json",		
-			
-		success : function(data) {
-		
-			payChart(data)
-			
-			console.log("월간결제 로딩");
-			
-		},
-			
-		error: function(request, status, error) {
-		       console.log("code: " + request.status)
-		       console.log("message: " + request.responseText)
-		       console.log("error: " + error);
-		        
-		}	
-				
-	})
-	
-}
-
-
-function payChart(data) {
-
-	let date = []
-	let price = []
-	
-
-
-	for (pay of data) {
-		date.push(pay.PAY_DATE)
-		price.push(pay.PRICE)
-	}	
-	
-		// 차트를 그럴 영역을 dom요소로 가져온다.
-		var chartArea = document.getElementById('myChart').getContext('2d');
-							
-		// 차트를 생성한다. 
-		Chart.defaults.font.size = 10;
-		
-		var payChart = new Chart(chartArea, {
-			
-		    type: 'bar',
-		    data: {
-		        labels: date,
-		        datasets: [{
-		
-		        	pointRadius: 0,
-		            label: '금액',
-		            
-		            data: price,
-		            
-		            backgroundColor: 'rgba(103,104,171, 1)',
-		            
-		            borderColor: 'rgba(103, 104, 171, 1)',
-		            
-		            borderWidth: 1
-		            
-		            
-		        }],
-		        		        
-		    },
-		    
-		  
-		    options: {
-		    	
-		    	plugins: {
-		    	    legend: {
-		    	      position: 'bottom',
-		    	      align: 'end',
-		    	          
-		    	      		labels: {
-		    	              usePointStyle: false,
-		    	              fontSize: 12,
-		    	              boxWidth: 12
-		    	            }
-		    	    }
-		    	  },
-		    	  
-		    	/*
-		    	plugins: {
-		    	    datalabels: {
-		    	      align: 'end',
-		    	      anchor: 'end',
-		    	      formatter: function(value) {
-		    	        return comma(value);
-		    	      }
-		    	    }
-		    	  }, */
-		    	  
-	                scales: {
-	                    x: {
-	                        grid: {
-	                          display: false
-	                        }
-	                    },	                	
-	                	y: {
-			            	suggestedMin: 0,
-			                suggestedMax: 300000
-			            }
-	                }  
-		    },
-
-
-		})	
-	
-}
-
-/***************************** 월간 결제 차트 버튼 *****************************/
-$(document).on("click", "#mly_paychart_btn", function(e) {
-	ById('myChart').style.display = "none";
-	Chart.getChart(myChart).destroy(); 	
-	payMlyDateChart()
-})
-
-/***************************** 주간 결제 차트 버튼 *****************************/
-$(document).on("click", "#wek_paychart_btn", function(e) {
-	Chart.getChart(myChart).destroy(); 
-	payWekDateChart()
-})
-
-/***************************** 총 결제금액 FUNCTION *****************************/
-function totalPaymentAmount() {
-	
-	$.ajax({
-		type : "POST",                              
-		url : "/admin/totalPayment",
-		dataType : "json",
-		contentType : "application/json",		
-			
-		success : function(data) {
-			
-			let price = comma(data.TOTAL_PRICE)
-			
-			console.log(data.TOTAL_PRICE)			
-			ById('total_price').innerHTML = price
-		},
-			
-		error: function(request, status, error) {
-		       console.log("code: " + request.status)
-		       console.log("message: " + request.responseText)
-		       console.log("error: " + error);
-		        
-		}	
-				
-	})	
-
-}
-
 /***************************** 결제수단비율 FUNCTION *****************************/
 function payMethodRate() {
 
@@ -671,3 +588,95 @@ function paymethodChart(data) {
 
 	})	
 }
+
+
+
+/***************************** 월간 카운트 차트 버튼 *****************************/
+$(document).on("click", "#mly_chart_btn", function(e) {
+	Chart.getChart(orderChart).destroy(); 
+	orderMlyDateChart()
+})
+
+/***************************** 주간 카운트 차트 버튼 *****************************/
+$(document).on("click", "#wek_chart_btn", function(e) {
+	Chart.getChart(orderChart).destroy(); 
+	orderDateChart()
+})
+
+
+/* 월간 주문 카운트 */
+function orderMlyDateChart() {
+						
+		$.ajax({
+			type : "POST",                              
+			url : "/admin/mlyOrder",
+			dataType : "json",
+			contentType : "application/json",		
+				
+			success : function(data) {
+
+				console.log(data)
+				countChart(data)
+				console.log("월간차트 로딩");
+									
+			},
+				
+			error: function(request, status, error) {
+			       console.log("code: " + request.status)
+			       console.log("message: " + request.responseText)
+			       console.log("error: " + error);
+			        
+			}	
+			
+			
+		})	
+	}
+
+
+/***************************** 월간 결제 차트 버튼 *****************************/
+$(document).on("click", "#mly_paychart_btn", function(e) {
+	ById('myChart').style.display = "none";
+	Chart.getChart(myChart).destroy(); 	
+	payMlyDateChart()
+})
+
+/***************************** 주간 결제 차트 버튼 *****************************/
+$(document).on("click", "#wek_paychart_btn", function(e) {
+	Chart.getChart(myChart).destroy(); 
+	payWekDateChart()
+})
+
+/* 월간 결제 금액 */
+function payMlyDateChart(){
+	
+	$.ajax({
+		type : "POST",                              
+		url : "/admin/MlyPay",
+		dataType : "json",
+		contentType : "application/json",		
+			
+		success : function(data) {
+		
+			payChart(data)
+			
+			console.log("월간결제 로딩");
+			
+		},
+			
+		error: function(request, status, error) {
+		       console.log("code: " + request.status)
+		       console.log("message: " + request.responseText)
+		       console.log("error: " + error);
+		        
+		}	
+				
+	})
+	
+}
+
+
+
+
+
+
+

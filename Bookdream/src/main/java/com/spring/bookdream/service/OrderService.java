@@ -16,12 +16,8 @@ public interface OrderService {
 	// 결제 취소, 반품 신청
 	void cancelOrder(OrderVO vo);
 
-	// 도서 재고 반환
-	int updateBookStock(OrderVO vo);
-	
 	// 사용, 적립 포인트 반환
 	int updateUserPoint(OrderVO vo);
-	
 	
 	// 마이페이지 배송상태 카운터
 	List<Map<String, Object>> orderStatusCount(OrderVO order);	

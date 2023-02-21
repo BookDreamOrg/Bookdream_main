@@ -114,17 +114,41 @@
 		  		SUM(CASE WHEN product_count = 1 THEN 1 ELSE 0 END) as pq1,
 				SUM(CASE WHEN product_count = 2 THEN 1 ELSE 0 END) as pq2,
 			    SUM(CASE WHEN product_count = 3 THEN 1 ELSE 0 END) as pq3,
-			    SUM(CASE WHEN product_count >= 4 THEN 1 ELSE 0 END) as pq4more,
-			    ROUND(SUM(CASE WHEN product_count = 1 THEN 1 ELSE 0 END) / COUNT(*) * 100, 2) as pq1rate,
-			    ROUND(SUM(CASE WHEN product_count = 2 THEN 1 ELSE 0 END) / COUNT(*) * 100, 2) as pq2rate,
-			    ROUND(SUM(CASE WHEN product_count = 3 THEN 1 ELSE 0 END) / COUNT(*) * 100, 2) as pq3rate,
-			    ROUND(SUM(CASE WHEN product_count >= 4 THEN 1 ELSE 0 END) / COUNT(*) * 100, 2) as pq4morerate
-		
+			    SUM(CASE WHEN product_count >= 4 THEN 1 ELSE 0 END) as pq4more
+
 		FROM	(SELECT COUNT(product_count) as product_count, 
 				 		order_no
 		 		 FROM   purchase
 				 GROUP BY order_no)
-	</select>	
+	</select>
+	
+	<!-- 배송시 재고차감 -->
+	<update id="updateBookStock">
+		UPDATE book b
+		SET    stock = (SELECT stock - product_count as stock
+		                FROM   purchase p
+		                WHERE  order_no = #{order_no} AND
+		                       p.book_no = b.book_no)
+		WHERE EXISTS   (SELECT 1
+		                FROM   purchase p
+		                WHERE  order_no = #{order_no} AND
+		                       p.book_no = b.book_no)		
+	
+	</update>	
+
+	<!-- 반품완료시 재고반환 -->	
+	<update id="bookStockReturn">	
+		UPDATE book b
+		SET    b.stock = (SELECT stock + p.product_count as stock
+                 		  FROM   purchase p
+                 		  WHERE  p.book_no = b.book_no AND                 		   
+                 		  		 p.order_no = #{order_no})
+                  
+		WHERE  EXISTS 	 (SELECT 1
+                 	      FROM   purchase p
+                  	      WHERE  p.book_no = b.book_no AND    
+                 		  	     p.order_no = #{order_no})
+	</update>	
 
 	<!-- 마이페이지 주문조회 (간단) (관리자 페이지로 넘길예정 : 페이징처리추가됨)
 		

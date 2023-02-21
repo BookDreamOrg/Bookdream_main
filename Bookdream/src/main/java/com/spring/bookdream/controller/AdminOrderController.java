@@ -21,13 +21,14 @@ import com.spring.bookdream.vo.DeliveryVO;
 import com.spring.bookdream.vo.OrderVO;
 import com.spring.bookdream.vo.PageVO;
 import com.spring.bookdream.vo.PayVO;
+import com.spring.bookdream.vo.PurchaseVO;
 import com.spring.bookdream.vo.SearchCriteria;
 
 
 
 @Controller
 @RequestMapping("/admin")
-public class adminOrderController {
+public class AdminOrderController {
 	
 	@Autowired
 	private OrderService orderService;
@@ -47,7 +48,7 @@ public class adminOrderController {
 
 		return "admin/order_dshbr";
 		
-		}	
+	}	
 	
 	// 주문관리 페이지 이동
 	@RequestMapping(value="/orderMngmn")
@@ -55,7 +56,7 @@ public class adminOrderController {
 
 		return "admin/order_mngmn";
 		
-		}		
+	}		
 	
 	/*********************************************************/
 	/********************  주문현황 페이지시작  *******************/	
@@ -193,7 +194,7 @@ public class adminOrderController {
 	// 취소/반품 승인
 	@RequestMapping(value="/orderAprvl")
 	@ResponseBody
-	public void orderAprvl(@RequestBody OrderVO order) {
+	public void orderAprvl(@RequestBody OrderVO order, PurchaseVO purchase) {
 		
 		System.out.println("---> 결제취소/반품 승인 <---");
 		orderService.orderAprvl(order);
@@ -201,8 +202,12 @@ public class adminOrderController {
 		System.out.println("---> 사용,적립 포인트 반환 <---");
 		orderService.updateUserPoint(order);
 		    
-		System.out.println("---> 도서 재고 반환 <---");
-		orderService.updateBookStock(order);			
+		// 반품완료시 상품재고반환
+		if (order.getOrder_status() == 12) {
+			System.out.println("---> 도서 재고 반환 <---");
+			purchaseService.bookStockReturn(purchase);				
+		}
+		
 		
 	}
 	
@@ -260,11 +265,15 @@ public class adminOrderController {
 	// 송장번호 및 택배사 등록후 등록버튼 클릭
 	@RequestMapping(value="/updateDelivery")
 	@ResponseBody
-	public void insertDelivery(@RequestBody DeliveryVO delivery) {
+	public void insertDelivery(@RequestBody DeliveryVO delivery, PurchaseVO purchase) {
 					
 		// 송장번호 및 택배사 등록
 		// 결제완료 -> 배송중으로 변경
 		deliveryService.updateDelivery(delivery);
+		
+		// 배송된 재고 차감
+		purchase.setOrder_no(delivery.getOrder_no());
+		purchaseService.updateBookStock(purchase);
 		
 	}	
 }

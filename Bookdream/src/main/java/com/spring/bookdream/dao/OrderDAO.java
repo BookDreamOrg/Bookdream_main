@@ -39,13 +39,6 @@ public class OrderDAO {
 		
 	}
 	
-	// 결제취소, 반품완료시 도서 반환
-	public int updateBookStock(OrderVO vo) {
-		
-		System.out.println("---> OrderDAO updateBookStock 실행 <---");
-		return mybatis.update("OrderDAO.updateBookStock", vo);	
-		
-	}
 	
 	// 결제취소, 반품완료시 포인트 반환
 	public int updateUserPoint(OrderVO vo) {

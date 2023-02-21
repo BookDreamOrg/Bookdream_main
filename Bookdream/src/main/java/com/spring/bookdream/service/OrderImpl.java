@@ -36,12 +36,6 @@ public class OrderImpl implements OrderService {
 	}
 
 	@Override
-	public int updateBookStock(OrderVO vo) {
-
-		return orderDAO.updateBookStock(vo);
-	}
-
-	@Override
 	public int updateUserPoint(OrderVO vo) {
 		
 		return orderDAO.updateUserPoint(vo);

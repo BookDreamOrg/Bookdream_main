@@ -42,4 +42,19 @@ public class PurchaseDAO {
 
 		return mybatis.selectOne("PurchaseDAO.purchaseBookRatio");
 	}
+
+
+	// 배송출발시 재고 차감
+	public void updateBookStock(PurchaseVO vo) {
+
+		mybatis.update("PurchaseDAO.updateBookStock",vo);
+	}
+
+
+	// 반품완료시 재고 추가
+	public void bookStockReturn(PurchaseVO vo) {
+
+		mybatis.update("PurchaseDAO.bookStockReturn",vo);
+		
+	}
 }

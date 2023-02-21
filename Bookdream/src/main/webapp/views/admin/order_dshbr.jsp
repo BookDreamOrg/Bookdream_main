@@ -116,7 +116,7 @@
 	width: 605px;
 	height: 350px;
 	border: 1px solid #ccc;		
-	padding: 0px 50px 0px 50px;
+	padding: 20px 10px 10px 10px;
 	float: left;	
 
 }
@@ -126,22 +126,19 @@
 	height: 350px;
 	border: 1px solid #ccc;		
 	margin-left: 30px;
-	padding: 10px 30px 10px 10px;
+	padding: 20px 30px 10px 10px;
 	float: left;
 }
 
 /* */
-.shadow-sm {
-	background-color: white;
-}
 
-.myChart {
-	display: inline-block;
+.chart_title {
+	margin: 10px 0px 0px 10px;
+	font-weight: bold;
 }
-
 
 .chartbox_chart {
-	margin-top: 50px;
+	margin-top: 30px;
 
 }
 
@@ -152,8 +149,8 @@
 }
 
 .pay_radio {
-	top: -30px;
-	left: 430px;
+	top: -50px;
+	left: 480px;
 }
 
 </style>
@@ -205,7 +202,7 @@
 
 		<div class="center">
 			<div class="order_chartbox">
-
+			<span class="chart_title">주간/월간 구매,취소 수</span>
 					<div class="chartbox_chart">
 						<div class="btn-group pay_radio" role="group" aria-label="radio toggle button group">
 						  <input type="radio" class="btn-check" name="order_radio" id="wek_chart_btn" autocomplete="off" checked>
@@ -214,10 +211,13 @@
 						  <label class="btn btn-outline-secondary chart_btn" for="mly_chart_btn">월간</label>
 						</div>				
 					</div>
-				<canvas class="myChart" id="orderChart"></canvas>
+				<div style="padding: 0px 50px;">
+					<canvas class="myChart" id="orderChart"></canvas>
+				</div>
 			</div>
 			
 			<div class="order_charbox_shbr">
+			<span class="chart_title">주문당 도서수 비율</span>
 			<div style="width: 380px; height:330px; float: right;">
 				<canvas class="myChart" id="rateChart"></canvas>
 			</div>
@@ -228,7 +228,7 @@
 		<div class="center">
 			
 			<div class="pay_chartbox">
-							
+			<span class="chart_title">주간/월간 매출액</span>				
 				<div class="chartbox_chart">
 					<div class="btn-group pay_radio" role="group" aria-label="radio toggle button group">
 					  <input type="radio" class="btn-check" name="pay_radio" id="wek_paychart_btn" autocomplete="off" checked>
@@ -237,10 +237,13 @@
 					  <label class="btn btn-outline-secondary chart_btn" for="mly_paychart_btn">월간</label>
 					</div>					
 				</div>	
-				<canvas class="myChart" id="myChart"></canvas>				
+				<div style="padding: 0px 50px;">				
+					<canvas class="myChart" id="myChart"></canvas>
+				</div>				
 			</div>			
 
 			<div class="pay_charbox_shbr">
+			<span class="chart_title">결제수단 비율</span>
 			<div style="width: 380px; height:330px; float: right;">
 				<canvas class="myChart" id="paymethodChart"></canvas>
 			</div>

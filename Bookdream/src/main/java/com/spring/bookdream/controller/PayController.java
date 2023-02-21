@@ -165,18 +165,13 @@ public class PayController {
 	    	
 	    	orderitem.setProduct_count(product_count);
 	    	orderitem.setBook_no(book_no);
-	    	
-	    	System.out.println("---> 바로구매 재고차감 <---");
-		    orderitemService.updateBookStock_now(orderitem);
-		    
+	    			    
 		// 장바구니 구매
 	    } else {
 	    	
  		    System.out.println("---> 주문상세보기 DB 등록 (장바구니) <---");
 		    PurchaseService.insertPurchase(purchase);
-		    
-		    System.out.println("---> 구입한 개수만큼 재고차감 (장바구니) <---");
-		    orderitemService.updateBookStock(orderitem);
+
 		    
 		    // 장바구니에서 필터하는 기능이 없어서 지금은 전부다 제거됨 
 		    System.out.println("---> 구입한 상품만 장바구니 제거 <---");

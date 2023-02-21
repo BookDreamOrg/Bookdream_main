@@ -134,27 +134,7 @@
 		WHERE  order_no = #{order_no} 
 	</update>
 								
-	<!-- 도서반환 -->	
-	<update id="updateBookStock">	
-		UPDATE book b
-		SET    b.stock = (select (b.stock + p.product_count) as stock
-                 		  from  purchase p,
-                 		  		orders o
-                 		  where p.book_no = b.book_no AND
-                  	            p.order_no = o.order_no AND                   		   
-                 		  		o.order_no = #{order_no}
-                 		  )
-                  
-		WHERE  exists (select 1
-                 	   from    purchase p,
-                 		  	   orders o
-                  	   where   p.book_no = b.book_no AND 
-                  	           p.order_no = o.order_no AND      
-                 		  	   o.order_no = #{order_no}
-               		   ) 
-		
-	</update>	
-	
+									
 	<!-- 포인트 반환 -->	
 	<update id="updateUserPoint">
 		UPDATE users u

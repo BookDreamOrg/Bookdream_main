@@ -17,6 +17,11 @@ public interface PurchaseService {
 	List<PurchaseVO> getPurchaseList(PurchaseVO vo);
 	
 	// 주문당 구매 도서수 비율
-	Map<String, Object> purchaseBookRatio();	
+	Map<String, Object> purchaseBookRatio();
 	
+	// 배송시작시 재고 감소
+	void updateBookStock(PurchaseVO vo);
+
+	// 반품완료시 재고 반환
+	void bookStockReturn(PurchaseVO vo);
 }
