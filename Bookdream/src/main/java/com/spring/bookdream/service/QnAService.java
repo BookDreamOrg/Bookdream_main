@@ -23,8 +23,11 @@ public interface QnAService {
 	//문의 삭제
 	public void deleteQnA(QnAVO qnaVO);
 	
-	//전체 문의 리스트
-	public List<QnAVO> getAllQnAList();
+	//문의대기 리스트
+	public List<QnAVO> getWaitQnAList();
+	
+	//문의완료 리스트
+	public List<QnAVO> getClearQnAList();
 	
 	//답변 insert
 	public void insertAnswer(AnswerVO answerVO);
@@ -40,4 +43,13 @@ public interface QnAService {
 	
 	// 유저번호에 맞는 유저정보 가져오기
 	public List<UserVO> getQnAUser();
+	
+	// 페이징 답변대기 리스트 가져오기
+	public List<QnAVO>getAllQnAPageList(QnAVO qnaVO);
+	
+	// 페이징 답변완료 리스트 가져오기
+	public List<QnAVO>getClearQnAPageList(QnAVO qnaVO);
+	
+	//전체 문의 리스트
+	public List<QnAVO> getAllQnAList();
 }

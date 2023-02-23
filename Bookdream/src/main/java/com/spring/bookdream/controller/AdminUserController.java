@@ -82,6 +82,7 @@ public class AdminUserController {
 		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("SearchUserKeyword",key);
 		
+		System.out.println("userListPage.do의 키워드: " + key);
 		return "/admin/user/userList";
 	}
 	
@@ -103,37 +104,98 @@ public class AdminUserController {
 	
 	
 	// 검색 유저 목록 가져오기
-	@RequestMapping(value="/getSearchUserList")
+	@RequestMapping(value="/getSearchUserList", produces = "application/text; charset=UTF-8")
 	@ResponseBody	
-	public String getSearchUserList(UserVO userVO, Model model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public String getSearchUserList(UserVO userVO, Model model) throws ServletException, IOException {
 		 
 		System.out.println("getSearchUserList실행");
 		System.out.println(userVO.getSearchUserKeyword());
-		request.setCharacterEncoding("utf-8");
-		response.setCharacterEncoding("utf-8");
-		
 		String key = userVO.getSearchUserKeyword();
 		
 		return key;
 	}
 	
-	// 관리자의 전체 문의 리스트 가져오기
+	// 관리자의 답변대기 리스트 가져오기
 	@RequestMapping(value="/getAllQnAList")
-	public String getAllQnAList(HttpSession session, Model model, UserVO userVO){
+	public String getWaitQnAList(HttpSession session, Model model, UserVO userVO, QnAVO qnaVO){
 		
-		System.out.println("getAllQnAList실행");
+		System.out.println("getWaitQnAList실행");
+		List<QnAVO> qnaAllList = qnaService.getWaitQnAList(); //답변 대기 문의 리스트
+			int count = qnaAllList.size();
+			int num = qnaVO.getPageNum();
+			int postNum = 5;
+			
+			int pageNum = (int)Math.ceil((double)count/postNum);
+			
+			int displayPost = 0;
+			
+			if(num > 1) {
+				displayPost = ((num - 1) * postNum) + 1;
+				postNum = (postNum - 1);
+			} 
 		
-		
-		List<QnAVO> qnaAllList = qnaService.getAllQnAList();
-		
+			qnaVO.setDisplayPost(displayPost);
+			qnaVO.setPostNum(postNum);
+			
+			System.out.println(num);
+			System.out.println(displayPost);
+			System.out.println(postNum);
+			
+			List<QnAVO> qnaAllList2 = qnaService.getAllQnAPageList(qnaVO);
+			for(int i=0;i<qnaAllList2.size(); i++) {
+				System.out.println(qnaAllList2.get(i));
+			}
+			
 		List<UserVO> user = qnaService.getQnAUser();
 		
 		model.addAttribute("userList", user);
-		model.addAttribute("qnaAllList", qnaAllList);
+		model.addAttribute("qnaAllList", qnaAllList2);
+		model.addAttribute("pageNum", pageNum);
 		
 		return "admin/user/admin_qnaanswer";
 	}
 
+	// 관리자의 답변완료 리스트 가져오기
+		@RequestMapping(value="/getClearQnAList")
+		public String getClearQnAList(HttpSession session, Model model, UserVO userVO, QnAVO qnaVO){
+			
+			System.out.println("getClearQnAList실행");
+			List<QnAVO> qnaAllList = qnaService.getClearQnAList(); //답변완료 문의 리스트
+				int count = qnaAllList.size();
+				System.out.println("count: "+ count);
+				int num = qnaVO.getPageNum();
+				int postNum = 5;
+				
+				int pageNum = (int)Math.ceil((double)count/postNum);
+				
+				int displayPost = 0;
+				
+				if(num > 1) {
+					displayPost = ((num - 1) * postNum) + 1;
+					postNum = (postNum - 1);
+				} 
+			
+				qnaVO.setDisplayPost(displayPost);
+				qnaVO.setPostNum(postNum);
+				
+				System.out.println(num);
+				System.out.println(displayPost);
+				System.out.println(postNum);
+				
+				List<QnAVO> qnaAllList2 = qnaService.getClearQnAPageList(qnaVO);
+				for(int i=0;i<qnaAllList2.size(); i++) {
+					System.out.println(qnaAllList2.get(i));
+				}
+				
+			List<UserVO> user = qnaService.getQnAUser();
+			
+			model.addAttribute("userList", user);
+			model.addAttribute("qnaAllList", qnaAllList2);
+			model.addAttribute("pageNum", pageNum);
+			
+			return "admin/user/admin_qnaanswer_clear";
+		}
+	
 	
 	// 답변 
 	@RequestMapping(value="/answerQnA")
@@ -155,5 +217,46 @@ public class AdminUserController {
 		return "admin/user/admin_qnaanswer";
 	}	
 	
+	@RequestMapping(value="/QnADashBoard")
+	public String QnADashBoard(Model model, UserVO userVO, QnAVO qnaVO) {
+		
+		System.out.println("QnADashBoard실행");
+		List<QnAVO> qnaWaitList = qnaService.getWaitQnAList(); //답변 대기 문의 리스트
+			int count = qnaWaitList.size();
+			int num = 1;
+			int postNum = 6;
+			
+			int pageNum = (int)Math.ceil((double)count/postNum);
+			
+			int displayPost = 0;
+			
+			if(num > 1) {
+				displayPost = ((num - 1) * postNum) + 1;
+				postNum = (postNum - 1);
+			} 
+		
+			qnaVO.setDisplayPost(displayPost);
+			qnaVO.setPostNum(postNum);
+			
+			System.out.println(num);
+			System.out.println(displayPost);
+			System.out.println(postNum);
+			
+			List<QnAVO> qnaAllList2 = qnaService.getAllQnAList();
+			List<QnAVO> qnaAllList = new ArrayList<>();
+			
+			for(int i=0;i<6; i++) {
+				qnaAllList.add(qnaAllList2.get(i));
+				System.out.println(qnaAllList.get(i));
+			}
+			
+		List<UserVO> user = qnaService.getQnAUser();
+		
+		model.addAttribute("userList", user);
+		model.addAttribute("qnaAllList", qnaAllList);
+		model.addAttribute("pageNum", pageNum);
+		
+		return "admin/user/admin_qnaanswer_dashboard";
+	}	
 }
 

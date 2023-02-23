@@ -18,7 +18,11 @@
 	display: none;
 }
 
-
+.hidden_text_qna {
+	margin-top: 10px;
+	margin-left: 35px;
+	display: none;
+}
 </style>
 </head>
 <body>
@@ -72,9 +76,14 @@
 			<ul class="list-group">
 				<li class="list-group-item"><span class="list_icon"><i
 						class="fa-solid fa-bug"></i></span> <span class="list_text"><a href="#">버그 및 신고</a></span></li>
-				<li class="list-group-item"><span class="list_icon"><i
-						class="fa-solid fa-comment"></i></span> <span class="list_text"><a href="/admin/user/getAllQnAList">문의 사항</a></span>
+				<li class="list-group-item">
+					<span class="list_icon">
+						<i class="fa-solid fa-comment"></i>
+					</span> 
+					<span class="list_text toggle_qna"><a href="#">문의 사항</a></span>
 				</li>
+				<li class="hidden_text_qna"><a href="/admin/user/getAllQnAList?pageNum=1">- 답변대기</a></li>
+				<li class="hidden_text_qna"><a href="/admin/user/getClearQnAList?pageNum=1">- 답변완료</a></li>
 			</ul>
 		</div>
 		<!-- <div class="thema">
@@ -94,6 +103,26 @@
 		if ($(".hidden_text").css("display") == "none") {
 		
 			for (var i=0; i<toggle.length; i++) {
+				toggle[i].style.display = "block";
+			}
+
+		} else {
+			for (var i=0; i<toggle.length; i++) {		
+				toggle[i].style.display = "none";
+			}	
+	
+		}
+
+	})
+	
+	/***************************** 문의 관리 토글 *****************************/
+	$(document).on("click", ".toggle_qna", function(e) {	
+			
+		var toggle = document.getElementsByClassName('hidden_text_qna');
+			
+		if ($(".hidden_text_qna").css("display") == "none") {
+		
+			for (var i=0; i<toggle.length; i++) {	
 				toggle[i].style.display = "block";
 			}
 

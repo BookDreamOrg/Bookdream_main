@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
-    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -87,6 +87,11 @@
 
 }
 
+.qnanew-icon{
+	width: 10px;
+	height: 10px;
+	display: none;
+}
 </style>
 
 </head>
@@ -106,7 +111,13 @@
 				<li class="side_text_content" style=""><div><a href="/mypage/address">배송지 관리</a></div></li>
 				<li class="side_text_content"><div><a href="/mypage/tracking">구매내역 / 배송조회</a></div></li>
 				<li class="side_text_title">문의</li>
-				<li class="side_text_content"><div><a href="/mypage/getMyQnAList">1:1 문의</a></div></li>
+				<li class="side_text_content">
+					<div>
+						<a href="/mypage/getMyQnAList">1:1 문의</a> 
+						<img src="/resources/images/new-icon5.svg" class="qnanew-icon" id="qnanew-icon">
+						<input type="hidden" id="answerCnt" value="${answerCnt }">
+					</div>
+				</li>
 			</ul>
 
 		</div>
@@ -135,7 +146,6 @@
 
 
 	</div>		
-		
 		
 	<script type="text/javascript" src="/resources/js/mypage_side.js"></script>
 			
