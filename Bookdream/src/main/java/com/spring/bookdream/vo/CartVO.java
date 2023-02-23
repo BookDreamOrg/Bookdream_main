@@ -1,5 +1,7 @@
 package com.spring.bookdream.vo;
 
+import java.sql.Date;
+
 import lombok.Data;
 
 @Data
@@ -14,7 +16,7 @@ public class CartVO {
 	private int user_no;
 	private int book_no;
 	private int product_count;
-	private int regDate;
+	private Date regDate;
 	
 	private int listCount;
 	private int initCount;
