@@ -30,6 +30,9 @@
 	<link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
 	<link rel="stylesheet" href="/resources/css/styles.css" />
 	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+	
 	<title>결제/주문 페이지</title>
 	
 	<!-- jQuery -->
@@ -82,7 +85,7 @@
 				<!-- dummy -->
 			</div>
 
-		<!-- ---------------------------top------------------------- /detail/cart/orderitem-->
+		<!-- ---------------------------top-------------------------  -->
 		<div class="top py-3 text-center fw-bold fs-1">
 		</div>
 
@@ -139,14 +142,13 @@
 										
 										<c:set var= "sum" value="${sum + (cnt*salePrice) }"/>
 										<c:if test="${discountRate != 0 }">
-											<c:set var = "costPrice" value = "${cart.bookVO.book_price}" />
 											<c:set var= "discountSum" value="${discountSum + (discountRate*costPrice*cnt) }"/>
 										</c:if>
 										<c:if test="${(sum - discountSum) >= 30000 }">
 											<c:set var = "deliveryFee" value = "0" />
 										</c:if>
 										<c:set var= "totalPrice" value="${sum - discountSum + deliveryFee }"/>
-										
+
 										<!-- -----------------------체크박스----------------------- -->
 										<td class="align-middle">
 											<div class="checkBox form-check checkBox">
@@ -161,11 +163,19 @@
 													$(".chBox${cart.cart_no}").change(function(){
 														 var checked = $(this).prop('checked');
 														 if (checked) {
-															 alert("더하기");
-															 console.log($(this).attr("data-cartNo"));
-															 console.log(checked);
+															 let cart = useSelector();
+															
+															alert("체크됨");
+															
+															$('.reload').load(location.href+' .reload');
+															console.log($(this).attr("data-cartNo"));
+															console.log(checked);
+															
 														} else {
-															alert("빼기");
+																
+															alert("체크안됨");
+															
+															$('.reload').load(location.href+' .reload');
 															console.log($(this).attr("data-cartNo"));
 														  	console.log(checked);
 														}
@@ -251,7 +261,7 @@
 													<!-- justify-content-center  text-center align-middle-->
 														<div class="d-flex justify-content-center  mx-auto"> 
 															<span class="total${cart.cart_no} fs-5 lh-sm  fs-4">
-																<fmt:formatNumber type="currency" pattern="###,###,###원" value="${salePrice * cnt } " />
+																<fmt:formatNumber  type="currency" pattern="###,###,###원" value="${salePrice * cnt } " />
 															</span>
 														</div>
 															
@@ -260,7 +270,7 @@
 															<input type="hidden" class="book_pirce${cart.cart_no}" value="${cart.bookVO.book_price }" disabled>
 															<input type="hidden" class="stock${cart.cart_no}" value="${cart.bookVO.stock }" disabled>
 															<input  class="product_cnt${cart.cart_no} qty form-control text-center border-0 " type="number" min="1" max="${cart.bookVO.stock}"  
-																	value="${cart.product_count}" readonly="readonly" disabled>
+																	value="${cart.product_count}" readonly="readonly">
 
 															<button class="minus${cart.cart_no} btn fw-bold order-first" type="button" data-cartNo="${cart.cart_no}">-</button>
 															<script >
@@ -431,8 +441,6 @@
 	<jsp:include page="/views/inc/footer.jsp" />
 	</div>
 	
-	<!-- ------------------------장바구니 선택(체크) 결제------------------------------- -->
-
 
 	<!-- ------------------------장바구니 선택(체크) 삭제------------------------------- -->
 	<script type="text/javascript">/* 장바구니  삭제 */
@@ -489,6 +497,7 @@
 	 <!-- 아래 자동 검색시 필요 (페이지마다 다 넣어줘야 함?)-->
    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+   
 </body>
 
 </html>

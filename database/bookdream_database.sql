@@ -182,6 +182,7 @@ create table CART (
     CART_NO       number(10) NOT NULL,
     USER_NO       number     NOT NULL,
     BOOK_NO       number     NOT NULL,
+    regDATE       DATE       DEFAULT SYSDATE,
     PRODUCT_COUNT number(10) DEFAULT 1 NOT NULL , -- 디폴트 1로 지정하기.
     constraint PK_CART primary key (CART_NO),
     constraint FK_CART_USER_NO foreign key(USER_NO) REFERENCES USERS (USER_NO),
@@ -193,16 +194,7 @@ CREATE sequence CART_SEQ increment by 1 START with 1;
 
 -- sequence적용 cart inert 예시
 insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) 
-values(CART_SEQ.nextval, 1, 30, 3);
-
-
--- if 조건 then 처리문 else if 조건2 then 처리문;     
-    
-UPDATE CART set PRODUCT_COUNT = (PRODUCT_COUNT + 5) where user_no=1 and book_no=20;
-  
-select PRODUCT_COUNT from cart
-where user_no=1 and book_no = 20;
-
+values(CART_SEQ.nextval, 2, 501, 1);
 
 -- cart user_no casecade
 alter table cart drop constraint FK_CART_USER_NO;
@@ -212,11 +204,6 @@ select * from cart;
 
 
 commit; 
-
-SELECT  count(*) 
-		FROM cart 
-		WHERE user_no = 1
-        group by user_no;
         
 SELECT  -- *
         row_number() over(order by C.cart_no desc) as num, -- 등록 순서대로 칼럼 num(index) 지정.
