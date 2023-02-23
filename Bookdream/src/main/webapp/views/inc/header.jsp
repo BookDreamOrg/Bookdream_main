@@ -121,26 +121,30 @@ margin-right:3px;
                      <i class="fa-solid fa-user"></i>
                 </button>
             </div>
-                  
-         </div>
             <!-- 검색창 -->
             <form action="/bookListSearchByKeyword" method="get">
-	            <div class="col-lg-6 p-2 header-col-search input-group">
-	               <div class="input-group mb-2 col-search">
-	                  <button
-	                     class="btn btn-outline-secondary dropdown-toggle search-toggle"
-	                     type="button" data-bs-toggle="dropdown" aria-expanded="false">통합검색</button>
-	                  <ul class="dropdown-menu">
-	                     <li><a class="dropdown-item" href="#">베스트</a></li>
-	                     <li><a class="dropdown-item" href="#">신상품</a></li>
-	                  </ul>
-	                  <input type="text" name="keyword" id="keyword_text" class="form-control search-input"
-	                     aria-label="Text input with dropdown button"
-	                     placeholder="성공적인 프로젝트를 위하여!!👍" />
-	                  <button type="submit"  class="btn btn-outline-secondary" id="input-group-button-right">검색</button>
-	               </div>
-	            </div>
+            <div class="col-lg-6 p-2 header-col-search input-group">
+               <div class="input-group mb-2 col-search">
+                  <button
+                     class="btn btn-outline-secondary dropdown-toggle search-toggle"
+                     type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                     통합검색</button>
+                  <ul class="dropdown-menu">
+                     <li><a class="dropdown-item" href="#">베스트</a></li>
+                     <li><a class="dropdown-item" href="#">신상품</a></li>
+                  </ul>
+                  <input type="text" name="keyword" id="keyword_text" class="form-control search-input"
+                     aria-label="Text input with dropdown button"
+                     placeholder="성공적인 프로젝트를 위하여!!👍" />
+                  <input type="hidden" name="num" id="num" value="1"/>	   
+                  <button type="submit"  class="btn btn-outline-secondary" id="input-group-button-right">검색</button>
+               </div>
+            </div>
             </form>
+
+         </div>
+            
+          
       
    <% 
       } else{ // 로그인 시
@@ -233,6 +237,7 @@ margin-right:3px;
                   <input type="text" name="keyword" id="keyword_text" class="form-control search-input"
                      aria-label="Text input with dropdown button"
                      placeholder="성공적인 프로젝트를 위하여!!👍" />
+                     <input type="hidden" name="num" id="num" value="1"/>	 
                   <button type="submit"  class="btn btn-outline-secondary" id="input-group-button-right">검색</button>
                </div>
             </div>
@@ -283,7 +288,7 @@ margin-right:3px;
 
 
 
-<!-- 자동검색 기능 js -->
+<!-- 자동검색 기능 -->
 <script type="text/javascript" charset="UTF-8" >
 <%@include file="/views/inc/viewSearchKeyword.js"%>
 </script>

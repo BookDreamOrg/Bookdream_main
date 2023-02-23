@@ -43,20 +43,6 @@
 		<jsp:include page="/views/inc/header.jsp" />
 
 		<main>
-		<div class="banner">
-			<div class="banner-text">Banner Title Text</div>
-			<div class="banner-img"></div>
-			<div class="banner-books">
-				<div class="banner-book"></div>
-				<div class="banner-book banner-book-lg"></div>
-				<div class="banner-book banner-book-xl"></div>
-			</div>
-		</div>
-		<ul class="nav nav-tabs book-section-nav">
-			<li class="nav-item"><a class="nav-link active"
-				aria-current="page" href="#">베스트</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">신상품</a></li>
-		</ul>
 		<div class="book-section">
 			<c:if test="${empty book}"  >
 				<div class="text-center mt-5"> 검색된 책이 없습니다. </div>
@@ -69,7 +55,7 @@
 
 			</c:when>
 			<c:otherwise>
-				<c:forEach var="book" items="${book}" varStatus="vs">
+				<c:forEach var="book" items="${book}" varStatus="status">
 					<div class="container-fluid mt-3">
 						<div class="row" >
 							<div class="col-md-3">
@@ -93,9 +79,29 @@
 					</div>	
 				</c:forEach>
 			</c:otherwise>
-			</c:choose>
-		
+			</c:choose>		
 </div>
+
+<div class="mt-5 mb-5 text-center">
+	<nav aria-label="Page navigation example" >
+		<ul class="pagination justify-content-center">
+			<li class="page-item">
+				<a class="page-link" onclick="prev()">Previous</a>
+			</li>
+			<c:forEach begin="1" end="${ lastIndex }" var="num">
+			<input type="hidden" id="SearchKeyword" value="${search_keyword}">
+				<li class="page-item">
+					<a class="page-link" href="bookListSearchByKeyword?num=${num}&keyword=${search_keyword}">${ num }</a>
+				</li>
+			</c:forEach>
+				
+			<li class="page-item">
+				<a class="page-link" onclick="next()" >Next</a>
+			</li>
+		</ul>
+	</nav>
+</div>
+
 </main>
 		
 			<jsp:include page="/views/inc/footer.jsp" />
@@ -104,6 +110,7 @@
 	
 
 <script type="text/javascript" >
+
 
 function bookList_buy(val){
 	let user_id = '<%=session.getAttribute("user_id")%>';
@@ -132,6 +139,30 @@ function bookList_cart(val){
 }
 
 
+function next(){
+	let lastIndex = "<c:out value='${lastIndex}'/>";
+	const keyword = "<c:out value='${search_keyword}'/>";
+	const urlParams = new URL(location.href).searchParams;
+	const num = urlParams.get('num');
+	let nextNum = parseInt(num) + 1; // 앞 번호로 가기
+	if(num==lastIndex){
+		alert('마지막 페이지입니다. ');
+	}else{
+		location.replace("/bookListSearchByKeyword?num="+nextNum+"&keyword="+keyword);
+	}
+}
+
+function prev(){
+	const keyword = "<c:out value='${search_keyword}'/>";
+	const urlParams = new URL(location.href).searchParams;
+	const num = urlParams.get('num');
+	let prevNum = parseInt(num) - 1; // 뒷 번호로 가기
+	if(num==1){
+		alert('첫번째 페이지입니다. ');
+	}else{
+		location.replace("/bookListSearchByKeyword?num="+prevNum+"&keyword="+keyword);
+	}
+}
 
 </script>
 	

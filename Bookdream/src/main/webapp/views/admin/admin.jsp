@@ -2,6 +2,14 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+
+<!-- Bootstrap 5.0.2 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<!-- Bootstrap icons-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+
 <head>
 <meta charset="UTF-8">
     <!-- Favicon -->
@@ -72,11 +80,11 @@
 		</section>
 		<section class="todo_list">
 			<div class="card">
-				<div class="card-header">Featured</div>
+				<div class="card-header">도서 일일 판매량(주간)</div>
 				<div class="card-body">
-					<h5 class="card-title">Special title treatment</h5>
-					<p class="card-text">With supporting text below as a natural
-						lead-in to additional content.</p>
+					<div class="container">
+    				<canvas id="Book_Order_qty_chart" style="width: 35em;"></canvas>
+  					</div>
 				</div>
 			</div>
 		</section>
@@ -120,5 +128,17 @@
 	<!-- Script FontAwesome-->
 	<script src="https://kit.fontawesome.com/4bf42f841a.js"
 		crossorigin="anonymous"></script>
+
+ 	<!-- 차트 링크 -->
+ 	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+		
+	<!-- J쿼리 -->
+	<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+	
+    <!-- JavaScript  -->
+    <script type="text/javascript" src="/resources/js/admin_main.js"></script>
+	
+		
+		
 </body>
 </html>
