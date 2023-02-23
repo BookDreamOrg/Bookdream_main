@@ -14,6 +14,7 @@ public class CartVO {
 	private int user_no;
 	private int book_no;
 	private int product_count;
+	private int regDate;
 	
 	private int listCount;
 	private int initCount;
