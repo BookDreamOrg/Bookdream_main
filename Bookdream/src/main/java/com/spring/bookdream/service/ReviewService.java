@@ -31,6 +31,6 @@ public interface ReviewService {
 	//리뷰 평균 평점
 	double avgReview(int book_no);
 	
-	//별점 별 갯수
+	//리뷰 별점로 별 갯수,퍼센트 계산 결과
 	List<HashMap<Integer, Integer>> progressStar(int book_no);
 }

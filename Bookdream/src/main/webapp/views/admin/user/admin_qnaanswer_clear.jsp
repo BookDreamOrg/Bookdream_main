@@ -68,7 +68,7 @@
 	<!------------------------------------- Main --------------------------------------------->
 	<div class="section_div">
 				<div class="card-body">
-					<div class="admin_answer_title card-title">1:1문의 답변 대기</div>
+					<div class="admin_answer_title card-title">1:1문의 답변 완료</div>
 				</div>
 	</div>
 	
@@ -80,7 +80,7 @@
 					<div class="qna_body">
 						<c:choose>
 							<c:when test="${empty qnaAllList }">
-								<p class="ans_main_content">답변 받은 내역이 없습니다.</p>
+								<p class="ans_main_content">답변한 내역이 없습니다.</p>
 							</c:when>
 							<c:when test="${!empty qnaAllList }">
 								<table class="table">
@@ -119,8 +119,11 @@
 																</c:forEach>
 														</span>
 													</td>
-													<td width="65%">
+													<td width="55%">
 														<span class="qna_list_title" id="qna_title" name="qna_title">${list.getQna_title() }</span> 
+													</td>
+													<td width="10%">
+														<span class="qna_list_title" id="qna_title" name="qna_title">답변완료
 													</td>
 													<td width="5%">
 														<i class="drop_btn bi bi-arrow-down-short"data-bs-toggle="collapse" data-bs-target="#collapseEx${list.getQna_no() }" 
@@ -132,53 +135,20 @@
 										</div>
 									</div>
 
-									<div class="collapse" id="collapseEx${list.getQna_no() }">
-										<div class="card card-body" id="qna_content"
-											name="qna_content">${list.getQna_content() }</div>
-										<div class="qna_sumbmit">
-											<div class="qna_submit_btn">
-												<button type="button" class="btn btn-primary"
-													data-bs-toggle="modal"
-													data-bs-target="#ModalQnA${vs.index }">답변</button>
-												<input class="qna_nocls" type="hidden" value="${list.getQna_no() }">
 
-												<!------------------------- Modal ------------------------------>
-												<div class="modal fade" id="ModalQnA${vs.index }"
-													tabindex="-1" aria-labelledby="ModalLabel"
-													aria-hidden="true">
-													
-													<div class="modal-dialog modal-dialog-centered">
-														<div class="modal-content">
-															<div class="modal-header">
-																<h5 class="modal-title" id="ModalLabel">답변하기</h5>
-																<button type="button" class="btn-close"
-																	data-bs-dismiss="modal" aria-label="Close"></button>
-															</div>
-															<div class="modal-body">
-																<textarea class="form_textarea" id="ans_content${vs.index }"
-																	name="ans_content" maxlength="500"
-																	style="width: 465px; height: 246px"></textarea>
-															</div>
-															<div class="modal-footer">
-																<button type="button" class="btn btn-primary" id="ans_btn${list.getQna_no() }"
-																	data-bs-dismiss="modal" onclick='answer_btn(${list.getUser_no() },${vs.index })'>답변</button>
-															</div>
-														</div>
-													</div>
-											
-												</div>
-											</div>
+									<div class="collapse" id="collapseEx${list.getQna_no() }">
+										<div class="card card-body" id="qna_content" name="qna_content">
+											${list.getQna_content() }
 										</div>
 										<hr>
 									</div>
-
 								</c:forEach>
 								
 								<nav aria-label="Page navigation example">
 									<ul class="pagination justify-content-center">
 										<c:forEach begin="1" end="${ pageNum }" var="num">
 													<li class="page-item"><a class="page-link"
-												href="getAllQnAList?pageNum=${num }">${ num }</a></li>
+												href="getClearQnAList?pageNum=${num }">${ num }</a></li>
 										</c:forEach>
 									</ul>
 								</nav>

@@ -11,6 +11,8 @@
 		<result property="qna_type" column="qna_type"/>
 		<result property="reg_date" column="reg_date"/>
 		<result property="ans_check" column="ans_check"/>
+		<result property="displayPost" column="displayPost;"/>
+		<result property="postNum" column="postNum"/>
 	</resultMap>
 
 	<resultMap type="answer" id="answerResult">
@@ -70,9 +72,14 @@
 		delete from QNA where qna_no = #{qna_no}
 	</delete>
 	
-	<!-- 문의 전체리스트 가져오기 -->
-	<select id="getAllQnAList" resultMap="qnaResult">
+	<!-- 답변대기 리스트 가져오기 -->
+	<select id="getWaitQnAList" resultMap="qnaResult">
 		select * from QNA where ans_check = '0' order by reg_date
+	</select>
+
+	<!-- 답변완료 리스트 가져오기 -->
+	<select id="getClearQnAList" resultMap="qnaResult">
+		select * from QNA where ans_check = '1' order by reg_date
 	</select>
 
 	<!-- 답변 insert -->
@@ -105,4 +112,22 @@
 		select u.* from QNA q, USERS u where q.user_no = u.user_no and ans_check = 0
 	</select>
 	
+	<!-- 답변 페이징 처리로 답변 대기 리스트 가져오기 -->
+	<select id="getAllQnAPageList" resultMap="qnaResult" parameterType="qna">
+	 select * from (select ROW_NUMBER() over (order by qna_no desc) NUM, A.* from QNA A where ans_check = '0' order by reg_date desc)
+ 					where NUM between #{displayPost} AND (#{displayPost} + #{postNum})
+	</select>
+	
+	<!-- 답변 페이징 처리로 답변 완료 리스트 가져오기 -->
+	<select id="getClearQnAPageList" resultMap="qnaResult" parameterType="qna">
+	 select * from (select ROW_NUMBER() over (order by qna_no desc) NUM, A.* from QNA A where ans_check = '1' order by reg_date desc)
+ 					<if test="displayPost != null">
+ 						where NUM between #{displayPost} AND (#{displayPost} + #{postNum})
+ 					</if>
+	</select>
+	
+	<!-- 문의 전체리스트 가져오기 -->
+	<select id="getAllQnAList" resultMap="qnaResult">
+		select * from QNA order by reg_date DESC
+	</select>
 </mapper>

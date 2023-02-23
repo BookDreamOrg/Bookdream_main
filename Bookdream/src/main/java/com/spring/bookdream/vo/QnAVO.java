@@ -15,4 +15,7 @@ public class QnAVO {
 	private Date reg_date;
 	private String ans_check;
 	
+	private int displayPost; 
+	private int postNum;
+	private int pageNum;
 }

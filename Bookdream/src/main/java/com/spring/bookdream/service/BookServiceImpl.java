@@ -30,7 +30,13 @@ public class BookServiceImpl implements BookService {
 	public List<BookVO> getBookList(String keyword) {
 		return bookDAO.getBookList(keyword);
 	}
-
+	
+	//[페이징] 키워드 검색한 데이터의 결과 count
+	@Override
+	public double getBookByKeywordCount(String keyword) {
+		return bookDAO.getBookByKeywordCount(keyword);
+	}
+	
 	@Override
 	public void updateBookStock(BookVO vo) {
 		bookDAO.updateBookStock(vo);
@@ -39,6 +45,20 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public void deleteBook(int book_no) {
 		bookDAO.deleteBook(book_no);
+	}
+
+	//[어드민/페이징]
+	@Override
+	public double adminBookListCount(BookVO vo) {
+		return bookDAO.adminBookListCount(vo);
+	}
+
+	
+	//[어드민] 도서등록
+	@Override
+	public int bookRegister(BookVO vo) {
+		bookDAO.bookRegister(vo);
+		return 0;
 	}
 
 

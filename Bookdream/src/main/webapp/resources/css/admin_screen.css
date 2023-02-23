@@ -17,6 +17,15 @@
   color: white;
 }
 
+.list-group-item {
+  background-color: #353535;
+  border: none;
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+
 .aside_logo {
   padding: 0.5rem 1.2rem 0.5rem 1rem;
   border-bottom: 1px solid black;

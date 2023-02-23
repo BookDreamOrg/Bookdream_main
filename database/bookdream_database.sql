@@ -82,10 +82,6 @@ alter table review add constraint fk_review_user_id foreign key (user_id) refere
 
 select * from review;
 
--- review table fk book_no casecade
-alter table REVIEW drop constraint FK_REVIEW_BOOK_NO;
-alter table REVIEW add constraint FK_REVIEW_BOOK_NO foreign key (book_no) references book (book_no) on delete cascade;
-
 --------------------------------------------------------------------------------
 ------------------------------------ PAY ---------------------------------------
 --------------------------------------------------------------------------------
@@ -124,8 +120,7 @@ CREATE TABLE orders(
     order_receiver      varchar2(20)   not null,
     order_address       varchar2(100)  not null,
     order_tel           varchar2(40)   not null,
-    order_status        number(10)     default 0 not null,
-    cancel_date         date           DEFAULT ''
+    order_status        number(10)     default 0 not null
 );
 -- 02-15 추가
 alter table orders add cancel_date  date DEFAULT '';
@@ -211,23 +206,14 @@ create table BOOK (
     book_CONTENT varchar2(3000),
     STOCK        number(20),
     BOOK_PRICE   number(10),
-    discount     number(10) DEFAULT 0,
     BOOK_IMG     varchar(500) not null,
     PBLIC_DATE   date not null,
     BOOK_CATEGORY varchar(500) not null,
     constraint PK_BOOK primary key (BOOK_NO)
 );
 
---할인율 컬럼 추가
-alter table BOOK add discount  number(10) DEFAULT 0;
 select * from BOOK;
-
-alter table BOOK add discount  number(10) DEFAULT 0; -- 10이면 10% 할인
-
-select book_no,BOOK_PRICE,discount from BOOK where book_no=500 or book_no=501 ;
-update BOOK set discount = 10  where book_no=500;
-update BOOK set discount = 15  where book_no=501;
-  
+select count(*) from BOOK;
 commit;
 
 
@@ -240,6 +226,7 @@ create table CART (
     CART_NO       number(10) NOT NULL,
     USER_NO       number     NOT NULL,
     BOOK_NO       number     NOT NULL,
+    regDATE       DATE       DEFAULT SYSDATE,
     PRODUCT_COUNT number(10) DEFAULT 1 NOT NULL , -- 디폴트 1로 지정하기.
     constraint PK_CART primary key (CART_NO),
     constraint FK_CART_USER_NO foreign key(USER_NO) REFERENCES USERS (USER_NO),
@@ -251,16 +238,7 @@ CREATE sequence CART_SEQ increment by 1 START with 1;
 
 -- sequence적용 cart inert 예시
 insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) 
-values(CART_SEQ.nextval, 1, 30, 3);
-
-
--- if 조건 then 처리문 else if 조건2 then 처리문;     
-    
-UPDATE CART set PRODUCT_COUNT = (PRODUCT_COUNT + 5) where user_no=1 and book_no=20;
-  
-select PRODUCT_COUNT from cart
-where user_no=1 and book_no = 20;
-
+values(CART_SEQ.nextval, 2, 501, 1);
 
 -- cart user_no casecade
 alter table cart drop constraint FK_CART_USER_NO;
@@ -270,11 +248,6 @@ select * from cart;
 
 
 commit; 
-
-SELECT  count(*) 
-		FROM cart 
-		WHERE user_no = 1
-        group by user_no;
         
 SELECT  -- *
         row_number() over(order by C.cart_no desc) as num, -- 등록 순서대로 칼럼 num(index) 지정.
@@ -352,7 +325,7 @@ create sequence qna_seq increment by 1 start with 1;
 
 insert into QNA(QNA_NO, USER_NO, QNA_TITLE, QNA_CONTENT, QNA_TYPE) 
 		values(qna_seq.nextval, 1, '이게안돼','이게 왜 안될까요','QNA타입');
-
+        
 -- qna table fk user_no casecade
 alter table QNA drop constraint FK_QNA_USER_NO;
 alter table QNA add constraint FK_QNA_USER_NO foreign key (user_no) references users (user_no) on delete cascade;
@@ -361,6 +334,7 @@ select * from qna;
 rollback;
 commit; 
 
+select * from qna order by reg_date desc;
 ------------------------- ANSWER ----------------------
 drop table answer;
 create table ANSWER(

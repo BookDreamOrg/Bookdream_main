@@ -1,15 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
-
-<!-- Bootstrap 5.0.2 -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
-<!-- Bootstrap icons-->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-
 <head>
 <meta charset="UTF-8">
     <!-- Favicon -->
@@ -33,6 +27,33 @@
     <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
     <link rel="stylesheet" href="/resources/css/styles.css" />
     <link rel="stylesheet" href="/resources/css/admin_screen.css" />
+    
+    <style type="text/css">
+    
+    	.qna-title-header{
+    		display: flex;
+    		justify-content: space-between;
+    	}
+    	
+    	.qna-Alllist{
+    		display:flex;
+    		justify-content: space-between;
+    	}
+    	.qna-dashboardList{
+    		margin: 10px;
+    	}
+    	.list-group-item-qna{
+    		font-size: 16px;
+    		font-weight: 700;
+    	}
+    	.qna-dashboardlist-name{
+    		font-size: 12px;
+    		margin-top: 3px;
+    	}
+    	.answerCheck{
+    		margin: 10px;
+    	}
+    </style>
 <title>Admin Page</title>
 </head>
 <body class="admin_body">
@@ -68,6 +89,7 @@
 			</div>
 		</nav>
 	</header>
+	<a href="/admin/user/QnADashBoard">문의 대시보드</a>
 	<div class="section_div">
 		<section class="today_state">
 			<div class="card">
@@ -80,11 +102,60 @@
 		</section>
 		<section class="todo_list">
 			<div class="card">
-				<div class="card-header">도서 일일 판매량(주간)</div>
+				<div class="card-header">
+					<div class="qna-title-header">
+						<div class="qna-title-header-left">문의사항</div>
+						<div class="qna-title-header-right"><a href="/admin/user/getAllQnAList">+더보기</a></div>
+					</div>
+				</div>
 				<div class="card-body">
-					<div class="container">
-    				<canvas id="Book_Order_qty_chart" style="width: 35em;"></canvas>
-  					</div>
+					<div class="list-group">
+						<c:forEach items="${qnaAllList }" var="list" varStatus="vs">
+						
+						<div class="qna-Alllist">
+							<div class="qna-dashboardList">
+								<a href="#" class="list-group-item-qna list-group-item-action">${list.getQna_title() }</a>
+
+							 <span class="qna_list_title" id="user_id" name="user_id">
+								<c:set var="flag" value="false"/>
+									<c:forEach var="userlist" items="${userList }">
+											<c:choose>
+												<c:when test="${list.getUser_no() eq userlist.getUser_no() && not flag }">
+													<c:set var="flag" value="true"/>
+													<c:choose>
+														<c:when test="${userlist.getUser_id() eq null }">
+															<div class="qna-dashboardlist-name">
+																${userlist.getUser_name() }님 <span class="nav-bar-line"></span> ${list.getReg_date() }
+															</div>
+														</c:when>
+														 <c:otherwise>
+														 	<div class="qna-dashboardlist-name">
+														 		${userlist.getUser_id() } <span class="nav-bar-line"></span> ${list.getReg_date() }
+														 	</div>
+														 </c:otherwise>
+													</c:choose>
+												</c:when>
+											</c:choose>
+										</c:forEach>
+							</span>
+							</div>
+							<div class="answerCheck">
+							 	<c:choose>
+									<c:when test="${list.getAns_check() eq 1}"> <!-- 답변 1이면 답변 완료 -->
+										<div class="qna-dashboardlist-name">
+											답변완료
+										</div>
+									</c:when>
+									 <c:otherwise>
+									 	<div class="qna-dashboardlist-name">
+											답변대기
+										</div>
+									 </c:otherwise>
+								</c:choose>
+							</div>
+						</div>
+						</c:forEach>
+					</div>
 				</div>
 			</div>
 		</section>
@@ -128,17 +199,5 @@
 	<!-- Script FontAwesome-->
 	<script src="https://kit.fontawesome.com/4bf42f841a.js"
 		crossorigin="anonymous"></script>
-
- 	<!-- 차트 링크 -->
- 	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-		
-	<!-- J쿼리 -->
-	<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
-	
-    <!-- JavaScript  -->
-    <script type="text/javascript" src="/resources/js/admin_main.js"></script>
-	
-		
-		
 </body>
 </html>
