@@ -42,10 +42,16 @@ public class QnAServiceImpl implements QnAService{
 		qnaDAO.deleteQnA(qnaVO);
 	}
 	
-	//전체 문의 리스트
-	public List<QnAVO> getAllQnAList(){
-		return qnaDAO.getAllQnAList();
+	//답변대기 리스트 가져오기
+	public List<QnAVO> getWaitQnAList(){
+		return qnaDAO.getWaitQnAList();
 	}
+	
+	//문의완료 리스트
+	public List<QnAVO> getClearQnAList(){
+		return qnaDAO.getClearQnAList();
+	}
+		
 	
 	//답변 insert
 	public void insertAnswer(AnswerVO answerVO) {
@@ -70,5 +76,20 @@ public class QnAServiceImpl implements QnAService{
 	// 유저번호에 맞는 유저정보 가져오기
 	public List<UserVO> getQnAUser() {
 		return qnaDAO.getQnAUser();
+	}
+	
+	// 페이징 답변대기 리스트 가져오기
+	public List<QnAVO>getAllQnAPageList(QnAVO qnaVO){
+		return qnaDAO.getAllQnAPageList(qnaVO);
+	}
+	
+	// 페이징 답변완료 리스트 가져오기
+	public List<QnAVO>getClearQnAPageList(QnAVO qnaVO){
+		return qnaDAO.getClearQnAPageList(qnaVO);
+	}
+	
+	//전체 문의 리스트
+	public List<QnAVO> getAllQnAList(){
+		return qnaDAO.getAllQnAList();
 	}
 }

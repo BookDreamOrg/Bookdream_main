@@ -39,7 +39,7 @@
 						<div class="qna_title">1:1 문의</div>
 						<button class="qna_button btn btn-success" type="button" onclick="location.href='/views/mypage/qna_write.jsp'">1:1문의하기</button>
 					</div>
-					
+					<input type="hidden" id="answerCnt" value="${answerCnt }">
 					<div class="qna_body">
 					<hr>
 						<c:choose>

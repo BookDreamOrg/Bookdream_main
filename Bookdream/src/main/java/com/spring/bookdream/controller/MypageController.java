@@ -84,6 +84,16 @@ public class MypageController {
 		model.addAttribute("order", orderService.recentOrder(order));		
 		model.addAttribute("qna", qnaService.getRecentMyQnAList(qna));
 
+		List<QnAVO> qnaList = qnaService.getMyQnAList(qna);
+		
+		int answerCnt = 0;
+		for(int i=0; i<qnaList.size(); i++) {
+			String check = qnaList.get(i).getAns_check();
+			if(check.equals("1")) { //답변 완료 목록 개수
+				answerCnt++;
+			}
+		}
+		model.addAttribute("answerCnt", answerCnt);
 		return "mypage/mypage";
 				
 	}	
@@ -268,6 +278,16 @@ public class MypageController {
 		model.addAttribute("ansMyList",ansMyList);
 		model.addAttribute("myQnAList", qnaMyList);
 		model.addAttribute("qnaUrl", "/mypage/qna_write");
+		
+		int answerCnt = 0;
+		for(int i=0; i<qnaMyList.size(); i++) {
+			String check = qnaMyList.get(i).getAns_check();
+			if(check.equals("1")) { //답변 완료 목록 개수
+				answerCnt++;
+			}
+		}
+		model.addAttribute("answerCnt", answerCnt);
+		
 		return "mypage/qna";
 	}
 	
