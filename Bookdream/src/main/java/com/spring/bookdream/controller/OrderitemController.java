@@ -67,7 +67,7 @@ public class OrderitemController {
 		orderitem.setArrCart(arrCart);		
 		pay.setUser_no(user_no);
 		user.setUser_no(user_no);
-
+		
 		// 카트번호 배열저장
 		session.setAttribute("arrCart", arrCart);
 		

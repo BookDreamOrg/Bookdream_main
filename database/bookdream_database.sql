@@ -129,6 +129,7 @@ CREATE TABLE orders(
 );
 -- 02-15 추가
 alter table orders add cancel_date  date DEFAULT '';
+
 -- orders table fk user_no casecade
 alter table orders drop constraint SYS_C007481;
 alter table orders add constraint fk_orders_user_no foreign key (user_no) references users (user_no) on delete cascade;
@@ -136,6 +137,63 @@ alter table orders add constraint fk_orders_user_no foreign key (user_no) refere
 select * from orders;
 
 commit;
+
+-------------------------------------------------------------------------------
+---------------------------------- PARCHASE -----------------------------------
+-------------------------------------------------------------------------------
+drop table PURCHASE;
+
+CREATE TABLE purchase (
+    PURCHASE_NO number(10),
+    USER_NO number(10),
+    BOOK_NO number(10),
+    ORDER_NO number(10),
+    ORDER_ADDRESS varchar2(100),
+    PRODUCT_COUNT number(10),
+    constraint FK_PURCHASE primary key(PURCHASE_NO), 
+    constraint FK_PURCHASE_USER_NO foreign key(USER_NO) REFERENCES USERS (USER_NO),
+    constraint FK_PURCHASE_BOOK_NO foreign key(BOOK_NO) REFERENCES BOOK (BOOK_NO), 
+    constraint FK_PURCHASE_ORDER_NO foreign key(ORDER_NO) REFERENCES ORDERS (ORDER_NO) 
+);
+
+-- pusrchase table fk user_no casecade
+alter table purchase drop constraint fk_purchase_user_no;
+alter table purchase add constraint fk_purchase_user_no foreign key (user_no) references users (user_no) on delete cascade;
+
+select * from purchase;
+----------------------------- purchase_no 자동증번 ------------------------------
+drop sequence numplus;
+
+Create sequence numplus  
+increment by 1        -- 증가값(1씩증가)
+start with 1          -- 시작값(1부터 시작)
+nomaxvalue            -- 최대값 재한 없음
+nocycle
+nocache;
+
+-------------------------------------------------------------------------------
+---------------------------------- DELIVERY -----------------------------------
+-------------------------------------------------------------------------------
+DROP TABLE DELIVERY;
+
+CREATE TABLE DELIVERY (
+    DELIVERY_NO number(10) not null,
+    ORDER_NO number(10) not null,
+    INVOICE_NO number(38), 
+    COURIER varchar(30),
+    START_DATE date,
+    CMPLT_DATE date,
+    constraint FK_DELIVERY primary key(DELIVERY_NO), 
+    constraint FK_DELIVERY_ORDER_NO foreign key(ORDER_NO) REFERENCES ORDERS (ORDER_NO) 
+);
+
+drop sequence delivery_seq;
+----------------------------- delivery_no 자동증번 ------------------------------
+create sequence delivery_seq increment by 1 start with 1;
+
+
+--------------------------------------------------------------------------------
+
 
 -----------------------------------------------------------------------------
 ---------------------------------- BOOK -----------------------------------
@@ -232,39 +290,7 @@ DELETE 	CART
 	    WHERE 	book_no = 20
 	    AND 	user_no = 1;
 
--------------------------------------------------------------------------------
----------------------------------- PARCHASE -----------------------------------
--------------------------------------------------------------------------------
-drop table PURCHASE;
 
-CREATE TABLE purchase (
-    PURCHASE_NO number(10),
-    USER_NO number(10),
-    BOOK_NO number(10),
-    ORDER_NO number(10),
-    ORDER_ADDRESS varchar2(100),
-    PRODUCT_COUNT number(10),
-    constraint FK_PURCHASE primary key(PURCHASE_NO), 
-    constraint FK_PURCHASE_USER_NO foreign key(USER_NO) REFERENCES USERS (USER_NO),
-    constraint FK_PURCHASE_BOOK_NO foreign key(BOOK_NO) REFERENCES BOOK (BOOK_NO), 
-    constraint FK_PURCHASE_ORDER_NO foreign key(ORDER_NO) REFERENCES ORDERS (ORDER_NO) 
-);
-
--- pusrchase table fk user_no casecade
-alter table purchase drop constraint fk_purchase_user_no;
-alter table purchase add constraint fk_purchase_user_no foreign key (user_no) references users (user_no) on delete cascade;
-
-select * from purchase;
------------------------------ purchase_no 자동증번 ------------------------------
-drop sequence numplus;
-
-Create sequence numplus  
-increment by 1        -- 증가값(1씩증가)
-start with 1          -- 시작값(1부터 시작)
-nomaxvalue            -- 최대값 재한 없음
-nocycle
-nocache;
---------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
 --------------------------------- ADDRESS --------------------------------------

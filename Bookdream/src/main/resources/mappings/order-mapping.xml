@@ -34,14 +34,18 @@
 			   book_img, 
       		   order_date,
 			   final_price,
-			   order_status				   
+			   order_status,
+			   TO_CHAR(start_date, 'YY.MM.DD HH24:MI') AS start_date,
+		       TO_CHAR(cmplt_date, 'YY.MM.DD HH24:MI') AS cmplt_date		   				   
 		FROM  (SELECT  ROW_NUMBER() OVER (ORDER BY rnum DESC) AS rnum,
 		              order_no, 
 		              order_name, 
 		              book_img,
 		              order_date,	
 		              final_price, 
-		              order_status
+		              order_status,
+		              start_date,
+		              cmplt_date		              
 		       FROM   (select rownum rnum, 
 		      				  o.order_no, 
 		                      o.order_name, 
@@ -49,14 +53,18 @@
 		                      o.order_date,
 		                      y.final_price,
 		                      o.order_status,
+		                      d.start_date,
+		                      d.cmplt_date,
 		                      ROW_NUMBER() OVER(PARTITION BY o.order_no ORDER BY o.order_name DESC) AS rn                       
 		              FROM    orders o, 
 		                      purchase p, 
 		                      book b,
-		                      pay y
+		                      pay y,
+		                      delivery d
 		              WHERE   p.book_no = b.book_no   AND
 		                      p.order_no = o.order_no AND
 		                      y.pay_no = o.order_no   AND
+		                      o.order_no = d.order_no AND
 		                      o.user_no = #{user_no}
 							  <choose>
 								<when test="order_status == 100">

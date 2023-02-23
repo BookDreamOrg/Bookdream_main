@@ -87,6 +87,19 @@
 	text-decoration-line: none; 
 }
 
+/* */
+.paging, .orderCnt {
+	display: inline-block;
+}
+
+.paging_btn {
+	height: 30px;
+	font-size: 12px;
+	line-height: 12px;
+}
+.orderCnt {
+	float: right;
+}
 
 /***************************** offcanvas *****************************/
 .offcanvas {
@@ -108,7 +121,9 @@
 	line-height: 35px;
 	border: 1px solid #ced4da;
 	margin-bottom: 30px;
+	margin-top: 6px;
 	cursor: pointer;
+
 }
 
 .order_status_select  {

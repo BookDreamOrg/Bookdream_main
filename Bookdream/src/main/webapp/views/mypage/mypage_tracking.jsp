@@ -71,7 +71,7 @@
 					<!-- 오프캔버스.... 뭐가좋을려나.. -->
 					<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasRightLabel">
 					  <div class="offcanvas-header">
-					    <h5 class="offcanvas-title" id="offcanvasRightLabel">상세조회</h5>
+					    <h5 class="offcanvas-title" id="offcanvasRightLabel" style="font-weight: bold;">상세조회</h5>
 					    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 					  </div>
 					  <div class="offcanvas-body">
@@ -80,14 +80,14 @@
 								필터 이용 시 선택한 주문정보만 조회 가능합니다.					  	
 					  		</div>
 			
-							<div>검색기간</div>
+							<div style="font-size: 12px; font-weight: bold;">검색기간</div>
 							<div class="srch_date" id="reportrange">
 								<i class="fa fa-calendar" style="float: left; margin: 9.5px 0px 0px 10px"></i>&nbsp;
 								<span id="scrh_date"></span> <i class="fa fa-caret-down" style="float: right; margin: 9.5px 10px 0px 0px;"></i>
 							</div>
 							
 							<div>
-								<label class="form-check-label order_status_select_label" for="order_status_select_btn">주문배송 상태</label>
+								<label class="form-check-label order_status_select_label" for="order_status_select_btn" style="font-size: 12px; font-weight: bold;">주문배송 상태</label>
 									<select class="form-select order_status_select" aria-label="Default select example" id="order_status_select_btn">
 									  <option selected value="100">전체</option>
 									  <option value="0">결제완료</option>
@@ -103,7 +103,7 @@
 							</div>							
 							
 							<div>
-								<button type="button" class="btn btn-outline-secondary order_search_reset_btn" id="order_search_reset_btn">초기화</button>							
+								<button type="button" class="btn btn-outline-secondary order_search_reset_btn" id="order_search_reset_btn"><i class="fas fa-undo"></i> 초기화</button>							
 								<button type="button" class="btn btn-primary order_search_view_btn" id="order_search_view_btn">적용</button>
 							</div>
 							
@@ -123,11 +123,9 @@
 				</div>	
 					
 				<!-- 페이징 -->
-				<div style="height: 30px;">
-					<div id="paging" style="display: inline-block;"></div>					
-					<div style="display: inline-block;  float:right; ">
-						<div id="cnt" style="font-size: 24px; font-weight: bold; padding-right: 20px;"></div>
-					</div>
+				<div>
+					<div class="paging" id="paging"></div>					
+					<div class="orderCnt" id="cnt"></div>
 				</div>
 				
 				<!-- 주문목록 -->	

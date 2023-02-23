@@ -66,14 +66,20 @@
      		   y.pay_fee,
     		   y.discount_price,
      		   y.use_point,
-     		   y.save_point
+     		   y.save_point,
+     		   TO_CHAR(d.cmplt_date, 'YY.MM.DD HH24:MI') AS cmplt_date,
+     		   TO_CHAR(d.start_date, 'YY.MM.DD HH24:MI') AS start_date
+     		   
 		FROM   purchase p, 
 		       orders o, 
 		       book b, 
-		       pay y
+		       pay y,
+		       delivery d
+		       
  		WHERE  p.order_no = o.order_no AND 
        		   p.order_no = y.pay_no AND
          	   p.book_no = b.book_no AND
+			   o.order_no = d.order_no AND         	   
 			   p.user_no = #{user_no} AND
       		   p.order_no = #{order_no}  	       		   	   
 	</select>

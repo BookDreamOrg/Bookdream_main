@@ -110,9 +110,18 @@ function order_list(pageNum, status, start_date, end_date) {
 					let date = timestamp(order.ORDER_DATE)
 					let status = switchCase(order.ORDER_STATUS) 	
 					
+					// 결제취소신청, 결제취소는 글색상 RED
 					let red = ((order.ORDER_STATUS == 10) || (order.ORDER_STATUS == 11)) ? `style="color: red"` : ''
+					
+					// 반품요청, 반품완료는 글색상 BLUE	
 					let	blue = ((order.ORDER_STATUS == 12) || (order.ORDER_STATUS == 13)) ? `style="color: blue"` : ''
-
+					
+					// 배송완료는 배송완료시간 표시, 구매확정 버튼
+					let	cmplt_date = order.ORDER_STATUS == 2 ? `<br><span style="font-size: 10px; font-weight: normal;">${order.CMPLT_DATE}</span>` : ''
+						
+					
+					// 배송중,,??
+						
 					html += `<table class="trackinglist_table">
 							 	<tr>
 									<th class="trackinglist_table_th1" colspan="3">
@@ -127,14 +136,10 @@ function order_list(pageNum, status, start_date, end_date) {
 									<th class="trackinglist_table_th2" >`
 									
 									if(order.ORDER_STATUS == 0) {
-					html +=				`<button type="button" class="btn btn-outline-secondary pay_cancel cancel_btn" 
-											 	 data-bs-toggle="modal" data-bs-target="#pay_cancel" 
-											 	 value="${order.ORDER_NO}">결제취소</button>`
+					html +=				`<button type="button" class="btn btn-outline-secondary pay_cancel cancel_btn" value="${order.ORDER_NO}">결제취소</button>`
 
 									} else if(order.ORDER_STATUS == 2) {
-					html +=				`<button type="button" class="btn btn-outline-secondary return_request cancel_btn" 
-												data-bs-toggle="modal" data-bs-target="#return_reqeust" 
-												value="${order.ORDER_NO}">반품신청</button>`							
+					html +=				`<button type="button" class="btn btn-outline-secondary return_request cancel_btn" value="${order.ORDER_NO}">반품신청</button>`							
 									
 									}
 							 	
@@ -151,7 +156,7 @@ function order_list(pageNum, status, start_date, end_date) {
 										${order.FINAL_PRICE} 원
 									</td>				
 							
-								<td class="trackinglist_table_col4" ${red} ${blue} >${status}</td>	
+								<td class="trackinglist_table_col4" ${red} ${blue} >${status} ${cmplt_date} </td>	
 
 								</tr>							 	
 							 </table>`
@@ -187,10 +192,11 @@ function order_list(pageNum, status, start_date, end_date) {
 				paging +=	`</ul>
 						</div>`	
 					
-				cnt = `${data.cnt}`
+				cnt = `<span style="font-size:24px; font-weight: bold; color:#3d3e66">${data.cnt}</span><span style="font-size:12px;"> 개</span>`
 			}
 			
 			paging = paging === undefined ? '' : paging	
+			cnt = cnt === undefined ? '' : cnt	
 					
 			ById('trackinglist').innerHTML = html
 			ById('paging').innerHTML = paging
@@ -367,9 +373,11 @@ function order_detail(order_no) {
 			let result =  JSON.parse(data);
 			let html = "";
 			
-			date = timestamp(result[0].ORDER_DATE);
+			let date = timestamp(result[0].ORDER_DATE);
 			
-			html += `<div class="tracking_detail_main">${date} | 주문번호 (${result[0].ORDER_NO})</div>
+			//let cmplt_date = (result[0].ORDER_STATUS == 2 || result[0].ORDER_STATUS == 3) ? `<span style="float: right">${result[0].CMPLT_DATE}</span>` : ''
+			
+			html += `<div class="tracking_detail_main">${date} | 주문번호 (${result[0].ORDER_NO}) ${cmplt_date} </div>
 					 <hr>`
 			
 				
