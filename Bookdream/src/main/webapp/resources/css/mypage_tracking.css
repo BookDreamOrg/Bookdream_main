@@ -10,7 +10,7 @@
 	margin: 0 auto;
 	width: 1240px;
 	height: auto;
-	min-height: 1000px;
+	min-height: 1200px;
 }
 
 /***************************** 주문내역 카운터 *****************************/
@@ -87,10 +87,18 @@
 	text-decoration-line: none; 
 }
 
+/* */
+.paging, .orderCnt {
+	display: inline-block;
+}
 
-.modal_pay_cancel {
-	height: 300px;
-	padding: 0px 20px;
+.paging_btn {
+	height: 30px;
+	font-size: 12px;
+	line-height: 12px;
+}
+.orderCnt {
+	float: right;
 }
 
 /***************************** offcanvas *****************************/
@@ -106,12 +114,19 @@
 	background-color: #f7f7f7; 
 }
 
-.order_search_select_label, .order_status_select_label {
+.srch_date {
+	height: 35px;
+	text-align: center;
 	font-size: 14px;
-	font-weight: bold;
+	line-height: 35px;
+	border: 1px solid #ced4da;
+	margin-bottom: 30px;
+	margin-top: 6px;
+	cursor: pointer;
+
 }
 
-.order_status_select, .order_search_select {
+.order_status_select  {
 	line-height:150%;
 	font-size: 14px;
 	margin: 5px 0px 30px 0px;

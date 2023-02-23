@@ -1,22 +1,18 @@
 package com.spring.bookdream.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.spring.bookdream.dao.CartDAO;
 import com.spring.bookdream.service.CartService;
 import com.spring.bookdream.vo.CartVO;
 import com.spring.bookdream.vo.UserVO;
@@ -61,11 +57,7 @@ public class CartController {
 		} else {
 			System.out.println("N");//no
 			
-			/*
-			 * 쿠키에 있는 장바구니 정보 찾아서 list 출력
-			 * */
-			
-			//mv.setViewName("/itemorder/cart/list");
+			mv.setViewName("/user/login.jsp");
 			
 		}
 		return mv;

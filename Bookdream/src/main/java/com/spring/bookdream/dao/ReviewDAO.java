@@ -78,7 +78,7 @@ public class ReviewDAO {
 		return mybatis.selectOne("ReviewDAO.avgReview",book_no);
 	}
 	
-/*************************** 별점 별  갯수 ********************************************/	
+/*************************** 별점 별  갯수와 퍼센트 값 ********************************************/	
 	public List<HashMap<Integer, Integer>> progressStar(int book_no){
 		return mybatis.selectList("ReviewDAO.progressStar",book_no);
 	}

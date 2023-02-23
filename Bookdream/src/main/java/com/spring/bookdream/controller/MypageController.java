@@ -55,7 +55,7 @@ public class MypageController {
 	
 	// 마이페이지 - 메인 
 	@RequestMapping(value="/main")
-	public String mypage(HttpServletResponse response, AddressVO address, OrderVO order, QnAVO qna, Model model) {
+	public String mypage(HttpServletResponse response, AddressVO address, OrderVO order, QnAVO qna, UserVO user, Model model) {
 
 		// 로그인해야 진입됨
 		if (session.getAttribute("user_no") == null) {
@@ -79,7 +79,9 @@ public class MypageController {
 		address.setUser_no(user_no);
 		order.setUser_no(user_no);
 		qna.setUser_no(user_no);
-
+		user.setUser_no(user_no);
+		
+		model.addAttribute("userPoint", userService.userPoint(user));
 		model.addAttribute("address", addressService.getDefaultAddress(address));
 		model.addAttribute("order", orderService.recentOrder(order));		
 		model.addAttribute("qna", qnaService.getRecentMyQnAList(qna));
@@ -115,7 +117,7 @@ public class MypageController {
 
 	// 마이페이지 - 주문목록 조회 (간단)
 	@RequestMapping(value="/tracking")
-	public String mypageTracking(HttpServletResponse response, OrderVO order, SearchCriteria cri, Model model) {
+	public String mypageTracking(HttpServletResponse response, Model model) {
 
 		// 로그인해야 진입됨
 		if (session.getAttribute("user_no") == null) {

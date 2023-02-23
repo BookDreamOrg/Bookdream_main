@@ -65,16 +65,16 @@
 			<div class="main">
 			
 		<!-- ------------------slide box---------------------- -->
-		
+				${arrCart}
 				 <div class="side">
 					<span class="fw-bold">Total</span> 
-					<span class="badge bg-primary rounded-pill side_count">${orderitemCount.total_count}</span>	
+					<span class="badge bg-primary rounded-pill side_count">${orderitemCount.TOTAL_COUNT}</span>	
 					
 					<div class="side_pay">
 						<ul>
 							<li class="side_li">
 								<span class="side_title">상품 금액</span>
-								<span class="side_total_price"><fmt:formatNumber value="${orderitemCount.total_price}" pattern="###,###"/> 원</span>
+								<span class="side_total_price"><fmt:formatNumber value="${orderitemCount.TOTAL_PRICE}" pattern="###,###"/> 원</span>
 							</li>
 							
 	
@@ -82,7 +82,7 @@
 								<span class="side_title">배송비</span>
 								<c:set var="delivery" value="3000" />
 								<c:choose>
-									<c:when test="${orderitemCount.total_price ge 30000 }">
+									<c:when test="${orderitemCount.TOTAL_PRICE ge 30000 }">
 										<c:set var="delivery" value="0" />					
 										<span class="side_delivery_price">(+) ${delivery} 원</span>						
 									</c:when>
@@ -102,7 +102,7 @@
 						<hr>
 								
 					<div class="side_title">결제 금액 예정</div>
-						<c:set var="final_price" value="${orderitemCount.total_price + delivery}"/>
+						<c:set var="final_price" value="${orderitemCount.TOTAL_PRICE + delivery}"/>
 						<div class="side_final_price"><span class="side_final_price_value" id="final_price"><fmt:formatNumber value="${final_price}" pattern="###,###"/></span>원</div> 
 						
 						<br>
@@ -113,7 +113,7 @@
 						<button type="button" class="btn btn-primary side_pay_now_btn" id="side_pay_now_btn">결제하기</button>
 						
 						<!-- VALUE  -->
-						<input type="hidden" id="total_price_value" value="${orderitemCount.total_price}">
+						<input type="hidden" id="total_price_value" value="${orderitemCount.TOTAL_PRICE}">
 						<input type="hidden" id="final_price_value" value="${final_price}">
 						<input type="hidden" id="delivery_value" value="${delivery}">										
 													
@@ -127,31 +127,31 @@
 							<th class="orderlist_table_th1">주문 상품</th>
 
 							<th class="orderlist_table_th2" colspan="3">
-								<span class="ordferlist_count">${orderitemCount.total_count} </span>개
+								<span class="ordferlist_count">${orderitemCount.TOTAL_COUNT} </span>개
 								<span class="orderlist_table_th_right"><i class="bi bi-chevron-down" id="orderlist_table_toggle"></i></span>
 							</th>
 							
 						</tr>
 						
 					<c:choose>
-						<c:when test="${orderitem.buy_now == 'Y'}">
+						<c:when test="${orderitem.BUY_NOW == 'Y'}">
 							<tr class="orderlist_table_tr" id="orderlist_table_tr">
 
 								<td class="orderlist_table_col1">
-									<a href="/getBook?book_no=${orderitem.bookVO.book_no}"><img class="orderlist_table_img" alt="book_img" src="${orderitem.bookVO.book_img }"></a>
+									<a href="/getBook?book_no=${orderitem.BOOK_NO}"><img class="orderlist_table_img" alt="book_img" src="${orderitem.BOOK_IMG }"></a>
 								</td>
 								
 								<td class="orderlist_table_col2">
-									${ orderitem.bookVO.title }
+									${ orderitem.TITLE }
 								</td>
 								
 								<td class="orderlist_table_col3">
-									<span style="font-weight: bold;">${ orderitem.product_count }</span>개
+									<span style="font-weight: bold;">${ orderitem.PRODUCT_COUNT }</span>개
 								</td>
 								
 								<td class="orderlist_table_col4">
 									<span style="font-weight: bold;">
-										<fmt:formatNumber value="${orderitem.bookVO.book_price}" pattern="###,###"/>
+										<fmt:formatNumber value="${orderitem.BOOK_PRICE}" pattern="###,###"/>
 									</span>원									
 								</td>
 							</tr>					
@@ -162,20 +162,20 @@
 							<tr class="orderlist_table_tr" id="orderlist_table_tr">
 								
 								<td class="orderlist_table_col1">
-									<a href="/getBook?book_no=${orderitem.bookVO.book_no}"><img class="orderlist_table_img" alt="book_img" src="${orderitem.bookVO.book_img }"></a>
+									<a href="/getBook?book_no=${orderitem.BOOK_NO}"><img class="orderlist_table_img" alt="book_img" src="${orderitem.BOOK_IMG }"></a>
 								</td>
 								
 								<td class="orderlist_table_col2">
-									${ orderitem.bookVO.title }
+									${ orderitem.TITLE }
 								</td>
 								
 								<td class="orderlist_table_col3">
-									<span style="font-weight: bold;">${ orderitem.product_count }</span>개
+									<span style="font-weight: bold;">${orderitem.PRODUCT_COUNT}</span>개
 								</td>
 								
 								<td class="orderlist_table_col4">
 									<span style="font-weight: bold;">
-										<fmt:formatNumber value="${orderitem.bookVO.book_price}" pattern="###,###"/>
+										<fmt:formatNumber value="${orderitem.BOOK_PRICE}" pattern="###,###"/>
 									</span>원									
 								</td>
 							</tr>															
@@ -193,16 +193,16 @@
 					<!-- JS 전송 -->	
 					<!-- 상품의 종류가 2개 이상일 경우 첫번째 상품이름 + 나머지 종류의 개수  -->
 					<c:choose>
-						<c:when test="${orderitem.buy_now == 'Y'}">
-							<c:set var="order_name" value="${orderitem.bookVO.title}"></c:set>
+						<c:when test="${orderitem.BUY_NOW == 'Y'}">
+							<c:set var="order_name" value="${orderitem.TITLE}"></c:set>
 						</c:when>
 						<c:otherwise >
 							<c:choose>
 								<c:when test="${fn:length(orderitemList) != 1}">
-									<c:set var="order_name" value="${orderitemList[0].bookVO.title} 외  ${orderitemCount.col_count - 1} 종"></c:set>
+									<c:set var="order_name" value="${orderitemList[0].TITLE} 외  ${orderitemCount.COL_COUNT - 1} 종"></c:set>
 								</c:when>	
 								<c:otherwise>
-									<c:set var="order_name" value="${orderitemList[0].bookVO.title}"></c:set>
+									<c:set var="order_name" value="${orderitemList[0].TITLE}"></c:set>
 								</c:otherwise>
 							</c:choose>
 						</c:otherwise>
@@ -354,7 +354,7 @@
 							</th>
 							
 							<td class="point_table_col1">
-								보유 <span class="user_point_value"><fmt:formatNumber value="${userPoint.userVO.user_point}" pattern="###,###"/></span> 원
+								보유 <span class="user_point_value"><fmt:formatNumber value="${userPoint}" pattern="###,###"/></span> 원
 							</td>
 							
 							<td class="point_table_col2">
@@ -365,8 +365,8 @@
 						<tr class="point_table_none" id="point_table_none">
 							<th class="point_table_th2">통합포인트</th>
 							<td class="point_table_col3">
-								<fmt:formatNumber value="${userPoint.userVO.user_point}" pattern="###,###"/> 원
-								<input type="hidden" id="max_point_value" value="${userPoint.userVO.user_point}" >
+								<fmt:formatNumber value="${userPoint}" pattern="###,###"/> 원
+								<input type="hidden" id="max_point_value" value="${userPoint}" >
 							</td>
 	
 							<td class="point_table_col4">
@@ -376,7 +376,8 @@
 						</tr>
 					</table>
 				</div>
-		
+				
+				
 				<!-- ------------------ pay ---------------------- -->
 				<div class="pay">			
 					<table class="pay_table">
@@ -389,8 +390,8 @@
 							<tr>
 								<td class="pay_table_col_lastpay">
 									<span>최근결제수단</span>
-									<input type="radio" class="btn-check" name="pay_radio" id="pay_radio0" autocomplete="off" value="${lastPayment.pay_method}" checked>
-									<label class="btn btn-outline-secondary pay_radio_label_last" for="pay_radio0">${lastPayment.pay_method}</label>								
+									<input type="radio" class="btn-check" name="pay_radio" id="pay_radio0" autocomplete="off" value="${lastPayment.PAY_METHOD}" checked>
+									<label class="btn btn-outline-secondary pay_radio_label_last" for="pay_radio0">${lastPayment.PAY_METHOD}</label>								
 								</td>
 							</tr>						
 						</c:if>

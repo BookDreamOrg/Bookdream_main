@@ -1,5 +1,10 @@
 @charset "UTF-8";
 
+.wrapper {
+	height: auto;
+}
+
+
 .main {
 	position:relative;
 
@@ -8,6 +13,7 @@
 	min-height: 1000px;
 	
 	margin: 0 auto;
+	margin-bottom: 100px;
 	line-height: 180%;
 }
 
@@ -177,7 +183,7 @@
 	width: 850px;
 	height: auto;
 		
-	margin-bottom: 30px;
+	margin-bottom: 50px;
 	padding: 0px 25px;
 
 }
@@ -214,6 +220,7 @@
 .user_info_button {
 	width: 320px;
 	margin: 0 auto;
+	margin-bottom: 30px;
 }
 
 

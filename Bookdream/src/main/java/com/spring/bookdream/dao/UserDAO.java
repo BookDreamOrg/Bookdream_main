@@ -157,4 +157,10 @@ public class UserDAO {
 		public void setBlack(int no) {
 			mybatis.update("UserDAO.setBlack", no);
 		}
+
+		// 사용자의 적립금 호출
+		public int userPoint(UserVO vo) {
+
+			return mybatis.selectOne("UserDAO.userPoint", vo);
+		}
 }

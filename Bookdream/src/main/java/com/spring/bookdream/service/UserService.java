@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.ui.Model;
 
+import com.spring.bookdream.vo.OrderitemVO;
 import com.spring.bookdream.vo.UserVO;
 
 //@Service("userService")
@@ -60,4 +61,7 @@ public interface UserService {
 	
 	// 블랙리스트 수정
 	public void setBlack(int no);
+	
+	// 사용자 포인트 조회
+	int userPoint(UserVO vo);	
 }

@@ -30,7 +30,7 @@ public class PayImpl implements PayService {
 	}
 
 	@Override
-	public PayVO lastPayment(PayVO vo) {
+	public Map<String, Object> lastPayment(PayVO vo) {
 		
 		return payDAO.lastPayment(vo);
 	}
@@ -53,6 +53,13 @@ public class PayImpl implements PayService {
 	public Map<String, Object> totalPaymentAmount(PayVO vo) {
 		
 		return payDAO.totalPaymentAmount(vo);
+	}
+
+	// 결제수단 비율
+	@Override
+	public Map<String, Object> payMethodRate() {
+
+		return payDAO.payMethodRate();
 	}
 
 }

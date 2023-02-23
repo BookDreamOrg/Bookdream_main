@@ -83,13 +83,13 @@
       			<div class="modal-body">
  					<div class="mb-3">
   						<label for="address_alias" class="form-label">배송지 이름</label>
-  						<input class="form-control address_input" id="address_alias" name="address_alias" placeholder="배송지 이름을 입력해주세요.">
+  						<input class="form-control address_input" id="address_alias" name="address_alias" maxlength="10" placeholder="배송지 이름을 입력해주세요.">
 					</div>		
 
 					<div class="mb-3">
   						<label for="address_name" class="form-label">받는 사람</label>
-  						<input class="form-control address_input" id="address_name" name="address_name" placeholder="이름을 입력해주세요.">
-  						<input class="form-control address_input" id="address_tel" name="address_tel" placeholder="휴대번호를 -없이 입력해주세요.">
+  						<input class="form-control address_input" id="address_name" name="address_name" maxlength="10" placeholder="이름을 입력해주세요.">
+  						<input class="form-control address_input" id="address_tel" name="address_tel" maxlength="11" placeholder="휴대번호를 -없이 입력해주세요.">
 					</div>				
 					
 
@@ -100,7 +100,7 @@
   						<input class="form-control address_input" id="zonecode" name="address_zonecode" placeholder="우편번호" readonly>
   						<input class="form-control address_input" id="roadAddr" name="address_roadAddr" placeholder="도로명주소" readonly>
   						<span  id="guide" style="color: #999; display: none"></span>
-  						<input class="form-control address_input" id="detailAddress" name="address_detailAddress" placeholder="상세주소" >
+  						<input class="form-control address_input" id="detailAddress" name="address_detailAddress" maxlength="20" placeholder="상세주소" >
 						<input type="hidden" id="extraAddress" placeholder="참고항목" readonly="readonly">			
 						<input type="hidden" id="address_no" name="address_no">	
 					</div> 
@@ -113,12 +113,12 @@
       			</div>
 
 
-
-     		    <div class="d-grid gap-2 address_save">
-					<button class="btn btn-primary" id="address_insert_modal_btn">저장</button>
-					<button class="btn btn-primary" id="address_update_modal_btn">수정</button>				
-				</div>	
-     		    
+				<div class="modal-footer">
+	     		    <div class="d-grid gap-2 address_save">
+						<button class="btn btn-primary" id="address_insert_modal_btn">저장</button>
+						<button class="btn btn-primary" id="address_update_modal_btn">수정</button>				
+					</div>	
+     		 	</div>   
      		    
     		</div>
   		</div>

@@ -1,7 +1,5 @@
 package com.spring.bookdream.dao;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
@@ -24,14 +22,21 @@ public class OrderDAO {
 		mybatis.insert("OrderDAO.insertOrder", vo);		
 	}
 
-	// 주문 조회
-	public List<OrderVO> searchOrder(OrderVO vo) {
+	// 마이페이지 : 주문 조회
+	public List<Map<String, Object>> searchOrder(OrderVO vo) {
 		
 		System.out.println("---> OrderDAO searchOrder 실행 <---");
 		return mybatis.selectList("OrderDAO.searchOrder", vo);	
 		
 	}
 
+	// 마이페이지 : 주문 조회 개수
+	public int searchOrderCount(OrderVO vo) {
+
+		return mybatis.selectOne("OrderDAO.searchOrderCount", vo);	
+
+	}
+	
 	// 결제 취소, 반품요청
 	public void cancelOrder(OrderVO vo) {
 		
@@ -41,13 +46,6 @@ public class OrderDAO {
 		
 	}
 	
-	// 결제취소, 반품완료시 도서 반환
-	public int updateBookStock(OrderVO vo) {
-		
-		System.out.println("---> OrderDAO updateBookStock 실행 <---");
-		return mybatis.update("OrderDAO.updateBookStock", vo);	
-		
-	}
 	
 	// 결제취소, 반품완료시 포인트 반환
 	public int updateUserPoint(OrderVO vo) {
@@ -57,15 +55,6 @@ public class OrderDAO {
 		
 	}	
 	
-	// 배송상태 갱신
-	public void trackingUpdate(OrderVO vo) {
-		
-		System.out.println("---> OrderDAO trackingUpdate 실행 <---");
-		// 결제완료 -> 배송중 
-		mybatis.update("OrderDAO.trackingUpdate", vo);		
-		// 배송중 -> 배송완료
-		mybatis.update("OrderDAO.trackingUpdate2", vo);		
-	}	
 	
 	// 주문 개수 확인
 	public List<Map<String, Object>> orderStatusCount(OrderVO vo) {
@@ -77,7 +66,7 @@ public class OrderDAO {
 	}		
 	
 	// 최근 주문 조회
-	public OrderVO recentOrder(OrderVO vo) {
+	public Map<String, Object> recentOrder(OrderVO vo) {
 		
 		System.out.println("---> OrderDAO recentOrder 실행 <---");
 		
@@ -120,19 +109,7 @@ public class OrderDAO {
 		
 		return mybatis.selectList("OrderDAO.orderMlyCancelDateCount", vo);
 	}
-
-	// 금주 취소/반품 현황
-	public List<Map<String, Object>> cancelOrderWek(OrderVO vo) {
-
-		return mybatis.selectList("OrderDAO.cancelOrderWek", vo);
-	}
-
-	// 금주 취소/반품 현황 카운트	
-	public int cancelOrderWekCount(OrderVO vo) {
-
-		return mybatis.selectOne("OrderDAO.cancelOrderWekCount", vo);
-	}
-
+	
 	// 결제취소/반품 승인
 	public void orderAprvl(OrderVO vo) {
 		
@@ -165,5 +142,7 @@ public class OrderDAO {
 		return mybatis.selectList("OrderDAO.Order_BY_7DAYS");
 		
 	}
+
+
 
 }

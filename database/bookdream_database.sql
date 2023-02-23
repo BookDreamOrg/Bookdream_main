@@ -122,6 +122,8 @@ CREATE TABLE orders(
     order_tel           varchar2(40)   not null,
     order_status        number(10)     default 0 not null
 );
+-- 02-15 추가
+alter table orders add cancel_date  date DEFAULT '';
 
 -- orders table fk user_no casecade
 alter table orders drop constraint SYS_C007481;
@@ -130,6 +132,63 @@ alter table orders add constraint fk_orders_user_no foreign key (user_no) refere
 select * from orders;
 
 commit;
+
+-------------------------------------------------------------------------------
+---------------------------------- PARCHASE -----------------------------------
+-------------------------------------------------------------------------------
+drop table PURCHASE;
+
+CREATE TABLE purchase (
+    PURCHASE_NO number(10),
+    USER_NO number(10),
+    BOOK_NO number(10),
+    ORDER_NO number(10),
+    ORDER_ADDRESS varchar2(100),
+    PRODUCT_COUNT number(10),
+    constraint FK_PURCHASE primary key(PURCHASE_NO), 
+    constraint FK_PURCHASE_USER_NO foreign key(USER_NO) REFERENCES USERS (USER_NO),
+    constraint FK_PURCHASE_BOOK_NO foreign key(BOOK_NO) REFERENCES BOOK (BOOK_NO), 
+    constraint FK_PURCHASE_ORDER_NO foreign key(ORDER_NO) REFERENCES ORDERS (ORDER_NO) 
+);
+
+-- pusrchase table fk user_no casecade
+alter table purchase drop constraint fk_purchase_user_no;
+alter table purchase add constraint fk_purchase_user_no foreign key (user_no) references users (user_no) on delete cascade;
+
+select * from purchase;
+----------------------------- purchase_no 자동증번 ------------------------------
+drop sequence numplus;
+
+Create sequence numplus  
+increment by 1        -- 증가값(1씩증가)
+start with 1          -- 시작값(1부터 시작)
+nomaxvalue            -- 최대값 재한 없음
+nocycle
+nocache;
+
+-------------------------------------------------------------------------------
+---------------------------------- DELIVERY -----------------------------------
+-------------------------------------------------------------------------------
+DROP TABLE DELIVERY;
+
+CREATE TABLE DELIVERY (
+    DELIVERY_NO number(10) not null,
+    ORDER_NO number(10) not null,
+    INVOICE_NO number(38), 
+    COURIER varchar(30),
+    START_DATE date,
+    CMPLT_DATE date,
+    constraint FK_DELIVERY primary key(DELIVERY_NO), 
+    constraint FK_DELIVERY_ORDER_NO foreign key(ORDER_NO) REFERENCES ORDERS (ORDER_NO) 
+);
+
+drop sequence delivery_seq;
+----------------------------- delivery_no 자동증번 ------------------------------
+create sequence delivery_seq increment by 1 start with 1;
+
+
+--------------------------------------------------------------------------------
+
 
 -----------------------------------------------------------------------------
 ---------------------------------- BOOK -----------------------------------
@@ -167,6 +226,7 @@ create table CART (
     CART_NO       number(10) NOT NULL,
     USER_NO       number     NOT NULL,
     BOOK_NO       number     NOT NULL,
+    regDATE       DATE       DEFAULT SYSDATE,
     PRODUCT_COUNT number(10) DEFAULT 1 NOT NULL , -- 디폴트 1로 지정하기.
     constraint PK_CART primary key (CART_NO),
     constraint FK_CART_USER_NO foreign key(USER_NO) REFERENCES USERS (USER_NO),
@@ -178,30 +238,7 @@ CREATE sequence CART_SEQ increment by 1 START with 1;
 
 -- sequence적용 cart inert 예시
 insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) 
-values(CART_SEQ.nextval, 1, 30, 3);
-
-insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(1, 1, 1, 1);
-insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(2, 1, 2, 1);
-insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(3, 1, 3, 2);
-insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(4, 1, 4, 1);
-insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(5, 1, 5, 1);
-
-insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) values(6, 2, 5, 1);
-
-select PRODUCT_COUNT from cart
-where user_no=1 and book_no = 20;
-
-insert into CART (CART_NO, USER_NO, BOOK_NO, PRODUCT_COUNT) 
-            values(CART_SEQ.nextval, 1, 20, 2);
-
-
--- if 조건 then 처리문 else if 조건2 then 처리문;     
-    
-UPDATE CART set PRODUCT_COUNT = (PRODUCT_COUNT + 5) where user_no=1 and book_no=20;
-  
-select PRODUCT_COUNT from cart
-where user_no=1 and book_no = 20;
-
+values(CART_SEQ.nextval, 2, 501, 1);
 
 -- cart user_no casecade
 alter table cart drop constraint FK_CART_USER_NO;
@@ -211,11 +248,6 @@ select * from cart;
 
 
 commit; 
-
-SELECT  count(*) 
-		FROM cart 
-		WHERE user_no = 1
-        group by user_no;
         
 SELECT  -- *
         row_number() over(order by C.cart_no desc) as num, -- 등록 순서대로 칼럼 num(index) 지정.
@@ -231,39 +263,7 @@ DELETE 	CART
 	    WHERE 	book_no = 20
 	    AND 	user_no = 1;
 
--------------------------------------------------------------------------------
----------------------------------- PARCHASE -----------------------------------
--------------------------------------------------------------------------------
-drop table PURCHASE;
 
-CREATE TABLE purchase (
-    PURCHASE_NO number(10),
-    USER_NO number(10),
-    BOOK_NO number(10),
-    ORDER_NO number(10),
-    ORDER_ADDRESS varchar2(100),
-    PRODUCT_COUNT number(10),
-    constraint FK_PURCHASE primary key(PURCHASE_NO), 
-    constraint FK_PURCHASE_USER_NO foreign key(USER_NO) REFERENCES USERS (USER_NO),
-    constraint FK_PURCHASE_BOOK_NO foreign key(BOOK_NO) REFERENCES BOOK (BOOK_NO), 
-    constraint FK_PURCHASE_ORDER_NO foreign key(ORDER_NO) REFERENCES ORDERS (ORDER_NO) 
-);
-
--- pusrchase table fk user_no casecade
-alter table purchase drop constraint fk_purchase_user_no;
-alter table purchase add constraint fk_purchase_user_no foreign key (user_no) references users (user_no) on delete cascade;
-
-select * from purchase;
------------------------------ purchase_no 자동증번 ------------------------------
-drop sequence numplus;
-
-Create sequence numplus  
-increment by 1        -- 증가값(1씩증가)
-start with 1          -- 시작값(1부터 시작)
-nomaxvalue            -- 최대값 재한 없음
-nocycle
-nocache;
---------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
 --------------------------------- ADDRESS --------------------------------------

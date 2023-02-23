@@ -12,6 +12,9 @@ public interface BookService {
 	// 책 검색어 조회
 	List<BookVO> getBookList(String keyword);
 	
+	//[페이징]검색한 키워드의 결과 count
+	double getBookByKeywordCount (String keyword);
+	
 	// [어드민] 책 리스트  조회 
 	List<BookVO> AdmingetBookList(BookVO vo);
 	
@@ -21,4 +24,9 @@ public interface BookService {
 	//[어드민] 도서 삭제
 	void deleteBook (int book_no);
 	
+	//[어드민/페이징] 필터링 검색한 결과 count
+	double adminBookListCount(BookVO vo);
+	
+	//[어드민] 도서 등록
+	int bookRegister(BookVO vo);
 }

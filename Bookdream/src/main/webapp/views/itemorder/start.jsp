@@ -7,54 +7,35 @@
 <meta charset="UTF-8">
 <title>테스트페이지</title>
 
-<!-- jQuery -->
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_orange.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
 
 </head>
 <body>
 
-	<h1>
-		<a href="/itemorder/cart/list">장바구니</a>
-	</h1>
-
-	<h1>
-		<a href="/detail/cart/orderitem">결제/주문</a>
-	</h1>
-
-	<h1>
-		<a href="/admin/order">관리자</a>
-	</h1>
-
-
-	<button id="cart">배열넘기기~</button>
-	
-	<input type="hidden" id="test" name="test[]" value="" />
-
-
+<div class="col-6">
+    <label class="form-label" for="birth">학생 생년월일</label>
+    <input class="form-control" id="birth" pattern="\d{4}-\d{2}-\d{2}" placeholder=""
+           required th:field="*{birth}" type="text" value="">
+    <div class="invalid-feedback">
+        학생 생년월일을 입력해주세요.(예시 2021-01-01)
+    </div>
+</div>
 
 <script type="text/javascript">
-/* */
-function ById(id) {
-	return document.getElementById(id);
-}
 
-/* */
-$(document).on("click", "#cart", function(e) {
-	//var aaa = document.getElementsByName("abc[]")[0].value;
-	
-	for (var i=0; i<50; i++) {
-		$("input[name='test[]']").eq(i).val(100)	
 
-	}
+	var fp = flatpickr(document.getElementById("birth"), {
+		'monthSelectorType' : 'static',
+		"locale": "ko" 
 	
-	aaa = document.getElementsByName("test[]").value;
-	
-	console.log(document.getElementsByName("test[]").length)
+	});
+	fp.setDate();
 
-})
 
 </script>
-
 
 </body>
 </html>

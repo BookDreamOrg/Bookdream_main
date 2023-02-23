@@ -1,6 +1,7 @@
 package com.spring.bookdream.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,56 +18,33 @@ public class OrderitemImpl implements OrderitemService {
 
 	// 장바구니 상품 목록 조회
 	@Override
-	public List<OrderitemVO> getOrderitemList(OrderitemVO vo) {
+	public List<Map<String, Object>> getOrderitemList(OrderitemVO vo) {
 
 		return orderitemDAO.getOrderitemList(vo);
 	}
 	
 	// 장바구니 상품 개수 조회
 	@Override
-	public OrderitemVO getOrderitemCount(OrderitemVO vo) {
+	public Map<String, Object> getOrderitemCount(OrderitemVO vo) {
 
 		return orderitemDAO.getOrderitemCount(vo);
 	}
 
 	// 바로구매 상품 조회
 	@Override
-	public OrderitemVO getBuyNow(OrderitemVO vo) {
+	public Map<String, Object> getBuyNow(OrderitemVO vo) {
 
 		return orderitemDAO.getBuyNow(vo);
 
 	}
-	
-	
-	// 사용자의 포인트 조회
+			
+	// 구매 한 장바구니만 제거
 	@Override
-	public OrderitemVO userPoint(OrderitemVO vo) {
-
-		return orderitemDAO.userPoint(vo);
-	}
-
-	
-	// 상품 구매후 재고 차감
-	@Override
-	public int updateBookStock(OrderitemVO user_no) {
+	public int deleteCartList(OrderitemVO vo) {
 		
-		return orderitemDAO.updateBookStock(user_no);
+		return orderitemDAO.deleteCartList(vo);		
 	}
-
-	@Override
-	public int updateBookStock_now(OrderitemVO vo) {
-		// TODO Auto-generated method stub
-		return orderitemDAO.updateBookStock_now(vo);
-	}
-	
-	
-	// 구매 한 장바구니 품목 제거
-	@Override
-	public int deleteCartList(OrderitemVO user_no) {
-		
-		return orderitemDAO.deleteCartList(user_no);		
-	}
-
+	// 구매 후 사용자의 포인트 정산
 	@Override
 	public int updateUserPoint(OrderitemVO vo) {
 

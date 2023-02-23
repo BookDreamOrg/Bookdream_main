@@ -23,6 +23,7 @@ public class SearchKeywordServiceImpl implements SearchKeywordService {
 			searchingKeywordDAO.insertSearchKeyword(vo);
 		
 	}
+	
 
 	@Override
 	public List<Map<String, Object>> viewAutoKeyword(Map<String, Object> paramMap) throws Exception {
@@ -40,4 +41,6 @@ public class SearchKeywordServiceImpl implements SearchKeywordService {
 
 		return searchingKeywordDAO.rcmndBooklist(vo);
 	}
+
+
 }
