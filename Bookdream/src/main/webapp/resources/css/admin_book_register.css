@@ -1,0 +1,11 @@
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+#section_title1{
+color:var(--main-color-shadow2);
+font-weight: 800;
+}

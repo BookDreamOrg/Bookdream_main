@@ -20,5 +20,10 @@ public class BookVO {
 	private String book_category;
 	private int discount;
 	
+	//페이징처리로 인해 추가 23.02.21
+	private int index;
+	private int startIndex;
+	private int endIndex;
+	
 	
 }

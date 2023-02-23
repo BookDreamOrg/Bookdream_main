@@ -83,26 +83,12 @@
 			</div>
 		</nav>
 	</header>
-	<div class="section_div">
-		<section class="today_state">
-			<div class="card">
-				<div class="card-body">
-					<h5 class="card-title">도서 일일 판매량(주간)</h5>
-					<div class="container">
-    				<canvas id="Book_Order_qty_chart" height="200px;" width="1300px;"></canvas>
-  					</div>
-				</div>
-			</div>
-		</section>
 		
-	</div>
-		
-		
-		<!---------------------------- 도서 검색 ------------------------------------>
-		<section class="mb-5">
+	<!---------------------------- 도서 검색 ------------------------------------>
+		<section class="mb-5 mt-5" >
 		<div class="h3 mb-3" id="section_title1"  >도서 상세 조회</div>
 		<hr>
-		<form action="/admin_bookList">
+		<form method="get">
 		<div class="row row-cols-4">
   		<div class="col-md-2">책 제목</div>
   		<div class="col-md-4"><input type="search" name="title" id="title" > </div>
@@ -112,17 +98,25 @@
   		
   		<div class="col-md-2 mt-2">카테고리</div>
   		<div class="col-md-4 mt-2"> 
-  			<select name="book_category" id="book_category"><option value="all">카테고리 선택</option><option value="국내도서">국내도서</option><option value="해외도서">해외도서</option> </select>
+  			<select name="book_category" id="book_category">
+  				<option value="all">카테고리 선택</option>
+  				<option value="국내도서">국내도서</option>
+  				<option value="해외도서">해외도서</option> 
+  			</select>
   		</div>
 
   		<div class="col-md-2 mt-2">출판사</div>
   		<div class="col-md-4 mt-2"><input type="search" name="publisher" id="publisher"> </div>
 		</div>
 
-		<div class="float-end"><button type="submit" class="btn btn-warning"> 검색  </button> </div>
+		<div class="float-end">
+		<button type="button" onclick='adminSearch(this.value)' class="btn btn-warning" value='1'> 검색  </button> 
+		
+		
+		</div>
 		</form>
 		</section>
-		<!----------------------검색 결과 리스트 ------------------------->
+	<!----------------------검색 결과 리스트 ------------------------->
 		<section>
 		<div id="bookList_title" class="text-center">
 		<ul class="list-group list-group-horizontal">
@@ -140,32 +134,19 @@
 	  	</ul>
 	  	</div>
 	  	<div id="bookList" class="text-center mb-5">
-		<c:forEach var="book" items="${book}" varStatus="status">
-		<ul class="list-group list-group-horizontal">
-			<li class="list-group-item list-group-item-action list-group-item-warning " id="check">
-				<input type="checkbox" name="item" value="${book.book_no}"/>
-			</li>	
-	  		<li class="list-group-item list-group-item-action list-group-item-warning text-center" id="count">${status.count}</li>
-	  		<li class="list-group-item list-group-item-action list-group-item-warning text-center" id="bookNo">${book.book_no}</li>
-	  		<li class="list-group-item list-group-item-action list-group-item-warning" id="book_title">${book.title}</li>
-	  		<li class="list-group-item list-group-item-action list-group-item-warning" id= "book_author">${book.author}</li>
-	  		<li class="list-group-item list-group-item-action list-group-item-warning text-center" id="category">${book.book_category}</li>
-	  		<li class="list-group-item list-group-item-action list-group-item-warning text-center" id="org_price"><fmt:formatNumber value="${book.book_price}" pattern="###,###,###원" /></li>
-	  		<li class="list-group-item list-group-item-action list-group-item-warning text-center" id="sale_rate"><fmt:formatNumber type="percent"  value="${book.discount/100} " /></li>
-	  		<li class="list-group-item list-group-item-action list-group-item-warning text-center" id="sale_price" style="font-weight: 700; color: red;"><fmt:formatNumber type="currency" pattern="###,###,###원" value="${book.book_price - (book.book_price*book.discount/100)}" /></li>
-	  		<li class="list-group-item list-group-item-action list-group-item-warning text-center" id="stock">
-	  			<div class="text-center">
-	  				<div>${book.stock}</div>
-	  				<div class="mt-1"><button type="button" class="btn btn-warning" id="stock_upd_btn" value="${book.book_no}">추가</button></div>
-				</div>
-			</li>
-			<li class="list-group-item list-group-item-action list-group-item-warning text-center" id="delete">
-				<button type="button" class="btn btn-warning mt-3" id="delete_btn" value="${book.book_no}">삭제</button>		
-			</li>
-	  	</ul>
-		</c:forEach>
+		
+			
 		</div>
 		</section>
+		
+		
+		
+<!--------------------------------- 페이징 처리   -------------------------------->		
+<div class="container" id="paging">
+<div class="mt-5 mb-5 text-center" id="page_result">
+
+</div>
+</div>	
 		
 	</main>
 
@@ -242,12 +223,15 @@
 	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
 	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 	
-    
+	
+
+    <!-- JavaScript  -->
     <script type="text/javascript" src="/resources/js/book_admin.js"></script>
 	
-		
 	<!-- J쿼리 -->
 	<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+	
+
 	
 
 	<!-- Script FontAwesome-->
