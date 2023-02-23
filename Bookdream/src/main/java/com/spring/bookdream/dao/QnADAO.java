@@ -65,7 +65,7 @@ public class QnADAO {
 	}
 	
 	//나의 문의 목록 리스트
-	public List<QnAVO> getRecentMyQnAList(QnAVO qnaVO){
+	public List<Map<String, Object>> getRecentMyQnAList(QnAVO qnaVO){
 		System.out.println("MyList 3개");
 		return mybatis.selectList("QnADAO.getRecentMyQnAList", qnaVO);
 	}

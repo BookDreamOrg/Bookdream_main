@@ -6,8 +6,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-
-
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -20,11 +19,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.spring.bookdream.service.DeliveryService;
 import com.spring.bookdream.service.OrderService;
 import com.spring.bookdream.service.OrderitemService;
 import com.spring.bookdream.service.PayService;
 import com.spring.bookdream.service.PurchaseService;
-
+import com.spring.bookdream.vo.DeliveryVO;
 import com.spring.bookdream.vo.OrderVO;
 import com.spring.bookdream.vo.OrderitemVO;
 import com.spring.bookdream.vo.PayVO;
@@ -46,6 +46,9 @@ public class PayController {
 
 	@Autowired
 	private PurchaseService PurchaseService;		
+
+	@Autowired
+	private DeliveryService deliveryService;	
 	
 	@Autowired
 	private HttpSession session;	
@@ -62,7 +65,9 @@ public class PayController {
 	
 	// 결제 후 처리
 	@RequestMapping(value="/pay")
-	public String insertPay(@SessionAttribute("order") OrderVO order, PayVO pay, OrderitemVO orderitem, PurchaseVO purchase, HttpServletRequest request, Model model) throws IOException, InterruptedException {
+	public String insertPay(@SessionAttribute("order") OrderVO order, PayVO pay, 
+							OrderitemVO orderitem, PurchaseVO purchase, 
+							DeliveryVO delivery, HttpServletRequest request, Model model) throws IOException, InterruptedException {
 		
 		// 결제정보 값을 url에서 추출
 		String paymentKey = request.getParameter("paymentKey");
@@ -129,10 +134,14 @@ public class PayController {
 	    order.setPay_no(payData.getPay_no());
 	    order.setOrder_date(payData.getPay_date());
 	    purchase.setOrder_no(payData.getPay_no());	    
-	    orderitem.setPay_no(payData.getPay_no());	   
+	    orderitem.setPay_no(payData.getPay_no());	 
+	    delivery.setOrder_no(payData.getPay_no());
 	    
 	    System.out.println("---> 주문 DB 등록 <---");
 	    orderService.insertOrder(order);			
+	    
+	    System.out.println("---> 배송 DB 등록 <---");
+	    deliveryService.insertDelivery(delivery);
 	    
 	    System.out.println("---> 사용자 포인트 갱신 <---");
 	    orderitemService.updateUserPoint(orderitem);
@@ -140,9 +149,11 @@ public class PayController {
 	    // 바로구매, 장바구니 판별
 	    String buy_now = (String) session.getAttribute("buy_now");
 
+	    
 	    // 바로구매
 	    if ("Y".equals(buy_now)) {
 
+	    	// 구매한 도서 및 수량
 		    int product_count = (int) session.getAttribute("product_count");	
 		    int book_no = (int) session.getAttribute("book_no");	
 		    
@@ -151,23 +162,19 @@ public class PayController {
 	    	
 		    System.out.println("---> 주문상세보기 DB 등록 (바로구매) <---");
 		    PurchaseService.insertPurchase_now(purchase);
-	    	
-	    	orderitem.setProduct_count(product_count);
-	    	orderitem.setBook_no(book_no);
-	    	
-	    	System.out.println("---> 바로구매 재고차감 <---");
-		    orderitemService.updateBookStock_now(orderitem);
-		    
+	    		    			    
 		// 장바구니 구매
 	    } else {
+	    		    	
+	    	// 카트번호 배열 
+	    	List<Integer> list =  (List<Integer>) session.getAttribute("arrCart");    
+	    	
+	    	purchase.setArrCart(list);	
+	    	orderitem.setArrCart(list);	
 	    	
  		    System.out.println("---> 주문상세보기 DB 등록 (장바구니) <---");
 		    PurchaseService.insertPurchase(purchase);
 		    
-		    System.out.println("---> 구입한 개수만큼 재고차감 (장바구니) <---");
-		    orderitemService.updateBookStock(orderitem);
-		    
-		    // 장바구니에서 필터하는 기능이 없어서 지금은 전부다 제거됨 
 		    System.out.println("---> 구입한 상품만 장바구니 제거 <---");
 		    orderitemService.deleteCartList(orderitem);	    	
 	    }
@@ -176,6 +183,8 @@ public class PayController {
 	    // 결제번호, 결제시간 표시용
 	    model.addAttribute("payData", payData);
 	    
+	    // 세션 초기화
+	    session.removeAttribute("arrCart");
 	    session.removeAttribute("buy_now");
 	    session.removeAttribute("product_count");
 	    session.removeAttribute("book_no");

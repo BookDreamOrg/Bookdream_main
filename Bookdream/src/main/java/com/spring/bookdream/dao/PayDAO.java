@@ -29,7 +29,7 @@ public class PayDAO {
 		return mybatis.selectOne("PayDAO.searchPay", vo);	
 	}
 	
-	public PayVO lastPayment(PayVO vo) {
+	public Map<String, Object> lastPayment(PayVO vo) {
 		
 		System.out.println("---> PayDAO lastPayment 실행 <---");
 
@@ -52,6 +52,12 @@ public class PayDAO {
 
 		return mybatis.selectOne("PayDAO.totalPaymentAmount", vo);	
 
+	}
+
+	// 결제수단 비율
+	public Map<String, Object> payMethodRate() {
+		
+		return mybatis.selectOne("PayDAO.payMethodRate");	
 	}	
 
 }

@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 public class OrderVO {
 
+	// DB
 	private int order_no;
 	private int user_no;
 	private int pay_no;
@@ -20,29 +21,23 @@ public class OrderVO {
 	private String order_tel;	
 	private int order_status;
 	
-	// 페이징 처리용
-	private int status_count;
+	// 관리자 확인
+	private String admin;	
+	
+	// 페이징
     private int pageNum;
 	private int amount;	
 	private String srchCrtr;
 	private String srchKey;	
+	private String srchStrDate;
+	private String srchEndDate;
 	
+	// 페이징버튼
 	private List<Map<String, Object>> list;
 	private PageVO page;
-	
-	// 마이페이지 조회용
-	private int row;
-	private int search_date;
-	private int search_status;
+	private int cnt;
+
 		
-	//관리자
-	private String admin;
-	
-	// JOIN
-	private PurchaseVO purchaseVO;
-	private BookVO bookVO;
-	private PayVO payVO;
-	
 	// 세션저장용
 	private String pay_method;
 	private int pay_fee;

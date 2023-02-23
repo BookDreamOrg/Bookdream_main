@@ -16,7 +16,7 @@
 		<result property="default_add" column="DEFAULT_ADD" />		
 	</resultMap>	
 
-	<!-- user_no 변경필요 -->
+	<!-- 배송지 목록 호출 -->
 	<select id="getAddressList" parameterType="address" resultMap="addressList">
 	<![CDATA[
 		SELECT a.address_no, 
@@ -33,7 +33,7 @@
 	]]>
 	</select>
 			
-	<!-- user_no 변경필요 -->			
+	<!-- 선택한 배송지의 value를 표시함 -->	
 	<select id="getAddress" parameterType="address" resultMap="addressList">
 	<![CDATA[
 		SELECT 
@@ -51,7 +51,7 @@
 	]]>	
 	</select>		
 	
-	<!-- user_no 변경필요 -->	
+	<!-- 결제화면에서 기본배송지를 표시함 -->
 	<select id="getDefaultAddress" parameterType="address" resultMap="addressList">
 	<![CDATA[
 		SELECT address_no,
@@ -68,7 +68,7 @@
 	]]>	
 	</select>	
 	
-	<!-- user_no 변경필요 -->			
+	<!-- 배송지 등록 -->
 	<insert id="insertAddress">
 	<![CDATA[	
 		INSERT INTO address(address_no, 
@@ -95,7 +95,8 @@
 	]]>		
 	</insert>		
 	
-	<!-- user_no 변경필요 -->	
+
+	<!-- 선택한 배송지를 기본배송지로 변경 1 -->
 	<update id="defaultAddress">
 	<![CDATA[	
 		update address
@@ -104,7 +105,7 @@
 	]]>	
 	</update>
 	
-	<!-- user_no 변경필요 -->	
+	<!-- 선택한 배송지를 기본배송지로 변경 2 -->
  	<update id="defaultAddress2">
 	<![CDATA[	
 		update address
@@ -113,7 +114,7 @@
 	]]>	
 	</update>	 
 
-	<!-- user_no 변경필요 -->
+	<!-- 배송지 수정 -->
 	<update id="updateAddress">
 	<![CDATA[		
 		UPDATE address
@@ -127,7 +128,7 @@
 	]]>		
 	</update>
 
-	<!-- user_no 변경필요 -->
+	<!-- 배송지 삭제 -->
 	<delete id="deleteAddress">
 		DELETE
 		FROM   address

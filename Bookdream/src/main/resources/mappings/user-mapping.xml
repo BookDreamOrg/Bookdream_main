@@ -166,4 +166,11 @@
                     end where user_no = #{user_no}
 	</update>
 	
+	<!-- 사용자의 적립금 호출 -->
+	<select id="userPoint" resultType="int">
+		SELECT user_point as point   
+		FROM   users
+		WHERE  user_no = #{user_no}
+	</select>
+	
 </mapper>

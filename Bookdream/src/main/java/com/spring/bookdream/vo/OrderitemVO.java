@@ -1,5 +1,7 @@
 package com.spring.bookdream.vo;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -11,18 +13,13 @@ public class OrderitemVO {
 	private int book_no;
 	private int pay_no;
 	private int product_count;
-	private int total_count;
-	private int col_count;
-	private int total_price;
+	
+	// 장바구니 / 바로구매 판별
 	private String buy_now;
 	
-	// JOIN TABLE
-	private UserVO userVO;
-	private BookVO bookVO;
-	private PayVO pavVO;
-	
-	
-	
+	// 장바구니 배열
+	private List<Integer> arrCart;
+
 
 	
 

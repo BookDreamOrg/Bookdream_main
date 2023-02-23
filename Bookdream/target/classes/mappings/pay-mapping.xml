@@ -6,9 +6,7 @@
 
 	<resultMap type="pay" id="payList">
 		<result property="pay_no" column="PAY_NO" />
-		<result property="pay_date" column="PAY_DATE" />
-		<result property="pay_method" column="PAY_METHOD" />
-		<result property="user_no" column="USER_NO" />			
+		<result property="pay_date" column="PAY_DATE" />		
 	</resultMap>
 
 	<insert id="insertPay" >
@@ -31,6 +29,7 @@
 			    )
 	</insert>
 
+	<!-- 결제번호, 결제시간 -->
 	<select id="searchPay" resultMap="payList">
 	<![CDATA[	
 		SELECT pay_no, 
@@ -43,7 +42,8 @@
      ]]>
 	</select>
 
-	<select id="lastPayment" resultMap="payList">
+	<!-- 마지막 결제 수단 -->
+	<select id="lastPayment" resultType="HashMap">
 		SELECT y.pay_method, 
 		       y.pay_no
 		FROM   pay y, 
@@ -113,6 +113,18 @@
 	
 	</select>
 
+	<select id="payMethodRate" resultType="HashMap">
+		SELECT sum(CASE WHEN pay_method = '카드' THEN 1 ELSE 0 END) as card,
+		       sum(CASE WHEN pay_method = '토스페이' THEN 1 ELSE 0 END) as tossPay,
+		       sum(CASE WHEN pay_method = '가상계좌' THEN 1 ELSE 0 END) as vrtlAcnt,
+		       sum(CASE WHEN pay_method = '계좌이체' THEN 1 ELSE 0 END) as acntTrnsf,
+		       sum(CASE WHEN pay_method = '휴대폰' THEN 1 ELSE 0 END) as phone,
+		       sum(CASE WHEN pay_method = '문화상품권' THEN 1 ELSE 0 END) as cltmrCrtfc,
+		       sum(CASE WHEN pay_method = '도서문화상품권' THEN 1 ELSE 0 END) as bkcgfCrtfc,
+		       sum(CASE WHEN pay_method = '게임문화상품권' THEN 1 ELSE 0 END) as gmcgfCrtfc
+		FROM pay
+	
+	</select>
 
 	
 </mapper>

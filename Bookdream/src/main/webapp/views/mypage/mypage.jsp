@@ -261,9 +261,17 @@ hr {
 							</ul>	
 							<ul class="mypage_info_content_ul2">
 								<li class="mypage_info_content_title">포인트</li>
-								<li class="mypage_info_content_text">${authUser.getUser_point()}P</li><br>							
+								<li class="mypage_info_content_text">${userPoint}P</li><br>							
 								<li class="mypage_info_content_title">배송지</li>
-								<li class="mypage_info_content_text">[${address.zone_code}] ${address.road_add} ${address.detail_add}</li>						
+								<c:choose>
+									<c:when test="${address.zone_code eq null}">
+										<li class="mypage_info_content_text">등록된 주소지가 없습니다.</li> 
+									</c:when>
+									
+									<c:otherwise>
+										<li class="mypage_info_content_text">${address.zone_code} ${address.road_add} ${address.detail_add}</li>						
+									</c:otherwise>
+								</c:choose>
 							</ul>
 						</div>	
 					</div>
@@ -272,43 +280,56 @@ hr {
 
 				<!-- 배송상태 -->
 				<c:choose>
-					<c:when test="${order.order_status == 0}">
+					<c:when test="${order.ORDER_STATUS == 0}">
 						<c:set var="status" value="결제완료"></c:set>
 					</c:when>
-					<c:when test="${order.order_status == 1}">
+					<c:when test="${order.ORDER_STATUS == 1}">
 						<c:set var="status" value="배송중"></c:set>
 					</c:when>					
-					<c:when test="${order.order_status == 2}">
+					<c:when test="${order.ORDER_STATUS == 2}">
 						<c:set var="status" value="배송완료"></c:set>
 					</c:when>
-					<c:when test="${order.order_status == 3}">
+					<c:when test="${order.ORDER_STATUS == 3}">
 						<c:set var="status" value="구매확정"></c:set>
 					</c:when>
-					<c:when test="${order.order_status == 10}">
+					<c:when test="${order.ORDER_STATUS == 10}">
 						<c:set var="status" value="결제취소중"></c:set>
 					</c:when>
-					<c:when test="${order.order_status == 11}">
+					<c:when test="${order.ORDER_STATUS == 11}">
 						<c:set var="status" value="결제취소"></c:set>
 					</c:when>					
-					<c:when test="${order.order_status == 12}">
+					<c:when test="${order.ORDER_STATUS == 12}">
 						<c:set var="status" value="반품요청중"></c:set>
 					</c:when>
-					<c:when test="${order.order_status == 13}">
+					<c:when test="${order.ORDER_STATUS == 13}">
 						<c:set var="status" value="반품완료"></c:set>
 					</c:when>																					
 				</c:choose>
 
-
-				<div class="mypage_sub_title">최근주문</div>					
+				<div class="mypage_sub_title">최근주문
+					<span style="font-size: 12px; font-weight: normal; margin-left: 10px;">
+						<fmt:formatDate value="${order.ORDER_DATE}" pattern="MM월 dd일 (E)" />
+					</span>
+				</div>					
 				
 				<div class="mypage_recent_pur">
 				<hr>
 					<table class="mypage_recent_pur_table">
-						<tr>
-							<td><img class="mypage_recent_pur_img" alt="" src="${order.bookVO.book_img}"></td>
-							<td>${order.order_name }</td>
-							<td>${status}</td>
-						</tr>
+					
+					<c:choose>
+						<c:when test="${order eq null}">
+							<div style="text-align: center; margin: 30px 0px;">주문내역이 없습니다.</div>
+						</c:when>
+					
+						<c:otherwise>
+							<tr>
+								<td><img class="mypage_recent_pur_img" alt="" src="${order.BOOK_IMG}"></td>
+								<td>${order.ORDER_NAME }</td>
+								<td>${status}</td>
+							</tr>						
+						</c:otherwise>
+					</c:choose>
+
 					</table>
 	
 				</div>
@@ -319,25 +340,31 @@ hr {
 				</div>
 				<div class="mypage_recent_qna">
 				<hr>
-
-					<table class="mypage_recent_qna_table">					
-						<c:forEach items="${qna}" var="qna">
-							
-							<!-- 문의상태 -->							
-							<c:set var="status" value="${qna.ans_check == 0 ? '문의접수' : '문의완료' }"></c:set>
-										
-							<tr>
-								<td>
-									<fmt:formatDate value="${qna.reg_date}" pattern="yy.MM.dd" /><br>
-									<fmt:formatDate value="${qna.reg_date}" pattern="HH:mm" />
-								</td>
-								<td>${qna.qna_title}</td>
-								<td>${status}</td>
-							</tr>
-						</c:forEach>
+					<c:choose>
+						<c:when test="${qna eq '[]'}">
+							<div style="text-align: center; margin: 30px 0px;">문의내역이 없습니다.</div>
+						</c:when>
 						
-							
-					</table>						
+						<c:otherwise>
+							<table class="mypage_recent_qna_table">					
+								<c:forEach items="${qna}" var="qna">
+									
+									<!-- 문의상태 -->							
+									<c:set var="status" value="${qna.ANS_CHECK == 0 ? '문의접수' : '문의완료' }"></c:set>
+												
+									<tr>
+										<td>
+											<fmt:formatDate value="${qna.REG_DATE}" pattern="yy.MM.dd" /><br>
+											<fmt:formatDate value="${qna.REG_DATE}" pattern="HH:mm" />
+										</td>
+										<td>${qna.QNA_TITLE}</td>
+										<td>${status}</td>
+									</tr>
+								</c:forEach>
+							</table>						
+						</c:otherwise>
+					</c:choose>
+						
 				</div>							
 
 

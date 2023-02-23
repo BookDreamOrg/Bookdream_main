@@ -53,7 +53,7 @@ public class QnAServiceImpl implements QnAService{
 	}
 
 	//마이페이지 나의 문의 목록 리스트 (3개)
-	public List<QnAVO> getRecentMyQnAList(QnAVO qnaVO) {
+	public List<Map<String, Object>> getRecentMyQnAList(QnAVO qnaVO) {
 		return qnaDAO.getRecentMyQnAList(qnaVO);
 	}
 		

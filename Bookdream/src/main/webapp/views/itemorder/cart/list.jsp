@@ -155,6 +155,7 @@
 												<input class="chBox chBox${cart.cart_no} form-check-input border rounded-circle"
 														type="checkbox" name="chBox[]" value="${cart.cart_no}" data-cartNo="${cart.cart_no}"> 
 												<!-- 체크 ----------------- -->
+												
 												<script>
 													$(".chBox").click(function(){
 													  	$("#allCheck").prop("checked", false);
