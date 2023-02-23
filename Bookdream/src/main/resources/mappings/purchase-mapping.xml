@@ -3,44 +3,8 @@
 			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="PurchaseDAO">
-
-	<resultMap type="purchase" id="purchaseList">
-		<result property="purchase_no" column="PURCHASE_NO" />
-		<result property="user_no" column="USER_NO" />
-		<result property="book_no" column="BOOK_NO" />
-		<result property="order_no" column="ORDER_NO" />
-		<result property="product_count" column="PRODUCT_COUNT" />	
-		<collection property="bookVO" resultMap="bookList"></collection>
-		<collection property="orderVO" resultMap="orderList"></collection>
-		<collection property="payVO" resultMap="payList"></collection>
-	</resultMap>	
-
-	<resultMap type="book" id="bookList">
-		<result property="book_no" column="BOOK_NO"/>
-		<result property="title" column="TITLE" />
-		<result property="book_price" column="BOOK_PRICE" />
-		<result property="book_img" column="BOOK_IMG" />		
-	</resultMap>
-
-	<resultMap type="order" id="orderList">
-		<result property="order_no" column="ORDER_NO"/>
-		<result property="order_date" column="ORDER_DATE"/>
-		<result property="order_receiver" column="ORDER_RECEIVER"/>
-		<result property="order_tel" column="ORDER_TEL"/>
-		<result property="order_address" column="ORDER_ADDRESS"/>
-		<result property="order_status" column="ORDER_STATUS"/>
-	</resultMap>	
-
-	<resultMap type="pay" id="payList">
-		<result property="total_price" column="TOTAL_PRICE"/>
-		<result property="final_price" column="FINAL_PRICE"/>
-		<result property="pay_fee" column="PAY_FEE"/>
-		<result property="discount_price" column="DISCOUNT_PRICE"/>
-		<result property="use_point" column="USE_POINT" />
-		<result property="save_point" column="SAVE_POINT" />
-	</resultMap>
-     	
-    <!-- 구매목록저장 (장바구니) -->	   	
+	     
+ 	<!-- 구매목록저장 (장바구니)-->
 	<insert id="insertPurchase">
 		INSERT INTO PURCHASE (purchase_no, 
 							  user_no, 
@@ -59,7 +23,12 @@
 		       orders o
 		WHERE  c.user_no = #{user_no} AND 
 			   b.book_no = c.book_no AND 
-			   o.order_no = #{order_no}
+			   o.order_no = #{order_no} AND
+			   c.cart_no IN (
+		        <foreach collection="arrCart" item="item" index="index" separator=",">
+		            ${item}
+		        </foreach>   			   
+			   )
 	</insert>
 
     <!-- 구매목록저장 (바로구매) -->	   	
@@ -79,7 +48,7 @@
 	</insert>
 
 	<!-- 마이페이지에서 확인하는 제품 상세 표기 -->	
-	<select id="getPurchaseList" parameterType="purchase" resultMap="purchaseList">
+	<select id="getPurchaseList" resultType="HashMap">
 		SELECT b.book_img, 
     		   b.title, 
     		   b.book_no,
@@ -106,9 +75,10 @@
        		   p.order_no = y.pay_no AND
          	   p.book_no = b.book_no AND
 			   p.user_no = #{user_no} AND
-      		   p.order_no = #{order_no}      		   	   
+      		   p.order_no = #{order_no}  	       		   	   
 	</select>
 	
+	<!-- 관리자 : 주문당 구매도서수 비율 -->
 	<select id="purchaseBookRatio" resultType="HashMap">
 		SELECT	COUNT(*) as total_orders,
 		  		SUM(CASE WHEN product_count = 1 THEN 1 ELSE 0 END) as pq1,
@@ -122,7 +92,7 @@
 				 GROUP BY order_no)
 	</select>
 	
-	<!-- 배송시 재고차감 -->
+	<!-- 관리자 : 배송시 재고차감 -->
 	<update id="updateBookStock">
 		UPDATE book b
 		SET    stock = (SELECT stock - product_count as stock
@@ -136,7 +106,7 @@
 	
 	</update>	
 
-	<!-- 반품완료시 재고반환 -->	
+	<!-- 관리자 : 반품완료시 재고반환 -->	
 	<update id="bookStockReturn">	
 		UPDATE book b
 		SET    b.stock = (SELECT stock + p.product_count as stock

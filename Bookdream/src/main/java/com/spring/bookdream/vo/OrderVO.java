@@ -24,29 +24,20 @@ public class OrderVO {
 	// 관리자 확인
 	private String admin;	
 	
-	// 페이징처리
-	private int status_count;
+	// 페이징
     private int pageNum;
 	private int amount;	
-	
 	private String srchCrtr;
 	private String srchKey;	
 	private String srchStrDate;
 	private String srchEndDate;
 	
+	// 페이징버튼
 	private List<Map<String, Object>> list;
 	private PageVO page;
-	
-	// 마이페이지 조회용
-	private int row;
-	private int search_date;
-	private int search_status;		
-	
-	// JOIN
-	private PurchaseVO purchaseVO;
-	private BookVO bookVO;
-	private PayVO payVO;
-	
+	private int cnt;
+
+		
 	// 세션저장용
 	private String pay_method;
 	private int pay_fee;

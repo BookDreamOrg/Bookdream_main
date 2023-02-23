@@ -6,8 +6,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-
-
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -141,7 +140,6 @@ public class PayController {
 	    System.out.println("---> 주문 DB 등록 <---");
 	    orderService.insertOrder(order);			
 	    
-	    
 	    System.out.println("---> 배송 DB 등록 <---");
 	    deliveryService.insertDelivery(delivery);
 	    
@@ -151,9 +149,11 @@ public class PayController {
 	    // 바로구매, 장바구니 판별
 	    String buy_now = (String) session.getAttribute("buy_now");
 
+	    
 	    // 바로구매
 	    if ("Y".equals(buy_now)) {
 
+	    	// 구매한 도서 및 수량
 		    int product_count = (int) session.getAttribute("product_count");	
 		    int book_no = (int) session.getAttribute("book_no");	
 		    
@@ -162,18 +162,19 @@ public class PayController {
 	    	
 		    System.out.println("---> 주문상세보기 DB 등록 (바로구매) <---");
 		    PurchaseService.insertPurchase_now(purchase);
-	    	
-	    	orderitem.setProduct_count(product_count);
-	    	orderitem.setBook_no(book_no);
-	    			    
+	    		    			    
 		// 장바구니 구매
 	    } else {
+	    		    	
+	    	// 카트번호 배열 
+	    	List<Integer> list =  (List<Integer>) session.getAttribute("arrCart");    
+	    	
+	    	purchase.setArrCart(list);	
+	    	orderitem.setArrCart(list);	
 	    	
  		    System.out.println("---> 주문상세보기 DB 등록 (장바구니) <---");
 		    PurchaseService.insertPurchase(purchase);
-
 		    
-		    // 장바구니에서 필터하는 기능이 없어서 지금은 전부다 제거됨 
 		    System.out.println("---> 구입한 상품만 장바구니 제거 <---");
 		    orderitemService.deleteCartList(orderitem);	    	
 	    }
@@ -182,15 +183,14 @@ public class PayController {
 	    // 결제번호, 결제시간 표시용
 	    model.addAttribute("payData", payData);
 	    
+	    // 세션 초기화
+	    session.removeAttribute("arrCart");
 	    session.removeAttribute("buy_now");
 	    session.removeAttribute("product_count");
 	    session.removeAttribute("book_no");
 	    
 	    return "redirect:/detail/cart/orderitem/success";
 	}		
-	
-	
-	
 	
 		// 새로고침 DB중복 방지
 		// 방금 구매한 상품을 조회함

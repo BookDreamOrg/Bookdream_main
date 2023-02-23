@@ -22,14 +22,21 @@ public class OrderDAO {
 		mybatis.insert("OrderDAO.insertOrder", vo);		
 	}
 
-	// 주문 조회
-	public List<OrderVO> searchOrder(OrderVO vo) {
+	// 마이페이지 : 주문 조회
+	public List<Map<String, Object>> searchOrder(OrderVO vo) {
 		
 		System.out.println("---> OrderDAO searchOrder 실행 <---");
 		return mybatis.selectList("OrderDAO.searchOrder", vo);	
 		
 	}
 
+	// 마이페이지 : 주문 조회 개수
+	public int searchOrderCount(OrderVO vo) {
+
+		return mybatis.selectOne("OrderDAO.searchOrderCount", vo);	
+
+	}
+	
 	// 결제 취소, 반품요청
 	public void cancelOrder(OrderVO vo) {
 		
@@ -59,7 +66,7 @@ public class OrderDAO {
 	}		
 	
 	// 최근 주문 조회
-	public OrderVO recentOrder(OrderVO vo) {
+	public Map<String, Object> recentOrder(OrderVO vo) {
 		
 		System.out.println("---> OrderDAO recentOrder 실행 <---");
 		
@@ -135,5 +142,7 @@ public class OrderDAO {
 		return mybatis.selectList("OrderDAO.Order_BY_7DAYS");
 		
 	}
+
+
 
 }

@@ -2,16 +2,20 @@ package com.spring.bookdream.service;
 
 import java.util.List;
 import java.util.Map;
-import java.time.LocalDate;
 import com.spring.bookdream.vo.OrderVO;
 
 public interface OrderService {
 	
-	// payDB -> OrderDB 등록
+	//************ 사용자 부문************/
+	
+	// 주문 DB 등록
 	void insertOrder(OrderVO vo);
 	
-	// 주문 조회
-	List<OrderVO> searchOrder(OrderVO vo);
+	// 마이페이지 주문 조회
+	List<Map<String, Object>> searchOrder(OrderVO vo);
+	
+	// 마이페이지 주문 조회 개수
+	int searchOrderCount(OrderVO vo);
 	
 	// 결제 취소, 반품 신청
 	void cancelOrder(OrderVO vo);
@@ -20,12 +24,16 @@ public interface OrderService {
 	int updateUserPoint(OrderVO vo);
 	
 	// 마이페이지 배송상태 카운터
-	List<Map<String, Object>> orderStatusCount(OrderVO order);	
+	List<Map<String, Object>> orderStatusCount(OrderVO vo);	
 
 	// 마이페이지 최근주문 1개 출력
-	OrderVO recentOrder(OrderVO vo);
+	Map<String, Object> recentOrder(OrderVO vo);
+
+	
 
 	/************ 관리자 부문************/
+	
+	/*주문 현황*/
 	
 	// 금주 주문 개수 리스트
 	List<Map<String, Object>> orderDateCount(OrderVO vo);

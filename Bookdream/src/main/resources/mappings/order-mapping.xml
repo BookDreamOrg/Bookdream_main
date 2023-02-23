@@ -3,34 +3,6 @@
 			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 			
 <mapper namespace="OrderDAO">
-
-	<resultMap type="order" id="orderList">
-		<result property="order_no" column="ORDER_NO" />
-		<result property="order_name" column="ORDER_NAME" />	
-		<result property="user_no" column="USER_NO" />	
-		<result property="order_date" column="ORDER_DATE" />	
-		<result property="order_status" column="ORDER_STATUS" />	
-		<result property="status_count" column="STATUS_COUNT" />	
-		<collection property="purchaseVO" resultMap="purchaseList"></collection>		
-		<collection property="bookVO" resultMap="bookList"></collection>
-		<collection property="payVO" resultMap="payList"></collection>
-	</resultMap>	
-
-	<resultMap type="purchase" id="purchaseList">
-		<result property="book_no" column="BOOK_NO"/>
-		<result property="order_no" column="ORDER_NO" />		
-	</resultMap>
-
-	<resultMap type="book" id="bookList">
-		<result property="book_no" column="BOOK_NO"/>
-		<result property="title" column="TITLE" />
-		<result property="book_img" column="BOOK_IMG" />		
-	</resultMap>
-
-	<resultMap type="pay" id="payList">
-		<result property="final_price" column="FINAL_PRICE"/>
-
-	</resultMap>
 	
 	<insert id="insertOrder" >
 		INSERT INTO orders(ORDER_NO, 
@@ -56,19 +28,60 @@
 	</insert>
 		
 	<!-- 마이페이지 주문조회 (간단) 1개월 이내만 조회!! -->
-	<select id="searchOrder" parameterType="order" resultMap="orderList">		
-		SELECT order_no, 
-			   order_name, 
+	<select id="searchOrder" resultType="HashMap">		
+		SELECT order_no,
+			   order_name,
 			   book_img, 
       		   order_date,
 			   final_price,
-			   order_status
-		FROM   (select o.order_no, 
-                	   o.order_name, 
-                       b.book_img, 
-                       o.order_date,
-                       y.final_price,
-                       o.order_status,
+			   order_status				   
+		FROM  (SELECT  ROW_NUMBER() OVER (ORDER BY rnum DESC) AS rnum,
+		              order_no, 
+		              order_name, 
+		              book_img,
+		              order_date,	
+		              final_price, 
+		              order_status
+		       FROM   (select rownum rnum, 
+		      				  o.order_no, 
+		                      o.order_name, 
+		                      b.book_img, 
+		                      o.order_date,
+		                      y.final_price,
+		                      o.order_status,
+		                      ROW_NUMBER() OVER(PARTITION BY o.order_no ORDER BY o.order_name DESC) AS rn                       
+		              FROM    orders o, 
+		                      purchase p, 
+		                      book b,
+		                      pay y
+		              WHERE   p.book_no = b.book_no   AND
+		                      p.order_no = o.order_no AND
+		                      y.pay_no = o.order_no   AND
+		                      o.user_no = #{user_no}
+							  <choose>
+								<when test="order_status == 100">
+									AND 1=1
+								</when>
+								<otherwise>
+									AND order_status = #{order_status}
+								</otherwise>
+							  </choose>			  
+							  AND order_date BETWEEN #{srchStrDate} AND TO_DATE(TO_DATE(#{srchEndDate})+1)			                      
+		                      
+		              )
+		     WHERE rn = 1
+		     ORDER BY rnum desc)
+		     
+		WHERE rnum between ((#{pageNum}-1) * #{amount})+1 AND 
+		                     #{pageNum} * #{amount}	
+		                     
+		order by order_no desc   
+	</select>
+	
+	<!-- 카운트 -->
+	<select id="searchOrderCount" resultType="int">
+		SELECT count(*)
+		FROM   (select o.order_no,
 	 			       ROW_NUMBER() OVER(PARTITION BY o.order_no ORDER BY o.order_name DESC) AS rn                       
 	 			from   orders o, 
 	 			       purchase p, 
@@ -78,25 +91,27 @@
                        p.order_no = o.order_no AND
                        y.pay_no = o.order_no   AND
                        o.user_no = #{user_no}
+ 					   <choose>
+					   	<when test="order_status == 100">
+							AND 1=1
+						</when>
+						<otherwise>
+							AND order_status = #{order_status}
+						</otherwise>
+					   </choose>			  
+						 	AND order_date BETWEEN #{srchStrDate} AND TO_DATE(TO_DATE(#{srchEndDate})+1)	 						 	                      
+                order by order_no desc 
+                      
                 )
         WHERE rn = 1 
-        	<![CDATA[
-        	 	AND order_date > sysdate-#{search_date} 
-        	]]>
-         	<choose>
-         		<when test="search_status == 100 ">
-         			AND	1 = 1         			
-         		</when>
-         		<otherwise>
-        			AND order_status = #{search_status}         			
-         		</otherwise>
-         	</choose>
-		order by order_no desc
-
+		order by order_no desc	
 	</select>
 	
+	
+	
+	
 	<!-- 마이페이지 최근 구매 조회-->
-	<select id="recentOrder" parameterType="order" resultMap="orderList">		
+	<select id="recentOrder" resultType="HashMap">		
 		SELECT order_no, 
 			   order_name, 
 			   book_img, 
@@ -117,23 +132,20 @@
 	 			where  p.book_no = b.book_no   AND
                        p.order_no = o.order_no AND
                        y.pay_no = o.order_no   AND
-                       o.user_no = #{user_no} 
-                order by order_no desc
-                )
+                       o.user_no = #{user_no})
         WHERE rn = 1 AND
 			  rownum = 1		
 
 
 	</select>	
-	
+		
 	<!-- 주문취소/반품요청시 배송상태 변경, 취소시간등록-->
 	<update id="cancelOrder">
 		UPDATE orders
 		SET	   order_status = #{order_status},
 			   cancel_date = sysdate
-		WHERE  order_no = #{order_no} 
-	</update>
-								
+		WHERE  order_no = #{order_no} 												
+	</update>							
 									
 	<!-- 포인트 반환 -->	
 	<update id="updateUserPoint">

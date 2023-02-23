@@ -541,12 +541,36 @@ $(document).on("click", ".mngmn_table_tr", function(e) {
 
 /***************************** 주문상세 : 승인버튼 클릭 *****************************/
 $(document).on("click", "a.aprvl_btn", function(e) {	
-	
+
 	let order_no = ById('order_no').value
 	let user_no = ById('user_no').value
 	let status = ById('order_status').value	
 	
-	orderAprvl(order_no, status, user_no)
+	 Swal.fire({
+	      title: '취소 & 반품',
+	      text: "해당 요청을 승인하시겠습니까?",
+	      icon: 'warning',
+	      showCancelButton: true,
+	      confirmButtonColor: '#3085d6',
+	      cancelButtonColor: '#d33',
+	      confirmButtonText: '승인',
+	      cancelButtonText: '취소',
+	      reverseButtons: true, // 버튼 순서 거꾸로
+	      
+	    }).then((result) => {
+	      if (result.isConfirmed) {
+	        Swal.fire(
+	  	      
+	          orderAprvl(order_no, status, user_no),	        
+	          '정상처리 되었습니다.',
+	          'success'
+
+	        )
+	      }
+	    })
+
+	
+	
 })
 
 /***************************** 주문상세 : 취소/반품 승인 FUNCTION *****************************/
@@ -566,9 +590,7 @@ function orderAprvl(order_no, status, user_no) {
 		contentType : "application/json",		
 			
 		success : function() {
-				
-			alert("해당 요청을 승인하였습니다.");
-			
+							
 			// 세션호출 후 재검색
 			getItemSession()
 			
@@ -617,9 +639,27 @@ $(document).on("click", "#invoice_no", function(e) {
 
 })
 
+
 /***************************** 배송 등록 버튼 클릭*****************************/
 $(document).on("click", "#dlvy_btn", function(e) {	 
 	
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'center-center',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+
+      Toast.fire({
+        icon: 'success',
+        title: '배송처리가 정상적으로 완료되었습니다.'
+      })
+    
 	let order_no = ById('order_no').value
 	let invoice_no = ById('invoice_no').innerHTML
 	let courier = ById('courier_select').value

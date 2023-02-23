@@ -6,9 +6,7 @@
 
 	<resultMap type="pay" id="payList">
 		<result property="pay_no" column="PAY_NO" />
-		<result property="pay_date" column="PAY_DATE" />
-		<result property="pay_method" column="PAY_METHOD" />
-		<result property="user_no" column="USER_NO" />			
+		<result property="pay_date" column="PAY_DATE" />		
 	</resultMap>
 
 	<insert id="insertPay" >
@@ -31,6 +29,7 @@
 			    )
 	</insert>
 
+	<!-- 결제번호, 결제시간 -->
 	<select id="searchPay" resultMap="payList">
 	<![CDATA[	
 		SELECT pay_no, 
@@ -43,7 +42,8 @@
      ]]>
 	</select>
 
-	<select id="lastPayment" resultMap="payList">
+	<!-- 마지막 결제 수단 -->
+	<select id="lastPayment" resultType="HashMap">
 		SELECT y.pay_method, 
 		       y.pay_no
 		FROM   pay y, 

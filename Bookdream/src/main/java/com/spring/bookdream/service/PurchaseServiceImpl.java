@@ -31,7 +31,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 	}	
 	
 	@Override
-	public List<PurchaseVO> getPurchaseList(PurchaseVO vo) {
+	public List<Map<String, Object>> getPurchaseList(PurchaseVO vo) {
 		return purchaseDAO.getPurchaseList(vo);
 	}
 

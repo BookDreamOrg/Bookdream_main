@@ -4,38 +4,8 @@
 
 <mapper namespace="OrderitemDAO">
 
-	<resultMap type="orderitem" id="orderitemList">
-		<result property="cart_no" column="CART_NO" />
-		<result property="user_no" column="USER_NO" />	
-		<result property="book_no" column="BOOK_NO" />	
-		<result property="total_count" column="TOTAL_COUNT" />	
-		<result property="product_count" column="PRODUCT_COUNT" />	
-		<result property="col_count" column="COL_COUNT" />	
-		<result property="total_price" column="TOTAL_PRICE" />			
-		<result property="buy_now" column="BUY_NOW" />			
-		<collection property="userVO" resultMap="userList"></collection>		
-		<collection property="bookVO" resultMap="bookList"></collection>
-	</resultMap>	
-
-	<resultMap type="user" id="userList">
-		<result property="user_no" column="USER_NO" />
-		<result property="user_point" column="USER_POINT" />
-	</resultMap>
-
-	<resultMap type="book" id="bookList">
-		<result property="book_no" column="BOOK_NO"/>
-		<result property="title" column="TITLE" />
-		<result property="author" column="AUTHOR" />
-		<result property="publisher" column="PUBLISHER" />
-		<result property="book_price" column="BOOK_PRICE" />
-		<result property="book_img" column="BOOK_IMG" />		
-	</resultMap>
-
-
-	<!-- 장바구니의 상품을 결제화면으로 전송함 -->	
-	<!-- user_no 변경필요 -->
-	<select id="getOrderitemList" parameterType="orderitem" resultMap="orderitemList">
-	<![CDATA[
+	<!-- 장바구니에서 선택한 상품 표기 -->
+	<select id="getOrderitemList" resultType="HashMap">
 		SELECT c.cart_no, 
 			   u.user_no, 
 			   b.book_no, 
@@ -46,17 +16,19 @@
 		FROM   cart c, 
 			   users u, 
 			   book b
-		WHERE  c.book_no = b.book_no AND 
-			   u.user_no = c.user_no AND 
-			   u.user_no = #{user_no}
-		order by cart_no
-	]]>
+		WHERE  c.book_no = b.book_no AND
+               u.user_no = c.user_no AND 
+			   u.user_no = ${user_no} AND
+               c.cart_no IN (
+		        <foreach collection="arrCart" item="item" index="index" separator=",">
+		            ${item}
+		        </foreach>               
+               )
+		ORDER BY cart_no	
 	</select>
 
-	<!-- 장바구니의 상품 개수, 종류, 가격을 전송함  -->
-	<!-- user_no 변경필요 -->
-	<select id="getOrderitemCount" parameterType="orderitem" resultMap="orderitemList">
-	<![CDATA[
+	<!-- 장바구니에서 선택한 상품의 개수, 총 가격, 종류  -->
+	<select id="getOrderitemCount" resultType="HashMap">
 		SELECT sum(product_count) as total_count, 
 			   count(*) as col_count, 
 			   sum(c.product_count * b.book_price) as total_price
@@ -65,12 +37,16 @@
 			   book b
 		WHERE  c.book_no = b.book_no AND   
 			   u.user_no = c.user_no AND
-			   u.user_no = #{user_no}
-	]]>
+			   u.user_no = #{user_no} AND
+               c.cart_no IN (
+		        <foreach collection="arrCart" item="item" index="index" separator=",">
+		            ${item}
+		        </foreach>               
+               )			   
 	</select>
 	
 	<!-- 바로구매에서 결제화면으로 전송함 -->
-	<select id="getBuyNow" parameterType="orderitem" resultMap="orderitemList">
+	<select id="getBuyNow" resultType="HashMap">
 		SELECT b.book_no,
 			   b.book_img, 
 			   b.title, 
@@ -80,14 +56,7 @@
 		WHERE  u.user_no = #{user_no} AND
 			   b.book_no = #{book_no}
 	</select>
-	
-	<!-- 사용자의 적립금 호출 -->
-	<select id="userPoint" parameterType="orderitem" resultMap="orderitemList">
-		SELECT user_point   
-		FROM   users
-		WHERE  user_no = #{user_no}
-	</select>
-	
+		
 	<!-- 구입한 상품 장바구니 제거 (장바구니만)-->
 	<delete id="deleteCartList">
 		DELETE
@@ -97,10 +66,16 @@
 	    	         book b, 
 	    	         cart c
         	  where  u.user_no = c.user_no AND 
-        	         c.book_no = b.book_no
+        	         c.book_no = b.book_no AND
+        	         c.cart_no IN (
+			        <foreach collection="arrCart" item="item" index="index" separator=",">
+			            ${item}
+			        </foreach>         	         
+        	         )
         	 )      
 		WHERE user_no = #{user_no}
 	</delete>
+	
 	
 	<!-- 결제 후 포인트 정산 -->
 	<update id="updateUserPoint">

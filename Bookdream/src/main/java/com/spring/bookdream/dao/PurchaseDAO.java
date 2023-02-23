@@ -30,7 +30,7 @@ public class PurchaseDAO {
 		return mybatis.insert("PurchaseDAO.insertPurchase_now", vo);
 	}
 	
-	public List<PurchaseVO> getPurchaseList(PurchaseVO vo) {
+	public List<Map<String, Object>> getPurchaseList(PurchaseVO vo) {
 
 		System.out.println("---> 구매목록 조회 <---");
 		

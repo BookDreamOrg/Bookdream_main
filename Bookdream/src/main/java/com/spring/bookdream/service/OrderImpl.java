@@ -15,41 +15,50 @@ public class OrderImpl implements OrderService {
 	@Autowired
 	private OrderDAO orderDAO;
 
-	// 
+	// 주문 db 등록
 	@Override
 	public void insertOrder(OrderVO vo) {
 		
 		orderDAO.insertOrder(vo);		
 	}
 
-	// 
+	// 마이페이지 주문내역 : 주문 목록 
 	@Override
-	public List<OrderVO> searchOrder(OrderVO vo) {
+	public List<Map<String, Object>> searchOrder(OrderVO vo) {
 
 		return orderDAO.searchOrder(vo);
 	}
 
+	@Override
+	public int searchOrderCount(OrderVO vo) {
+
+		return orderDAO.searchOrderCount(vo);
+	}	
+	
+	// 결제취소/반품요청 
 	@Override
 	public void cancelOrder(OrderVO vo) {
 
 		orderDAO.cancelOrder(vo);
 	}
 
+	// 결제취소/반품완료 시 사용,적립 포인트 반환
 	@Override
 	public int updateUserPoint(OrderVO vo) {
 		
 		return orderDAO.updateUserPoint(vo);
 	}
 
-
+	// 마이페이지 : 배송상태 총 카운트
 	@Override
 	public List<Map<String, Object>> orderStatusCount(OrderVO vo) {
 
 		return orderDAO.orderStatusCount(vo);
 	}
 
+	// 마이페이지 메인 : 최근 주문한 상품
 	@Override
-	public OrderVO recentOrder(OrderVO vo) {
+	public Map<String, Object> recentOrder(OrderVO vo) {
 		
 		return orderDAO.recentOrder(vo);
 	}
@@ -117,6 +126,8 @@ public class OrderImpl implements OrderService {
 	public List<Map<String,Object>> orderBy7DaysBook() {
 		return orderDAO.orderBy7DaysBook();
 	}
+
+
 
 
 	

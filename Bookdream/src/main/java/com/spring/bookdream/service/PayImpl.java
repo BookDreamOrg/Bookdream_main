@@ -30,7 +30,7 @@ public class PayImpl implements PayService {
 	}
 
 	@Override
-	public PayVO lastPayment(PayVO vo) {
+	public Map<String, Object> lastPayment(PayVO vo) {
 		
 		return payDAO.lastPayment(vo);
 	}

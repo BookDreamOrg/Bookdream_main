@@ -145,6 +145,7 @@ $(document).on("click", "#address_insert_btn", function(e) {
 	ById('roadAddr').value = null;
 	ById('detailAddress').value = null;
 
+	// 버튼
 	ById('address_update_modal_btn').style.display = "none";
 	ById('address_insert_modal_btn').style.display = "block";
 	
@@ -156,6 +157,7 @@ $(document).on("click", "button.address_update", function(e) {
 
 	$('#exampleModal').modal('show');
 	
+	//버튼
 	ById('address_insert_modal_btn').style.display = "none";
 	ById('address_update_modal_btn').style.display = "block";
 	
@@ -211,24 +213,33 @@ $(document).on("click", "#address_update_modal_btn", function(e) {
 	address_insert('update');
 })
 
+/***************************** 전화번호 입력 *****************************/
+$(document).on("keyup", "#address_tel", function(e) { 
+	
+	var tel = e.currentTarget.value
+	e.currentTarget.value = tel.replace(/[^0-9]/g,'');
+})
+
 /***************************** 배송지 입력/수정 모달 : DB 전송 function *****************************/
 function address_insert(check) {
 		
 	var address_alias = ById('address_alias').value;
 	var address_name = ById('address_name').value;
-	var address_tel = ById('address_tel').value;
+	var address_tel = ById('address_tel').value.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`); // - 추가
 	var zone_code = ById('zonecode').value;
 	var road_add = ById('roadAddr').value;
 	var detail_add = ById('detailAddress').value;
 	var address_no = ById('address_no').value;
 
-	
 	if (address_alias == '') {
 		alert("배송지 이름을 입력하세요.");
+		return false
 	} else if (address_name == '') {
 		alert("받는사람 이름을 입력하세요.");
 	} else if (address_tel == '') {
-		alert("받는사람 전화번호를 입력하세요.");
+		alert("휴대폰번호를 입력하세요.");
+	} else if (address_tel.length != 13) { // - 포함 13자리
+		alert("휴대폰번호 11자리 기입하세요.");
 	} else if (zone_code == '' || road_add == '' || detail_add == '') {
 		alert("주소를 입력하세요.");
 		
@@ -275,6 +286,10 @@ function address_insert(check) {
 						
 						success : function() {	
 
+							// 전송되면 기본 배송지 체크박스 해제됨
+							ById("default_address_check").checked = false;
+							$('#exampleModal').modal('hide');
+							
 							console.log("배송지 등록 완료");
 							load_default();
 							
@@ -320,6 +335,10 @@ function address_insert(check) {
 			
 			success : function() {	
 
+				// 전송되면 기본 배송지 체크박스 해제됨
+				ById("default_address_check").checked = false;
+				$('#exampleModal').modal('hide');
+				
 				console.log("배송지 수정 완료");
 				load_default();
 				
@@ -335,9 +354,7 @@ function address_insert(check) {
 
 
 	}
-	// 전송되면 기본 배송지 체크박스 해제됨
-	ById("default_address_check").checked = false;
-	$('#exampleModal').modal('hide');
+
 }
 
 /***************************** 배송지 삭제 버튼 클릭 *****************************/

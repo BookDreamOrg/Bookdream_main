@@ -7,6 +7,10 @@
 <head>
 <meta charset="UTF-8">
 
+<!-- alert -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
 <!-- bootstrap -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -100,6 +104,7 @@
 				<button class="btn btn-outline-secondary reset_btn" id="reset_btn">
 				<i class="fas fa-undo"></i></button>
 
+				<!-- 달력 -->
 				<div class="srch_date" id="reportrange">
 					<i class="fa fa-calendar" style="float: left;"></i>&nbsp;
 					<span id="scrh_date"></span> <i class="fa fa-caret-down" style="float: right;"></i>
@@ -166,6 +171,7 @@
 	<!-- Script FontAwesome-->
 	<script src="https://kit.fontawesome.com/4bf42f841a.js" crossorigin="anonymous"></script>
 		
+	<!-- 달력 -->	
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>

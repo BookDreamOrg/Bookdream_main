@@ -10,10 +10,11 @@ public interface PayService {
 	// 주문성공 -> payDB 등록
 	void insertPay(PayVO vo);
 	
+	// 등록된 DB의 PAY_NO 추출
 	PayVO searchPay(PayVO vo);
 
 	// 마지막 결제수단 찾기
-	PayVO lastPayment(PayVO vo);
+	Map<String, Object> lastPayment(PayVO vo);
 	
 	// 주간 결제금액 
 	List<Map<String, Object>> payWekTotalPrice(PayVO vo);	

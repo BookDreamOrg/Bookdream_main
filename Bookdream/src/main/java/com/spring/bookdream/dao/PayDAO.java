@@ -29,7 +29,7 @@ public class PayDAO {
 		return mybatis.selectOne("PayDAO.searchPay", vo);	
 	}
 	
-	public PayVO lastPayment(PayVO vo) {
+	public Map<String, Object> lastPayment(PayVO vo) {
 		
 		System.out.println("---> PayDAO lastPayment 실행 <---");
 

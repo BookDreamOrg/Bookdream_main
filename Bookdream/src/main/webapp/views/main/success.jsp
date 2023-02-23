@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>	
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -72,10 +72,10 @@
 						
 						<c:forEach items="${purchase}" var="pur" varStatus="i">
 							<tr class="orderlist_table_tr" id="orderlist_table_tr">
-								<td class="orderlist_table_col1"><img class="orderlist_table_img" alt="" src="${pur.bookVO.book_img}"></td>
-								<td class="orderlist_table_col2">${pur.bookVO.title}</td>
-								<td class="orderlist_table_col3"><fmt:formatNumber value="${pur.bookVO.book_price}" pattern="###,###"/>원</td>
-								<td class="orderlist_table_col4">${pur.product_count}개</td>
+								<td class="orderlist_table_col1"><img class="orderlist_table_img" alt="" src="${pur.BOOK_IMG}"></td>
+								<td class="orderlist_table_col2">${pur.TITLE}</td>
+								<td class="orderlist_table_col3"><fmt:formatNumber value="${pur.BOOK_PRICE}" pattern="###,###"/>원</td>
+								<td class="orderlist_table_col4">${pur.PRODUCT_COUNT}개</td>
 							</tr>
 						</c:forEach>
 					

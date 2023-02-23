@@ -120,4 +120,11 @@ public class UserServiceImpl implements UserService {
 		userDAO.setBlack(no);
 	}
 
+	// 사용자 포인트 조회
+	@Override
+	public int userPoint(UserVO vo) {
+
+		return userDAO.userPoint(vo);
+	}
+
 }
