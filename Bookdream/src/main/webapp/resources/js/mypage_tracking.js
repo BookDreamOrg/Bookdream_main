@@ -377,7 +377,7 @@ function order_detail(order_no) {
 			
 			//let cmplt_date = (result[0].ORDER_STATUS == 2 || result[0].ORDER_STATUS == 3) ? `<span style="float: right">${result[0].CMPLT_DATE}</span>` : ''
 			
-			html += `<div class="tracking_detail_main">${date} | 주문번호 (${result[0].ORDER_NO}) ${cmplt_date} </div>
+			html += `<div class="tracking_detail_main">${date} | 주문번호 (${result[0].ORDER_NO}) </div>
 					 <hr>`
 			
 				
