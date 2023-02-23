@@ -9,6 +9,7 @@
 		<result property="user_no" column="USER_NO" />	
 		<result property="book_no" column="BOOK_NO" />
 		<result property="product_count" column="PRODUCT_COUNT" />	
+		<result property="regDate" column="regDATE" />	
 		
 		<result property="listCount" column="LISTCOUNT" />	
 		<result property="initCount" column="INITCOUNT" />	
@@ -37,7 +38,7 @@
 	<select id="getCartList" parameterType="cart" resultMap="cartList">		
 		SELECT  row_number() over(order by C.cart_no desc) as num,
         		C.cart_no, C.user_no, C.product_count, B.book_no, B.book_img, B.title, B.book_price, B.stock
-				,B.discount
+				,B.discount, C.regDATE
 		FROM 	CART C
 		        INNER JOIN BOOK B
 		        ON C.book_no = B.book_no   
