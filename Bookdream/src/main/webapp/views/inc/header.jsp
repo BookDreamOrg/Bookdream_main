@@ -131,6 +131,7 @@ margin-right:3px;
                   <input type="text" name="keyword" id="keyword_text" class="form-control search-input"
                      aria-label="Text input with dropdown button"
                      placeholder="성공적인 프로젝트를 위하여!!👍" />
+                  <input type="hidden" name="num" id="num" value="1"/>	   
                   <button type="submit"  class="btn btn-outline-secondary" id="input-group-button-right">검색</button>
                </div>
             </div>
@@ -227,6 +228,7 @@ margin-right:3px;
                   <input type="text" name="keyword" id="keyword_text" class="form-control search-input"
                      aria-label="Text input with dropdown button"
                      placeholder="성공적인 프로젝트를 위하여!!👍" />
+                     <input type="hidden" name="num" id="num" value="1"/>	 
                   <button type="submit"  class="btn btn-outline-secondary" id="input-group-button-right">검색</button>
                </div>
             </div>
@@ -279,7 +281,7 @@ margin-right:3px;
 
 
 
-<!-- 자동검색 기능 js -->
+<!-- 자동검색 기능 -->
 <script type="text/javascript" charset="UTF-8" >
 <%@include file="/views/inc/viewSearchKeyword.js"%>
 </script>
