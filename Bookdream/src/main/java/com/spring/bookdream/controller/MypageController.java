@@ -3,7 +3,6 @@ package com.spring.bookdream.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +26,6 @@ import com.spring.bookdream.vo.AnswerVO;
 import com.spring.bookdream.vo.KeywordHistoryVO;
 import com.spring.bookdream.vo.OrderVO;
 import com.spring.bookdream.vo.QnAVO;
-import com.spring.bookdream.vo.SearchCriteria;
 import com.spring.bookdream.vo.UserVO;
 
 @Controller
@@ -95,6 +93,8 @@ public class MypageController {
 				answerCnt++;
 			}
 		}
+		
+		System.out.println("answerCnt : " + answerCnt);
 		model.addAttribute("answerCnt", answerCnt);
 		return "mypage/mypage";
 				

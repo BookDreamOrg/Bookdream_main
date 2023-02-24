@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.bookdream.dao.OrderDAO;
 import com.spring.bookdream.vo.OrderVO;
+import com.spring.bookdream.vo.SearchCriteria;
 
 @Service("OrderService")
 public class OrderImpl implements OrderService {
@@ -24,15 +25,15 @@ public class OrderImpl implements OrderService {
 
 	// 마이페이지 주문내역 : 주문 목록 
 	@Override
-	public List<Map<String, Object>> searchOrder(OrderVO vo) {
+	public List<Map<String, Object>> searchOrder(SearchCriteria cri) {
 
-		return orderDAO.searchOrder(vo);
+		return orderDAO.searchOrder(cri);
 	}
 
 	@Override
-	public int searchOrderCount(OrderVO vo) {
+	public int searchOrderCount(SearchCriteria cri) {
 
-		return orderDAO.searchOrderCount(vo);
+		return orderDAO.searchOrderCount(cri);
 	}	
 	
 	// 결제취소/반품요청 
@@ -103,14 +104,14 @@ public class OrderImpl implements OrderService {
 
 	// 주문 총 관리 리스트
 	@Override
-	public List<Map<String, Object>> orderMngmn(OrderVO vo) {
-		return orderDAO.orderMngmn(vo);
+	public List<Map<String, Object>> orderMngmn(SearchCriteria cri) {
+		return orderDAO.orderMngmn(cri);
 	}
 
 	// 주문 총 관리 개수
-	public int orderMngmnCount(OrderVO vo) {
+	public int orderMngmnCount(SearchCriteria cri) {
 
-		return orderDAO.orderMngmnCount(vo);
+		return orderDAO.orderMngmnCount(cri);
 	}
 
 	// 주문 총 관리 세부내역

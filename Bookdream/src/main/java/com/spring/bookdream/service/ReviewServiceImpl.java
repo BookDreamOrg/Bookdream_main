@@ -79,5 +79,12 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewDAO.progressStar(book_no);
 	}
 
+/*************************** 내가 작성란 리뷰 확인  ********************************************/
+	@Override
+	public List<Map<String, Object>> myReview(ReviewVO review) {
+		
+		return reviewDAO.myReview(review);
+	}
+
 
 }

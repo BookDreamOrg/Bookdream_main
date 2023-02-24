@@ -26,7 +26,7 @@
 <!-- jQuery -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
-
+<!-- 부트스트랩 -->
 <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap_icon.css">
 <!--  맨위 자동 검색시 필요 (페이지마다 다 넣어줘야 함?)-->
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -40,208 +40,13 @@
 	height: auto;
 }
 
-hr {
-	padding: 0px 40px;
-}
-
-.main {
-	line-height: 180%;
-	position: relative;
-	margin: 0 auto;
-	width: 1240px;
-	height: auto;
-
-	min-height: 1000px;
-}
-
-.mypage {
-	height: auto;
-	min-height: 1200px;
-	padding: 0px 40px;	
-	float: right;
-}
-
-.test {
-	width: 100px;
-	height: 100px;
-}
-
-.mypage_info {
-	position: relative;
-	width: 870px;
-	height: auto;
-	min-height: 300px;
-}
-
-.mypage_info_title {
-    padding: 30px 0px;
-    vertical-align: middle;
-    height: 100px;
-	margin-top: 30px;    
-    font-size: 20px;
-    font-weight: bold;
-}
-
-
-.mypage_info_box {
-	height:auto;
-	min-height: 300px;
-	border-radius: 20px;
-	padding: 40px 40px 40px 40px;
-	background-color: #f7f7f7;	
-	
-}
-
-.mypage_info_profile {
-	position: relative;
-	width: 150px;
-	height:150px;
-	border-radius: 50%;
-	background-color: white;
-	float: left;
-	margin: 35px 40px 0px 0px;
-}
-
-.mypage_info_icon {
-	margin: 35px 0px 0px 40px;
-	color: #e0e0ee;
-}
-
-.mypage_info_profile_set {
-	position: absolute;
-	top: 120px;
-	left: 120px;
-	color: #525388;
-}
-
-.mypage_info_content div {
-	margin-bottom: 20px;
-}
-
-.mypage_info_content ul {
-	float: left;
-}
-
-.mypage_info_content_ul2 {
-	 margin-left: 100px;
-}
-
-.mypage_info_content_text {
-	font-size: 14px;
-}
-
-/*                                     */
-.mypage_sub{
-	display: flex;
-	justify-content: space-between;
-}
-
-.mypage_sub_title {
-    height: 50px;
-    line-height: 70px;
-	margin-top: 30px;    
-    font-size: 14px;
-    font-weight: bold;
-}
-
-.mypage_sub_title_right {
-    height: 50px;
-    line-height: 70px;
-	margin-top: 30px;    
-    font-size: 14px;
-    font-weight: bold;
-}
-
-/*                         */
-.mypage_recent_pur {
-
-}
-
-.mypage_recent_pur_table td:nth-child(1) img {
-	width: 80px;
-	height: 100px;
-	vertical-align: middle;	
-	border: 1px solid black;
-}
-
-.mypage_recent_pur_table td:nth-child(1),
-.mypage_recent_pur_table td:nth-child(2),
-.mypage_recent_pur_table td:nth-child(3) {
-	height: 120px;	
-	text-align: center;	
-	vertical-align: middle;
-	
-	font-size: 14px;
-}
-
-.mypage_recent_pur_table td:nth-child(1),
-.mypage_recent_pur_table td:nth-child(3) {
-	width: 100px;
-	font-weight: bold;
-}
-
-.mypage_recent_pur_table td:nth-child(2) {
-	width: 670px;
-	padding: 0px 40px;
-	text-align: left;
-
-}
-.mypage_recent_pur_table tr:hover {
-	background-color: #e0e0ee;	
-	cursor: pointer;
-}
-
-
-
-/*                   */
-.mypage_recent_qna_table td:nth-child(1), 
-.mypage_recent_qna_table td:nth-child(2),
-.mypage_recent_qna_table td:nth-child(3) {
-	width: 100px;
-	height: 80px;
-	vertical-align: middle;
-	text-align: center;
-	
-	font-size: 14px;
-}
-
-.mypage_recent_qna_table td:nth-child(1) {
-	font-size: 12px;
-}
-
-.mypage_recent_qna_table td:nth-child(2) {
-	width: 670px;
-	padding: 0px 40px;
-	text-align: left;
-	 
-}
-
-.mypage_recent_qna_table td:nth-child(3) {
-	font-weight: bold;
-}
-
-.mypage_recent_qna_table tr:hover {
-	background-color: #e0e0ee;	
-}
-
-
-
-.mypage_info_content_title {
-	font-size: 12px;
-	color: #5c5d99;
-	font-weight: bold;
-}
-
 </style>
 
 
 </head>
 <body>
 
-	<%
-		UserVO user = (UserVO) session.getAttribute("authUser");
-	%>
-	
+
 	<div class="wrapper">
 	<jsp:include page="/views/inc/header.jsp" />
 

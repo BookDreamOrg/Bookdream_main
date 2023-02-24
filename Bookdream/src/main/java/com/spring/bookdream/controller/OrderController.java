@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.bookdream.service.DeliveryService;
@@ -42,7 +41,7 @@ public class OrderController {
 	// 배송상태 갱신
 	@RequestMapping(value="/update")
 	@ResponseBody
-	public void cencelOrder(@RequestBody OrderVO order ) {
+	public void cencelOrder(@RequestBody OrderVO order) {
 		
 		int user_no = (int) session.getAttribute("user_no");		
 		order.setUser_no(user_no);
@@ -55,42 +54,37 @@ public class OrderController {
 	// 마이페이지 주문 목록
 	@RequestMapping(value="/orderList")
 	@ResponseBody	
-	public OrderVO searchOrder(@RequestParam("pageNum")  int pageNum, 
-							   @RequestParam("order_status") int orderStatus, 
-							   @RequestParam("srchStrDate")  String srchStrDate, 
-							   @RequestParam("srchEndDate") String srchEndDate,
-			  				   OrderVO order,
-							   SearchCriteria cri, 
-			  				   DeliveryVO delivery, Model model) {
-	
-		int user_no = (int) session.getAttribute("user_no");
-		order.setUser_no(user_no);
+	public OrderVO searchOrder(SearchCriteria cri, DeliveryVO delivery, PageVO page, Model model) {
 		
+		int user_no = (int) session.getAttribute("user_no");
+		
+		// 조회할 사용자
+		cri.setUser_no(user_no);
+		
+		// 한 페이지에 표시될 개수
+		cri.setAmount(3);	
+		
+		// 페이지블럭 개수
+		int pageBlcok = 3;
+		
+		System.out.println("몇개니 : " + page.getDisplayPageItems());
 		// 배송중 -> 배송완료 갱신
 		deliveryService.cmpltDelivery(delivery);
-		
-		order.setPageNum(pageNum);
-		order.setAmount(3);
-		
-		order.setOrder_status(orderStatus);
-
-		cri.setPageNum(pageNum);		
-		cri.setAmount(3);			
-		
+				
 		// 주문총개수
-		int cnt = orderService.searchOrderCount(order);
+		int cnt = orderService.searchOrderCount(cri);
 		
 		// 주문목록
-		List<Map<String, Object>> list  = orderService.searchOrder(order);
+		List<Map<String, Object>> list  = orderService.searchOrder(cri);
 
 		// 페이징
-		// 표시 개수
-		PageVO pageMaker = new PageVO(cri, cnt);
+		PageVO pageMaker = new PageVO(cri, cnt, pageBlcok);
 		
 		OrderVO result = new OrderVO();
 		result.setPage(pageMaker);
 		result.setList(list);	
 		result.setCnt(cnt);	
+		
 		
 		return result;			
 

@@ -211,37 +211,27 @@ public class AdminOrderController {
 	// 주문 총 관리 페이지
 	@RequestMapping(value="/mngmn")
 	@ResponseBody
-	public OrderVO orderMngmn(@RequestParam("pageNum")  int pageNum, 
-							  @RequestParam("srchCrtr") String srchCrtr, 
-							  @RequestParam("srchKey")  String srchKey, 
-							  @RequestParam("order_status") int orderStatus,
-							  OrderVO order, SearchCriteria cri,
-							  DeliveryVO delivery) {
+	public OrderVO orderMngmn(SearchCriteria cri, PageVO page, DeliveryVO delivery) {
 		
 		// 배송중 -> 배송완료 갱신
 		deliveryService.cmpltDelivery(delivery);
-		
-		order.setSrchCrtr(srchCrtr);
-		order.setSrchKey(srchKey);
-		order.setPageNum(pageNum);
-		order.setOrder_status(orderStatus);
-		
-		cri.setPageNum(pageNum);		
-		
+			
 		// 한 페이지의 표시 개수
-		order.setAmount(5);
 		cri.setAmount(5);	
 		
-		int cnt = orderService.orderMngmnCount(order);	
-	
-		List<Map<String, Object>> list = orderService.orderMngmn(order);
+		int pageBlcok = 5;
 		
-		PageVO pageMaker = new PageVO(cri, cnt);
+		int cnt = orderService.orderMngmnCount(cri);	
+	
+		List<Map<String, Object>> list = orderService.orderMngmn(cri);
+		
+		PageVO pageMaker = new PageVO(cri, cnt, pageBlcok);
 		
 		OrderVO result = new OrderVO();
 		result.setPage(pageMaker);
 		result.setList(list);	
 				
+		System.out.println("result : " +result);
 		return result;			
 		
 	}

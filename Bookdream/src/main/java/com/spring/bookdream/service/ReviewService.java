@@ -33,4 +33,7 @@ public interface ReviewService {
 	
 	//리뷰 별점로 별 갯수,퍼센트 계산 결과
 	List<HashMap<Integer, Integer>> progressStar(int book_no);
+	
+	// 내가 작성한 리뷰 
+	List<Map<String,Object>> myReview(ReviewVO review);
 }

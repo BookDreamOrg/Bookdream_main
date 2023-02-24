@@ -79,6 +79,11 @@
 	ORDER BY review_star
 	</select>
 
-	
+<!-- 리뷰 별점 별 갯수,퍼센트 계산 -->	
+	<select id="myReview" resultType="HashMap">
+	SELECT *
+	FROM   review 
+	WHERE  user_id = #{user_id}
+	</select>	
 	
 </mapper>

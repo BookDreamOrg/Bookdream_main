@@ -1,14 +1,14 @@
 package com.spring.bookdream.vo;
 
 import lombok.Data;
-
+	
 @Data
 public class PageVO {
 	  private int startPage;
 	  private int endPage;
 	  private boolean prev, next;
 	  private int totalPage;
-	  private int displayPageItems = 5; // 슷자블럭 개수
+	  private int displayPageItems;
 
 	  private SearchCriteria cri;
 	  
@@ -16,7 +16,7 @@ public class PageVO {
 
 	  }
 	  
-	  public PageVO(SearchCriteria cri, int totalPage) {
+	  public PageVO(SearchCriteria cri, int totalPage, int displayPageItems) {
 
 	    this.cri = cri;
 	    if (totalPage == 0) {
@@ -42,6 +42,7 @@ public class PageVO {
 	    }
 	    
 	    System.out.println("cri : " + cri);
+	    System.out.println("displayPageItems : " + displayPageItems);
 	    System.out.println("totalPage : " + totalPage);
 	    System.out.println("endPage : " + endPage);
 	    System.out.println("startPage : " + startPage);

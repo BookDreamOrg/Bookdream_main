@@ -65,7 +65,6 @@
 			<div class="main">
 			
 		<!-- ------------------slide box---------------------- -->
-				${arrCart}
 				 <div class="side">
 					<span class="fw-bold">Total</span> 
 					<span class="badge bg-primary rounded-pill side_count">${orderitemCount.TOTAL_COUNT}</span>	

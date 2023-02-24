@@ -7,13 +7,20 @@ import lombok.Data;
 
 @Data
 public class SearchCriteria {
+
     private int pageNum;
 	private int amount;
+
+	private int user_no;
+	private int order_status;
+	private String srchStrDate;
+	private String srchEndDate;
+	private String srchCrtr;
+	private String srchKey;	
 	
 	public SearchCriteria() {
 		this.pageNum = 1;
 		this.amount = 1;
-
 	}
 	
 	public void setPageNum(int pageNum) {

@@ -74,6 +74,5 @@
 		<property name="scope" value="https://www.googleapis.com/auth/userinfo.email" />
 		<property name="redirectUri" ref="googleRedirectUrl" />
 	</bean>
-	
 
 </beans>

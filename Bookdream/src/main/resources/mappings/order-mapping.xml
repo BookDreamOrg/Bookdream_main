@@ -74,7 +74,8 @@
 									AND order_status = #{order_status}
 								</otherwise>
 							  </choose>			  
-							  AND order_date BETWEEN #{srchStrDate} AND TO_DATE(TO_DATE(#{srchEndDate})+1)			                      
+							  AND order_date BETWEEN #{srchStrDate} AND TO_DATE(TO_DATE(#{srchEndDate})+1)
+					  ORDER BY order_no desc			                      
 		                      
 		              )
 		     WHERE rn = 1
@@ -82,8 +83,8 @@
 		     
 		WHERE rnum between ((#{pageNum}-1) * #{amount})+1 AND 
 		                     #{pageNum} * #{amount}	
+		ORDER BY order_no desc                     
 		                     
-		order by order_no desc   
 	</select>
 	
 	<!-- 카운트 -->
@@ -126,21 +127,22 @@
       		   order_date,
 			   final_price,
 			   order_status
-		FROM   (select o.order_no, 
+		FROM   (SELECT o.order_no, 
                 	   o.order_name, 
                        b.book_img, 
                        o.order_date,
                        y.final_price,
                        o.order_status,
 	 			       ROW_NUMBER() OVER(PARTITION BY o.order_no ORDER BY o.order_name DESC) AS rn                       
-	 			from   orders o, 
+	 			FROM   orders o, 
 	 			       purchase p, 
 	 			       book b,
 	 			       pay y
-	 			where  p.book_no = b.book_no   AND
+	 			WHERE  p.book_no = b.book_no   AND
                        p.order_no = o.order_no AND
                        y.pay_no = o.order_no   AND
-                       o.user_no = #{user_no})
+                       o.user_no = #{user_no}
+                ORDER BY order_no DESC) 
         WHERE rn = 1 AND
 			  rownum = 1		
 

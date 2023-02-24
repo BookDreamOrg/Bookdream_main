@@ -117,7 +117,7 @@ margin-right:3px;
                   <i class="fa-solid fa-cart-shopping"></i>
                </button>
                <button type="button" class="header-btn btn-circle border-0"
-                  			onclick="location.href='/detail/cart/orderitem'">
+                  			onclick="location.href='/mypage/main'">
                      <i class="fa-solid fa-user"></i>
                 </button>
             </div>
@@ -217,7 +217,7 @@ margin-right:3px;
                <input id="user_no" value="${user.user_no}" type="hidden">
                </button>
                   <button type="button" class="header-btn btn-circle border-0"
-                  			onclick="location.href='/detail/cart/orderitem'">
+                  			onclick="location.href='/mypage/main'">
                      <i class="fa-solid fa-user"></i>
                   </button>
             </div>

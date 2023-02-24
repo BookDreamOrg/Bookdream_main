@@ -82,4 +82,10 @@ public class ReviewDAO {
 	public List<HashMap<Integer, Integer>> progressStar(int book_no){
 		return mybatis.selectList("ReviewDAO.progressStar",book_no);
 	}
+
+/*************************** 내가 작성한 리뷰 ********************************************/		
+	public List<Map<String, Object>> myReview(ReviewVO review) {
+
+		return mybatis.selectList("ReviewDAO.myReview",review);
+	}
 }

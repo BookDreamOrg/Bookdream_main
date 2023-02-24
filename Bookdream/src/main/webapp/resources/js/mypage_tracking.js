@@ -166,15 +166,16 @@ function order_list(pageNum, status, start_date, end_date) {
 				
 			    /* 페이징 */	
 				
+				let prevDisabled = data.page.prev == true ? '' : 'disabled'
+				let nextDisabled = data.page.next == true ? '' : 'disabled'
 				
 				paging = `<div class="text-center paging_btn">
-							<ul class="pagination justify-content-left">`
+							<ul class="pagination justify-content-left">
 							
-							if(data.page.prev) {
-				paging +=		`<li class="page-item paginate_button previous">
-									<button class="page-link paging_btn" value="${data.page.startPage-1}" ><</button>
-								</li>`							
-							}
+						  <li class="page-item paginate_button previous">
+							<button class="page-link paging_btn ${prevDisabled}" value="${data.page.startPage-1}" ><i class="fas fa-angle-left"></i></button>
+						  </li>`							
+
 							for (let i = data.page.startPage; i<=data.page.endPage; i++) {
 								let active = pageNum == i ? 'active' : ''
 				paging +=		`<li class="page-item paginate_button ${active} " >								
@@ -182,14 +183,11 @@ function order_list(pageNum, status, start_date, end_date) {
 								</li>`							 
 								 
 							}	
-							if(data.page.next) {
 				paging +=		`<li class="page-item paginate_button next">
-									<button class="page-link paging_btn" value="${data.page.endPage+1}">></button>
-								</li>`						
-							}																		
-	
-								
-				paging +=	`</ul>
+									<button class="page-link paging_btn ${nextDisabled}" value="${data.page.endPage+1}"><i class="fas fa-angle-right"></i></button>
+								</li>						
+
+						 	</ul>
 						</div>`	
 					
 				cnt = `<span style="font-size:24px; font-weight: bold; color:#3d3e66">${data.cnt}</span><span style="font-size:12px;"> 개</span>`

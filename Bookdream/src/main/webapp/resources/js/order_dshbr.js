@@ -107,6 +107,7 @@ function countChart(data) {
 		        	
 		        	// 점 삭제
 		        	pointRadius: 0,
+		        	
 		            // ⑤dataset의 이름(String)
 		            label: '주문',
 		            
@@ -151,7 +152,9 @@ function countChart(data) {
 		    options: {	
 		    	
 		    	plugins: {
+		    		
 		    	    legend: {
+		    	    	
 		    	      position: 'bottom',
 		    	      align: 'end',
 		    	      
@@ -192,6 +195,7 @@ function countChart(data) {
 	                }
 		        
 		    },
+		    
 		})
 	
 	
@@ -262,13 +266,11 @@ function payChart(data) {
 		            borderColor: 'rgba(103, 104, 171, 1)',
 		            
 		            borderWidth: 1
-		            
-		            
+		           	            
 		        }],
 		        		        
 		    },
-		    
-		  
+		    	  
 		    options: {
 		    	
 		    	plugins: {
@@ -281,20 +283,22 @@ function payChart(data) {
 		    	              fontSize: 12,
 		    	              boxWidth: 12
 		    	            }
-		    	    }
-		    	  },
-		    	  
-		    	/*
-		    	plugins: {
+		    	    },
+		    
 		    	    datalabels: {
-		    	      align: 'end',
-		    	      anchor: 'end',
+		    	    	
+		    	        color: 'black',
+		    	        anchor: 'end',
+		    	        align: 'top',
 		    	      formatter: function(value) {
-		    	        return comma(value);
+		    	    	 
+		    	    	  let result = value !== 0 ? comma(value) : ''
+		    	    	  
+		    	        return result
 		    	      }
-		    	    }
-		    	  }, */
-		    	  
+		    	    },		    
+		    	  },
+		    	  		    	
 	                scales: {
 	                    x: {
 	                        grid: {
@@ -302,12 +306,16 @@ function payChart(data) {
 	                        }
 	                    },	                	
 	                	y: {
+	                		grid: {
+	                			display: false
+	                		},
+	                		display: false,
 			            	suggestedMin: 0,
 			                suggestedMax: 300000
 			            }
 	                }  
 		    },
-
+		    plugins: [ChartDataLabels]	
 
 		})	
 	
@@ -480,7 +488,7 @@ function purchaseBookRatioChart(data) {
 	    	borderWidth: 5,	  
 
 	    	plugins: {
-            	
+	    		
 	    		/*
                 title: {
                     display: true, // 제목 표시
@@ -492,15 +500,18 @@ function purchaseBookRatioChart(data) {
                   }, */
             	
                 legend: {
-                    position: 'right' // 범례를 우측에 배치합니다.
+                    position: 'right' // 범례를 우측에 배치
                   },
                   
                 tooltips: {
                     enabled: false
                 },
+                
                 datalabels: {
                     formatter: function (value, context) {
-                        return Math.round(value / context.chart.getDatasetMeta(0).total * 100) + "%";
+                        let percentage = Math.round(value / context.chart.getDatasetMeta(0).total * 100)
+                        return percentage !== 0 ? percentage + "%" : ''
+                        
                     },
                     color: 'black',
                 }
@@ -563,26 +574,33 @@ function paymethodChart(data) {
 	    },
 	    
 	    options: {
+            hideZero: true,
 	    	maintainAspectRatio :false,
 	    	borderWidth: 5,	  
 	    	
 	    	plugins: {
                 legend: {
-                    position: 'right'
-                 	
+                    position: 'right',
+
                   },
                   
                 tooltips: {
                     enabled: false
                 },
                 datalabels: {
+                	
                     formatter: function (value, context) {
-                        return Math.round(value / context.chart.getDatasetMeta(0).total * 100) + "%";
+                        let percentage = Math.round(value / context.chart.getDatasetMeta(0).total * 100);
+                        return percentage !== 0 ? percentage + "%" : '';
                     },
                     color: 'black',
                 }
+                
+        	   
             }
+
 	    },
+
 	    plugins: [ChartDataLabels]
 
 
