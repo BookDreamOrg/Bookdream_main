@@ -3,6 +3,7 @@ package com.spring.bookdream.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,13 +20,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.spring.bookdream.service.AddressService;
 import com.spring.bookdream.service.OrderService;
 import com.spring.bookdream.service.QnAService;
+import com.spring.bookdream.service.ReviewService;
 import com.spring.bookdream.service.SearchKeywordService;
 import com.spring.bookdream.service.UserService;
 import com.spring.bookdream.vo.AddressVO;
 import com.spring.bookdream.vo.AnswerVO;
 import com.spring.bookdream.vo.KeywordHistoryVO;
 import com.spring.bookdream.vo.OrderVO;
+import com.spring.bookdream.vo.PageVO;
 import com.spring.bookdream.vo.QnAVO;
+import com.spring.bookdream.vo.ReviewVO;
+import com.spring.bookdream.vo.SearchCriteria;
 import com.spring.bookdream.vo.UserVO;
 
 @Controller
@@ -43,6 +48,9 @@ public class MypageController {
 
 	@Autowired
 	private SearchKeywordService keywordService;
+	
+	@Autowired
+	private ReviewService reviewService;
 	
 	@Autowired
 	private QnAService qnaService;
@@ -164,7 +172,65 @@ public class MypageController {
 			
 	}
 		
+	// 마이페이지(내가작성한 리뷰)
+	@RequestMapping(value="/review")
+	public String mypageReview(HttpServletResponse response) {
+
+		// 로그인해야 진입됨
+		if (session.getAttribute("user_no") == null) {
+			String msg = "로그인 후 이용해주세요";
+			String url ="/views/user/login.jsp";	
+		    try {
+		        response.setContentType("text/html; charset=utf-8");
+		        PrintWriter w = response.getWriter();
+		        w.write("<script>alert('"+msg+"');location.href='"+url+"';</script>");
+		        w.flush();
+		        w.close();
+		    } catch(Exception e) {
+		        e.printStackTrace();
+		    }
+					
+		}
+					
+		return "mypage/myReview";
+			
+	}	
 	
+	// 작성한 리뷰 리스트 및 리뷰개수, 총 추천수, 평균 별점
+	@RequestMapping(value="/reviewList")
+	@ResponseBody
+	public ReviewVO reviewList(SearchCriteria cri) {
+
+		String user_id = (String) session.getAttribute("user_id");
+		cri.setUser_id(user_id);
+		
+		// 한 페이지의 표시 개수
+		cri.setAmount(3);	
+		
+		// 페이지 블록의 개수
+		int pageBlcok = 5;		
+		
+		// 리뷰 목록
+		List<Map<String, Object>> list = reviewService.myReview(cri);
+		
+		System.out.println("list:" + list);
+		
+		// 리뷰개수, 추천수, 평균 별점
+		Map<String, Object> cnt = reviewService.myReviewCount(cri);		
+
+		// 리뷰개수 추출
+		int count = Integer.parseInt(String.valueOf(cnt.get("CNT")));	
+			
+		PageVO pageMaker = new PageVO(cri, count, pageBlcok);		
+				
+		ReviewVO result = new ReviewVO();
+		result.setList(list);
+		result.setCnt(cnt);
+		result.setPage(pageMaker);
+		
+		return result;
+			
+	}		
 	
 	
 	//회원정보 수정

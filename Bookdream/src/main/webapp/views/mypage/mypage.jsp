@@ -411,12 +411,8 @@ hr {
 	<script type="text/javascript">
 	$(document).on("click", "table.mypage_recent_pur_table", function(e) {
 	
-		console.log("되냐?")
 		location.href="/mypage/tracking"
 	})
-	
-	
-	
 	
 	</script>
 

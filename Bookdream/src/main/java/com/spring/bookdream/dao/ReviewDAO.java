@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import com.fasterxml.jackson.annotation.JacksonInject.Value;
 import com.spring.bookdream.service.ReviewService;
 import com.spring.bookdream.vo.ReviewVO;
+import com.spring.bookdream.vo.SearchCriteria;
 import com.spring.bookdream.vo.UserVO;
 
 
@@ -84,8 +85,14 @@ public class ReviewDAO {
 	}
 
 /*************************** 내가 작성한 리뷰 ********************************************/		
-	public List<Map<String, Object>> myReview(ReviewVO review) {
+	public List<Map<String, Object>> myReview(SearchCriteria cri) {
 
-		return mybatis.selectList("ReviewDAO.myReview",review);
+		return mybatis.selectList("ReviewDAO.myReview", cri);
 	}
-}
+
+/*************************** 내가 작성한 리뷰의 개수, 추천수, 평균 별점 ********************************************/		
+	public Map<String, Object> myReviewCount(SearchCriteria cri) {
+
+		return mybatis.selectOne("ReviewDAO.myReviewCount", cri);
+	}
+}	

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.bookdream.dao.ReviewDAO;
 import com.spring.bookdream.vo.ReviewVO;
+import com.spring.bookdream.vo.SearchCriteria;
 import com.spring.bookdream.vo.UserVO;
 
 
@@ -81,9 +82,16 @@ public class ReviewServiceImpl implements ReviewService {
 
 /*************************** 내가 작성란 리뷰 확인  ********************************************/
 	@Override
-	public List<Map<String, Object>> myReview(ReviewVO review) {
+	public List<Map<String, Object>> myReview(SearchCriteria cri) {
 		
-		return reviewDAO.myReview(review);
+		return reviewDAO.myReview(cri);
+	}
+
+/*************************** 내가 작성한 리뷰의 개수, 추천수, 평균 별점  ********************************************/	
+	@Override
+	public Map<String, Object> myReviewCount(SearchCriteria cri) {
+
+		return reviewDAO.myReviewCount(cri);
 	}
 
 

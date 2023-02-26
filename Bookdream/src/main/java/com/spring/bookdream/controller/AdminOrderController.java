@@ -211,7 +211,7 @@ public class AdminOrderController {
 	// 주문 총 관리 페이지
 	@RequestMapping(value="/mngmn")
 	@ResponseBody
-	public OrderVO orderMngmn(SearchCriteria cri, PageVO page, DeliveryVO delivery) {
+	public OrderVO orderMngmn(SearchCriteria cri, DeliveryVO delivery) {
 		
 		// 배송중 -> 배송완료 갱신
 		deliveryService.cmpltDelivery(delivery);

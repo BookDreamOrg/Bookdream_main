@@ -24,7 +24,7 @@
 		            ${item}
 		        </foreach>               
                )
-		ORDER BY cart_no	
+		ORDER BY book_no	
 	</select>
 
 	<!-- 장바구니에서 선택한 상품의 개수, 총 가격, 종류  -->

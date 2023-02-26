@@ -81,7 +81,9 @@
          	   p.book_no = b.book_no AND
 			   o.order_no = d.order_no AND         	   
 			   p.user_no = #{user_no} AND
-      		   p.order_no = #{order_no}  	       		   	   
+      		   p.order_no = #{order_no}
+      	
+      	ORDER BY book_no	     	       		   	   
 	</select>
 	
 	<!-- 관리자 : 주문당 구매도서수 비율 -->

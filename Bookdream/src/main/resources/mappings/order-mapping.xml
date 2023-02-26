@@ -37,7 +37,7 @@
 			   order_status,
 			   TO_CHAR(start_date, 'YY.MM.DD HH24:MI') AS start_date,
 		       TO_CHAR(cmplt_date, 'YY.MM.DD HH24:MI') AS cmplt_date		   				   
-		FROM  (SELECT  ROW_NUMBER() OVER (ORDER BY rnum DESC) AS rnum,
+		FROM  (SELECT ROW_NUMBER() OVER (ORDER BY order_no DESC) AS rnum,
 		              order_no, 
 		              order_name, 
 		              book_img,
@@ -65,25 +65,23 @@
 		                      p.order_no = o.order_no AND
 		                      y.pay_no = o.order_no   AND
 		                      o.order_no = d.order_no AND
-		                      o.user_no = #{user_no}
+		                      o.user_no = #{user_no}  AND	  
+							  (order_date BETWEEN #{srchStrDate} AND 
+							  TO_DATE(TO_DATE(#{srchEndDate})+1)) AND
 							  <choose>
 								<when test="order_status == 100">
-									AND 1=1
+									1=1
 								</when>
 								<otherwise>
-									AND order_status = #{order_status}
+									order_status = #{order_status}
 								</otherwise>
-							  </choose>			  
-							  AND order_date BETWEEN #{srchStrDate} AND TO_DATE(TO_DATE(#{srchEndDate})+1)
-					  ORDER BY order_no desc			                      
-		                      
-		              )
-		     WHERE rn = 1
-		     ORDER BY rnum desc)
+							  </choose>
+					  ORDER BY order_no desc)
+		        WHERE rn = 1)
 		     
 		WHERE rnum between ((#{pageNum}-1) * #{amount})+1 AND 
 		                     #{pageNum} * #{amount}	
-		ORDER BY order_no desc                     
+                  
 		                     
 	</select>
 	

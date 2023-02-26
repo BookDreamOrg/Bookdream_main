@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 
 import com.spring.bookdream.vo.ReviewVO;
+import com.spring.bookdream.vo.SearchCriteria;
 
 
 public interface ReviewService {
@@ -35,5 +36,8 @@ public interface ReviewService {
 	List<HashMap<Integer, Integer>> progressStar(int book_no);
 	
 	// 내가 작성한 리뷰 
-	List<Map<String,Object>> myReview(ReviewVO review);
+	List<Map<String,Object>> myReview(SearchCriteria cri);
+	
+	// 내가 작성한 리뷰의 개수, 추천수, 평균 별점
+	Map<String, Object> myReviewCount(SearchCriteria cri);
 }

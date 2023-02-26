@@ -283,7 +283,7 @@ $(document).on("click", "#side_pay_now_btn", function(e) {
 	var add1 = ById('user_info_zone_code').innerText;
 	var add2 = ById('user_info_road_add').innerText;
 	var add3 = ById('user_info_detail_add').innerText;
-	var order_address = "[" + add1 + "]" + " " + add2 + " " + add3
+	var order_address = add1 + " " + add2 + " " + add3
 	
 
 
@@ -714,8 +714,8 @@ function address_info(check, address_no) {
 								}			
 				html +=				`<span id="user_info_tel"> ${result.address_tel}</span>&nbsp;/&nbsp;
 									<span id="user_info_name">${result.address_name}</span>
-									<br>[
-									<span id="user_info_zone_code">${result.zone_code}</span>]&nbsp;
+									<br>
+									<span id="user_info_zone_code">${result.zone_code}</span>&nbsp;
 									<span id="user_info_road_add">${result.road_add}</span>&nbsp;
 									<span id="user_info_detail_add">${result.detail_add}</span>&nbsp;
 								</td>
@@ -775,8 +775,8 @@ function address_list() {
 									}
 				html +=				 `<span>${result[i].address_tel}</span>&nbsp;/&nbsp;
 								     <span>${result[i].address_name}</span>
-								     <br>[
-								     <span>${result[i].zone_code}</span>]&nbsp;
+								     <br>
+								     <span>${result[i].zone_code}</span>&nbsp;
 								     <span>${result[i].road_add}</span>&nbsp;
 								     <span>${result[i].detail_add}</span><label>
 								</td>
@@ -837,7 +837,7 @@ function execDaumPostcode() {
 					}
 
 					// 우편번호와 주소 정보를 해당 필드에 넣는다.
-					document.getElementById('zonecode').value = data.zonecode;
+					document.getElementById('zonecode').value = '[ ' + data.zonecode + ' ]';
 					document.getElementById("roadAddr").value = roadAddr;
 					// document.getElementById("jibunAddress").value = data.jibunAddress;
 

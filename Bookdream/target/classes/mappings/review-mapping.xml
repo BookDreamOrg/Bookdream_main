@@ -79,11 +79,38 @@
 	ORDER BY review_star
 	</select>
 
-<!-- 리뷰 별점 별 갯수,퍼센트 계산 -->	
+<!-- 내가 작성한 리뷰 리스트 -->	
 	<select id="myReview" resultType="HashMap">
-	SELECT *
-	FROM   review 
-	WHERE  user_id = #{user_id}
+		SELECT review_no, 
+			   review_content,
+			   review_recommend,
+			   review_star,
+			   TO_CHAR(review_date, 'YY.MM.DD HH24:MI') AS review_date,
+			   title,
+			   book_img
+		FROM   (SELECT ROW_NUMBER() OVER (ORDER BY review_date DESC) AS rnum,
+		               review_no,
+					   review_content,
+					   review_recommend,
+					   review_star,
+				       review_date,
+				       b.title, 
+				       b.book_img
+				FROM   review r, book b
+				WHERE  r.book_no = b.book_no AND
+					   user_id = #{user_id}
+				ORDER BY review_date DESC)
+				
+		WHERE rnum between ((#{pageNum}-1) * #{amount})+1 AND 
+		                     #{pageNum} * #{amount}
+	</select>
+
+<!-- 내가 작성한 리뷰 개수, 총 추천수, 평균평점 -->
+	<select id="myReviewCount" resultType="HashMap">
+		SELECT COUNT(*) as cnt, 
+			   SUM(review_recommend) as sum_rcmnd, 
+			   AVG(review_star) as avg_star
+		FROM   review
+		WHERE  user_id = #{user_id}
 	</select>	
-	
 </mapper>

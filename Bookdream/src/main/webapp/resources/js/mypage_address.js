@@ -39,8 +39,8 @@ function load_default() {
 								}			
 					html +=			`<span> ${result.address_tel}</span>&nbsp;/&nbsp;
 									<span>${result.address_name}</span>
-									<br>[
-									<span>${result.zone_code}</span>]&nbsp;
+									<br>
+									<span>${result.zone_code}</span>&nbsp;
 									<span>${result.road_add}</span>&nbsp;
 									<span>${result.detail_add}</span>&nbsp;` 						
 									
@@ -101,8 +101,8 @@ function address_list() {
 									}
 				html +=				 `<span>${result[i].address_tel}</span>&nbsp;/&nbsp; 
 								     <span>${result[i].address_name}</span>
-								     <br>[
-								     <span>${result[i].zone_code}</span>]&nbsp;
+								     <br>
+								     <span>${result[i].zone_code}</span>&nbsp;
 								     <span>${result[i].road_add}</span>&nbsp;
 								     <span>${result[i].detail_add}</span><label>
 								</td>
@@ -460,7 +460,7 @@ function execDaumPostcode() {
 					}
 
 					// 우편번호와 주소 정보를 해당 필드에 넣는다.
-					document.getElementById('zonecode').value = data.zonecode;
+					document.getElementById('zonecode').value = '[ ' + data.zonecode + ' ]';
 					document.getElementById("roadAddr").value = roadAddr;
 					// document.getElementById("jibunAddress").value = data.jibunAddress;
 

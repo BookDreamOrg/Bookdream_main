@@ -12,6 +12,8 @@ public class SearchCriteria {
 	private int amount;
 
 	private int user_no;
+	private String user_id;
+	
 	private int order_status;
 	private String srchStrDate;
 	private String srchEndDate;
