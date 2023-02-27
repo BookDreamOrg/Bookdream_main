@@ -95,8 +95,25 @@
 		
 		
 			<!-- ------------------cartList---------------------- -->
-			<div class="col-md-8 col-lg-8 order-md-first">
+			<div class=" d-flex align-items-stretch justify-content-center 
+						col-md-8 col-lg-8 order-md-first">
+				<c:if test="${cartListCount == 0 }">
+					<div class="d-flex flex-column border align-self-center rounded p-3 fw-bold  ">
+							<span class=" p-3 text-center fs-5">
+								<p>당신 장바구니엔 아무것도 읎어,,</p></span>
+							<span class=" p-3 text-center fs-1">
+								<p>🤔🤔🤔</p></span>
+					</div>
+				</c:if>
+					
 					<div class="row">
+								
+					<c:set var = "sum" value = "0" />
+					<c:set var = "discountSum" value = "0" />
+					<c:set var = "totalPrice" value = "0" />
+					<c:set var = "deliveryFee" value = "3000" />
+								
+					<c:if test="${cartListCount != 0 }">
 						<table class="table ">
 								
 								<thead><tr><th colspan="5" >
@@ -128,11 +145,6 @@
 									</div>
 								</th></tr></thead>
 								
-								<c:set var = "sum" value = "0" />
-								<c:set var = "discountSum" value = "0" />
-								<c:set var = "totalPrice" value = "0" />
-								<c:set var = "deliveryFee" value = "3000" />
-								
 								<c:forEach items="${cartList}" var="cart" varStatus="status">
 									<tbody><tr class="border-top border-bottom ">
 										<c:set var = "discountRate" value = "${cart.bookVO.discount/100 }" />
@@ -160,28 +172,6 @@
 													$(".chBox").click(function(){
 													  	$("#allCheck").prop("checked", false);
 													 });
-													
-													$(".chBox${cart.cart_no}").change(function(){
-														 var checked = $(this).prop('checked');
-														 if (checked) {
-															 let cart = useSelector();
-															
-															alert("체크됨");
-															
-															$('.reload').load(location.href+' .reload');
-															console.log($(this).attr("data-cartNo"));
-															console.log(checked);
-															
-														} else {
-																
-															alert("체크안됨");
-															
-															$('.reload').load(location.href+' .reload');
-															console.log($(this).attr("data-cartNo"));
-														  	console.log(checked);
-														}
-															$('.reload').load(location.href+' .reload');
-													});
 												</script>
 											</div>
 										</td>
@@ -272,7 +262,7 @@
 															<input type="hidden" class="stock${cart.cart_no}" value="${cart.bookVO.stock }" disabled>
 															<input  class="product_cnt${cart.cart_no} qty form-control text-center border-0 " type="number" min="1" max="${cart.bookVO.stock}"  
 																	value="${cart.product_count}" readonly="readonly">
-
+	
 															<button class="minus${cart.cart_no} btn fw-bold order-first" type="button" data-cartNo="${cart.cart_no}">-</button>
 															<script >
 															$(".minus${cart.cart_no}").click(function() {
@@ -330,9 +320,9 @@
 													</div>
 												</td>
 								</tr></tbody></c:forEach>
-						</table>
+						</table></c:if>
 					</div>
-				</div>
+			</div>
 				
 			<!-- ------------------slide box---------------------- -->
 			<div class="slideBox col-md-3 col-lg-3">
@@ -421,7 +411,12 @@
 				<!-- 결제 버튼 -->
 				<div class="card p-0 border-0">
 					<div class="input-group">
-						<button class="payNow_btn w-100 btn btn-lg fw-bold color_btn" type="submit"> 결제하기</button>
+						<c:if test="${cartListCount == 0 }">
+							<button class="payNow_btn w-100 btn btn-lg fw-bold color_btn" disabled="disabled"> 결제하기</button>
+						</c:if>
+						<c:if test="${cartListCount != 0 }">
+							<button class="payNow_btn w-100 btn btn-lg fw-bold color_btn" > 결제하기</button>
+						</c:if>	
 					</div>
 				</div>
 			</div>
@@ -442,6 +437,42 @@
 	<jsp:include page="/views/inc/footer.jsp" />
 	</div>
 	
+	<script type="text/javascript">
+	$(".chBox${cart.cart_no}").change(function(){
+		 var checked = $(this).prop('checked');
+		 if (checked) {
+			
+			alert("체크됨");
+			
+			let discountRate = ${discountRate};
+		 	let costPrice = ${costPrice};
+		 	let salePrice = ${salePrice};
+		 	let cnt = ${cnt};
+		 	let sum = ${sum};
+		 	let discountSum = ${discountSum};
+		 	let totalPrice = ${totalPrice};
+		 	console.log("\n discountRate : "+ discountRate + 
+			 			"\n costPrice : "+ costPrice + 
+			 			"\n cnt : "+ cnt + 
+			 			"\n sum : "+ sum + 
+			 			"\n discountSum : "+ discountSum + 
+		 				"\n totalPrice : "+ totalPrice );
+		 	
+			$('.reload').load(location.href+' .reload');
+			console.log($(this).attr("data-cartNo"));
+			console.log(checked);
+			
+		} else {
+				
+			alert("체크안됨");
+			
+			$('.reload').load(location.href+' .reload');
+			console.log($(this).attr("data-cartNo"));
+		  	console.log(checked);
+		}
+			$('.reload').load(location.href+' .reload');
+	});
+	</script>
 
 	<!-- ------------------------장바구니 선택(체크) 삭제------------------------------- -->
 	<script type="text/javascript">/* 장바구니  삭제 */
