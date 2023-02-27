@@ -14,7 +14,6 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 
     <!-- CSS -->
     <link href="/resources/css/main.css" rel="stylesheet" />
-
     <!-- Bootstrap 5.0.2 -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"

@@ -47,11 +47,12 @@ create sequence user_seq increment by 1 start with 1;
 -- BookDream test 로그인 insert
 insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
    values(user_seq.nextval,'test','test','test','BD','test@test.com');
-
+-- BookDream admin 로그인 insert
+insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_LEVEL, FLATFORM_TYPE, USER_EMAIL) 
+   values(user_seq.nextval,'admin','admin','admin',1,'BD','test@test.com');
 
 insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
    values(user_seq.nextval,'sycha11','test','차승윤','BD','sycha112@naver.com');
-
 
 
 insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
@@ -354,6 +355,17 @@ drop sequence answer_seq;
 create sequence answer_seq increment by 1 start with 1;
 
 select * from answer;
+
+------------------- VISIT -------------------
+DROP TABLE VISIT;
+CREATE TABLE VISIT (V_DATE DATE NOT NULL);
+
+INSERT INTO VISIT (V_DATE) VALUES ( TO_DATE('02-25-2023','MM-DD-YYYY') );
+INSERT INTO VISIT (V_DATE) VALUES ( TO_DATE('02-26-2023','MM-DD-YYYY') );
+INSERT INTO VISIT (V_DATE) VALUES ( TO_DATE('02-27-2023','MM-DD-YYYY') );
+INSERT INTO VISIT (v_date) VALUES (SYSDATE);
+
+SELECT * FROM VISIT;
 
 rollback;
 commit;

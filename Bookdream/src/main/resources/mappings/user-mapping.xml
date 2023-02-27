@@ -173,4 +173,15 @@
 		WHERE  user_no = #{user_no}
 	</select>
 	
+	<insert id="insertAdmin">
+		insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_LEVEL, FLATFORM_TYPE, USER_EMAIL) 
+		values(user_seq.nextval,#{user_id},#{user_password}, 1 ,#{user_name},'BD',#{user_email})
+	</insert>
+	
+	<select id="adminLoginCheck" resultType="String">
+		select *
+		from (select * from users where user_level = 1)
+		where user_id=#{user_id} and user_password=#{user_password}
+	</select>
+	
 </mapper>
