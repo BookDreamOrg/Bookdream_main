@@ -65,6 +65,17 @@ font-weight:bold;
 margin-right:3px;
 }
 
+/* 스크롤바 스타일 변경 */
+::-webkit-scrollbar {
+	width: 10px;
+    height: 10px;
+}
+    
+::-webkit-scrollbar-thumb {
+	background-color: #c2c2dd;
+    border-radius: 10px;
+    border: 3px solid #c2c2dd;
+}
 
 </style>
 

@@ -3,12 +3,6 @@ $(function() {
 	address_info("Y");	
 })
 
-
-/***************************** getElementById function *****************************/
-function ById(id) {
-	return document.getElementById(id);
-}
-
 /***************************** 주문 상품 토글 *****************************/
 $(document).on("click", "#orderlist_table_toggle", function(e) {	
 		
@@ -95,11 +89,19 @@ $(document).on("click", "#address_update_modal_btn", function(e) {
 
 /***************************** 배송지 목록 : 삭제 버튼 클릭 *****************************/
 $(document).on("click", "#address_list_table_delete", function(e) {
+
+	var address_no = e.currentTarget.value
+
+	let title = '배송지 삭제'
+	let text = '해당 배송지를 삭제하시겠습니까?'
+	let icon = 'question'
+	let msg = '해당 주소를 삭제하였습니다.'
+		
+	confirmed(title, text, icon, msg, function() {
+		address_delete(address_no)
+		console.log("배송지 삭제 완료")		
+    })
 	
-	
-	var address_no = e.currentTarget.value;
-	address_delete(address_no);
-	console.log("배송지 삭제 완료");
 });
 
 /***************************** 배송요청사항 버튼 클릭 *****************************/
@@ -136,15 +138,17 @@ $(document).on("click", "#delivery_request_change_btn", function(e) {
 		value = ById('delrivery_reqeust_message').value;
 		
 		if (value == '') {
-			alert("요청사항을 입력하세요.");
+			alert('요청사항 누락', "요청사항을 입력하세요.", 'error');
 			return false;
 		}
 	} 
 		html = `<span id="delivery_request_value">${value}</span><button class="btn btn-outline-secondary delivery_request_btn_two" id="delivery_request_btn"><i class="bi bi-pencil-square"></i> 수정</button></span>` 
 
+		toast('배송요청사항이 입력되었습니다.')
+		
 		ById('address_table_col2').innerHTML = html;
 		$('#delivery_request').modal('hide');	
-	
+		
 })
 
 
@@ -266,11 +270,12 @@ $(document).on("click", "#side_pay_now_btn", function(e) {
 	if(ById('user_info_name') == null || ById('user_info_tel') == null || ById('user_info_zone_code') == null ||
 	   ById('user_info_road_add') == null || ById('user_info_detail_add') == null) {
 		
-		alert("배송지정보를 입력하세요.");
+		
+		alert('배송지 정보 누락', "배송지정보를 입력하세요.", 'error')
 		return false;	
 		
 	} else if (pay_method == null) {
-		alert("결제수단을 선택하세요.");
+		alert('결제수단 누락', "결제수단을 선택하세요.", 'error')
 		return false;		
 	} 
 	
@@ -302,12 +307,7 @@ $(document).on("click", "#side_pay_now_btn", function(e) {
 			"use_point" : use_point,
 			"save_point" : save_point					
 			};
-	
-	
-	console.log(data);
-	
-
-	
+		
 	$.ajax({
 		
 		type : 'POST',
@@ -340,9 +340,9 @@ $(document).on("click", "#side_pay_now_btn", function(e) {
 				})
 				.catch(function (error) {
 					if (error.code === 'USER_CANCEL') {
-						alert("결제가 취소되었습니다.");
+						alert('결제 Error', '결제오류입니다.' ,'error')
 					} else if (error.code === 'INVALID_CARD_COMPANY') {
-						alert("유효하지 않은 카드입니다. 다시 입력해주세요.");
+						alert('결제 Error', "유효하지 않은 카드입니다. 다시 입력해주세요.", 'error')
 					}
 				})			
 
@@ -365,7 +365,7 @@ function fastpay() {
 /***************************** 포인트 전액사용 버튼 클릭 function *****************************/
 function max_point_toggle(btn) {
 		
-	var final_price = Number(ById('total_price_value').value);
+	var final_price = Number(ById('final_price_value').value);
 	var max_point = Number(ById('max_point_value').value);
 
 	// side바 표시
@@ -416,25 +416,6 @@ function calculation(use_point) {
 	ById('save_point_value').innerHTML = comma((Math.floor(final_price * 0.05)));
 	ById('final_price').innerHTML = comma(final_price);
 }
-
-
-/***************************** uncomma function *****************************/
-function uncomma(value) {
-	
-	var comma = value.replace(/[^\d]+/g, '');
-	
-	return comma;	
-
-}
-
-/***************************** comma function *****************************/
-function comma(value) {
-	
-	var comma = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-	return comma;
-}
-
 
 /***************************** 배송지 수정 버튼 클릭시 value 리턴 function *****************************/
 function select_address_value(address_no) {
@@ -490,18 +471,26 @@ function address_insert(check) {
 	var detail_add = ById('detailAddress').value;
 	var address_no = ById('address_insert_address_no').value;
 	
-	console.log(address_tel.length)
-	
-	if (address_alias == '') {
-		alert("배송지 이름을 입력하세요.");
-	} else if (address_name == '') {
-		alert("받는사람 이름을 입력하세요.");
-	} else if (address_tel == '') {
-		alert("받는사람 전화번호를 입력하세요.");
-	} else if (address_tel.length != 13) { // - 포함 13자리
-		alert("전화번호를 11자리 기입하세요.");
-	} else if (zone_code == '' || road_add == '' || detail_add == '') {
-		alert("주소를 입력하세요.");
+	let title = '유효성검사 Error'
+		let icon = 'error'
+		let text = ''	
+			
+		if (address_alias == '') {
+			text = '배송지 이름을 입력하세요.'
+			alert(title, text, icon)
+			return false
+		} else if (address_name == '') {
+			text = '받는사람 이름을 입력하세요.'
+			alert(title, text, icon)
+		} else if (address_tel == '') {
+			text = '휴대폰번호를 입력하세요.'
+			alert(title, text, icon)
+		} else if (address_tel.length != 13) { // - 포함 13자리
+			text = '휴대폰 번호를 -를 제외한 숫자 11자리를 입력하세요.'
+			alert(title, text, icon)
+		} else if (zone_code == '' || road_add == '' || detail_add == '') {
+			text = '주소를 입력하세요.'
+			alert(title, text, icon)
 		
 		// 주소 입력하기를 누르면 사용자의 주소 목록을 조회함
 	} else if(check == 'insert') {
@@ -537,10 +526,11 @@ function address_insert(check) {
 						success : function() {	
 
 							if(default_add == 'Y') {
-								alert("처음 생성한 배송지는 기본 배송지로 설정됩니다.");
+								toast("처음 생성한 배송지는 기본 배송지로 설정됩니다.");
 							}
 							
 							// 배송지 갱신
+							toast('배송지가 등록되었습니다.')
 							address_list();
 							$('#address_insert_modal').modal('hide');
 							
@@ -578,6 +568,7 @@ function address_insert(check) {
 			
 			success : function() {	
 				
+				toast('주소가 수정되었습니다.')
 				// 배송지 갱신
 				address_list();
 				$('#address_insert_modal').modal('hide');
@@ -628,7 +619,7 @@ $(document).on("click", "#address_list_change_btn", function(e) {
 	
 	change_view_address(address_no);
 	
-	console.log("배송지 선택 완료");
+	
 
 })
 
@@ -637,7 +628,7 @@ $(document).on("click", "#address_list_change_btn", function(e) {
 function change_view_address(address_no) {
 	
 	if (ById('address_list_default_set').checked == true) {	
-		alert("기본 배송지로 설정 됩니다.");
+
 		
 		var data = {"address_no" : address_no}
 		
@@ -649,11 +640,12 @@ function change_view_address(address_no) {
 			contentType : "application/json",		
 			
 			success : function() {	
-				
+
+				toast('기본 배송지로 설정됩니다.')				
 				// 기본 배송지로 갱신함
 				address_info("Y", address_no);
 				$('#address_list_modal').modal('hide');	
-				console.log("기본 배송지로 설정 콜백");
+
 			},
 			
 			error: function(request, status, error) {
@@ -666,6 +658,7 @@ function change_view_address(address_no) {
 	// 바로 저장을 한다면
 	} else {
 		
+		toast('선택한 배송지로 설정됩니다.')
 		// 선택한 배송지로 갱신함
 		address_info("N", address_no);
 		$('#address_list_modal').modal('hide');			
@@ -873,7 +866,7 @@ function execDaumPostcode() {
 			, onclose: function(state) {
 
 		        if(state === 'FORCE_CLOSE'){
-					alert("주소를 입력하지 않고 종료합니다."); 
+		    		alert('입력취소', '입력을 취소하였습니다.', 'warning')
 		        	
 		        } else if(state === 'COMPLETE_CLOSE'){
 		        	

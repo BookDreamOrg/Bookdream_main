@@ -114,9 +114,6 @@
 		order by order_no desc	
 	</select>
 	
-	
-	
-	
 	<!-- 마이페이지 최근 구매 조회-->
 	<select id="recentOrder" resultType="HashMap">		
 		SELECT order_no, 
@@ -148,10 +145,16 @@
 	</select>	
 		
 	<!-- 주문취소/반품요청시 배송상태 변경, 취소시간등록-->
-	<update id="cancelOrder">
+	<update id="updateOrderStatus">
 		UPDATE orders
 		SET	   order_status = #{order_status},
-			   cancel_date = sysdate
+			   <if test="order_status == 10 || order_status == 12">
+			   		cancel_date = sysdate			   
+			   </if>
+			   <if test="order_status == 3">
+			   		prchsCnfrm_date = sysdate
+			   </if>	
+
 		WHERE  order_no = #{order_no} 												
 	</update>							
 									

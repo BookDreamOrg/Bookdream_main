@@ -1,6 +1,7 @@
 package com.spring.bookdream.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -122,9 +123,21 @@ public class UserServiceImpl implements UserService {
 
 	// 사용자 포인트 조회
 	@Override
-	public int userPoint(UserVO vo) {
+	public int userPoint(UserVO user) {
 
-		return userDAO.userPoint(vo);
+		return userDAO.userPoint(user);
+	}
+
+	// 사용자 포인트 내역
+	public List<Map<String, Object>> userPointHistory(UserVO user) {
+		return userDAO.userPointHistory(user);
+	}
+
+	// 구매확정 포인트 적립
+	@Override
+	public void pointEarned(UserVO user) {
+		userDAO.pointEarned(user);
+		
 	}
 
 }

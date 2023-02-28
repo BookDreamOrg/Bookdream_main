@@ -15,17 +15,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.spring.bookdream.service.DeliveryService;
 import com.spring.bookdream.service.OrderService;
 import com.spring.bookdream.service.PurchaseService;
+import com.spring.bookdream.service.UserService;
 import com.spring.bookdream.vo.DeliveryVO;
 import com.spring.bookdream.vo.OrderVO;
 import com.spring.bookdream.vo.PageVO;
 import com.spring.bookdream.vo.PurchaseVO;
 import com.spring.bookdream.vo.SearchCriteria;
+import com.spring.bookdream.vo.UserVO;
 
 
 @Controller
 @RequestMapping("/order")
 public class OrderController {
 
+	@Autowired
+	private UserService userService;
+	
 	@Autowired
 	private OrderService orderService;	
 	
@@ -41,13 +46,19 @@ public class OrderController {
 	// 배송상태 갱신
 	@RequestMapping(value="/update")
 	@ResponseBody
-	public void cencelOrder(@RequestBody OrderVO order) {
+	public void cencelOrder(@RequestBody OrderVO order, UserVO user) {
 		
 		int user_no = (int) session.getAttribute("user_no");		
 		order.setUser_no(user_no);
+		user.setUser_no(user_no);
 				
 	    System.out.println("--->  배송상태 갱신 처리 <---");
-		orderService.cancelOrder(order);
+		orderService.updateOrderStatus(order);
+		
+		if (order.getOrder_status() == 3) {
+		    System.out.println("--->  구매확정 포인트 적립 <---");			
+			userService.pointEarned(user);
+		}
 	    
 	}
 	

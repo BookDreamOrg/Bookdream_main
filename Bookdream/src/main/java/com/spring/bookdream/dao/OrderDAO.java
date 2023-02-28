@@ -38,12 +38,12 @@ public class OrderDAO {
 
 	}
 	
-	// 결제 취소, 반품요청
-	public void cancelOrder(OrderVO vo) {
+	// 구매확정, 결제취소, 반품 요청시 상태 변경
+	public void updateOrderStatus(OrderVO vo) {
 		
-		System.out.println("---> OrderDAO cancelOrder 실행 <---");
+		System.out.println("---> OrderDAO updateOrderStatus 실행 <---");
 		
-		mybatis.update("OrderDAO.cancelOrder", vo);
+		mybatis.update("OrderDAO.updateOrderStatus", vo);
 		
 	}
 	

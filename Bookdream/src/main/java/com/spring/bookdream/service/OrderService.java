@@ -19,7 +19,7 @@ public interface OrderService {
 	int searchOrderCount(SearchCriteria cri);
 	
 	// 결제 취소, 반품 신청
-	void cancelOrder(OrderVO vo);
+	void updateOrderStatus(OrderVO vo);
 
 	// 사용, 적립 포인트 반환
 	int updateUserPoint(OrderVO vo);

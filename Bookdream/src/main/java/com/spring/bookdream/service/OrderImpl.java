@@ -38,9 +38,9 @@ public class OrderImpl implements OrderService {
 	
 	// 결제취소/반품요청 
 	@Override
-	public void cancelOrder(OrderVO vo) {
+	public void updateOrderStatus(OrderVO vo) {
 
-		orderDAO.cancelOrder(vo);
+		orderDAO.updateOrderStatus(vo);
 	}
 
 	// 결제취소/반품완료 시 사용,적립 포인트 반환

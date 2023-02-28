@@ -10,6 +10,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+<!-- alert -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
 <!-- bootstrap -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -22,20 +26,31 @@
 <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
 <link rel="stylesheet" href="/resources/css/styles.css" />
 
-
+<!-- Script Bootstrap, jqurey-3.6.3 -->
+<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
+<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+	
 <!-- jQuery -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
-
+<!-- 부트스트랩 아이콘 -->
 <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap_icon.css">
-<!--  맨위 자동 검색시 필요 (페이지마다 다 넣어줘야 함?)-->
-<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<!-- 스크롤 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css">
+
+<!-- FontAwesome -->
+<script src="https://kit.fontawesome.com/4bf42f841a.js" crossorigin="anonymous"></script>
+
+<!-- jQuery UI -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <title>마이페이지 - 메인</title>
 
 <style>
 
 
+    
 .wrapper {
 	height: auto;
 }
@@ -127,7 +142,15 @@ hr {
 }
 
 .mypage_info_content_text {
+	line-height: 14px;
 	font-size: 14px;
+}
+
+.point_history {
+	width: 120px;
+	height: 100%;
+	font-size: 10px;
+	margin-left: 10px;
 }
 
 /*                                     */
@@ -232,6 +255,101 @@ hr {
 	font-weight: bold;
 }
 
+/* Modal */
+.point_history_modal {
+	height: 700px;
+	padding: 0px 30px;
+}
+
+.point_history_table_container {
+	margin-top: 20px;
+	border-bottom: 1px dotted #DFDFDF;
+}
+
+.point_history_table {
+	width: 100%;	
+}
+
+.point_history_table th,td {
+	width: 20%;
+	font-size: 14px;
+	text-align: center;
+	vertical-align: middle;
+
+}
+
+.point_history_table th {
+	height: 50px;
+	font-weight: bold;
+	position: sticky; 
+	top: 0; 
+	z-index: 2px;		
+	background-color: #efefef;
+}
+
+.point_history_table td {
+	height: 70px;
+	font-size: 12px;
+}
+
+.point_history_table tr:nth-child(odd) {
+	background-color: #fafafa;
+}
+
+
+.cancelDecoreation {
+  text-decoration: line-through;
+  text-decoration-color: #FF6384;
+}
+
+
+.cancelColor {
+	color: #FF6384;	
+	font-weight: bold;
+}
+
+/* */
+.point_dshbr_table {
+	width: 100%; 
+	height: 15%; 
+	margin-top: 50px;	
+}
+
+.point_dshbr_table tr {
+	text-align: left;
+
+}
+
+.point_dshbr_table th {
+	font-size: 12px;
+	font-weight: bold;
+	padding-left: 60px;
+	height: 30%;
+}
+
+.point_dshbr_table td {
+	font-size: 24px;
+	vertical-align: top;
+
+}
+.point_dshbr_table td:nth-child(1), 	
+.point_dshbr_table td:nth-child(3), 	
+.point_dshbr_table td:nth-child(5) {	
+	padding-left: 60px;
+	text-align: left;
+}
+
+.point_dshbr_table td:nth-child(5) {
+	font-weight:bold;
+	color: #5c5d99
+}
+
+.point_dshbr_table td:nth-child(2),
+.point_dshbr_table td:nth-child(4) {
+
+	width: 5%;
+}
+
 </style>
 
 
@@ -260,7 +378,11 @@ hr {
 					<div class="mypage_info_box">
 					<div class="mypage_info_profile"><i class="fa-solid fa-user fa-5x mypage_info_icon" ></i><i class="bi bi-gear-fill mypage_info_profile_set"></i></div>
 						<div class="mypage_info_content">
-							<div>${authUser.getUser_name()}님 | ${authUser.getFlatform_type()} 회원</div>						
+							<div>${authUser.getUser_name()}님 | ${authUser.getFlatform_type()} 회원
+									<button type="button" class="btn btn-outline-success point_history" id="point_history">
+										<i class="fas fa-money-check"></i> 포인트 사용 현황
+									</button>								
+							</div>						
 							<ul>
 								<li class="mypage_info_content_title">이메일</li>							
 								<li class="mypage_info_content_text"> ${authUser.getUser_email()}</li><br>
@@ -268,8 +390,15 @@ hr {
 								<li class="mypage_info_content_text">${authUser.getUser_tel()}</li>
 							</ul>	
 							<ul class="mypage_info_content_ul2">
-								<li class="mypage_info_content_title">포인트</li>
-								<li class="mypage_info_content_text">${userPoint}P</li><br>							
+								<li class="mypage_info_content_title">포인트
+								
+								</li>
+								<li class="mypage_info_content_text">${userPoint}P
+
+								</li>
+								
+								<br>							
+								
 								<li class="mypage_info_content_title">배송지</li>
 								<c:choose>
 									<c:when test="${address.zone_code eq null}">
@@ -384,36 +513,153 @@ hr {
 			</div>	
 				
 		</div>
-		
+
+		<!-- Modal -->
+		<div class="modal fade" id="point_history_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable modal-lg">
+		    <div class="modal-content point_history_modal">
+		      <div class="modal-header">
+		        <h1 class="modal-title fs-5" id="exampleModalLabel">포인트 사용현황</h1>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body" id="point_history_body">
+		        
+		        <c:set var="totalPoint" value="10000"/>
+  				
+  				<div style="height:70%; overflow-y: auto;" class="point_history_table_container" id="point_history_table_container">	 
+  				       
+		        <table class="point_history_table scrollbar">
+			        <tr>
+			       		<th></th>
+			       		<th>적립 포인트</th>
+			       		<th>사용 포인트</th>
+			       		<th>구매확정 포인트</th>
+			       		<th>합계</th>
+			       	</tr>		
+			       	
+			        <tr>
+			       		<td>회원가입</td>
+			       		<td>${totalPoint}</td>
+			       		<td></td>
+			       		<td></td>
+			       		<td>${totalPoint}</td>
+			       	</tr>				       	        		        
+			        <c:forEach items="${userPointHistory}" var="point" varStatus="i">
+			        	
+				        <c:set var="totalPoint"   value="${!empty point.CANCEL_DATE ? totalPoint : (totalPoint + point.SAVE_POINT + point.PRCHSCNFRM_POINT) - point.USE_POINT}"></c:set>        	
+						<c:set var="sumUsePoint"  value="${!empty point.CANCEL_DATE ? sumUsePoint : sumUsePoint + point.USE_POINT}"/>
+					
+						<c:set var="sumSavePoint" value="${!empty point.CANCEL_DATE ? sumSavePoint : sumSavePoint + point.SAVE_POINT}"/>
+						<c:set var="sumPrchscnfrmPoint" value="${!empty point.CANCEL_DATE ? sumPrchscnfrmPoint : sumPrchscnfrmPoint + point.PRCHSCNFRM_POINT}"/>
+						
+						<c:set var="cancelDecoreation" value="${!empty point.CANCEL_DATE ? 'cancelDecoreation' : ''}"/>
+						<c:set var="cancelText" value="${!empty point.CANCEL_DATE ? '취소' : ''}"/>
+						<c:set var="cancelColor" value="${!empty point.CANCEL_DATE ? 'cancelColor' : ''}"/>
+			
+			        	<tr class="">
+			        		<td class="${cancelDecoreation}"><fmt:formatDate value="${point.PAY_DATE}" pattern="YY년 MM월 dd일 (E)" /></td>
+			        		<td class="${cancelDecoreation}">${point.SAVE_POINT}</td>
+			        		<td class="${cancelDecoreation}">${point.USE_POINT}</td>
+			        		<td class="${cancelColor}">${point.PRCHSCNFRM_POINT}${cancelText}</td>
+			        		<td class="${cancelDecoreation}">${totalPoint}</td>
+			        	</tr>		  
+			        	      
+			        </c:forEach>
+		        
+		        </table>
+		        		        
+		  		</div>
+		  		
+		  		<table class="point_dshbr_table">
+		        	<tr>
+		        		<th colspan="2">적립포인트</th>
+		        		<th colspan="2">사용포인트</th>
+		        		<th>총 포인트</th>
+		        	</tr>
+		        	
+		        	<tr>
+		        		<td>${sumSavePoint + 10000 + sumPrchscnfrmPoint}</td>
+		        		<td>-</td>
+		        		<td>${sumUsePoint }</td>
+		        		<td>=</td>
+		        		<td>${totalPoint}</td>
+		        	</tr>
+		        </table>
+		        	        
+		      </div>
+
+		    </div>
+		  </div>
+		</div>		
 
 	<jsp:include page="/views/inc/footer.jsp" />
 	</div>
 
-	
-	<!-- Script Bootstrap, jqurey-3.6.3 -->
-	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
-	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
-
-	<!-- Script FontAwesome-->
-	<script src="https://kit.fontawesome.com/4bf42f841a.js" crossorigin="anonymous"></script>
-
+	<!-- 공통 function -->
+	<script type="text/javascript" src="/resources/js/commonFunction.js"></script>
+		
 	<script>
-		let user_no =
-	<%=(int) session.getAttribute("user_no")%>
-		;
-	<%@include file="/resources/js/cartLIstCount.js"%>
+		let user_no = <%=(int) session.getAttribute("user_no")%>
+		<%@include file="/resources/js/cartLIstCount.js"%>
 	</script>
 	
-	<!-- 자동 검색시 필요 (페이지마다 다 넣어줘야 함?)-->
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>	
-	
 	<script type="text/javascript">
+	
+	// 최근 상품 누르면 배송조회로 이동
 	$(document).on("click", "table.mypage_recent_pur_table", function(e) {
 	
 		location.href="/mypage/tracking"
 	})
 	
+	// 포인트사용현황 버튼 클릭
+	$(document).on("click", "#point_history", function(e) {
+
+		let modal = ById('point_history_table_container')
+		
+		modal.scrollTop = 0		
+		
+		$('#point_history_modal').modal('show')
+
+		userPointHistory() 
+	})
+	
+	$(document).on("click", ".btn-close", function(e) {
+
+		let modal = ById('point_history_table_container')
+		
+		modal.scrollTop = 0		
+	})
+	
+	// 포인트사용현황 function
+	function userPointHistory() {
+		
+		$.ajax ({
+		
+			type : "POST",                              
+			url : "/mypage/userPointHistory",	
+			dataType : "json",
+			contentType : "application/json",		
+				
+			success : function(data) {
+									
+				console.log(data)
+			},
+				
+			error: function(request, status, error) {
+			       console.log("code: " + request.status)
+			       console.log("message: " + request.responseText)
+			       console.log("error: " + error);
+			        
+			}	
+						
+		})
+		
+	}
+		
+	// 스크롤
+    const scrollbar = document.querySelector('.scrollbar');
+    scrollbar.classList.add('animate__animated', 'animate__fadeInUp');
+		
 	</script>
 
 	

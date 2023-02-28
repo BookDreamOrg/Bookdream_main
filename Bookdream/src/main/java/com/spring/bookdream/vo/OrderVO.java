@@ -20,6 +20,9 @@ public class OrderVO {
 	private String order_address;
 	private String order_tel;	
 	private int order_status;
+	private Date cancel_date;
+	private Date prchsCnfrm_date;
+	
 	
 	// 관리자 확인
 	private String admin;	

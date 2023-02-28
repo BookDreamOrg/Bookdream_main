@@ -100,8 +100,9 @@
 .address_change_button {
 	height: 50px;
 	width: 150px;
-	margin: 30px 400px;
+	margin: 30px 360px;
 	text-align: center;
+	display: none;
 }
 
 /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Modal !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  */

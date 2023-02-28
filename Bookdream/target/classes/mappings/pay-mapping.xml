@@ -122,7 +122,7 @@
 		       sum(CASE WHEN pay_method = '문화상품권' THEN 1 ELSE 0 END) as cltmrCrtfc,
 		       sum(CASE WHEN pay_method = '도서문화상품권' THEN 1 ELSE 0 END) as bkcgfCrtfc,
 		       sum(CASE WHEN pay_method = '게임문화상품권' THEN 1 ELSE 0 END) as gmcgfCrtfc
-		FROM pay
+		FROM   pay
 	
 	</select>
 

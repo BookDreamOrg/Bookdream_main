@@ -2,6 +2,7 @@ package com.spring.bookdream.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -158,9 +159,21 @@ public class UserDAO {
 			mybatis.update("UserDAO.setBlack", no);
 		}
 
-		// 사용자의 적립금 호출
+		// 사용자 포인트 조회
 		public int userPoint(UserVO vo) {
 
 			return mybatis.selectOne("UserDAO.userPoint", vo);
+		}
+		
+		// 사용자 포인트 내역
+		public List<Map<String, Object>> userPointHistory(UserVO user) {
+			return mybatis.selectList("UserDAO.userPointHistory", user);
+		}
+
+		// 구매확정 포인트 적립
+		public void pointEarned(UserVO user) {
+			 
+			mybatis.update("UserDAO.pointEarned", user);
+			
 		}
 }

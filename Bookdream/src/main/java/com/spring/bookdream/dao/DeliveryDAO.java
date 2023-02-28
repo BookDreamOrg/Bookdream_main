@@ -1,5 +1,7 @@
 package com.spring.bookdream.dao;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -33,6 +35,11 @@ public class DeliveryDAO {
 		// 배송중 -> 배송완료
 		mybatis.insert("DeliveryDAO.cmpltDelivery", vo);
 		
+	}
+
+	// 배송조회
+	public Map<String, Object> getDelivery(DeliveryVO delivery) {
+		return 	mybatis.selectOne("DeliveryDAO.getDelivery", delivery);
 	}
 	
 }

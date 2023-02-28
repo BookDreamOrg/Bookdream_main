@@ -26,6 +26,10 @@
 <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
 <link rel="stylesheet" href="/resources/css/styles.css" />
 
+<!-- Script Bootstrap, jqurey-3.6.3 -->
+<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
+<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+
 <!-- 별점 -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.6/css/star-rating.min.css" rel="stylesheet" type="text/css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -297,15 +301,15 @@
 
 	<jsp:include page="/views/inc/footer.jsp" />
 
+	<script type="text/javascript" src="/resources/js/commonFunction.js"></script>
 	<script type="text/javascript" src="/resources/js/mypage_review.js"></script>
 	
-
-
 	<script>
 		let user_no = <%=(int) session.getAttribute("user_no")%>;
 	<%@include file="/resources/js/cartLIstCount.js"%>
 	</script>
 	
+	<!-- 별점 -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.6/js/star-rating.min.js"></script>
 
 	

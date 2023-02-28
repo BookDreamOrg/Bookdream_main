@@ -87,6 +87,7 @@ public class MypageController {
 		qna.setUser_no(user_no);
 		user.setUser_no(user_no);
 		
+		model.addAttribute("userPointHistory", userService.userPointHistory(user));
 		model.addAttribute("userPoint", userService.userPoint(user));
 		model.addAttribute("address", addressService.getDefaultAddress(address));
 		model.addAttribute("order", orderService.recentOrder(order));		
@@ -121,7 +122,20 @@ public class MypageController {
 		return list;
 				
 	}		
-	
+
+	// 마이페이지 메인 : 포인트사용현황
+	@RequestMapping(value="/userPointHistory")
+	@ResponseBody	
+	public List<Map<String, Object>> userPointHistory(UserVO user) {
+
+		int user_no = (int) session.getAttribute("user_no");
+		user.setUser_no(user_no);
+		
+		List<Map<String, Object>> list = userService.userPointHistory(user);
+		
+		return list;
+				
+	}		
 
 	// 마이페이지 - 주문목록 조회 (간단)
 	@RequestMapping(value="/tracking")
@@ -208,12 +222,10 @@ public class MypageController {
 		cri.setAmount(3);	
 		
 		// 페이지 블록의 개수
-		int pageBlcok = 5;		
+		int pageBlcok = 3;		
 		
 		// 리뷰 목록
 		List<Map<String, Object>> list = reviewService.myReview(cri);
-		
-		System.out.println("list:" + list);
 		
 		// 리뷰개수, 추천수, 평균 별점
 		Map<String, Object> cnt = reviewService.myReviewCount(cri);		

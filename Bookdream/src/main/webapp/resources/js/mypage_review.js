@@ -7,16 +7,9 @@ $(function() {
 
 })
 
-/***************************** getElementById function *****************************/
-function ById(id) {
-	return document.getElementById(id)
-}
-
 /***************************** reviewList function *****************************/
 function reviewList(pageNum) {
     
-
-	
 	let data = {"pageNum" : pageNum}
 		
 	$.ajax ({
@@ -164,45 +157,13 @@ $(document).on("click", "button.review_delete_btn", function(e) {
 	let title = '리뷰 삭제'
 	let text = '리뷰를 삭제하시겠습니까?'
 	let msg = '리뷰가 삭제되었습니다.'
+	let icon = 'warning'
 	let review_no = e.currentTarget.value
 	
-	alert(title, text, msg, review_no, function() {
+	confirmed(title, text, icon, msg, function() {
         deleteReview(review_no)
     })
 })
-
-
-function alert(title, text, msg, review_no, confirmFunction) {
-	
-	 Swal.fire({
-	      title: title,
-	      text: text,
-	      icon: 'warning',
-	      showCancelButton: true,
-	      confirmButtonColor: '#3085d6',
-	      cancelButtonColor: '#d33',
-	      confirmButtonText: '확인',
-	      cancelButtonText: '취소',
-	      reverseButtons: true, // 버튼 순서 거꾸로
-	      
-	  }).then((result) => {
-		    if (result.isConfirmed) {
-		    	
-		      Swal.fire({
-		        title: '',
-		        text: msg,
-		        icon: 'success',
-		        timer: 2000, // 확인 버튼을 누르면 타이머가 작동
-		        timerProgressBar: true, // 타이머 프로그래스바 활성화
-		        
-		      }).then(() => {
-		        if (confirmFunction) {
-		          confirmFunction();
-		        }
-		      });
-		    }
-		  });
-		}
 
 
 function deleteReview(review_no) {
@@ -255,10 +216,11 @@ $(document).on("click", "button.review_cancel_btn", function(e) {
 	let title = '수정 취소'
 	let text = '수정중인 내용은 초기화 됩니다.'
 	let msg = '수정이 취소되었습니다.'
+	let icon = 'warning'
     let review_no = e.currentTarget.value 
     let review_content = e.target.closest('tr').querySelector('input[type=hidden]').value
   
-	alert(title, text, msg, review_no, function() {
+    confirmed(title, text, icon, msg, function() {
 		
 	    let	btns = `<button class="btn btn-outline-primary review_update_btn" value="${review_no}"><i class="bi bi-pen"><span style="font-size:10px; font-weight: bold;"> 수정<span></i>
 					<button class="btn btn-outline-primary review_delete_btn" value="${review_no}"><i class="bi bi-trash"><span style="font-size:10px; font-weight: bold;"> 삭제<span></i>`
@@ -277,11 +239,12 @@ $(document).on("click", "button.review_submit_btn", function(e) {
 	let title = '리뷰 수정'
 	let text = '작성한 리뷰가 수정됩니다.'
 	let msg = '리뷰가 수정되었습니다.'
-			
+	let icon = 'question'		
+		
     let review_no = e.currentTarget.value 
     let review_content = e.target.closest('tr').querySelector('textarea').value; 
  
-	alert(title, text, msg, review_no, function() {
+	confirmed(title, text, icon, msg, function() {
 	    updateReview(review_no, review_content)  
     })    
 
