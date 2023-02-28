@@ -164,10 +164,15 @@
 										<!-- -----------------------체크박스----------------------- -->
 										<td class="align-middle">
 											<div class="checkBox form-check checkBox">
-												<input class="chBox chBox${cart.cart_no} form-check-input border rounded-circle"
-														type="checkbox" name="chBox[]" value="${cart.cart_no}" data-cartNo="${cart.cart_no}"> 
+												<input class="chBox chBox${cart.cart_no} form-check-input border rounded-circle" onchange="ckBox()"
+														type="checkbox" name="chBox[]" value="${cart.cart_no}" data-cartNo="${cart.cart_no}"
+														data-discountRate="${cart.bookVO.discount/100 }"
+														data-costPrice="${cart.bookVO.book_price}"
+														data-salePrice="${costPrice - (costPrice*discountRate)}"
+														> 
+														<%-- data-cnt="${cart.product_count}"  --%>
+												<input type="hidden" class="product_cnt${cart.cart_no}" value="${cart.product_count }" disabled>
 												<!-- 체크 ----------------- -->
-												
 												<script>
 													$(".chBox").click(function(){
 													  	$("#allCheck").prop("checked", false);
@@ -319,6 +324,7 @@
 														</div>
 													</div>
 												</td>
+								
 								</tr></tbody></c:forEach>
 						</table></c:if>
 					</div>
@@ -442,21 +448,45 @@
 		 var checked = $(this).prop('checked');
 		 if (checked) {
 			
-			alert("체크됨");
-			
+			let deliveryFee = ${deliveryFee};
 			let discountRate = ${discountRate};
 		 	let costPrice = ${costPrice};
 		 	let salePrice = ${salePrice};
-		 	let cnt = ${cnt};
-		 	let sum = ${sum};
-		 	let discountSum = ${discountSum};
-		 	let totalPrice = ${totalPrice};
-		 	console.log("\n discountRate : "+ discountRate + 
+		 	let cnt =  ${cnt};
+		 	let sum = 0;
+		 	let discountSum = 0;
+		 	let totalPrice = 0;
+		 	
+			$('input:checkbox[name="chBox[]"]').each(function() {
+				if($(this).is(":checked")==true){
+					discountRate=	$(this).attr("data-discountRate");
+					costPrice=		$(this).attr("data-costPrice");
+					salePrice=		$(this).attr("data-salePrice");
+					cnt=			$(this).attr("data-cnt");
+										
+					sum +=  (cnt*salePrice);
+					if (discountRate != 0) {
+						discountSum += (discountRate*costPrice*cnt);
+					}
+					
+					totalPrice = (sum - discountSum + deliveryFee);
+			    }
+				console.log("\n discountRate : "+ discountRate + 
 			 			"\n costPrice : "+ costPrice + 
 			 			"\n cnt : "+ cnt + 
 			 			"\n sum : "+ sum + 
 			 			"\n discountSum : "+ discountSum + 
 		 				"\n totalPrice : "+ totalPrice );
+			});
+			
+
+			console.log("\n discountRate : "+ discountRate + 
+			 			"\n costPrice : "+ costPrice + 
+			 			"\n cnt : "+ cnt + 
+			 			"\n sum : "+ sum + 
+			 			"\n discountSum : "+ discountSum + 
+		 				"\n totalPrice : "+ totalPrice );
+			
 		 	
 			$('.reload').load(location.href+' .reload');
 			console.log($(this).attr("data-cartNo"));
@@ -464,8 +494,6 @@
 			
 		} else {
 				
-			alert("체크안됨");
-			
 			$('.reload').load(location.href+' .reload');
 			console.log($(this).attr("data-cartNo"));
 		  	console.log(checked);
@@ -477,39 +505,91 @@
 	<!-- ------------------------장바구니 선택(체크) 삭제------------------------------- -->
 	<script type="text/javascript">/* 장바구니  삭제 */
 		$(".selectDelete_btn").click(function(){
-			
 			// 선택(체크)된 아이템 갯수
 			let i = $('input:checkbox[name="chBox[]"]:checked').length; 
 			
+			
 			if (i > 0) {
-				var confirm_val = confirm("정말 삭제하시겠습니까?");
 				
-				if(confirm_val) {
-					var checkArr = [];
-					$('input:checkbox[name="chBox[]"]').each(function() {
-						if($(this).is(":checked")==true){
-					    	checkArr.push($(this).attr("data-cartNo"));
-					    }
-					});
-					console.log("checkArr : " + checkArr)
-														  	    
-					$.ajax({
-						url : "/itemorder/cart/delete",
-						type : "POST",
-						data : { chbox : checkArr },
-						success : function(result){
-							if(result != 1) {          
-							   alert("삭제 실패");
-							}
-						},complete: function(){
-							location.href = "/itemorder/cart/list";
-						},error : function(){
-							alert("error : 삭제 실패");
-						}
-					});
-				}
+			var checkArr = [];
+				$('input:checkbox[name="chBox[]"]').each(function() {
+					if($(this).is(":checked")==true){
+				    	checkArr.push($(this).attr("data-cartNo"));
+				    }
+			}); console.log("checkArr : " + checkArr)
+			
+				Swal.fire({
+	         	      title: '선택된 항목을 삭제할까요?',
+	         	      text: '',
+	         	      icon: 'warning',
+	         	      showCancelButton: true,
+	         	      confirmButtonColor: '#3085d6',
+	         	      cancelButtonColor: '#d33',
+	         	      confirmButtonText: '삭제하기',
+	         	      cancelButtonText: '취소',
+	         	      reverseButtons: true, // 버튼 순서 거꾸로
+	         	    
+					
+	         	    }).then((result) =>{
+	         	    	if (result.value) { 
+	         	    		
+	         	    		const Toast = Swal.mixin({
+	         				    toast: true,
+	         				    position: 'center-center',
+	         				    showConfirmButton: false,
+	         				    timer: 2000,
+	         				    timerProgressBar: true,
+	         				    didOpen: (toast) => {
+	         				        toast.addEventListener('mouseenter', Swal.stopTimer)
+	         				        toast.addEventListener('mouseleave', Swal.resumeTimer)
+	         				    }
+	         				});
+	         													  	    
+	    					$.ajax({
+	    						url : "/itemorder/cart/delete",
+	    						type : "POST",
+	    						data : { chbox : checkArr },
+	    						success : function(result){
+	    							if(result != 1) { 
+	    								Toast.fire({
+	    									icon: 'error',
+		    							    title: '삭제 실패'
+	    								});
+	    							   alert("삭제 실패");
+	    							}
+	    						},complete: function(){
+	    							Toast.fire({
+	    							    icon: 'success',
+	    							    title: '삭제되었습니다!'
+	    							});
+	    							    location.href = "/itemorder/cart/list";
+	    							
+	    						},error : function(){
+	    							Toast.fire({
+	    							    icon: 'error',
+	    							    title: 'error : 삭제 실패'
+	    							});
+	    						}
+	    					});
+	         	    	}
+	         	  });
+				
 			} else {
-				alert("삭제 선택된 품목이 없습니다.");
+				const Toast = Swal.mixin({
+ 				    toast: true,
+ 				    position: 'center-center',
+ 				    showConfirmButton: false,
+ 				    timer: 2000,
+ 				    timerProgressBar: true,
+ 				    didOpen: (toast) => {
+ 				        toast.addEventListener('mouseenter', Swal.stopTimer)
+ 				        toast.addEventListener('mouseleave', Swal.resumeTimer)
+ 				    }
+ 				});
+				Toast.fire({
+				    icon: 'warning',
+				    title: '선택된 항목이 없어요ㅜ'
+				});
 			}
 		});
 	</script>
