@@ -48,8 +48,6 @@
 <title>마이페이지 - 메인</title>
 
 <style>
-
-
     
 .wrapper {
 	height: auto;
@@ -176,8 +174,9 @@ hr {
 }
 
 /*                         */
-.mypage_recent_pur {
-
+.mypage_recent_pur_table {
+	border-left: 5px solid white;
+	width: 100%;
 }
 
 .mypage_recent_pur_table td:nth-child(1) img {
@@ -187,29 +186,27 @@ hr {
 	border: 1px solid black;
 }
 
-.mypage_recent_pur_table td:nth-child(1),
-.mypage_recent_pur_table td:nth-child(2),
-.mypage_recent_pur_table td:nth-child(3) {
+.mypage_recent_pur_table tr {
 	height: 120px;	
 	text-align: center;	
 	vertical-align: middle;
-	
 	font-size: 14px;
 }
 
 .mypage_recent_pur_table td:nth-child(1),
 .mypage_recent_pur_table td:nth-child(3) {
-	width: 100px;
+	width: 15%;
 	font-weight: bold;
 }
 
 .mypage_recent_pur_table td:nth-child(2) {
-	width: 670px;
+	width: 70%;
 	padding: 0px 40px;
 	text-align: left;
 
 }
 .mypage_recent_pur_table tr:hover {
+	border-left: 5px solid #5c5d99;
 	background-color: #e0e0ee;	
 	cursor: pointer;
 }
@@ -217,23 +214,27 @@ hr {
 
 
 /*                   */
-.mypage_recent_qna_table td:nth-child(1), 
-.mypage_recent_qna_table td:nth-child(2),
-.mypage_recent_qna_table td:nth-child(3) {
-	width: 100px;
+
+.mypage_recent_qna_table {
+	width: 100%;
+	border-left: 5px solid white;	
+}
+
+.mypage_recent_qna_table tr {
 	height: 80px;
 	vertical-align: middle;
-	text-align: center;
-	
 	font-size: 14px;
 }
 
-.mypage_recent_qna_table td:nth-child(1) {
+.mypage_recent_qna_table td:nth-child(1), 
+.mypage_recent_qna_table td:nth-child(3) {
+	width: 15%;
+	text-align: center;	
 	font-size: 12px;
 }
 
 .mypage_recent_qna_table td:nth-child(2) {
-	width: 670px;
+	width: 70%;
 	padding: 0px 40px;
 	text-align: left;
 	 
@@ -244,10 +245,9 @@ hr {
 }
 
 .mypage_recent_qna_table tr:hover {
+	border-left: 5px solid #5c5d99;
 	background-color: #e0e0ee;	
 }
-
-
 
 .mypage_info_content_title {
 	font-size: 12px;
@@ -483,6 +483,7 @@ hr {
 						</c:when>
 						
 						<c:otherwise>
+						<div>
 							<table class="mypage_recent_qna_table">					
 								<c:forEach items="${qna}" var="qna">
 									
@@ -498,8 +499,10 @@ hr {
 										<td>${status}</td>
 									</tr>
 								</c:forEach>
-							</table>						
+							</table>	
+						</div>						
 						</c:otherwise>
+						
 					</c:choose>
 						
 				</div>							
@@ -546,15 +549,15 @@ hr {
 			       	</tr>				       	        		        
 			        <c:forEach items="${userPointHistory}" var="point" varStatus="i">
 			        	
-				        <c:set var="totalPoint"   value="${!empty point.CANCEL_DATE ? totalPoint : (totalPoint + point.SAVE_POINT + point.PRCHSCNFRM_POINT) - point.USE_POINT}"></c:set>        	
-						<c:set var="sumUsePoint"  value="${!empty point.CANCEL_DATE ? sumUsePoint : sumUsePoint + point.USE_POINT}"/>
+				        <c:set var="totalPoint"   value="${point.ORDER_STATUS == 11 || point.ORDER_STATUS == 13 ? totalPoint : (totalPoint + point.SAVE_POINT + point.PRCHSCNFRM_POINT) - point.USE_POINT}"></c:set>        	
+						<c:set var="sumUsePoint"  value="${point.ORDER_STATUS == 11 || point.ORDER_STATUS == 13 ? sumUsePoint : sumUsePoint + point.USE_POINT}"/>
 					
-						<c:set var="sumSavePoint" value="${!empty point.CANCEL_DATE ? sumSavePoint : sumSavePoint + point.SAVE_POINT}"/>
-						<c:set var="sumPrchscnfrmPoint" value="${!empty point.CANCEL_DATE ? sumPrchscnfrmPoint : sumPrchscnfrmPoint + point.PRCHSCNFRM_POINT}"/>
+						<c:set var="sumSavePoint" value="${point.ORDER_STATUS == 11 || point.ORDER_STATUS == 13 ? sumSavePoint : sumSavePoint + point.SAVE_POINT}"/>
+						<c:set var="sumPrchscnfrmPoint" value="${point.ORDER_STATUS == 11 || point.ORDER_STATUS == 13 ? sumPrchscnfrmPoint : sumPrchscnfrmPoint + point.PRCHSCNFRM_POINT}"/>
 						
-						<c:set var="cancelDecoreation" value="${!empty point.CANCEL_DATE ? 'cancelDecoreation' : ''}"/>
-						<c:set var="cancelText" value="${!empty point.CANCEL_DATE ? '취소' : ''}"/>
-						<c:set var="cancelColor" value="${!empty point.CANCEL_DATE ? 'cancelColor' : ''}"/>
+						<c:set var="cancelDecoreation" value="${point.ORDER_STATUS == 11 || point.ORDER_STATUS == 13 ? 'cancelDecoreation' : ''}"/>
+						<c:set var="cancelText" value="${point.ORDER_STATUS == 11 || point.ORDER_STATUS == 13 ? '취소' : ''}"/>
+						<c:set var="cancelColor" value="${point.ORDER_STATUS == 11 || point.ORDER_STATUS == 13 ? 'cancelColor' : ''}"/>
 			
 			        	<tr class="">
 			        		<td class="${cancelDecoreation}"><fmt:formatDate value="${point.PAY_DATE}" pattern="YY년 MM월 dd일 (E)" /></td>
@@ -641,7 +644,7 @@ hr {
 			contentType : "application/json",		
 				
 			success : function(data) {
-									
+										
 				console.log(data)
 			},
 				

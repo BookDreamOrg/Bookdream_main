@@ -6,53 +6,56 @@
 	
 	<!-- 배송DB 생성 -->
 	<insert id="insertDelivery">
-		INSERT into delivery(delivery_no,
-							 order_no
-							 )		
-			        values  (delivery_seq.nextval,
-			        	     #{order_no}
-			        	    )
+		INSERT INTO delivery(delivery_no,
+							 order_no)		
+			        
+			        VALUES  (delivery_seq.nextval,
+			        	     #{order_no})
 	</insert>
 	
 	<!-- 송장번호, 택배사 등록-->
 	<update id="updateDelivery">
-	<![CDATA[	
 		UPDATE delivery
+		
 		SET    invoice_no = #{invoice_no},
 			   courier = #{courier},
 			   start_date = sysdate,
 			   cmplt_date = sysdate + NUMTODSINTERVAL(FLOOR(DBMS_RANDOM.VALUE(2, 3) * 60), 'MINUTE')
+			   
 		WHERE  order_no = #{order_no}
-	]]>
 	</update>
 	
 	<!-- 결제완료 -> 배송중 -->
 	<update id="startDelivery">		
-	<![CDATA[	
 		UPDATE orders
+		
 		SET    order_status = 1
+		
 		WHERE  order_no = #{order_no}
-    ]]>	  
 	</update>	
 	
 	<!-- 배송중 -> 배송완료 -->
 	<update id="cmpltDelivery">
-	<![CDATA[	
 		UPDATE orders 
+		
 		SET    order_status = 2
+		
 		WHERE  order_no IN  (SELECT o.order_no
+		
 		                	 FROM   orders o, 
 		                	        delivery d
+		                	        
 		               		 WHERE  o.order_no = d.order_no AND
 		               		 		o.order_status = 1 AND
-		               		  		sysdate >= cmplt_date)
-    ]]>	 		               		   
+		               		  		sysdate >= cmplt_date)	               		   
 	</update>	
 	
 	<!-- 배송 조회 -->
 	<select id="getDelivery" resultType="HashMap">
 		SELECT *
+		
 		FROM   delivery d, orders o
+		
 		WHERE  o.order_no = #{order_no} AND
 		       o.order_no = d.order_no	
 	</select>

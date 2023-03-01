@@ -62,22 +62,6 @@ public class MypageController {
 	// 마이페이지 - 메인 
 	@RequestMapping(value="/main")
 	public String mypage(HttpServletResponse response, AddressVO address, OrderVO order, QnAVO qna, UserVO user, Model model) {
-
-		// 로그인해야 진입됨
-		if (session.getAttribute("user_no") == null) {
-			String msg = "로그인 후 이용해주세요";
-			String url ="/views/user/login.jsp";	
-		    try {
-		        response.setContentType("text/html; charset=utf-8");
-		        PrintWriter w = response.getWriter();
-		        w.write("<script>alert('"+msg+"');location.href='"+url+"';</script>");
-		        w.flush();
-		        w.close();
-		    } catch(Exception e) {
-		        e.printStackTrace();
-		    }
-					
-		}
 		
 		int user_no = (int) session.getAttribute("user_no");
 		

@@ -13,9 +13,11 @@
 			   b.title, 
 			   b.book_price, 
 			   c.product_count
+			   
 		FROM   cart c, 
 			   users u, 
 			   book b
+			   
 		WHERE  c.book_no = b.book_no AND
                u.user_no = c.user_no AND 
 			   u.user_no = ${user_no} AND
@@ -24,17 +26,20 @@
 		            ${item}
 		        </foreach>               
                )
+               
 		ORDER BY book_no	
 	</select>
 
 	<!-- 장바구니에서 선택한 상품의 개수, 총 가격, 종류  -->
 	<select id="getOrderitemCount" resultType="HashMap">
-		SELECT sum(product_count) as total_count, 
-			   count(*) as col_count, 
-			   sum(c.product_count * b.book_price) as total_price
+		SELECT SUM(product_count) AS total_count, 
+			   COUNT(*) AS col_count, 
+			   SUM(c.product_count * b.book_price) AS total_price
+			   
 		FROM   cart c, 
 			   users u, 
 			   book b
+			   
 		WHERE  c.book_no = b.book_no AND   
 			   u.user_no = c.user_no AND
 			   u.user_no = #{user_no} AND
@@ -51,8 +56,10 @@
 			   b.book_img, 
 			   b.title, 
 			   b.book_price   
+			   
 		FROM   users u, 
 			   book b
+			   
 		WHERE  u.user_no = #{user_no} AND
 			   b.book_no = #{book_no}
 	</select>
@@ -60,6 +67,7 @@
 	<!-- 구입한 상품 장바구니 제거 (장바구니만)-->
 	<delete id="deleteCartList">
 		DELETE
+		
 		FROM (select u.user_no, 
 					 c.cart_no
 	    	  from   users u, 
@@ -73,6 +81,7 @@
 			        </foreach>         	         
         	         )
         	 )      
+        	 
 		WHERE user_no = #{user_no}
 	</delete>
 	
@@ -80,18 +89,15 @@
 	<!-- 결제 후 포인트 정산 -->
 	<update id="updateUserPoint">
 		UPDATE users u
-		SET    user_point = (select (user_point - (use_point - save_point)) as user_point
-                  			 from    
-                  			 		 pay p
-                  			 where   user_no = #{user_no} AND 
-                  			 		 pay_no = #{pay_no}
-                  			 )
-		WHERE  exists (select 1 
-         		       from  
+		SET    user_point = (SELECT (user_point - (use_point - save_point)) AS user_point
+                  			 FROM    pay p
+                  			 WHERE   user_no = #{user_no} AND 
+                  			 		 pay_no = #{pay_no})
+		WHERE  EXISTS (SELECT 1 
+         		       FROM  
          		       		  pay p 
-             	       where  user_no = #{user_no} AND 
-             	       		  pay_no = #{pay_no}
-             	      ) 	
+             	       WHERE  user_no = #{user_no} AND 
+             	       		  pay_no = #{pay_no}) 	
 	</update>
 </mapper>
 

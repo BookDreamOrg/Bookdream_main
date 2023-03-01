@@ -55,6 +55,7 @@ public class OrderController {
 	    System.out.println("--->  배송상태 갱신 처리 <---");
 		orderService.updateOrderStatus(order);
 		
+		// 구매확정
 		if (order.getOrder_status() == 3) {
 		    System.out.println("--->  구매확정 포인트 적립 <---");			
 			userService.pointEarned(user);
@@ -78,7 +79,6 @@ public class OrderController {
 		// 페이지블럭 개수
 		int pageBlcok = 3;
 		
-		System.out.println("몇개니 : " + page.getDisplayPageItems());
 		// 배송중 -> 배송완료 갱신
 		deliveryService.cmpltDelivery(delivery);
 				
@@ -91,6 +91,7 @@ public class OrderController {
 		// 페이징
 		PageVO pageMaker = new PageVO(cri, cnt, pageBlcok);
 		
+		// 3개 객체를 1개의 VO에 묶어서 처리
 		OrderVO result = new OrderVO();
 		result.setPage(pageMaker);
 		result.setList(list);	
@@ -101,7 +102,7 @@ public class OrderController {
 
 	}
 
-	// 주문내역 카운트
+	// 주문상태별 누적 개수
 	@RequestMapping(value="/orderHistory") 
 	@ResponseBody
 	public List<Map<String, Object>> orderHistory(OrderVO order) {
@@ -109,6 +110,7 @@ public class OrderController {
 		int user_no = (int) session.getAttribute("user_no");
 		order.setUser_no(user_no);
 		
+		// 사용자가 조회함
 		order.setAdmin("user");
 		
 		List<Map<String, Object>> list  = orderService.orderStatusCount(order);

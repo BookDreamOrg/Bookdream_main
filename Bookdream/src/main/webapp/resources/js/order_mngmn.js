@@ -1,8 +1,20 @@
 /*  */
 $(function() {
-
-	defaultSrch()
+	
+	let loadStatus = ById('load_status').value;
 		
+	if (loadStatus == 100) {
+		ById('all').checked = true		
+	} else if (loadStatus == 0) {
+		ById('pymntCmplt').checked = true			
+	} else if (loadStatus == 10) {
+		ById('pymcnRqst').checked = true			
+	} else if (loadStatus == 12) {
+		ById('rqstRtrn').checked = true			
+	}
+
+	defaultSrch(loadStatus)	
+	
 })
 
 /* 공통 FUNCTION */
@@ -38,13 +50,13 @@ function switchCase(data) {
 }
 
 /***************************** 초기 검색 function *****************************/
-function defaultSrch() {
-	
+function defaultSrch(loadStatus = 100) {
+		
 	// 기본 값
 	let pageNum = 1
 	let srchCrtr = 'all'
 	let srchKey = ''
-	let status = 100
+	let status = loadStatus
 	let start_date = '23.01.01'
 	let end_date = '23.12.31'
 	
@@ -107,7 +119,7 @@ $(document).on("click", "label.orderclsfc_btn", function(e) {
 	console.log("status : " + status)
 	*/
 	
-	let pageNum = sessionStorage.getItem("pageNum");	
+	let pageNum = 1
 	let srchCrtr = sessionStorage.getItem("srchCrtr");	
 	let srchKey = sessionStorage.getItem("srchKey");
 	//let status = sessionStorage.getItem("status");

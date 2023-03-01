@@ -244,13 +244,13 @@
 		        nvl(sum(a.cnt), 0) cnt
 		FROM    (select to_date(order_date, 'YY-MM-DD')as order_date, 
 		               count(case when order_status between 0 and 3 AND 
-		                     to_date(order_date, 'YY-MM-DD') between to_date('220801', 'YY-MM-DD') AND 
-		                     to_date('230228', 'YY-MM-DD') then 1 end) cnt               
+		                     to_date(order_date, 'YY-MM-DD') between to_date('220901', 'YY-MM-DD') AND 
+		                     to_date('230331', 'YY-MM-DD') then 1 end) cnt               
 		        from orders
 		        group by order_date) a,      
-		        (SELECT to_date(TO_DATE('220801','YY-MM-DD') + LEVEL - 1, 'YY-MM-DD') AS dt
+		        (SELECT to_date(TO_DATE('220901','YY-MM-DD') + LEVEL - 1, 'YY-MM-DD') AS dt
 		        FROM dual 
-		        CONNECT BY LEVEL <= (TO_DATE('230228','YY-MM-DD') - TO_DATE('220801','YY-MM-DD') + 1)) b
+		        CONNECT BY LEVEL <= (TO_DATE('230331','YY-MM-DD') - TO_DATE('220901','YY-MM-DD') + 1)) b
 		WHERE b.dt = a.order_date(+) 
 		group by TO_CHAR(b.dt, 'YY-MM')
 		order by TO_CHAR(b.dt, 'YY-MM')	
@@ -263,13 +263,13 @@
 		SELECT  nvl(sum(a.cnt), 0) cnt2
 		FROM    (select to_date(cancel_date, 'YY-MM-DD')as order_date, 
 		                count(case when order_status between 10 and 13 AND 
-		                      to_date(cancel_date, 'YY-MM-DD') between to_date('220801', 'YY-MM-DD') AND 
-		                      to_date('230228', 'YY-MM-DD') then 1 end) cnt               
+		                      to_date(cancel_date, 'YY-MM-DD') between to_date('220901', 'YY-MM-DD') AND 
+		                      to_date('230331', 'YY-MM-DD') then 1 end) cnt               
 		        from orders
 		        group by cancel_date) a,      
-		        (SELECT to_date(TO_DATE('220801','YY-MM-DD') + LEVEL - 1, 'YY-MM-DD') AS dt
+		        (SELECT to_date(TO_DATE('220901','YY-MM-DD') + LEVEL - 1, 'YY-MM-DD') AS dt
 		        FROM dual 
-		        CONNECT BY LEVEL <= (TO_DATE('230228','YY-MM-DD') - TO_DATE('220801','YY-MM-DD') + 1)) b
+		        CONNECT BY LEVEL <= (TO_DATE('230331','YY-MM-DD') - TO_DATE('220901','YY-MM-DD') + 1)) b
 		WHERE b.dt = a.order_date(+) 
 		group by TO_CHAR(b.dt, 'YY-MM')
 		order by TO_CHAR(b.dt, 'YY-MM')	

@@ -179,7 +179,8 @@
 		       use_point, 
 		       pay_date, 
 		       cancel_date,
-		       prchsCnfrm_date,        
+		       prchsCnfrm_date,
+		       order_status,        
 		       CASE WHEN o.prchsCnfrm_date IS NOT NULL THEN 1000 ELSE NULL END AS prchsCnfrm_point		
 		FROM   pay y, users u, orders o
 		WHERE  u.user_no = #{user_no} 

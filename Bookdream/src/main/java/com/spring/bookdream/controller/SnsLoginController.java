@@ -80,6 +80,9 @@ public class SnsLoginController {
 				System.out.println(user.getUser_name() + " 님 반갑습니다.");
 				model.addAttribute("result", user.getUser_name() + " 님 반갑습니다.");
 				session.setAttribute("authUser", user);
+				
+				session.setAttribute("user_id", user.getUser_id());
+				session.setAttribute("user_no", user.getUser_no());			
 			}
 			
 			return "redirect:/views/main/main.jsp";
