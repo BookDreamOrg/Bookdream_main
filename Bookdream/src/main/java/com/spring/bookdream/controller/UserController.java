@@ -1,7 +1,9 @@
 package com.spring.bookdream.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +30,23 @@ public class UserController {
 	private HttpSession session;
 	//회원가입
 	@RequestMapping(value="/insertUser.do")
-	public String insertUser(UserVO userVO, UserDAO userDAO) throws IOException {
+	public String insertUser(UserVO userVO, UserDAO userDAO, HttpServletResponse response) throws IOException {
 		System.out.println("회원가입 처리 ");
 		
+		String id = userVO.getUser_id();
+		String pw = userVO.getUser_password();
+		String name = userVO.getUser_name();
+		String email = userVO.getUser_email();
+		String email2 = userVO.getUser_email2();
+		
+		if(id == "" || pw == "" || name == "" || email == "" || email2 == "") {
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter w = response.getWriter();
+			w.write("<script>alert('빈칸이 있어요!');location.href='/views/user/join.jsp\'</script>");
+			w.flush();
+			w.close();
+			return "/user/join";
+		}
 		
 		userService.insertUser(userVO);
 		return "/user/login"; 
@@ -41,6 +57,9 @@ public class UserController {
 	@ResponseBody
 	public int idCheck(@RequestParam("id") String id) {
 		System.out.println("idcheckController" + id);
+		if(id == null || id.equals("")) {
+			return -1;
+		}
 		int cnt = userService.idCheck(id);
 
 		

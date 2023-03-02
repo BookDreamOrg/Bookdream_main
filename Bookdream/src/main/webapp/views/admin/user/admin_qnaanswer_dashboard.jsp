@@ -27,33 +27,8 @@
     <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
     <link rel="stylesheet" href="/resources/css/styles.css" />
     <link rel="stylesheet" href="/resources/css/admin_screen.css" />
-    
-    <style type="text/css">
-    
-    	.qna-title-header{
-    		display: flex;
-    		justify-content: space-between;
-    	}
-    	
-    	.qna-Alllist{
-    		display:flex;
-    		justify-content: space-between;
-    	}
-    	.qna-dashboardList{
-    		margin: 10px;
-    	}
-    	.list-group-item-qna{
-    		font-size: 16px;
-    		font-weight: 700;
-    	}
-    	.qna-dashboardlist-name{
-    		font-size: 12px;
-    		margin-top: 3px;
-    	}
-    	.answerCheck{
-    		margin: 10px;
-    	}
-    </style>
+    <link rel="stylesheet" href="/resources/css/admin_qnadashboard.css" />
+
 <title>Admin Page</title>
 </head>
 <body class="admin_body">
