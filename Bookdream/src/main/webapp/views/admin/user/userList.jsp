@@ -194,14 +194,14 @@
 						<nav aria-label="Page navigation example">
 							<ul class="pagination justify-content-center">
 								<li class="page-item"><a class="page-link"
-									onclick="return prev()" tabindex="-1">Previous</a></li>
+									onclick="return prev()" tabindex="-1">#</a></li>
 								<c:forEach begin="1" end="${ pageNum }" var="num">
 									<input type="hidden" id="SearchUserKeyword" value="${SearchUserKeyword }">
 											<li class="page-item"><a class="page-link"
 										href="userListPage.do?num=${num }&SearchUserKeyword=${SearchUserKeyword}">${ num }</a></li>
 								</c:forEach>
 								<li class="page-item"><a class="page-link"
-									onclick="return next()">Next</a></li>
+									onclick="return next()">#</a></li>
 							</ul>
 						</nav>
 					</div>
