@@ -34,6 +34,8 @@
 <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
 <link rel="stylesheet" href="/resources/css/styles.css" />
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 </head>
 <body class="mt-3">
 
@@ -322,45 +324,68 @@ function now_buy(){
 }
 
 /* ------------------------장바구니 버튼 클릭 ----------------------------*/
-function cart(){
-   let book_no = document.getElementById("book_no").value;
-   let product_count  = document.getElementById("product_cnt").value;
-   
-   let data = {
-           book_no :  book_no,
-           product_count :product_count
-         };
-      
-   console.log(data);
-     
-   $.ajax({
-      url : "/itemorder/cart/add",
-      type : "POST",
-      data : data,
-      success : function(result){
-         
-         if(result == 1) { // 1 : 장바구니 추가 성공, 0 : 장바구니 추가 실패
-               $("#product_cnt").val(1);
-            // 카트 리스트 갯수 뱃지 recount
-            
-               let confirm_cart = confirm("장바구니에 추가되었습니다.\n>> 장바구니로 이동할꺄요?");
-               
-               if (confirm_cart) { location.href = "/itemorder/cart/list"; } 
-            
-         } else {
-            
-            let confirm_login = confirm("회원만 사용할 수 있습니다. \n>> 로그인 페이지로 이동할까요?");
-               
-               if (confirm_login) { location.replace("/views/user/login.jsp");} 
-               
-            $("#product_cnt").val(1);
-         }
-         
-      }, error : function(){
-           alert("error : 카트 담기 실패");
-          }      
-    });
-}
+
+ $("#btn_cart").click(function cart() {
+	 let book_no = document.getElementById("book_no").value;
+	 let product_count  = document.getElementById("product_cnt").value;
+	 
+	 let data = {
+	           book_no :  book_no,
+	           product_count :product_count
+	         };
+	      
+	   console.log(data);
+	     
+	   $.ajax({
+	      url : "/itemorder/cart/add",
+	      type : "POST",
+	      data : data,
+	      success : function(result){
+	         
+	         if(result == 1) { // 1 : 장바구니 추가 성공, 0 : 장바구니 추가 실패
+	         	$("#product_cnt").val(1);
+	            // 카트 리스트 갯수 뱃지 recount
+	               
+	               Swal.fire({
+	         	      title: '장바구니에 담았어요!',
+	         	      text: '장바구니로 이동할까요?',
+	         	      icon: 'success',
+	         	      showCancelButton: true,
+	         	      confirmButtonColor: '#3085d6',
+	         	      cancelButtonColor: '#d33',
+	         	      confirmButtonText: '장바구니 이동',
+	         	      cancelButtonText: '계속 쇼핑하기',
+	         	      reverseButtons: true, // 버튼 순서 거꾸로
+	         	      
+	         	    }).then((result) =>{
+	         	    	if (result.value) { location.href = "/itemorder/cart/list"; }
+	         	    });
+	         	    
+	         } else if(result == 0) {
+	        	  
+	               Swal.fire({
+	         	      title: '로그인을 해주세요',
+	         	      text: '로그인 페이지로 이동할까요?',
+	         	      icon: 'warning',
+	         	      showCancelButton: true,
+	         	      confirmButtonColor: '#3085d6',
+	         	      cancelButtonColor: '#d33',
+	         	      confirmButtonText: '로그인 하기',
+	         	      cancelButtonText: '계속 쇼핑하기',
+	         	      
+	         	    }).then((result)  =>{
+	         	    	if (result.value) { location.href = "/views/user/login.jsp"; }
+	         	    });
+	               
+	        	  $("#product_cnt").val(1);
+	         }
+	         
+	      }, error : function(){
+	           alert("error : 카트 담기 실패");
+	          }      
+	    });
+	   
+	  });
 
 
 

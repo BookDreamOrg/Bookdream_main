@@ -2,6 +2,8 @@ package com.spring.bookdream.service;
 
 import java.util.List;
 import com.spring.bookdream.vo.BookVO;
+import java.util.ArrayList;
+
 
 
 public interface BookService {
@@ -29,4 +31,13 @@ public interface BookService {
 	
 	//[어드민] 도서 등록
 	int bookRegister(BookVO vo);
+	
+	//[어드민/파일업로드] 이미지 이름으로 쓸 도서번호 (pk) 가져오기 max + 1 
+	int bookImgUploadFileName(); 
+	
+	//[어드민/체크박스] 도서 조회
+	List<BookVO> checkGetBook(ArrayList<Integer> list);
+	
+	//[어드민/체크박스] 도서 업데이트
+	void chkBookUpd(ArrayList<BookVO> voList);
 }
