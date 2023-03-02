@@ -1,0 +1,22 @@
+.qna-title-header{
+    		display: flex;
+    		justify-content: space-between;
+    	}
+    	
+    	.qna-Alllist{
+    		display:flex;
+    		justify-content: space-between;
+    	}
+    	.qna-dashboardList{
+    		margin: 10px;
+    	}
+    	.list-group-item-qna{
+    		font-size: 16px;
+    		font-weight: 700;
+    	}
+    	.qna-dashboardlist-name{
+    		font-size: 12px;
+    		margin-top: 3px;
+    	}
+    	.answerCheck{
+    		margin: 10px;

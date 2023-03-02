@@ -14,7 +14,6 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 
     <!-- CSS -->
     <link href="/resources/css/main.css" rel="stylesheet" />
-
     <!-- Bootstrap 5.0.2 -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -73,7 +72,7 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
             <div class="swiper-wrapper">
               <!-- Slides -->
               <div class="swiper-slide">
-                <a href="">
+                <a href="/getBook?book_no=988">
                   <div class="text-wrap slamdunk">
                     <h2>영감님의 영광의</h2>
                     <h2>시대는 언제였죠?</h2>
@@ -86,7 +85,7 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
                 </a>
               </div>
               <div class="swiper-slide">
-                <a href="">
+                <a href="/getBook?book_no=989">
                   <div class="text-wrap trend">
                     <h2>#2023 #계묘년</h2>
                     <h2>무엇을 준비할 것인가?</h2>
@@ -99,38 +98,50 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
                 </a>
               </div>
               <div class="swiper-slide">
-                <a href="">
+                <a href="/getBook?book_no=990">
                   <div class="text-wrap knowledge">
-                    <h2>지적대화를 위한</h2>
-                    <h2>넓고 얕은 지식</h2>
+                    <h2>나는</h2>
+                    <h2>웃지 않는 아이였다.</h2>
                   </div>
                   <img
-                    src="/resources/images/banner/banner_slamdunk.png"
-                    alt="지대넓얕"
+                    src="/resources/images/banner/banner_amond.png"
+                    alt="아몬드"
                   />
                 </a>
               </div>
               <div class="swiper-slide">
-                <a href="">
+                <a href="/getBook?book_no=992">
                   <div class="text-wrap economy">
-                    <h2>부자가 되기 위한</h2>
-                    <h2>40년짜리 플랜에 속지마라</h2>
+                    <h2>넷플릭스 영화 원작소설</h2>
+                    <h2>나는 덫에 걸렸다</h2>
                   </div>
                   <img
-                    src="/resources/images/banner/banner_slamdunk.png"
-                    alt="부의 추월 차선"
+                    src="/resources/images/banner/banner_phone.png"
+                    alt="스마트폰을 떨어트렸을 뿐인데"
                   />
                 </a>
               </div>
               <div class="swiper-slide">
-                <a href="">
+                <a href="/getBook?book_no=993">
                   <div class="text-wrap life">
-                    <h2>'니나' 처럼</h2>
-                    <h2>당당한 삶을 위하여</h2>
+                    <h2>나는 오래된 풍경처럼</h2>
+                    <h2>너를 바라보고</h2>
                   </div>
                   <img
-                    src="/resources/images/banner/banner_slamdunk.png"
-                    alt="삶의 한가운데"
+                    src="/resources/images/banner/banner_poem.png"
+                    alt="나는 오래된 거리처럼 너를 사랑하고"
+                  />
+                </a>
+              </div>
+              <div class="swiper-slide">
+                <a href="/getBook?book_no=991">
+                  <div class="text-wrap life">
+                    <h2>더 이상 고민하지 말고</h2>
+                    <h2>그냥 재미있게 살아라!</h2>
+                  </div>
+                  <img
+                    src="/resources/images/banner/banner_life.png"
+                    alt="만일 내가 인생을 다시 산다면"
                   />
                 </a>
               </div>

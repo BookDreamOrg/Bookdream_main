@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,9 +53,11 @@ public class AdminUserController {
 	public String getListPage(Model model, @RequestParam("num") int num, UserVO userVO) {
 		System.out.println("userListPage.do실행");
 		List<UserVO> userAllList = userService.getAllUserList(userVO);
-
 		int count = userAllList.size();
 		
+		for(int i=0; i<count; i++) {
+			System.out.println(userAllList.get(i));
+		}
 		// 페이지에 보이는 수(변경 가능)
 		int postNum = 5;
 		
@@ -82,7 +83,9 @@ public class AdminUserController {
 		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("SearchUserKeyword",key);
 		
-		System.out.println("userListPage.do의 키워드: " + key);
+		System.out.println("userListPage.do의 키워드: " + key);		
+		System.out.println("userListPage.do의 키워드타입: " + userVO.getSearchUserType());
+		
 		return "/admin/user/userList";
 	}
 	
@@ -104,15 +107,29 @@ public class AdminUserController {
 	
 	
 	// 검색 유저 목록 가져오기
-	@RequestMapping(value="/getSearchUserList", produces = "application/text; charset=UTF-8")
+	@RequestMapping(value="/getSearchUserList")
 	@ResponseBody	
-	public String getSearchUserList(UserVO userVO, Model model) throws ServletException, IOException {
+	public HashMap<String, String> getSearchUserList(UserVO userVO, Model model) {
 		 
 		System.out.println("getSearchUserList실행");
 		System.out.println(userVO.getSearchUserKeyword());
+		System.out.println("userListPage.do의 키워드타입: " + userVO.getSearchUserType());
+		UserVO user = new UserVO();
+		
+		String keyword = userVO.getSearchUserKeyword();
+		String type = userVO.getSearchUserType();
+		
+		user.setSearchUserKeyword(userVO.getSearchUserKeyword());
+		user.setSearchUserType(userVO.getSearchUserType());
+		System.out.println(user);
 		String key = userVO.getSearchUserKeyword();
 		
-		return key;
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("keyword", keyword);
+		map.put("type", type);
+		
+		System.out.println(map.get(keyword));
+		return map;
 	}
 	
 	// 관리자의 답변대기 리스트 가져오기
@@ -256,7 +273,7 @@ public class AdminUserController {
 		model.addAttribute("qnaAllList", qnaAllList);
 		model.addAttribute("pageNum", pageNum);
 		
-		return "admin/user/admin_qnaanswer_dashboard";
+		return "admin/admin"; 
 	}	
 }
 

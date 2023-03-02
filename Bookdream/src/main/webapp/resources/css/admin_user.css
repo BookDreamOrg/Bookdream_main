@@ -82,3 +82,11 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.form-select-user-search{
+	margin-right: 10px;
+	border-radius: 7px;	
+	font-size: 12px;
+	padding: 5px;
+	width: 170px;
+}
