@@ -70,4 +70,11 @@ public interface UserService {
 	
 	// 구매확정 포인트 적립
 	public void pointEarned(UserVO user);
+
+	
+	// 관리자 회원가입
+	public void insertAdmin(UserVO vo);
+	
+	// 관리자 로그인 아이디 체크
+	public boolean adminLoginCheck(UserVO vo, Model model);
 }

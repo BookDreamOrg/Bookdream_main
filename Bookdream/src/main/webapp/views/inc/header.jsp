@@ -106,7 +106,7 @@ margin-right:3px;
                   href="#">고객센터</a></li>
                <span class="nav-bar-line"></span>
                <li class="nav-item"><a
-                  class="nav-link header-nav-link" href="/views/admin/admin.jsp">관리자 </a></li>
+                  class="nav-link header-nav-link" href="/views/admin/login.jsp">관리자 </a></li>
             </ul>
          </div>
          <div class="row d-flex header-row  justify-content-lg-between ">
@@ -199,7 +199,7 @@ margin-right:3px;
                   href="/mypage/main">마이페이지</a></li>
                <span class="nav-bar-line"></span>
                <li class="nav-item"><a
-                  class="nav-link header-nav-link" href="/views/admin/admin.jsp" tabindex="-1"
+                  class="nav-link header-nav-link" href="/views/admin/login.jsp" tabindex="-1"
                   aria-disabled="true">관리자 </a></li>
             </ul>
          </div>

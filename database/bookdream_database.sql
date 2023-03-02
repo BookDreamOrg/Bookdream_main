@@ -47,11 +47,12 @@ create sequence user_seq increment by 1 start with 1;
 -- BookDream test 로그인 insert
 insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
    values(user_seq.nextval,'test','test','test','BD','test@test.com');
-
+-- BookDream admin 로그인 insert
+insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_LEVEL, FLATFORM_TYPE, USER_EMAIL) 
+   values(user_seq.nextval,'admin','admin','admin',1,'BD','test@test.com');
 
 insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
    values(user_seq.nextval,'sycha11','test','차승윤','BD','sycha112@naver.com');
-
 
 
 insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
@@ -357,6 +358,59 @@ drop sequence answer_seq;
 create sequence answer_seq increment by 1 start with 1;
 
 select * from answer;
+
+------------------- VISIT -------------------
+DROP TABLE VISIT;
+CREATE TABLE VISIT (V_DATE DATE NOT NULL);
+
+INSERT INTO VISIT (V_DATE) VALUES ( TO_DATE('02-25-2023','MM-DD-YYYY') );
+INSERT INTO VISIT (V_DATE) VALUES ( TO_DATE('02-26-2023','MM-DD-YYYY') );
+INSERT INTO VISIT (V_DATE) VALUES ( TO_DATE('02-24-2023','MM-DD-YYYY') );
+INSERT INTO VISIT (V_DATE) VALUES ( TO_DATE('02-23-2023','MM-DD-YYYY') );
+INSERT INTO VISIT (V_DATE) VALUES ( TO_DATE('02-22-2023','MM-DD-YYYY') );
+INSERT INTO VISIT (V_DATE) VALUES ( TO_DATE('02-21-2023','MM-DD-YYYY') );
+INSERT INTO VISIT (V_DATE) VALUES ( TO_DATE('02-20-2023','MM-DD-YYYY') );
+INSERT INTO VISIT (v_date) VALUES (SYSDATE);
+
+SELECT
+    (SELECT COUNT(*)
+    FROM VISIT
+    WHERE TO_CHAR(V_DATE, 'MM-DD-YYYY') =
+        TO_CHAR(TRUNC(sysdate,'iw')-7, 'MM-DD-YYYY'))
+    AS "MON"
+    ,(SELECT COUNT(*)
+    FROM VISIT
+    WHERE TO_CHAR(V_DATE, 'MM-DD-YYYY') =
+        TO_CHAR(TRUNC(sysdate,'iw')-6, 'MM-DD-YYYY'))
+    AS "TUE"
+    ,(SELECT COUNT(*)
+    FROM VISIT
+    WHERE TO_CHAR(V_DATE, 'MM-DD-YYYY') =
+        TO_CHAR(TRUNC(sysdate,'iw')-5, 'MM-DD-YYYY'))
+    AS "WEN"
+    ,(SELECT COUNT(*)
+    FROM VISIT
+    WHERE TO_CHAR(V_DATE, 'MM-DD-YYYY') =
+        TO_CHAR(TRUNC(sysdate,'iw')-4, 'MM-DD-YYYY'))
+    AS "TUR"
+    ,(SELECT COUNT(*)
+    FROM VISIT
+    WHERE TO_CHAR(V_DATE, 'MM-DD-YYYY') =
+        TO_CHAR(TRUNC(sysdate,'iw')-3, 'MM-DD-YYYY'))
+    AS "FRI"
+    ,(SELECT COUNT(*)
+    FROM VISIT
+    WHERE TO_CHAR(V_DATE, 'MM-DD-YYYY') =
+        TO_CHAR(TRUNC(sysdate,'iw')-2, 'MM-DD-YYYY'))
+    AS "SAT"
+    ,(SELECT COUNT(*)
+    FROM VISIT
+    WHERE TO_CHAR(V_DATE, 'MM-DD-YYYY') =
+        TO_CHAR(TRUNC(sysdate,'iw')-1, 'MM-DD-YYYY'))
+    AS "SUN"
+FROM DUAL;
+
+SELECT * FROM VISIT;
 
 rollback;
 commit;
