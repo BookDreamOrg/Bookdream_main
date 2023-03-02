@@ -87,32 +87,11 @@
 		</section>
 		<section class="calandar">
 			<div class="card">
-				<div class="card-header">일자별 요약</div>
+				<div class="card-header">유저 정보</div>
 				<div class="card-body">
 					<div class="container">
-						<nav class="nav nav-tabs" id="nav-tab" role="tablist">
-							<a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
-								href="#nav-home" role="tab" aria-controls="nav-home"
-								aria-selected="true">Home</a> <a class="nav-link"
-								id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile"
-								role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
-							<a class="nav-link disabled" id="nav-disabled-tab"
-								data-bs-toggle="tab" href="#nav-disabled" role="tab"
-								aria-controls="nav-disabled" tabindex="-1" aria-disabled="true">Disabled</a>
-						</nav>
-						<div class="tab-content" id="nav-tabContent">
-							<div class="tab-pane fade show active" id="nav-home"
-								role="tabpanel" aria-labelledby="nav-home-tab">
-								<canvas id="myChart" width="35em">
-								<p>Hello Fallback World</p>
-						</canvas>
-							</div>
-							<div class="tab-pane fade" id="nav-profile" role="tabpanel"
-								aria-labelledby="nav-profile-tab"></div>
-							<div class="tab-pane fade" id="nav-disabled" role="tabpanel"
-								aria-labelledby="nav-disabled-tab"></div>
-						</div>
-
+						<canvas id="visitChart" width="35em">
+					</canvas>
 					</div>
 				</div>
 			</div>
@@ -155,34 +134,46 @@
 	<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 	<!-- JavaScript  -->
-	<script type="text/javascript" src="/resources/js/admin_main.js"></script>
-
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 	<script>
-		const ctx = document.getElementById('myChart');
-
-		new Chart(ctx,
-				{
-					type : 'bar',
-					data : {
-						labels : [ 'Red', 'Blue', 'Yellow', 'Green', 'Purple',
-								'Orange' ],
-						datasets : [ {
-							label : '# of Votes',
-							data : [ 12, 19, 3, 5, 2, 3 ],
-							borderWidth : 1
-						} ]
-					},
-					options : {
-						scales : {
-							y : {
-								beginAtZero : true
-							}
-						}
-					}
-				});
+		$(document).ready(function() {
+			getVisitGraph();
+		})
+		
+		const visit_ctx = document.getElementById('visitChart');
+		
+		function getVisitGraph(){
+			var visitCountList = [];
+			
+			$.ajax({
+				url : "${cpath}/countVisit.do",
+				type : "GET",
+				dataType: "JSON",
+				success : function(data) {
+					visitCountList = Object.values(data[0]).reverse();
+					new Chart(visit_ctx, {
+						type : 'line',
+						data : {
+							datasets : [ {
+								label : '방문자 수',
+								data : visitCountList,
+							} ],
+							labels : [ '월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일' ]
+						},
+						options: {
+						      scales: {
+						        y: {
+						          beginAtZero: true
+						        }
+						      }
+						    }
+					});
+				},
+				error : function() {
+					alert("Graph Fail");
+				}
+			})
+		}
 	</script>
-
 </body>
 </html>

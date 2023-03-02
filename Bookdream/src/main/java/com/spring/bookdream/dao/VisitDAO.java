@@ -1,5 +1,7 @@
 package com.spring.bookdream.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -27,15 +29,10 @@ public class VisitDAO {
 		System.out.println("INSERT VISITOR 실행");
 		mybatis.insert("VisitDAO.insertVisitor", vo);
 	}
-
-	public int getTotalCount() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int getTodayCount() {
-		// TODO Auto-generated method stub
-		return 0;
+	
+	public List<VisitVO> countVisitor(VisitVO vo) {
+		System.out.println("VISIT COUNTER 실행");
+		return mybatis.selectList("VisitDAO.countVisitor", vo);
 	}
 
 }
