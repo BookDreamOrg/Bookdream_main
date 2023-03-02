@@ -3,15 +3,10 @@ $(function() {
 	load_default();
 })
 
-
-/***************************** getElementById function *****************************/
-function ById(id) {
-	return document.getElementById(id);
-}
-
 /***************************** 상단 기본배송지 표시 function *****************************/
 function load_default() {
 			
+	
 	var data = {"default_add" : "Y"}	
 			
 		$.ajax({
@@ -22,11 +17,14 @@ function load_default() {
 			contentType : "application/json",		
 				
 			success : function(result) {
-				var html = "";
+				
+				let html = ""
+				let disabled = ''
 
 				if (result == "") {
+					
 					html += `기본 배송지가 없습니다.`		
-				
+										
 				} else {
 
 					var result =  JSON.parse(result);
@@ -39,14 +37,21 @@ function load_default() {
 								}			
 					html +=			`<span> ${result.address_tel}</span>&nbsp;/&nbsp;
 									<span>${result.address_name}</span>
-									<br>[
-									<span>${result.zone_code}</span>]&nbsp;
+									<br>
+									<span>${result.zone_code}</span>&nbsp;
 									<span>${result.road_add}</span>&nbsp;
-									<span>${result.detail_add}</span>&nbsp;` 						
+									<span>${result.detail_add}</span>&nbsp;` 	
+
+					// 기본 배송지가 있어야 기본 배송지 설정 버튼이 활성화
+					ById('address_change_button').style.display = 'block'
 									
 				}
+
+			     
 				     ById('address_main').innerHTML = html;
 				     address_list();
+				     
+
 			},
 				
 			error: function(request, status, error) {
@@ -101,15 +106,15 @@ function address_list() {
 									}
 				html +=				 `<span>${result[i].address_tel}</span>&nbsp;/&nbsp; 
 								     <span>${result[i].address_name}</span>
-								     <br>[
-								     <span>${result[i].zone_code}</span>]&nbsp;
+								     <br>
+								     <span>${result[i].zone_code}</span>&nbsp;
 								     <span>${result[i].road_add}</span>&nbsp;
 								     <span>${result[i].detail_add}</span><label>
 								</td>
 								<td class="addresslist_table_col3">
-									<div><button class="btn btn-outline-primary address_update" value=${result[i].address_no}><i class="bi bi-pen"> 수정</i></button></div>`
+									<div><button class="btn btn-outline-primary address_update" value=${result[i].address_no}><i class="bi bi-pen"><span style="font-size:12px; font-weight: bold;"> 수정</span></i></button></div>`
 								if (i!=0) {
-				html +=				`<br><div><button type="button" class="btn btn-outline-primary address_delete"  value=${result[i].address_no}><i class="bi bi-trash"> 삭제</i></button></div>`
+				html +=				`<br><div><button type="button" class="btn btn-outline-primary address_delete" value=${result[i].address_no}><i class="bi bi-trash"><span style="font-size:12px; font-weight: bold;"> 삭제</span></i></button></div>`
 								}	
 				html +=			`</td>
 							</tr>
@@ -231,17 +236,26 @@ function address_insert(check) {
 	var detail_add = ById('detailAddress').value;
 	var address_no = ById('address_no').value;
 
+	let title = '유효성검사 Error'
+	let icon = 'error'
+	let text = ''	
+		
 	if (address_alias == '') {
-		alert("배송지 이름을 입력하세요.");
+		text = '배송지 이름을 입력하세요.'
+		alert(title, text, icon)
 		return false
 	} else if (address_name == '') {
-		alert("받는사람 이름을 입력하세요.");
+		text = '받는사람 이름을 입력하세요.'
+		alert(title, text, icon)
 	} else if (address_tel == '') {
-		alert("휴대폰번호를 입력하세요.");
+		text = '휴대폰번호를 입력하세요.'
+		alert(title, text, icon)
 	} else if (address_tel.length != 13) { // - 포함 13자리
-		alert("휴대폰번호 11자리 기입하세요.");
+		text = '휴대폰 번호를 -를 제외한 숫자 11자리를 입력하세요.'
+		alert(title, text, icon)
 	} else if (zone_code == '' || road_add == '' || detail_add == '') {
-		alert("주소를 입력하세요.");
+		text = '주소를 입력하세요.'
+		alert(title, text, icon)
 		
 	// 배송지 입력하기 모달에서 저장 클릭
 	} else if(check == 'insert') {
@@ -290,7 +304,9 @@ function address_insert(check) {
 							ById("default_address_check").checked = false;
 							$('#exampleModal').modal('hide');
 							
-							console.log("배송지 등록 완료");
+							let text = '배송지가 등록되었습니다.'
+							toast(text)
+							
 							load_default();
 							
 						},
@@ -339,7 +355,10 @@ function address_insert(check) {
 				ById("default_address_check").checked = false;
 				$('#exampleModal').modal('hide');
 				
-				console.log("배송지 수정 완료");
+				let text = '배송지가 수정되었습니다.'
+					
+				toast(text)
+					
 				load_default();
 				
 			},
@@ -360,7 +379,15 @@ function address_insert(check) {
 /***************************** 배송지 삭제 버튼 클릭 *****************************/
 $(document).on("click", ".address_delete", function(e) {
 	let order_no = e.currentTarget.value
-	address_delete(order_no)
+	
+	let title = '배송지 삭제'
+	let text = '배송지를 삭제하시겠습니까?'
+	let icon = 'warning'
+	let msg = '배송지가 삭제되었습니다.'
+		
+	confirmed(title, text, icon, msg, function() {
+		address_delete(order_no)
+    })	
 })	
 
 
@@ -402,7 +429,7 @@ $(document).on("click", "#address_change_button", function(e) {
 	var address_no = document.querySelector('input[name="address_radio"]:checked').value;
 
 		// 기본 배송지 설정		
-		alert("기본 배송지를 변경합니다.");
+		toast("기본 배송지를 변경합니다.");
 
 		var data = {"address_no" : address_no};
 		
@@ -416,7 +443,7 @@ $(document).on("click", "#address_change_button", function(e) {
 			contentType : "application/json",		
 			
 			success : function() {	
-				console.log("기본 배송지 변경 완료");
+
 				load_default();
 			},
 			
@@ -460,7 +487,7 @@ function execDaumPostcode() {
 					}
 
 					// 우편번호와 주소 정보를 해당 필드에 넣는다.
-					document.getElementById('zonecode').value = data.zonecode;
+					document.getElementById('zonecode').value = '[ ' + data.zonecode + ' ]';
 					document.getElementById("roadAddr").value = roadAddr;
 					// document.getElementById("jibunAddress").value = data.jibunAddress;
 
@@ -473,6 +500,9 @@ function execDaumPostcode() {
 
 					var guideTextBox = document.getElementById("guide");
 					// 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+					
+					/* 
+					 
 					if (data.autoroadAddress) {
 						var exproadAddr = data.autoroadAddress
 								+ extraroadAddr;
@@ -489,6 +519,8 @@ function execDaumPostcode() {
 						guideTextBox.innerHTML = '';
 						guideTextBox.style.display = 'none';
 					}
+					
+					*/
 
 				}
 
@@ -496,7 +528,7 @@ function execDaumPostcode() {
 			, onclose: function(state) {
 
 		        if(state === 'FORCE_CLOSE'){
-					alert("주소를 입력하지 않고 종료합니다."); 
+		    		alert('입력취소', '입력을 취소하였습니다.', 'warning')
 		        	
 		        } else if(state === 'COMPLETE_CLOSE'){
 		        	

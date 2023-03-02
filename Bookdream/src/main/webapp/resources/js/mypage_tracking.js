@@ -4,6 +4,7 @@ $(function() {
 
 })
 
+// 검색 초기값 FUCNTION
 function order_list_default() {
 	
 	// 초기 값 
@@ -16,6 +17,7 @@ function order_list_default() {
 	
 }
 
+// 검색 달력
 $(function() {
 
     let start = moment().subtract(29, 'days')
@@ -56,20 +58,6 @@ function cb(start, end) {
 	
 }
 
-
-/***************************** getElementById function *****************************/
-function ById(id) {
-	return document.getElementById(id);
-}
-
-/***************************** 날짜 형식 변경 function *****************************/
-function timestamp(date){
-    var today = new Date(date);
-    today.setHours(today.getHours() + 9);
-    return today.toISOString().replace('T', ' ').substring(0, 16); //년도~분까지 표시
-}
-
-
 /***************************** 주문 목록 표시 *****************************/
 function order_list(pageNum, status, start_date, end_date) {
 
@@ -94,9 +82,7 @@ function order_list(pageNum, status, start_date, end_date) {
 		contentType : "application/json",
 		
 		success : function(data) {
-			
-			console.log(data.list)
-			
+						
 			let html = "";
 			let paging, cnt 
 				
@@ -108,42 +94,53 @@ function order_list(pageNum, status, start_date, end_date) {
 				for (let order of data.list) {
 
 					let date = timestamp(order.ORDER_DATE)
-					let status = switchCase(order.ORDER_STATUS) 	
-					
+					let status_text = switchCase(order.ORDER_STATUS) 
+					let status = order.ORDER_STATUS
+						
 					// 결제취소신청, 결제취소는 글색상 RED
-					let red = ((order.ORDER_STATUS == 10) || (order.ORDER_STATUS == 11)) ? `style="color: red"` : ''
+					let red = ((status == 10) || (status == 11)) ? `style="color: #FF6384"` : ''
 					
 					// 반품요청, 반품완료는 글색상 BLUE	
-					let	blue = ((order.ORDER_STATUS == 12) || (order.ORDER_STATUS == 13)) ? `style="color: blue"` : ''
+					let	blue = ((status == 12) || (status == 13)) ? `style="color: #4BC0C0"` : ''
 					
-					// 배송완료는 배송완료시간 표시, 구매확정 버튼
-					let	cmplt_date = order.ORDER_STATUS == 2 ? `<br><span style="font-size: 10px; font-weight: normal;">${order.CMPLT_DATE}</span>` : ''
+					// 배송완료 : 배송완료시간 표시
+					let	cmplt_date = status == 2 ? `<br><span style="font-size: 10px; font-weight: normal;">${order.CMPLT_DATE}</span>` : ''
 						
+					// 결제완료 : 결제취소 버튼	
+					let pymntCmplt = status == 0 ? `<button type="button" class="btn btn-outline-danger btns pay_cancel"><i class="fas fa-times-circle"></i>&nbsp; 결제취소</button>` : ''
 					
-					// 배송중,,??
+					// 배송완료 : 반품요청, 구매확정 버튼
+					let cmpltDlvry = status == 2 ? `<button type="button" class="btn btn-outline-warning btns prchs_cnfrm"><i class="fas fa-check-circle"></i>&nbsp; 구매확정</button>						
+						     									<button type="button" class="btn btn-outline-success btns return_request"><i class="fas fa-undo"></i>&nbsp; 반품신청</button>` : ''
+					
+					// 취소 / 반품 중인 상품에 대해서는 배송조회 불가
+				    let dlvry_check = ((status == 10) || (status == 11) || (status == 12) || (status == 13)) ? '' : `<button type="button" class="btn btn-outline-primary btns dlvry_check" value="${order.ORDER_NO}">
+																										    			<i class="fas fa-truck"></i> 배송조회
+																											      	 </button>`
+	
 						
 					html += `<table class="trackinglist_table">
 							 	<tr>
-									<th class="trackinglist_table_th1" colspan="3">
+									<th class="trackinglist_table_th1" colspan="2">
 										<span class="trackinglist_table_title">${date} (${order.ORDER_NO})</span>
 										<br>
-										<button type="button" class="btn btn-link trackinglist_table_detail_btn" 
-												data-bs-toggle="modal" data-bs-target="#exampleModal" value="${order.ORDER_NO}">
-												상세 조회<i class="bi bi-chevron-right"></i>
+										<button type="button" class="btn btn-link trackinglist_table_detail_btn" value="${order.ORDER_NO}">
+												<i class="fas fa-search"></i> 주문상세
 										</button>
 									</th>
 									
-									<th class="trackinglist_table_th2" >`
+									<th class="trackinglist_table_th2">
 									
-									if(order.ORDER_STATUS == 0) {
-					html +=				`<button type="button" class="btn btn-outline-secondary pay_cancel cancel_btn" value="${order.ORDER_NO}">결제취소</button>`
-
-									} else if(order.ORDER_STATUS == 2) {
-					html +=				`<button type="button" class="btn btn-outline-secondary return_request cancel_btn" value="${order.ORDER_NO}">반품신청</button>`							
+									${pymntCmplt}
+									${cmpltDlvry}
+					
+									</th>
+					
+									<th class="trackinglist_table_th3">
 									
-									}
-							 	
-					html +=			`</th>
+									${dlvry_check}
+									
+							       </th>
 								</tr>
 							 	
 								<tr>
@@ -153,12 +150,12 @@ function order_list(pageNum, status, start_date, end_date) {
 											
 									<td class="trackinglist_table_col2">${order.ORDER_NAME}</td>						
 									<td class="trackinglist_table_col3">
-										${order.FINAL_PRICE} 원
+										${order.FINAL_PRICE.toLocaleString()} 원
 									</td>				
 							
-								<td class="trackinglist_table_col4" ${red} ${blue} >${status} ${cmplt_date} </td>	
-
-								</tr>							 	
+								<td class="trackinglist_table_col4" ${red} ${blue}>${status_text} ${cmplt_date} </td>	
+								</tr>							 
+								<input type="hidden" value="${order.ORDER_NO}">	
 							 </table>`
 							
 					
@@ -166,15 +163,16 @@ function order_list(pageNum, status, start_date, end_date) {
 				
 			    /* 페이징 */	
 				
+				let prevDisabled = data.page.prev == true ? '' : 'disabled'
+				let nextDisabled = data.page.next == true ? '' : 'disabled'
 				
 				paging = `<div class="text-center paging_btn">
-							<ul class="pagination justify-content-left">`
+							<ul class="pagination justify-content-left">
 							
-							if(data.page.prev) {
-				paging +=		`<li class="page-item paginate_button previous">
-									<button class="page-link paging_btn" value="${data.page.startPage-1}" ><</button>
-								</li>`							
-							}
+						  <li class="page-item paginate_button previous">
+							<button class="page-link paging_btn ${prevDisabled}" value="${data.page.startPage-1}" ><i class="fas fa-angle-left"></i></button>
+						  </li>`							
+
 							for (let i = data.page.startPage; i<=data.page.endPage; i++) {
 								let active = pageNum == i ? 'active' : ''
 				paging +=		`<li class="page-item paginate_button ${active} " >								
@@ -182,14 +180,11 @@ function order_list(pageNum, status, start_date, end_date) {
 								</li>`							 
 								 
 							}	
-							if(data.page.next) {
 				paging +=		`<li class="page-item paginate_button next">
-									<button class="page-link paging_btn" value="${data.page.endPage+1}">></button>
-								</li>`						
-							}																		
-	
-								
-				paging +=	`</ul>
+									<button class="page-link paging_btn ${nextDisabled}" value="${data.page.endPage+1}"><i class="fas fa-angle-right"></i></button>
+								</li>						
+
+						 	</ul>
 						</div>`	
 					
 				cnt = `<span style="font-size:24px; font-weight: bold; color:#3d3e66">${data.cnt}</span><span style="font-size:12px;"> 개</span>`
@@ -228,9 +223,7 @@ function orderHistory() {
 		success : function(data) {
 			
 			var num = 0
-			
-			console.log(data)
-			
+						
 			for(order of data) {
 						
 				if (order.ORDER_STATUS == 10 || order.ORDER_STATUS == 11 ||
@@ -285,10 +278,13 @@ $(document).on("click", "button.paging_btn", function(e) {
 /***************************** switch case function *****************************/
 function switchCase(data) {
 	
+	//
+	
 	switch (data) {
 	    case  0: return "결제완료"    
 	    case  1: return "배송중"	
 	    case  2: return "배송완료"
+	    case  3: return "구매확정"
 	    case 10: return "결제취소중"
 	    case 11: return "결제취소"
 	    case 12: return "반품요청중"	 
@@ -296,7 +292,6 @@ function switchCase(data) {
 	}
 
 }
-
 
 /***************************** 주문내역 : 상세조회 버튼 클릭 *****************************/
 $(document).on("click", "#order_search_btn", function(e) {
@@ -319,6 +314,8 @@ $(document).on("click", "#order_search_view_btn", function(e) {
 	
 	$('#offcanvas').offcanvas('hide')
 	
+	toast('설정한 조건으로 검색되었습니다.')
+	
 	order_list(pageNum, status, start_date, end_date)	
 	
 	
@@ -340,23 +337,44 @@ $(document).on("click", "#order_search_reset_btn", function(e) {
 	ById('order_status_select_btn').selectedIndex = 0
 	
     cb(start, end)	
-	  
+
+	toast('검색 초기화 설정')
+	
 	// 초기 검색 값
 	order_list_default()	
 })
 
-/***************************** 주문목록 : 주문상세보기 버튼 클릭 *****************************/
+/***************************** 주문상세 버튼 클릭 *****************************/
 $(document).on("click", ".trackinglist_table_detail_btn", function(e) {
-	
-	let order_no = e.currentTarget.value
+
+	// 모달 열림
+	$('#exampleModal').modal('show');	
+	$('#dlvry_check').modal('hide');	
+ 	
+    let order_no = e.currentTarget.value	
+    
 	order_detail(order_no)
 })
 
+/***************************** 배송조회 버튼 *****************************/
+$(document).on("click", "button.dlvry_check", function(e) {	
+
+	// 모달 열림
+	$('#dlvry_check').modal('show');	
+	$('#exampleModal').modal('hide');	
+		
+    let order_no = e.currentTarget.value	
+    
+    getDelivery(order_no)
+
+
+})
 
 /***************************** 주문상세보기 모달 function *****************************/
 function order_detail(order_no) {
 	
 	var data = {"order_no" : order_no}
+	
 	console.log(data)
 	
 	$.ajax({
@@ -368,8 +386,6 @@ function order_detail(order_no) {
 		
 		success : function(data) {	
 
-			console.log(data)
-			
 			let result =  JSON.parse(data);
 			let html = "";
 			
@@ -377,7 +393,9 @@ function order_detail(order_no) {
 			
 			//let cmplt_date = (result[0].ORDER_STATUS == 2 || result[0].ORDER_STATUS == 3) ? `<span style="float: right">${result[0].CMPLT_DATE}</span>` : ''
 			
-			html += `<div class="tracking_detail_main">${date} | 주문번호 (${result[0].ORDER_NO}) ${cmplt_date} </div>
+			html += `<div class="tracking_detail_main">${date} | 주문번호 (${result[0].ORDER_NO}) 
+							
+					</div>
 					 <hr>`
 			
 				
@@ -392,14 +410,20 @@ function order_detail(order_no) {
 								<td class="tracking_detail_table_col2">${order.TITLE} <br> ${order.PRODUCT_COUNT}개</td>
 								<td class="tracking_detail_table_col3">${order.BOOK_PRICE.toLocaleString()}원</td>
 								<td class="tracking_detail_table_col4">${status}</td>
-							</tr>
+							</tr>							
 						</table>`
 			}
 			
-			html += `<div class="tracking_detail_title">배송정보</div>
+			html += `<div class="tracking_detail_title">배송정보
+						<button type="button" class="btn btn-outline-primary btns dlvry_check" value="${result[0].ORDER_NO}">
+							<i class="fas fa-truck"></i> 배송조회
+						</button>					
+					</div>
+					
 					<hr>
+					
 					<div class="tracking_detail_address">
-						<div>${result[0].ORDER_RECEIVER} / ${result[0].ORDER_TEL} <br><br> ${result[0].ORDER_ADDRESS}</div>
+						<div>${result[0].ORDER_RECEIVER} / ${result[0].ORDER_TEL} <br> ${result[0].ORDER_ADDRESS}</div>
 					</div>
 					<div class="tracking_detail_title">결제정보</div>
 					<hr>	
@@ -435,57 +459,59 @@ function order_detail(order_no) {
 
 /***************************** 결제취소 버튼 클릭 *****************************/
 $(document).on("click", "button.pay_cancel", function(e) {	
-      
-	let order_no = e.currentTarget.value
+	
+    let order_no = e.target.closest("table").querySelector("input[type=hidden]").value
+    
 	let order_status = 10
 	let title = '결제취소 요청'
+	let icon = 'warning'		
 	let text = '결제취소 요청을 하시겠습니까?'
+	let msg = '반품 요청을 하였습니다.'		
 		
-	console.log(e.currentTarget.value)	
+	console.log(order_no)
 	
-	alertSwal(title, text, order_no, order_status)
+	confirmed(title, text, icon, msg, function() {
+		orderTrackingUpdate(order_no, order_status)
+    })	
 })
 
 /***************************** 반품신청 버튼 클릭 *****************************/
 $(document).on("click", "button.return_request", function(e) {	
 
-	let order_no = e.currentTarget.value
+    let order_no = e.target.closest("table").querySelector("input[type=hidden]").value
+	
 	let order_status = 12
 	let title = '반품 요청'
+	let icon = 'warning'
 	let text = '반품 요청을 하시겠습니까?'
+	let msg = '반품 요청을 하였습니다.'
 		
-	console.log(e.currentTarget.value)
+	console.log(order_no)
 	
-	alertSwal(title, text, order_no, order_status)	
+	confirmed(title, text, icon, msg, function() {
+		orderTrackingUpdate(order_no, order_status)
+    })		
+	
 })
 
-function alertSwal(title, text, order_no, order_status) {
+/***************************** 구매확정 버튼 클릭 *****************************/
+$(document).on("click", "button.prchs_cnfrm", function(e) {	
+    
+    let order_no = e.target.closest("table").querySelector("input[type=hidden]").value
+
+	let order_status = 3
+	let title = '구매 확정'
+	let icon = 'question'
+	let text = '구매확정을 하면 해당 상품은 반품이 불가합니다.'
+	let msg = '구매확정 + 1000P 적립되었습니다.'
+		
+	console.log(order_no)
 	
-    Swal.fire({
-        title: title ,
-        text: text,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#6768ab',
-        cancelButtonColor: '#d33',
-        confirmButtonText: '승인',
-        cancelButtonText: '취소',
-        reverseButtons: true, // 버튼 순서 거꾸로
-        
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire(
-            orderTrackingUpdate(order_no, order_status),  
-        	'정상처리 되었습니다.',
-            'success'
-          )
-        }
-      })
-}
-
-
-
-
+	confirmed(title, text, icon, msg, function() {
+		orderTrackingUpdate(order_no, order_status)
+    })		
+	
+})
 
 
 
@@ -525,5 +551,145 @@ function orderTrackingUpdate(order_no, status) {
 		}
 	})
 }
+
+
+
+
+/***************************** 배송조회 FUNCTION *****************************/
+function getDelivery(order_no) {
+
+	var data = { "order_no" : order_no }
+	
+	$.ajax({
+		type : "GET",                              
+		url : "/getDelivery",	
+		data : data,  
+		dataType : "text",
+		contentType : "application/json",
+	
+		success : function(result) {	
+			
+			let data =  JSON.parse(result);
+							
+			// 배송상태별 아이콘 색상
+			let status = data.ORDER_STATUS
+			
+			// 구매확정도 배송완료와 동일하게 처리
+			if (status == 3) {
+				status = 2
+			}			
+			
+			let box = iconColor(0)
+			let truck = iconColor(1)
+			let circle = iconColor(2)
+				
+			function iconColor(num) {
+				return status == num ? `style="color: #5c5d99; opacity: 1;"` : ''
+			}
+			
+			// 배송상태별 내용
+			let startDate = time(data.START_DATE)
+			let cmlitDate = time(data.CMPLT_DATE)
+			
+			let title = modalBody(status)	
+			
+			function modalBody(status) {
+
+				if (status == 1) {
+					
+					var title = '배송중</span> 입니다.'
+					var date = '도착예정시간'
+				}
+					
+				 
+				if (status == 2) {
+					
+					var title = '배송완료</span> 되었습니다.'
+					var date = '도착시간'
+						
+					status = 1
+					
+				}
+				
+				switch(status) {
+				
+				case 0: return `<div style="font-size:24px; margin-top:50px;"><span style="color:#5c5d99; font-weight: bold;">상품 준비중</span> 입니다.</div> <br> 
+							    빠른 시간내에 상품을 준비할수 있도록 하겠습니다. <br> 
+							    고객님들의 양해 부탁드립니다. 감사합니다.`
+						break;
+				
+				case 1: return `고객님의 주문하신 상품이 <span style="font-size:20px; color:#5c5d99; font-weight: bold;"> ${title}
+								<table class="dlvry_info_table">
+									<tr>
+										<th>주문번호</td>
+										<td>
+											${data.ORDER_NO}
+											<button type="button" style="float:right; margin-right:10px;" class="btn btn-outline-primary btns trackinglist_table_detail_btn" data-bs-dismiss="modal" value="${data.ORDER_NO}">
+												<i class="fas fa-search"></i> 주문상세
+											</button>											
+										</td>
+										
+										<th>송장번호</th>
+										<td>${data.INVOICE_NO}</td>
+									</tr>
+									
+									<tr>
+										<th>배송번호</td>
+										<td>${data.DELIVERY_NO}</td>
+										<th>택배사</th>
+										<td>${data.COURIER}</td>
+									</tr>
+									
+									<tr>
+										<th>출발시간</td>
+										<td>${startDate}</td>
+										<th>${date}</th>
+										<td style="color:#5c5d99; font-weight:bold;">${cmlitDate}</td>
+									</tr>
+								</table>`
+						break;
+			
+				}	
+			}
+				
+			let html = `<div class="dlvry_icon_box">
+					    	<div class="dlvry_icon_text">
+					    		<i class="bi bi-box dlvry_icon" ${box}></i>
+					   			<span ${box}>상품준비중</span>
+							</div>
+					  
+					  		<div class="dlvry_icon_text">
+					    		<i class="bi bi-truck dlvry_icon" ${truck}></i>
+					    		<span ${truck}>배송중</span>
+						  	</div>
+						  
+					  		<div class="dlvry_icon_text">
+					    		<i class="bi bi-check2-circle dlvry_icon" ${circle}></i>
+					    		<span ${circle}>배송완료</span>
+					  		</div>
+						</div>
+				
+						<div class="dlvry_content">
+							
+							<div style="text-align: center; width:80%; height:100%;">
+								${title}
+								
+
+								
+							</div>
+						</div>`
+				
+				ById('dlvry_check_body').innerHTML = html
+	
+		},
+	
+		error: function(request, status, error) {
+			console.log("code: " + request.status)
+			console.log("message: " + request.responseText)
+			console.log("error: " + error);
+		}
+	})
+}
+
 
 

@@ -121,11 +121,15 @@ CREATE TABLE orders(
     order_receiver      varchar2(20)   not null,
     order_address       varchar2(100)  not null,
     order_tel           varchar2(40)   not null,
-    order_status        number(10)     default 0 not null
+    order_status        number(10)     default 0 not null,
+    cancel_date         data           DEFAULT '',
+    prchsCnfrm_date     data           DEFAULT ''   
 );
 -- 02-15 추가
 alter table orders add cancel_date  date DEFAULT '';
-
+-- 02-27 추가
+alter table orders add prchsCnfrm_date date DEFAULT '';
+COMMIT;
 -- orders table fk user_no casecade
 alter table orders drop constraint SYS_C007481;
 alter table orders add constraint fk_orders_user_no foreign key (user_no) references users (user_no) on delete cascade;
@@ -216,7 +220,6 @@ create table BOOK (
 select * from BOOK;
 select count(*) from BOOK;
 commit;
-
 
 --------------------------------------------------------------------
 -------------------------- CART ------------------------------------

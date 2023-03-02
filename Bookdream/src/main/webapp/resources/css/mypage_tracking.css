@@ -82,9 +82,9 @@
 	font-weight: 900;
 }
 
-.pay_cancel, .return_request {
+.btns {
 	font-size: 10px;
-	text-decoration-line: none; 
+	text-decoration-line: none; 	
 }
 
 /* */
@@ -165,22 +165,23 @@
 	margin:50px 0px;
 	width: 100%;
 	font-size: 14px;
-	border: 1px solid #DFDFDF;
+	border-top: 2px dotted #DFDFDF;
+	border-bottom: 2px dotted #DFDFDF;
 }
 
 .trackinglist_table_th1 {
-	width: 800px;
+	width: 70%;
 	height: 100px;
 	padding-left: 35px;	
 	vertical-align: middle;
-	border-bottom: 1px solid #DFDFDF;		
+	border-bottom: 1px dotted #DFDFDF;		
 }
 
-.trackinglist_table_th2 {
-	width: 150px;
+.trackinglist_table_th2, .trackinglist_table_th3{
+	width: 15%;
 	text-align: center;
 	vertical-align: middle;	
-	border-bottom: 1px solid #DFDFDF;	
+	border-bottom: 1px dotted #DFDFDF;	
 }
 
 
@@ -204,14 +205,14 @@
 }
 
 .trackinglist_table_col1, .trackinglist_table_col3, .trackinglist_table_col4 {
-	width: 150px;
+	width: 15%;
 	height: 150px;
 	vertical-align: middle;
 	text-align: center;
 }
 
 .trackinglist_table_col2 {
-	width: 500px;
+	width: 55%;
 	max-width:500px;
 	height: 150px;
 	vertical-align: middle;
@@ -312,9 +313,77 @@
 	opacity: 0.5;
 }
 
-
-
 .button-left {
 	float: left;
 }
 
+
+/* 배송조회 */
+.dlvry_check_modal {
+	height: 600px;
+	padding: 30px;
+}
+
+.dlvry_icon_box {
+	display: flex;
+	height: 35%;	
+	justify-content: center;
+	align-items: center;	
+	margin-top: 30px;
+
+}
+
+.dlvry_icon_text {
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0px 50px;
+}
+
+.dlvry_icon_text span {
+	margin-top: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    opacity: 0.4;
+}
+
+
+.dlvry_icon {
+	opacity: 0.1;
+	font-size: 100px;
+	
+}
+
+.dlvry_content {
+	display: flex;
+	height: 50%;
+	justify-content: center;
+	align-items: center;		
+	margin-top: 30px;
+
+}
+
+.dlvry_info_table {
+	width: 100%;
+	height: 70%;
+	margin: auto;
+	margin-top: 30px;
+	text-align:left;	
+	font-size: 12px;	
+
+}
+
+.dlvry_info_table th {
+	padding-left: 10px;
+	vertical-align:middle;
+	font-weight: bold;
+	width: 18%;
+}
+
+.dlvry_info_table td {
+	padding-left: 10px;	
+	vertical-align: middle;	
+	width: 32%;
+}

@@ -21,7 +21,7 @@
 				
 			}
 		}, error : function(){
-			alert("error : 카트 담기 실패");
+			console.log("error : 카트 담기 실패");
 			
 		},complete: function(){
 			$('.reload').load(location.href+' .reload');

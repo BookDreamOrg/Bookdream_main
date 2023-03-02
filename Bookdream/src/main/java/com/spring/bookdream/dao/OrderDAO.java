@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.bookdream.vo.OrderVO;
+import com.spring.bookdream.vo.SearchCriteria;
 
 @Repository
 public class OrderDAO {
@@ -23,26 +24,26 @@ public class OrderDAO {
 	}
 
 	// 마이페이지 : 주문 조회
-	public List<Map<String, Object>> searchOrder(OrderVO vo) {
+	public List<Map<String, Object>> searchOrder(SearchCriteria cri ) {
 		
 		System.out.println("---> OrderDAO searchOrder 실행 <---");
-		return mybatis.selectList("OrderDAO.searchOrder", vo);	
+		return mybatis.selectList("OrderDAO.searchOrder", cri);	
 		
 	}
 
 	// 마이페이지 : 주문 조회 개수
-	public int searchOrderCount(OrderVO vo) {
+	public int searchOrderCount(SearchCriteria cri) {
 
-		return mybatis.selectOne("OrderDAO.searchOrderCount", vo);	
+		return mybatis.selectOne("OrderDAO.searchOrderCount", cri);	
 
 	}
 	
-	// 결제 취소, 반품요청
-	public void cancelOrder(OrderVO vo) {
+	// 구매확정, 결제취소, 반품 요청시 상태 변경
+	public void updateOrderStatus(OrderVO vo) {
 		
-		System.out.println("---> OrderDAO cancelOrder 실행 <---");
+		System.out.println("---> OrderDAO updateOrderStatus 실행 <---");
 		
-		mybatis.update("OrderDAO.cancelOrder", vo);
+		mybatis.update("OrderDAO.updateOrderStatus", vo);
 		
 	}
 	
@@ -118,15 +119,15 @@ public class OrderDAO {
 	}
 
 	// 주문 총 관리 리스트
-	public List<Map<String, Object>> orderMngmn(OrderVO vo) {
+	public List<Map<String, Object>> orderMngmn(SearchCriteria cri) {
 
-		return mybatis.selectList("OrderDAO.orderMngmn", vo);
+		return mybatis.selectList("OrderDAO.orderMngmn", cri);
 	}
 
 	// 주문 총 관리 카운트
-	public int orderMngmnCount(OrderVO vo) {
+	public int orderMngmnCount(SearchCriteria cri) {
 
-		return mybatis.selectOne("OrderDAO.orderMngmnCount", vo);
+		return mybatis.selectOne("OrderDAO.orderMngmnCount", cri);
 	}
 
 	// 주문 총 관리 세부내역

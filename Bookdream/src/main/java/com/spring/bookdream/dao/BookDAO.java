@@ -1,5 +1,6 @@
 package com.spring.bookdream.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -84,5 +85,23 @@ public class BookDAO {
 		public int bookRegister(BookVO vo) {
 			System.out.println("---> JDBC로 bookRegister() 처리");
 			return mybatis.insert("BookDAO.bookRegister", vo);
+		}
+		
+		//[어드민/이미지 업로드] 이미지 이름 가져오기
+		public int bookImgName() {
+			System.out.println("---> JDBC로 bookImgName() 처리");
+			return mybatis.selectOne("BookDAO.bookImgName");
+		}
+		
+		//[어드민/체크박스/모달] 체크한 도서 리스트 가져오기
+		public List<BookVO> checkGetBook(ArrayList<Integer> list){
+			System.out.println("---> JDBC로 checkGetBook() 처리");
+			return mybatis.selectList("BookDAO.checkGetBook",list);
+		}
+		
+		//[어드민/모달] checkGetBook()에서 가져온 도서 정보 일괄 업데이트
+		public void chkBookUpd(ArrayList<BookVO> voList) {
+			System.out.println("---> JDBC로 chkBookUpd() 처리");
+			mybatis.update("BookDAO.chkBookUpd", voList);
 		}
 }

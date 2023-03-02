@@ -20,13 +20,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.spring.bookdream.service.AddressService;
 import com.spring.bookdream.service.OrderService;
 import com.spring.bookdream.service.QnAService;
+import com.spring.bookdream.service.ReviewService;
 import com.spring.bookdream.service.SearchKeywordService;
 import com.spring.bookdream.service.UserService;
 import com.spring.bookdream.vo.AddressVO;
 import com.spring.bookdream.vo.AnswerVO;
 import com.spring.bookdream.vo.KeywordHistoryVO;
 import com.spring.bookdream.vo.OrderVO;
+import com.spring.bookdream.vo.PageVO;
 import com.spring.bookdream.vo.QnAVO;
+import com.spring.bookdream.vo.ReviewVO;
 import com.spring.bookdream.vo.SearchCriteria;
 import com.spring.bookdream.vo.UserVO;
 
@@ -47,6 +50,9 @@ public class MypageController {
 	private SearchKeywordService keywordService;
 	
 	@Autowired
+	private ReviewService reviewService;
+	
+	@Autowired
 	private QnAService qnaService;
 	
 	@Autowired
@@ -56,22 +62,6 @@ public class MypageController {
 	// 마이페이지 - 메인 
 	@RequestMapping(value="/main")
 	public String mypage(HttpServletResponse response, AddressVO address, OrderVO order, QnAVO qna, UserVO user, Model model) {
-
-		// 로그인해야 진입됨
-		if (session.getAttribute("user_no") == null) {
-			String msg = "로그인 후 이용해주세요";
-			String url ="/views/user/login.jsp";	
-		    try {
-		        response.setContentType("text/html; charset=utf-8");
-		        PrintWriter w = response.getWriter();
-		        w.write("<script>alert('"+msg+"');location.href='"+url+"';</script>");
-		        w.flush();
-		        w.close();
-		    } catch(Exception e) {
-		        e.printStackTrace();
-		    }
-					
-		}
 		
 		int user_no = (int) session.getAttribute("user_no");
 		
@@ -81,6 +71,7 @@ public class MypageController {
 		qna.setUser_no(user_no);
 		user.setUser_no(user_no);
 		
+		model.addAttribute("userPointHistory", userService.userPointHistory(user));
 		model.addAttribute("userPoint", userService.userPoint(user));
 		model.addAttribute("address", addressService.getDefaultAddress(address));
 		model.addAttribute("order", orderService.recentOrder(order));		
@@ -95,6 +86,8 @@ public class MypageController {
 				answerCnt++;
 			}
 		}
+		
+		System.out.println("answerCnt : " + answerCnt);
 		model.addAttribute("answerCnt", answerCnt);
 		return "mypage/mypage";
 				
@@ -113,7 +106,20 @@ public class MypageController {
 		return list;
 				
 	}		
-	
+
+	// 마이페이지 메인 : 포인트사용현황
+	@RequestMapping(value="/userPointHistory")
+	@ResponseBody	
+	public List<Map<String, Object>> userPointHistory(UserVO user) {
+
+		int user_no = (int) session.getAttribute("user_no");
+		user.setUser_no(user_no);
+		
+		List<Map<String, Object>> list = userService.userPointHistory(user);
+		
+		return list;
+				
+	}		
 
 	// 마이페이지 - 주문목록 조회 (간단)
 	@RequestMapping(value="/tracking")
@@ -164,7 +170,63 @@ public class MypageController {
 			
 	}
 		
+	// 마이페이지(내가작성한 리뷰)
+	@RequestMapping(value="/review")
+	public String mypageReview(HttpServletResponse response) {
+
+		// 로그인해야 진입됨
+		if (session.getAttribute("user_no") == null) {
+			String msg = "로그인 후 이용해주세요";
+			String url ="/views/user/login.jsp";	
+		    try {
+		        response.setContentType("text/html; charset=utf-8");
+		        PrintWriter w = response.getWriter();
+		        w.write("<script>alert('"+msg+"');location.href='"+url+"';</script>");
+		        w.flush();
+		        w.close();
+		    } catch(Exception e) {
+		        e.printStackTrace();
+		    }
+					
+		}
+					
+		return "mypage/myReview";
+			
+	}	
 	
+	// 작성한 리뷰 리스트 및 리뷰개수, 총 추천수, 평균 별점
+	@RequestMapping(value="/reviewList")
+	@ResponseBody
+	public ReviewVO reviewList(SearchCriteria cri) {
+
+		String user_id = (String) session.getAttribute("user_id");
+		cri.setUser_id(user_id);
+		
+		// 한 페이지의 표시 개수
+		cri.setAmount(3);	
+		
+		// 페이지 블록의 개수
+		int pageBlcok = 3;		
+		
+		// 리뷰 목록
+		List<Map<String, Object>> list = reviewService.myReview(cri);
+		
+		// 리뷰개수, 추천수, 평균 별점
+		Map<String, Object> cnt = reviewService.myReviewCount(cri);		
+
+		// 리뷰개수 추출
+		int count = Integer.parseInt(String.valueOf(cnt.get("CNT")));	
+			
+		PageVO pageMaker = new PageVO(cri, count, pageBlcok);		
+				
+		ReviewVO result = new ReviewVO();
+		result.setList(list);
+		result.setCnt(cnt);
+		result.setPage(pageMaker);
+		
+		return result;
+			
+	}		
 	
 	
 	//회원정보 수정

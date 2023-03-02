@@ -1,5 +1,7 @@
 @charset "utf-8";
 
+
+
 #paging{
 	display : table;
 	margin-bottom: 10px;
@@ -10,6 +12,24 @@
 	margin: 0;
 	justify-content: center;
 	
+}
+
+.btn.btn-outline-primary{
+	--bs-btn-color: var(--main-color-shadow2);
+    --bs-btn-border-color: var(--main-color-shadow2);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--main-color-shadow2);
+    --bs-btn-hover-border-color: var(--main-color-shadow2);
+    --bs-btn-focus-shadow-rgb: 13,110,253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--main-color-shadow2);
+    --bs-btn-active-border-color: var(--main-color-shadow2);
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: var(--main-color-shadow2);
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: var(--main-color-shadow2);
+    --bs-gradient: none;
+	margin-right: 7em;
 }
 
 .modal-header {
@@ -29,6 +49,23 @@ div.col-md-2{
 	font-weight: 800;
 }
 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input{
+	width : 15em;
+	padding: 7px;
+	border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+}
+
+#search{
+	align-self:center;
+	line-height: inherit;
+}
 
 #book_list_section{
 border:1px solid gray;
@@ -38,25 +75,44 @@ border:1px solid gray;
 background-color : var(--main-color-tint2);
 color: 	white;
 font: bold;
+border-radius: 0;
+
 }
 
-#bookList ul {
+
+#modal_title ul li{
+border-bottom: 1px solid #ced4da;
+border-top : 1px solid #ced4da;
+font: bold;
+color: var(--main-color-shadow2);
+background-color: white;
+border-radius: 0;
+
+	
+}
+#bookList ul #result_modal ul{
 float:left;
 text-align:center;
 align-items: center;
 height: auto;
 background-color: #F7F7FA;
-border-bottom: 1px solid gray;
+border-bottom: 1px solid #ced4da;
 border-radius: 0;
  
 }
- #bookList li{
+
+
+
+ #bookList li, div.modal-body li{
 float:left;
 text-align:center;
 height: auto;
 vertical-align:middle;
 background-color: #F7F7FA;
 color: black;
+border-bottom: 1px solid #ced4da;
+border-radius: 0;
+
 }
  
  
@@ -75,20 +131,18 @@ font-weight: 800;
 	font: bold;
 }
 
-#count{
-width: 3em;	
-}
-#bookNo,#check,#sale_rate {
+
+#check,#sale_rate {
 width: 4em;
 }
 
 #book_title {
-width: 25em;
+width: 35em;
 }
 #book_author{
 width:15em;
 }
-#category {
+#category, #bookNo {
 width: 7em;
 }
 
@@ -100,5 +154,24 @@ width: 6em;
 width: 7em;
 }
 
+#delete_btn{
+	margin-top: 20px;
+}
 
 
+#modal_bookNo,#modal_sale_rate,#modal_stock,#modal_org_price{
+	width: 5em;
+}
+#modal_book_img{
+	width: 10em;
+}
+#modal_book_author{
+ width: 10em;	
+}
+#modal_book_title{
+	width: 25em;
+}
+
+#li_book_img{
+	width: 7em;
+}

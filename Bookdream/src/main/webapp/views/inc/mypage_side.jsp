@@ -106,7 +106,7 @@
 				<li class="side_text_center"><div><a href="/mypage/main">${authUser.getUser_name() }</a>님 환영합니다</div></li>
 				<li class="side_text_title">나의 정보</li>
 				<li class="side_text_content"><h1><a href="/mypage/edit">회원정보 관리</a></h1></li>
-				<li class=side_text_content><h1><a href="">내가 작성한 리뷰</a></h1></li>
+				<li class=side_text_content><h1><a href="/mypage/review">내가 작성한 리뷰</a></h1></li>
 				<li class="side_text_title">주문 정보</li>
 				<li class="side_text_content" style=""><div><a href="/mypage/address">배송지 관리</a></div></li>
 				<li class="side_text_content"><div><a href="/mypage/tracking">구매내역 / 배송조회</a></div></li>

@@ -40,12 +40,12 @@ public class OrderitemController {
 	@Autowired
 	private HttpSession session;	
 	
-	// 장바구니
+	// 장바구니 - > 결제
 	@RequestMapping(value="/orderitem")
 	public String orderitemList(@RequestParam(value="chBox[]") List<Integer> arrCart, 
 								OrderitemVO orderitem, PayVO pay, UserVO user,
 								Model model, HttpServletResponse response, PurchaseVO purchase) {
-		
+				
 		// 로그인해야 진입됨
 		if (session.getAttribute("user_no") == null) {
 			String msg = "로그인 후 이용해주세요";
