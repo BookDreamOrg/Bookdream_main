@@ -176,11 +176,11 @@
 		</div>	
 
 <!----------------------------------------- 상세조회 모달 -------------------------------------->
-	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" aria-hidden="true">
   		<div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
    			<div class="modal-content tracking_detail">
       			<div class="modal-header">
-       		 		<h5 class="modal-title" id="exampleModalLabel">	상세 조회</h5>
+       		 		<h5 class="modal-title" id="exampleModalToggleLabel">	상세조회</h5>
        		 		<button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close"></button>
      		 	</div>
       		
@@ -192,11 +192,33 @@
   		</div>
 	</div>
 	
+	
+<!----------------------------------------- 배송조회 모달 -------------------------------------->
+	<div class="modal fade" id="dlvry_check" tabindex="-1" aria-hidden="true" aria-labelledby="exampleModalToggleLabe2" aria-hidden="true">
+  		<div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
+   			<div class="modal-content dlvry_check_modal">
+      			<div class="modal-header">
+       		 		<h5 class="modal-title" id="exampleModalToggleLabe2">	배송조회</h5>
+       		 		<button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close"></button>
+     		 	</div>
+      		
+      			<div class="modal-body" id="dlvry_check_body" >
+      			</div>
+
+    		</div>
+  		</div>
+	</div>	
+	
+	
+	
+	
+	
 	</div>
 			
 	<jsp:include page="/views/inc/footer.jsp" />
 	</div>
 	
+	<script type="text/javascript" src="/resources/js/commonFunction.js"></script>
 	<script type="text/javascript" src="/resources/js/mypage_tracking.js"></script>
 	
 

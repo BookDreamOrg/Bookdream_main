@@ -65,6 +65,17 @@ font-weight:bold;
 margin-right:3px;
 }
 
+/* 스크롤바 스타일 변경 */
+::-webkit-scrollbar {
+	width: 10px;
+    height: 10px;
+}
+    
+::-webkit-scrollbar-thumb {
+	background-color: #c2c2dd;
+    border-radius: 10px;
+    border: 3px solid #c2c2dd;
+}
 
 </style>
 
@@ -117,7 +128,7 @@ margin-right:3px;
                   <i class="fa-solid fa-cart-shopping"></i>
                </button>
                <button type="button" class="header-btn btn-circle border-0"
-                  			onclick="location.href='/detail/cart/orderitem'">
+                  			onclick="location.href='/mypage/main'">
                      <i class="fa-solid fa-user"></i>
                 </button>
             </div>
@@ -217,7 +228,7 @@ margin-right:3px;
                <input id="user_no" value="${user.user_no}" type="hidden">
                </button>
                   <button type="button" class="header-btn btn-circle border-0"
-                  			onclick="location.href='/detail/cart/orderitem'">
+                  			onclick="location.href='/mypage/main'">
                      <i class="fa-solid fa-user"></i>
                   </button>
             </div>

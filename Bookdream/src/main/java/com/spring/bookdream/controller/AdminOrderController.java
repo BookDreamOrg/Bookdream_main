@@ -5,8 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,16 +52,24 @@ public class AdminOrderController {
 	
 	// 주문관리 페이지 이동
 	@RequestMapping(value="/orderMngmn")
-	public String orderMngmn() {
+	public String orderMngmn(OrderVO order, Model model, HttpServletRequest request) {
 
+		int status = 100;
+		
+		String statusParam = request.getParameter("status");
+		
+		if (statusParam != null) {
+			status = Integer.parseInt(statusParam);			
+		}
+		
+		// 대시보드에서 누른 링크에 따라 표시되는 첫 페이지가 다르게 설정됨
+		model.addAttribute("status", status);		
+				
 		return "/admin/order_mngmn";
 		
 	}		
 	
-	/*********************************************************/
-	/********************  주문현황 페이지시작  *******************/	
-	/*********************************************************/
-	
+	// 모든 사용자의 배송상태별 개수
 	@RequestMapping(value="/orderStatusCount")
 	@ResponseBody
 	public List<Map<String, Object>> orderStatusCount(OrderVO order, DeliveryVO delivery) {
@@ -66,33 +77,37 @@ public class AdminOrderController {
 		// 배송중 -> 배송완료 갱신
 		deliveryService.cmpltDelivery(delivery);		
 		
+		// 관리자가 조회
 		order.setAdmin("admin");	
+		
 		List<Map<String, Object>> cnt = orderService.orderStatusCount(order);
 		return cnt;
 		
 		}	
 	
-	// 주간 주문 카운트
+	// 주간 주문 개수
 	@RequestMapping(value="/wekOrder")
 	@ResponseBody
 	public List<Map<String, Object>> orderWekDateCount(OrderVO order) {
 		
+		// 주간 주문, 주간 취소 개수를 각각 구한 후 새로운 Map 합치는 과정
 		List<Map<String, Object>> dt = orderService.orderDateCount(order);
 		List<Map<String, Object>> cdt = orderService.orderCancelDateCount(order);
 		
+		// List 초기화
 		List<Map<String, Object>> combinedList = new ArrayList<>();
 		
-		// 두 리스트 중 작은 크기만큼 순회하면서 같은 인덱스에 있는 Map을 합칩니다.
+		// 두 리스트 중 작은 크기만큼 순회하면서 같은 인덱스에 있는 Map을 합침
 		int minSize = Math.min(dt.size(), cdt.size());
 		for (int i = 0; i < minSize; i++) {
 		    Map<String, Object> map1 = dt.get(i);
 		    Map<String, Object> map2 = cdt.get(i);
 
-		    // 두 Map을 합쳐서 새로운 Map을 만듭니다.
+		    // 두 Map을 합쳐서 새로운 Map을 만듬
 		    Map<String, Object> combinedMap = new HashMap<>(map1);
 		    combinedMap.putAll(map2);
 
-		    // 합쳐진 Map을 결과 리스트에 추가합니다.
+		    // 합쳐진 Map을 결과 리스트에 추가함
 		    combinedList.add(combinedMap);
 		}
 		
@@ -100,27 +115,25 @@ public class AdminOrderController {
 		
 		}
 	
-	// 월간 주문 카운트
+	// 월간 주문 개수
 	@RequestMapping(value="/mlyOrder")
 	@ResponseBody
 	public List<Map<String, Object>> orderMlyDateCount(OrderVO order) {
 		
+		// 위와 동일
 		List<Map<String, Object>> dt = orderService.orderMlyDateCount(order);
 		List<Map<String, Object>> cdt = orderService.orderMlyCancelDateCount(order);
 
 		List<Map<String, Object>> combinedList = new ArrayList<>();
 		
-		// 두 리스트 중 작은 크기만큼 순회하면서 같은 인덱스에 있는 Map을 합칩니다.
 		int minSize = Math.min(dt.size(), cdt.size());
 		for (int i = 0; i < minSize; i++) {
 		    Map<String, Object> map1 = dt.get(i);
 		    Map<String, Object> map2 = cdt.get(i);
 
-		    // 두 Map을 합쳐서 새로운 Map을 만듭니다.
 		    Map<String, Object> combinedMap = new HashMap<>(map1);
 		    combinedMap.putAll(map2);
 
-		    // 합쳐진 Map을 결과 리스트에 추가합니다.
 		    combinedList.add(combinedMap);
 		}
 		
@@ -184,10 +197,6 @@ public class AdminOrderController {
 	}	
 	
 	
-	/*********************************************************/
-	/********************  주문관리 페이지시작  *******************/	
-	/*********************************************************/
-
 	// 취소/반품 승인
 	@RequestMapping(value="/orderAprvl")
 	@ResponseBody
@@ -211,32 +220,22 @@ public class AdminOrderController {
 	// 주문 총 관리 페이지
 	@RequestMapping(value="/mngmn")
 	@ResponseBody
-	public OrderVO orderMngmn(@RequestParam("pageNum")  int pageNum, 
-							  @RequestParam("srchCrtr") String srchCrtr, 
-							  @RequestParam("srchKey")  String srchKey, 
-							  @RequestParam("order_status") int orderStatus,
-							  OrderVO order, SearchCriteria cri,
-							  DeliveryVO delivery) {
+	public OrderVO orderMngmn(SearchCriteria cri, DeliveryVO delivery) {
 		
 		// 배송중 -> 배송완료 갱신
 		deliveryService.cmpltDelivery(delivery);
-		
-		order.setSrchCrtr(srchCrtr);
-		order.setSrchKey(srchKey);
-		order.setPageNum(pageNum);
-		order.setOrder_status(orderStatus);
-		
-		cri.setPageNum(pageNum);		
-		
+			
 		// 한 페이지의 표시 개수
-		order.setAmount(5);
 		cri.setAmount(5);	
 		
-		int cnt = orderService.orderMngmnCount(order);	
-	
-		List<Map<String, Object>> list = orderService.orderMngmn(order);
+		// 페이징 블럭 개수
+		int pageBlcok = 5;
 		
-		PageVO pageMaker = new PageVO(cri, cnt);
+		int cnt = orderService.orderMngmnCount(cri);	
+	
+		List<Map<String, Object>> list = orderService.orderMngmn(cri);
+		
+		PageVO pageMaker = new PageVO(cri, cnt, pageBlcok);
 		
 		OrderVO result = new OrderVO();
 		result.setPage(pageMaker);

@@ -18,26 +18,26 @@
 
 	<!-- 배송지 목록 호출 -->
 	<select id="getAddressList" parameterType="address" resultMap="addressList">
-	<![CDATA[
-		SELECT a.address_no, 
-			   a.address_alias, 
-			   a.address_name, 
-			   a.address_tel, 
-			   a.zone_code, 
-			   a.road_add, 
-			   a.detail_add, 
-			   a.default_add
-		FROM   address a
-		where  a.user_no = #{user_no}
-		order by a.default_add desc, a.address_no asc
-	]]>
+		SELECT   a.address_no, 
+			     a.address_alias, 
+			     a.address_name, 
+			     a.address_tel, 
+			     a.zone_code, 
+			     a.road_add, 
+			     a.detail_add, 
+			     a.default_add
+			   
+		FROM     address a
+		
+		WHERE    a.user_no = #{user_no}
+		
+		ORDER BY a.default_add DESC, 
+		         a.address_no ASC
 	</select>
 			
 	<!-- 선택한 배송지의 value를 표시함 -->	
 	<select id="getAddress" parameterType="address" resultMap="addressList">
-	<![CDATA[
-		SELECT 
-			   address_no,
+		SELECT address_no,
 			   address_alias, 
 			   address_name, 
 			   address_tel, 
@@ -45,15 +45,15 @@
 			   road_add, 
 			   detail_add, 
 			   default_add
+			   
 		FROM   address
-		where  user_no = #{user_no} AND address_no = #{address_no} 
-
-	]]>	
+		
+		WHERE  user_no = #{user_no} AND
+		       address_no = #{address_no} 
 	</select>		
 	
 	<!-- 결제화면에서 기본배송지를 표시함 -->
 	<select id="getDefaultAddress" parameterType="address" resultMap="addressList">
-	<![CDATA[
 		SELECT address_no,
 			   address_alias, 
 			   address_name, 
@@ -62,15 +62,15 @@
 			   road_add, 
 			   detail_add,
 			   default_add
+			   
 		FROM   address
-		where  user_no = #{user_no} AND default_add = #{default_add}
-
-	]]>	
+		
+		WHERE  user_no = #{user_no} AND 
+		       default_add = #{default_add}
 	</select>	
 	
 	<!-- 배송지 등록 -->
 	<insert id="insertAddress">
-	<![CDATA[	
 		INSERT INTO address(address_no, 
 							user_no, 
 							address_alias, 
@@ -79,10 +79,9 @@
 							zone_code, 
 							road_add, 
 							detail_add,
-							default_add
-							)
+							default_add)
 							
-		VALUES ((select nvl(max(address_no), 0) + 1 from address), 
+		VALUES ((SELECT NVL(max(address_no), 0) + 1 FROM address), 
 		         #{user_no}, 
 		         #{address_alias},
 		         #{address_name},
@@ -90,49 +89,53 @@
 		         #{zone_code},
 		         #{road_add},
 		         #{detail_add},
-		         #{default_add}
-		       )
-	]]>		
+		         #{default_add})	
 	</insert>		
 	
 
 	<!-- 선택한 배송지를 기본배송지로 변경 1 -->
 	<update id="defaultAddress">
-	<![CDATA[	
-		update address
-		set    default_add = 'N'
-		WHERE  default_add = 'Y' AND user_no = #{user_no} 
-	]]>	
+		UPDATE address
+		
+		SET    default_add = 'N'
+		
+		WHERE  default_add = 'Y' AND 
+		 	   user_no = #{user_no} 
 	</update>
 	
 	<!-- 선택한 배송지를 기본배송지로 변경 2 -->
  	<update id="defaultAddress2">
-	<![CDATA[	
-		update address
-		set    default_add = 'Y'
-		WHERE  address_no = #{address_no} AND user_no = #{user_no} 
-	]]>	
+		UPDATE address
+		
+		SET    default_add = 'Y'
+		
+		WHERE  address_no = #{address_no} AND 
+			   user_no = #{user_no} 
 	</update>	 
 
 	<!-- 배송지 수정 -->
-	<update id="updateAddress">
-	<![CDATA[		
+	<update id="updateAddress">		
 		UPDATE address
+		
 		SET	   address_alias = #{address_alias},
 			   address_name = #{address_name},
 			   address_tel = #{address_tel},
 			   zone_code = #{zone_code},
 			   road_add = #{road_add},
 			   detail_add = #{detail_add}
-		WHERE  address_no = #{address_no} AND user_no = #{user_no}
-	]]>		
+			   
+		WHERE  address_no = #{address_no} AND 
+			   user_no = #{user_no}
 	</update>
 
 	<!-- 배송지 삭제 -->
 	<delete id="deleteAddress">
 		DELETE
+		
 		FROM   address
-	    WHERE  address_no = #{address_no} AND user_no = #{user_no}
+	    
+	    WHERE  address_no = #{address_no} AND 
+	    	   user_no = #{user_no}
 	</delete>
 	
 

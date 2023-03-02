@@ -1,6 +1,8 @@
 package com.spring.bookdream.vo;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import lombok.Data;
 
@@ -20,5 +22,7 @@ public class ReviewVO {
 		
 	}
 
-	
+	private List<Map<String, Object>> list;	
+	private Map<String, Object> cnt;
+	private PageVO page;	
 }

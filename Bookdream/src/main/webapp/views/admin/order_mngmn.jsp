@@ -70,7 +70,7 @@
 		
 		<div class="test">
 			<div class="btn-group " role="group" aria-label="Basic radio toggle button group">
-			  <input type="radio" class="btn-check " name="orderclsfc_btn" id="all" value="100" autocomplete="off" checked>
+			  <input type="radio" class="btn-check " name="orderclsfc_btn" id="all" value="100" autocomplete="off" >
 			  <label class="btn btn-outline-primary orderclsfc_btn" for="all">전체</label>
 			
 			  <input type="radio" class="btn-check" name="orderclsfc_btn" id="pymntCmplt" value="0" autocomplete="off">
@@ -153,7 +153,7 @@
 		
 	</div>		
 	
-
+	<input id="load_status" type="hidden" value="${status}">
 	</main>
 
 

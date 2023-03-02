@@ -10,23 +10,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.bookdream.service.DeliveryService;
 import com.spring.bookdream.service.OrderService;
 import com.spring.bookdream.service.PurchaseService;
+import com.spring.bookdream.service.UserService;
 import com.spring.bookdream.vo.DeliveryVO;
 import com.spring.bookdream.vo.OrderVO;
 import com.spring.bookdream.vo.PageVO;
 import com.spring.bookdream.vo.PurchaseVO;
 import com.spring.bookdream.vo.SearchCriteria;
+import com.spring.bookdream.vo.UserVO;
 
 
 @Controller
 @RequestMapping("/order")
 public class OrderController {
 
+	@Autowired
+	private UserService userService;
+	
 	@Autowired
 	private OrderService orderService;	
 	
@@ -42,61 +46,63 @@ public class OrderController {
 	// 배송상태 갱신
 	@RequestMapping(value="/update")
 	@ResponseBody
-	public void cencelOrder(@RequestBody OrderVO order ) {
+	public void cencelOrder(@RequestBody OrderVO order, UserVO user) {
 		
 		int user_no = (int) session.getAttribute("user_no");		
 		order.setUser_no(user_no);
+		user.setUser_no(user_no);
 				
 	    System.out.println("--->  배송상태 갱신 처리 <---");
-		orderService.cancelOrder(order);
+		orderService.updateOrderStatus(order);
+		
+		// 구매확정
+		if (order.getOrder_status() == 3) {
+		    System.out.println("--->  구매확정 포인트 적립 <---");			
+			userService.pointEarned(user);
+		}
 	    
 	}
 	
 	// 마이페이지 주문 목록
 	@RequestMapping(value="/orderList")
 	@ResponseBody	
-	public OrderVO searchOrder(@RequestParam("pageNum")  int pageNum, 
-							   @RequestParam("order_status") int orderStatus, 
-							   @RequestParam("srchStrDate")  String srchStrDate, 
-							   @RequestParam("srchEndDate") String srchEndDate,
-			  				   OrderVO order,
-							   SearchCriteria cri, 
-			  				   DeliveryVO delivery, Model model) {
-	
+	public OrderVO searchOrder(SearchCriteria cri, DeliveryVO delivery, PageVO page, Model model) {
+		
 		int user_no = (int) session.getAttribute("user_no");
-		order.setUser_no(user_no);
+		
+		// 조회할 사용자
+		cri.setUser_no(user_no);
+		
+		// 한 페이지에 표시될 개수
+		cri.setAmount(3);	
+		
+		// 페이지블럭 개수
+		int pageBlcok = 3;
 		
 		// 배송중 -> 배송완료 갱신
 		deliveryService.cmpltDelivery(delivery);
-		
-		order.setPageNum(pageNum);
-		order.setAmount(3);
-		
-		order.setOrder_status(orderStatus);
-
-		cri.setPageNum(pageNum);		
-		cri.setAmount(3);			
-		
+				
 		// 주문총개수
-		int cnt = orderService.searchOrderCount(order);
+		int cnt = orderService.searchOrderCount(cri);
 		
 		// 주문목록
-		List<Map<String, Object>> list  = orderService.searchOrder(order);
+		List<Map<String, Object>> list  = orderService.searchOrder(cri);
 
 		// 페이징
-		// 표시 개수
-		PageVO pageMaker = new PageVO(cri, cnt);
+		PageVO pageMaker = new PageVO(cri, cnt, pageBlcok);
 		
+		// 3개 객체를 1개의 VO에 묶어서 처리
 		OrderVO result = new OrderVO();
 		result.setPage(pageMaker);
 		result.setList(list);	
 		result.setCnt(cnt);	
 		
+		
 		return result;			
 
 	}
 
-	// 주문내역 카운트
+	// 주문상태별 누적 개수
 	@RequestMapping(value="/orderHistory") 
 	@ResponseBody
 	public List<Map<String, Object>> orderHistory(OrderVO order) {
@@ -104,6 +110,7 @@ public class OrderController {
 		int user_no = (int) session.getAttribute("user_no");
 		order.setUser_no(user_no);
 		
+		// 사용자가 조회함
 		order.setAdmin("user");
 		
 		List<Map<String, Object>> list  = orderService.orderStatusCount(order);

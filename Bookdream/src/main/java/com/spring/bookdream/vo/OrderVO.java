@@ -20,18 +20,13 @@ public class OrderVO {
 	private String order_address;
 	private String order_tel;	
 	private int order_status;
+	private Date cancel_date;
+	private Date prchsCnfrm_date;
+	
 	
 	// 관리자 확인
 	private String admin;	
-	
-	// 페이징
-    private int pageNum;
-	private int amount;	
-	private String srchCrtr;
-	private String srchKey;	
-	private String srchStrDate;
-	private String srchEndDate;
-	
+		
 	// 페이징버튼
 	private List<Map<String, Object>> list;
 	private PageVO page;

@@ -131,6 +131,7 @@ public class PayController {
 	    // 결제번호, 결제시간 추출 -> 다른 DB 등록
 	    PayVO payData = payService.searchPay(pay);
 	    
+	    // 결제번호 = 주문번호, 결제시간 = 주문시간 맞춤
 	    order.setPay_no(payData.getPay_no());
 	    order.setOrder_date(payData.getPay_date());
 	    purchase.setOrder_no(payData.getPay_no());	    
@@ -167,6 +168,7 @@ public class PayController {
 	    } else {
 	    		    	
 	    	// 카트번호 배열 
+	    	// 구매한 카트번호와 장바구니에 들어있는 카트번호를 비교해서 제거함
 	    	List<Integer> list =  (List<Integer>) session.getAttribute("arrCart");    
 	    	
 	    	purchase.setArrCart(list);	
@@ -195,7 +197,9 @@ public class PayController {
 		// 새로고침 DB중복 방지
 		// 방금 구매한 상품을 조회함
 		@RequestMapping(value="/success")
-		public String success(@SessionAttribute("payData") PayVO pay, @SessionAttribute("order") OrderVO order, PurchaseVO purchase, Model model) {
+		public String success(@SessionAttribute("payData") PayVO pay, 
+							  @SessionAttribute("order") OrderVO order, 
+							  PurchaseVO purchase, Model model) {
 
 			int user_no = (int) session.getAttribute("user_no");
 			

@@ -37,7 +37,7 @@
 			   order_status,
 			   TO_CHAR(start_date, 'YY.MM.DD HH24:MI') AS start_date,
 		       TO_CHAR(cmplt_date, 'YY.MM.DD HH24:MI') AS cmplt_date		   				   
-		FROM  (SELECT  ROW_NUMBER() OVER (ORDER BY rnum DESC) AS rnum,
+		FROM  (SELECT ROW_NUMBER() OVER (ORDER BY order_no DESC) AS rnum,
 		              order_no, 
 		              order_name, 
 		              book_img,
@@ -65,25 +65,24 @@
 		                      p.order_no = o.order_no AND
 		                      y.pay_no = o.order_no   AND
 		                      o.order_no = d.order_no AND
-		                      o.user_no = #{user_no}
+		                      o.user_no = #{user_no}  AND	  
+							  (order_date BETWEEN #{srchStrDate} AND 
+							  TO_DATE(TO_DATE(#{srchEndDate})+1)) AND
 							  <choose>
 								<when test="order_status == 100">
-									AND 1=1
+									1=1
 								</when>
 								<otherwise>
-									AND order_status = #{order_status}
+									order_status = #{order_status}
 								</otherwise>
-							  </choose>			  
-							  AND order_date BETWEEN #{srchStrDate} AND TO_DATE(TO_DATE(#{srchEndDate})+1)			                      
-		                      
-		              )
-		     WHERE rn = 1
-		     ORDER BY rnum desc)
+							  </choose>
+					  ORDER BY order_no desc)
+		        WHERE rn = 1)
 		     
 		WHERE rnum between ((#{pageNum}-1) * #{amount})+1 AND 
 		                     #{pageNum} * #{amount}	
+                  
 		                     
-		order by order_no desc   
 	</select>
 	
 	<!-- 카운트 -->
@@ -115,9 +114,6 @@
 		order by order_no desc	
 	</select>
 	
-	
-	
-	
 	<!-- 마이페이지 최근 구매 조회-->
 	<select id="recentOrder" resultType="HashMap">		
 		SELECT order_no, 
@@ -126,21 +122,22 @@
       		   order_date,
 			   final_price,
 			   order_status
-		FROM   (select o.order_no, 
+		FROM   (SELECT o.order_no, 
                 	   o.order_name, 
                        b.book_img, 
                        o.order_date,
                        y.final_price,
                        o.order_status,
 	 			       ROW_NUMBER() OVER(PARTITION BY o.order_no ORDER BY o.order_name DESC) AS rn                       
-	 			from   orders o, 
+	 			FROM   orders o, 
 	 			       purchase p, 
 	 			       book b,
 	 			       pay y
-	 			where  p.book_no = b.book_no   AND
+	 			WHERE  p.book_no = b.book_no   AND
                        p.order_no = o.order_no AND
                        y.pay_no = o.order_no   AND
-                       o.user_no = #{user_no})
+                       o.user_no = #{user_no}
+                ORDER BY order_no DESC) 
         WHERE rn = 1 AND
 			  rownum = 1		
 
@@ -148,10 +145,16 @@
 	</select>	
 		
 	<!-- 주문취소/반품요청시 배송상태 변경, 취소시간등록-->
-	<update id="cancelOrder">
+	<update id="updateOrderStatus">
 		UPDATE orders
 		SET	   order_status = #{order_status},
-			   cancel_date = sysdate
+			   <if test="order_status == 10 || order_status == 12">
+			   		cancel_date = sysdate			   
+			   </if>
+			   <if test="order_status == 3">
+			   		prchsCnfrm_date = sysdate
+			   </if>	
+
 		WHERE  order_no = #{order_no} 												
 	</update>							
 									
@@ -241,13 +244,13 @@
 		        nvl(sum(a.cnt), 0) cnt
 		FROM    (select to_date(order_date, 'YY-MM-DD')as order_date, 
 		               count(case when order_status between 0 and 3 AND 
-		                     to_date(order_date, 'YY-MM-DD') between to_date('220801', 'YY-MM-DD') AND 
-		                     to_date('230228', 'YY-MM-DD') then 1 end) cnt               
+		                     to_date(order_date, 'YY-MM-DD') between to_date('220901', 'YY-MM-DD') AND 
+		                     to_date('230331', 'YY-MM-DD') then 1 end) cnt               
 		        from orders
 		        group by order_date) a,      
-		        (SELECT to_date(TO_DATE('220801','YY-MM-DD') + LEVEL - 1, 'YY-MM-DD') AS dt
+		        (SELECT to_date(TO_DATE('220901','YY-MM-DD') + LEVEL - 1, 'YY-MM-DD') AS dt
 		        FROM dual 
-		        CONNECT BY LEVEL <= (TO_DATE('230228','YY-MM-DD') - TO_DATE('220801','YY-MM-DD') + 1)) b
+		        CONNECT BY LEVEL <= (TO_DATE('230331','YY-MM-DD') - TO_DATE('220901','YY-MM-DD') + 1)) b
 		WHERE b.dt = a.order_date(+) 
 		group by TO_CHAR(b.dt, 'YY-MM')
 		order by TO_CHAR(b.dt, 'YY-MM')	
@@ -260,13 +263,13 @@
 		SELECT  nvl(sum(a.cnt), 0) cnt2
 		FROM    (select to_date(cancel_date, 'YY-MM-DD')as order_date, 
 		                count(case when order_status between 10 and 13 AND 
-		                      to_date(cancel_date, 'YY-MM-DD') between to_date('220801', 'YY-MM-DD') AND 
-		                      to_date('230228', 'YY-MM-DD') then 1 end) cnt               
+		                      to_date(cancel_date, 'YY-MM-DD') between to_date('220901', 'YY-MM-DD') AND 
+		                      to_date('230331', 'YY-MM-DD') then 1 end) cnt               
 		        from orders
 		        group by cancel_date) a,      
-		        (SELECT to_date(TO_DATE('220801','YY-MM-DD') + LEVEL - 1, 'YY-MM-DD') AS dt
+		        (SELECT to_date(TO_DATE('220901','YY-MM-DD') + LEVEL - 1, 'YY-MM-DD') AS dt
 		        FROM dual 
-		        CONNECT BY LEVEL <= (TO_DATE('230228','YY-MM-DD') - TO_DATE('220801','YY-MM-DD') + 1)) b
+		        CONNECT BY LEVEL <= (TO_DATE('230331','YY-MM-DD') - TO_DATE('220901','YY-MM-DD') + 1)) b
 		WHERE b.dt = a.order_date(+) 
 		group by TO_CHAR(b.dt, 'YY-MM')
 		order by TO_CHAR(b.dt, 'YY-MM')	

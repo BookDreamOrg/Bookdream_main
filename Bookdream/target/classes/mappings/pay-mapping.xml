@@ -86,16 +86,16 @@
 		FROM  (select to_date(pay_date, 'YY-MM-DD') as pay_date,
 		              sum(final_price) total_price
 		       from pay p, orders o
-		       where (to_date(pay_date, 'YY-MM-DD') between to_date('220801', 'YY-MM-DD') AND to_date('230228', 'YY-MM-DD') AND
+		       where (to_date(pay_date, 'YY-MM-DD') between to_date('220901', 'YY-MM-DD') AND to_date('230331', 'YY-MM-DD') AND
                       p.pay_no = o.order_no) and
                      (o.order_status between 0 and 3 or
                       o.order_status = 10 or
                       o.order_status = 12)
 		       group by pay_date) a,      
 		       
-		      (select to_date(TO_DATE('220801','YY/MM/DD') + LEVEL - 1, 'YY/MM/DD') AS dt
+		      (select to_date(TO_DATE('220901','YY/MM/DD') + LEVEL - 1, 'YY/MM/DD') AS dt
 		       from dual 
-		       CONNECT BY LEVEL <= (TO_DATE('230228','YY/MM/DD') - TO_DATE('220801','YY/MM/DD') + 1)) b
+		       CONNECT BY LEVEL <= (TO_DATE('230331','YY/MM/DD') - TO_DATE('220901','YY/MM/DD') + 1)) b
 		WHERE b.dt = pay_date(+)
 		group by TO_CHAR(b.dt, 'YY-MM')
 		order by TO_CHAR(b.dt, 'YY-MM') 		
@@ -122,7 +122,7 @@
 		       sum(CASE WHEN pay_method = '문화상품권' THEN 1 ELSE 0 END) as cltmrCrtfc,
 		       sum(CASE WHEN pay_method = '도서문화상품권' THEN 1 ELSE 0 END) as bkcgfCrtfc,
 		       sum(CASE WHEN pay_method = '게임문화상품권' THEN 1 ELSE 0 END) as gmcgfCrtfc
-		FROM pay
+		FROM   pay
 	
 	</select>
 
