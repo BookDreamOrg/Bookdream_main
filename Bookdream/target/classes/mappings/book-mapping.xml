@@ -36,6 +36,7 @@
 		<result property="index" column="INDEX" />
 		<result property="startIndex" column="STARTINDEX" />
 		<result property="endIndex" column="ENDINDEX" />
+		<result property="finalIndex" column = "FINALINDEX" />
 	</resultMap>
 
 	<!-- 책 한권 정보 가져오기 -->
@@ -158,12 +159,12 @@
 	
 	<!-- [어드민/모달] 도서 삭제 -->
 	<delete id="deleteBook">
-	 DELETE FROM book WHERE book_no = #{book_no}
+	 <![CDATA[  DELETE FROM book WHERE book_no = #{book_no}  ]]>  
 		
 	</delete>
 	
-	<insert id="bookRegister" >
-	insert into book (
+	<insert id="bookRegister"   >
+	 <![CDATA[ insert into book (
 		BOOK_NO,
 		ISBN_NO,
 		TITLE,
@@ -173,29 +174,63 @@
 		STOCK,
 		BOOK_PRICE,
 		BOOK_IMG,
-		PUBLIC_DATE,
-		BOOK_CATEGORY,
-		DISCOUNT 
+		PBLIC_DATE,
+		BOOK_CATEGORY
 		) 
 		values 
 		( 
-		book_seq.nextval,
-		#{ISBN_NO},
-		#{TITLE},
-		#{AUTHOR},
-		#{PUBLISHER},
-		#{BOOK_CONTENT},
-		#{STOCK},
-		#{BOOK_PRICE},
-		#{BOOK_IMG},
-		#{PUBLIC_DATE},
-		#{BOOK_CATEGORY},
-		#{DISCOUNT}
-		)
-			
-	
-	
+		(select nvl(max(book_no),0)+1 from book),
+		#{isbn_no, jdbcType=VARCHAR},
+		#{title},
+		#{author},
+		#{publisher},
+		#{book_content},
+		#{stock, jdbcType=INTEGER},
+		#{book_price},
+		#{book_img},
+		#{pblic_date},
+		#{book_category}
+		)  ]]>  
 	</insert>
+	
+		<!-- 이미지 이름으로 사용  -->
+	<select id="bookImgName" resultType="Integer">
+	   <![CDATA[ 
+	   select nvl(max(book_no),0)+1 from book 
+	   ]]>  
+	</select>
+	
+	
+	<!-- 검색한 책 정보 가져오기 -->
+	<select id="checkGetBook" resultMap="bookResult">
+		SELECT * 
+		FROM book 
+		WHERE book_no 
+		IN
+	<foreach collection="list" item="list" index="index"
+            separator="," open="(" close=")">
+            #{list}
+	</foreach>
+
+	</select>
+	
+	
+	<update id="chkBookUpd" parameterType="java.util.List">
+
+	<foreach collection="list" item="item" separator=";" open="DECLARE BEGIN" close="; END;">
+	UPDATE book 
+	
+	<trim prefix="SET" suffixOverrides=",">
+      <if test=" item.book_price != 0 ">book_price = #{item.book_price},</if>
+      <if test=" item.discount != 0 ">discount = #{item.discount},</if>
+      <if test=" item.stock != 0 ">stock = #{item.stock},</if>
+   </trim>
+   	WHERE  book_no = #{item.book_no}
+	</foreach>
+	
+	
+	</update>
+	
 	
 </mapper>
 

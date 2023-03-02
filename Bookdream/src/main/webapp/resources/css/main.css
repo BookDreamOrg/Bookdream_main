@@ -41,4 +41,8 @@ font-weight:bold;
 margin-right:3px;
 }
 
+li.list-group-item{
+	border-color: white;
+}
+
 
