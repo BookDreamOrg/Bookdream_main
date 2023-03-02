@@ -44,8 +44,18 @@
 							tabindex="-1" aria-disabled="true">Disabled</a></li>
 					</ul>
 					<form class="d-flex">
-						<input class="form-control me-2" type="search" id="searchUserKeyword" placeholder="Search" aria-label="Search" />
-						<button class="btn btn-outline-success" type="button" onclick="searchUser()">Search</button>
+						<select class="form-select-user-search" id="user_select" name="user_select">
+							<option selected value="all">전체</option>
+							<option value="user_no">사용자 번호</option>
+							<option value="user_id">아이디</option>
+							<option value="user_password">비밀번호</option>
+							<option value="user_email">이메일</option>
+							<option value="user_name">이름</option>
+							<option value="flatform_type">플랫폼 타입</option>
+						</select>
+						<input class="form-control me-2" type="search" id="searchUserKeyword" placeholder="Search" aria-label="Search" onkeypress="show_name(event)" />
+ 						<input type="text" style="display:none;">
+ 						<button class="btn btn-outline-success" type="button" onclick="searchUser()"><i class="bi bi-search"></i></button>
 					</form>
 				</div>
 			</div>
@@ -209,118 +219,7 @@
 	<script src="https://kit.fontawesome.com/4bf42f841a.js"
 		crossorigin="anonymous"></script>
 
-	<script>
-		const urlParams = new URL(location.href).searchParams;
-		const num = urlParams.get('num');
-		const prevNum = parseInt(num) - 1;
-		const nextNum = parseInt(num) + 1;
-		const listUrl = "userListPage.do?num=";
-		const page = document.getElementsByClassName('page-link');
-		const SearchUserKeyword = $('#SearchUserKeyword').val();
-		
-		$(function() {
+	<script type="text/javascript" src="/resources/js/admin_userList.js"></script>
 
-			for (var i = 1; i < page.length - 1; i++) {
-				if (page[i].innerText === num) {
-					page[i].parentNode.classList.add('active');
-				}
-			}
-			;
-
-			if (num == 1) {
-				page[0].parentNode.classList.add("disabled");
-			} else if(num == (page.length - 2)) {
-				page[page.length-1].parentNode.classList.add("disabled");
-			};
-
-			$('#getUserModal').on('show.bs.modal',function(event) {
-								const btn = $(event.relatedTarget);
-								const getUserNo = parseInt(btn[0].parentNode.parentNode.childNodes[1].innerText);
-								$.ajax({
-									url : "/admin/user/getUserByNo.do",
-									type : "POST",
-									data : {
-										user_no : getUserNo
-									},
-									success : function(data) {
-										console.log(data);
-										$('#getUSerByNoTitle').html(
-												data.user_name);
-										$('#getUSerByNoNo').html(data.user_no);
-										$('#getUSerByNoName').html(
-												data.user_name);
-										$('#getUSerByNoTel')
-												.html(data.user_tel);
-										$('#getUSerByNoEmail').html(
-												data.user_email);
-										$('#getUSerByNoPoint').html(
-												data.user_point);
-										$('#getUSerByNoLevel').html(
-												data.user_level);
-										$('#getUSerByNoBlack').html(
-												data.blacklist_yn);
-										$('#getUSerByNoType').html(
-												data.flatform_type);
-									},
-									error : function() {
-										alert("error");
-									}
-								})
-							});
-			$('#blackListChange').click(function(event) {
-				const val = $('#getUSerByNoNo');
-				const blackNum = parseInt(val[0].innerText);
-				$.ajax({
-					url : "/admin/user/blackList.do",
-					type : "POST",
-					data : {
-						user_no : blackNum
-					},
-					success : function(data) {
-						alert("블랙리스트 수정 성공!");
-						window.location.reload();
-					},
-					error : function() {
-						alert("error");
-					}
-				})
-			})
-		});
-
-		function prev() {
-			if(SearchUserKeyword === null){
-				window.location = listUrl + prevNum;	
-			} else{
-				window.location = listUrl + prevNum + "&SearchUserKeyword=" + SearchUserKeyword;
-			}
-		};
-		function next() {
-			if(SearchUserKeyword == null){
-				window.location = listUrl + nextNum;
-			} else{
-				window.location = listUrl + nextNum + "&SearchUserKeyword=" + SearchUserKeyword;
-			}
-		};
-		
-	</script>
-	
-	<script type="text/javascript">
-		function searchUser(){
-			var searchUserKeyword = $('#searchUserKeyword').val();
-			$.ajax({
-				type : "POST",
-				url : "/admin/user/getSearchUserList",
-				data : {searchUserKeyword : searchUserKeyword},
-
-				success : function(result){	
-					console.log(result);
-					location.href="/admin/user/userListPage.do?num=1"+"&searchUserKeyword=" + result;
-				},
-				error : function(){
-					alert('서버 에러입니다.');
-				}
-			});
-		}
-	</script>
 </body>
 </html>

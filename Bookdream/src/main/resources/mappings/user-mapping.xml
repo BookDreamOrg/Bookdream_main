@@ -38,13 +38,31 @@
 	<select id="getAllUserList" resultType="user" parameterType="user">
 		select * 
 		from users
-		<if test="searchUserKeyword != null">
+		<if test="searchUserKeyword != null and searchUserType == 'all'">
 			where user_no like '%' || #{searchUserKeyword} || '%' or user_id like '%' || #{searchUserKeyword} || '%' 
 			or user_password like '%' || #{searchUserKeyword} || '%' or user_name like '%' || #{searchUserKeyword} || '%' 
 			or user_tel like '%' || #{searchUserKeyword} || '%' or user_level like '%' || #{searchUserKeyword} || '%'
 			or blacklist_yn like '%' || #{searchUserKeyword} || '%' or user_email like '%' || #{searchUserKeyword} || '%' 
 			or user_point like '%' || #{searchUserKeyword} || '%' or user_regdate like '%' || #{searchUserKeyword} || '%'
 			or flatform_type like '%' || #{searchUserKeyword} || '%'
+		</if>
+		<if test="searchUserKeyword != null and searchUserType == 'user_no'">
+			where user_no like '%' || #{searchUserKeyword} || '%'
+		</if>
+		<if test="searchUserKeyword != null and searchUserType == 'user_id'">
+			where user_id like '%' || #{searchUserKeyword} || '%'
+		</if>
+		<if test="searchUserKeyword != null and searchUserType == 'user_password'">
+			where user_password like '%' || #{searchUserKeyword} || '%'
+		</if>
+		<if test="searchUserKeyword != null and searchUserType == 'user_email'">
+			where user_email like '%' || #{searchUserKeyword} || '%'
+		</if>
+		<if test="searchUserKeyword != null and searchUserType == 'user_name'">
+			where user_name like '%' || #{searchUserKeyword} || '%'
+		</if>
+		<if test="searchUserKeyword != null and searchUserType == 'flatform_type'">
+			where flatform_type like '%' || #{searchUserKeyword} || '%'
 		</if>
 	</select>
 	
@@ -128,7 +146,8 @@
 	<select id="userListPage" parameterType="user" resultType="user">
  		select * from 
  		<choose>
- 			<when test="searchUserKeyword != null">
+ 		<!-- 키워드도 없고 카테고리도 없는 경우 -->
+ 			<when test="searchUserKeyword != null and searchUserType == 'all'">
 				 (select ROW_NUMBER() over (order by user_no) NUM, A.* from users A 
 	         	 where 
 		            user_no like '%' || #{searchUserKeyword} || '%' or user_id like '%' || #{searchUserKeyword} || '%' 
@@ -146,10 +165,54 @@
 				or user_point like '%' || #{searchUserKeyword} || '%' or user_regdate like '%' || #{searchUserKeyword} || '%'
 				or flatform_type like '%' || #{searchUserKeyword} || '%')
 			</when>
+			<when test="searchUserKeyword != null and searchUserType == 'user_no'">
+				 (select ROW_NUMBER() over (order by user_no) NUM, A.* from users A 
+		            where user_no like '%' || #{searchUserKeyword} || '%'
+	             order by user_no)
+	             where NUM between #{displayPost} AND (#{displayPost} + #{postNum})
+	             and ( user_no like '%' || #{searchUserKeyword} || '%')
+			</when>
+			<when test="searchUserKeyword != null and searchUserType == 'user_id'">
+				 (select ROW_NUMBER() over (order by user_no) NUM, A.* from users A 
+		            where user_id like '%' || #{searchUserKeyword} || '%'
+	             order by user_no)
+	             where NUM between #{displayPost} AND (#{displayPost} + #{postNum})
+	             and ( user_id like '%' || #{searchUserKeyword} || '%')
+			</when>
+			<when test="searchUserKeyword != null and searchUserType == 'user_password'">
+				 (select ROW_NUMBER() over (order by user_no) NUM, A.* from users A 
+		            where user_password like '%' || #{searchUserKeyword} || '%'
+	             order by user_no)
+	             where NUM between #{displayPost} AND (#{displayPost} + #{postNum})
+	             and ( user_password like '%' || #{searchUserKeyword} || '%')
+			</when>
+			<when test="searchUserKeyword != null and searchUserType == 'user_email'">
+				 (select ROW_NUMBER() over (order by user_no) NUM, A.* from users A 
+		            where user_email like '%' || #{searchUserKeyword} || '%'
+	             order by user_no)
+	             where NUM between #{displayPost} AND (#{displayPost} + #{postNum})
+	             and ( user_email like '%' || #{searchUserKeyword} || '%')
+			</when><when test="searchUserKeyword != null and searchUserType == 'user_name'">
+				 (select ROW_NUMBER() over (order by user_no) NUM, A.* from users A 
+		            where user_name like '%' || #{searchUserKeyword} || '%'
+	             order by user_no)
+	             where NUM between #{displayPost} AND (#{displayPost} + #{postNum})
+	             and ( user_name like '%' || #{searchUserKeyword} || '%')
+			</when><when test="searchUserKeyword != null and searchUserType == 'flatform_type'">
+				 (select ROW_NUMBER() over (order by user_no) NUM, A.* from users A 
+		            where flatform_type like '%' || #{searchUserKeyword} || '%'
+	             order by user_no)
+	             where NUM between #{displayPost} AND (#{displayPost} + #{postNum})
+	             and ( flatform_type like '%' || #{searchUserKeyword} || '%')
+			</when>
 			<when test="searchUserKeyword == null">
 				 (select ROW_NUMBER() over (order by user_no) NUM, A.* from users A order by user_no)
  					where NUM between #{displayPost} AND (#{displayPost} + #{postNum})
 			</when>
+			<otherwise>
+				(select ROW_NUMBER() over (order by user_no) NUM, A.* from users A order by user_no)
+ 					where NUM between #{displayPost} AND (#{displayPost} + #{postNum})
+			</otherwise>
  		</choose>
 	</select>
 	
