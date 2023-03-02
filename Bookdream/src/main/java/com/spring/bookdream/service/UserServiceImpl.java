@@ -126,5 +126,27 @@ public class UserServiceImpl implements UserService {
 
 		return userDAO.userPoint(vo);
 	}
+	
+	// 관리자 회원가입
+	@Override
+	public void insertAdmin(UserVO vo) {
+		userDAO.insertAdmin(vo);
+	}
+	
+	// 관리자 로그인 체크
+	public boolean adminLoginCheck(UserVO vo, Model model) {
+		boolean result = userDAO.adminLoginCheck(vo);
+		
+		if(result) {
+			UserVO userVO = getUser(vo);
+			
+			model.addAttribute(userVO);
+			model.addAttribute("userId", userVO.getUser_id());
+			model.addAttribute("userPassword", userVO.getUser_password());
+			
+		}
+		return result;
+	}
+	
 
 }

@@ -63,5 +63,11 @@ public interface UserService {
 	public void setBlack(int no);
 	
 	// 사용자 포인트 조회
-	int userPoint(UserVO vo);	
+	int userPoint(UserVO vo);
+	
+	// 관리자 회원가입
+	public void insertAdmin(UserVO vo);
+	
+	// 관리자 로그인 아이디 체크
+	public boolean adminLoginCheck(UserVO vo, Model model);
 }

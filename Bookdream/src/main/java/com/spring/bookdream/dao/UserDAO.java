@@ -163,4 +163,23 @@ public class UserDAO {
 
 			return mybatis.selectOne("UserDAO.userPoint", vo);
 		}
+		
+		// 관리자 회원가입
+		public void insertAdmin(UserVO vo) {
+			System.out.println("insertAdmin처리");
+			vo.setUser_email(vo.getUser_email()+vo.getUser_email2());
+			
+			mybatis.insert("UserDAO.insertAdmin", vo);
+		}
+		
+		// 관리자 로그인 확인
+		public boolean adminLoginCheck(UserVO vo) {
+			String name = mybatis.selectOne("UserDAO.adminLoginCheck", vo);
+			System.out.println("userDAO " + name);
+			boolean result = false;
+			if(name != null) {
+				result = true;
+			}
+			return result;
+		}
 }
