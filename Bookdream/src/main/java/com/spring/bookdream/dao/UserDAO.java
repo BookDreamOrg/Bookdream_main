@@ -175,6 +175,8 @@ public class UserDAO {
 			 
 			mybatis.update("UserDAO.pointEarned", user);
 			
+		}
+			
 		// 관리자 회원가입
 		public void insertAdmin(UserVO vo) {
 			System.out.println("insertAdmin처리");
