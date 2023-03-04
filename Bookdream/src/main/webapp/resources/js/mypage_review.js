@@ -144,7 +144,6 @@ $(document).on("click", "button.paging_btn", function(e) {
 				
 	let pageNum = e.currentTarget.value	
 
-	// 페이지 이동시 검색조건,검색키워드 유지됨
 
 	reviewList(pageNum)
 })
