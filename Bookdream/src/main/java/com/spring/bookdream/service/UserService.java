@@ -62,12 +62,7 @@ public interface UserService {
 	// 블랙리스트 수정
 	public void setBlack(int no);
 	
-	// 관리자 회원가입
-	public void insertAdmin(UserVO vo);
-	
-	// 관리자 로그인 아이디 체크
-	public boolean adminLoginCheck(UserVO vo, Model model);
-
+	// 사용자 포인트 조회
 	public int userPoint(UserVO user);	
 	
 	// 사용자 포인트 내역
@@ -75,4 +70,10 @@ public interface UserService {
 	
 	// 구매확정 포인트 적립
 	public void pointEarned(UserVO user);
+
+	// 관리자 회원가입
+	public void insertAdmin(UserVO vo);
+	
+	// 관리자 로그인 아이디 체크
+	public boolean adminLoginCheck(UserVO vo, Model model);
 }

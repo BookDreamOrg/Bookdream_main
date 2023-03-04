@@ -190,8 +190,6 @@ public class UserDAO {
 
 		// 구매확정 포인트 적립
 		public void pointEarned(UserVO user) {
-			 
 			mybatis.update("UserDAO.pointEarned", user);
-			
 		}
 }

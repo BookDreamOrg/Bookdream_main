@@ -63,20 +63,17 @@
 					<a href="/views/admin/adminS">관리자</a></span>
 				</li>
 				<li class="list-group-item"><span class="list_icon"><i
-						class="fa-solid fa-user"></i></span> <span class="list_text"><a href="#">프로필 관리</a></span></li>
-				<li class="list-group-item"><span class="list_icon"><i
 						class="fa-solid fa-arrow-up-right-from-square"></i></span> <span
 					class="list_text"><a href="/views/main/main.jsp">사이트 바로가기</a></span></li>
 			</ul> 
 		</div>
 		<div class="aside_product">
 			<div class="aside_product_title">제품관리</div>
-			<span><i class="fa-regular fa-square-plus"></i></span>
 		</div>
 		<div class="aside_product_list">
 			<ul class="list-group">
 				<li class="list-group-item"><span class="list_icon"><i
-						class="fa-solid fa-border-all"></i></span> <span class="list_text"><a href="#">대시보드</a></span>
+						class="fa-solid fa-border-all"></i></span> <span class="list_text"><a href="/views/admin/admin.jsp">대시보드</a></span>
 				</li>
 				<li class="list-group-item"><span class="list_icon"><i
 						class="fa-solid fa-user-gear"></i></span><span class="list_text"><a href="/admin/user/userListPage.do?num=1&searchUserKeyword=">사용자 관리</a></span></li>
@@ -92,12 +89,9 @@
 		</div>
 		<div class="aside_resource">
 			<div class="aside_resource_title">고객지원</div>
-			<span><i class="fa-regular fa-square-plus"></i></span>
 		</div>
 		<div class="aside_resource_list">
 			<ul class="list-group">
-				<li class="list-group-item"><span class="list_icon"><i
-						class="fa-solid fa-bug"></i></span> <span class="list_text"><a href="#">버그 및 신고</a></span></li>
 				<li class="list-group-item">
 					<span class="list_icon">
 						<i class="fa-solid fa-comment"></i>
