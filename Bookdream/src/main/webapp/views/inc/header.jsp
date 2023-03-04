@@ -98,15 +98,9 @@ margin-right:3px;
             <ul class="nav header-nav">
                <li class="nav-item"><a class="nav-link header-nav-link"
                   aria-current="page" href="/views/user/join.jsp">회원가입</a></li>
-               <span class="nav-bar-line"></span>
+               <div class="vr"></div>
                <li class="nav-item"><a class="nav-link header-nav-link"
                   href="/views/user/login.jsp">로그인</a></li>
-               <span class="nav-bar-line"></span>
-               <li class="nav-item"><a class="nav-link header-nav-link"
-                  href="#">고객센터</a></li>
-               <span class="nav-bar-line"></span>
-               <li class="nav-item"><a
-                  class="nav-link header-nav-link" href="/views/admin/login.jsp">관리자 </a></li>
             </ul>
          </div>
          <div class="row d-flex header-row  justify-content-lg-between ">
@@ -169,38 +163,40 @@ margin-right:3px;
                %>
                   <li class="nav-item"><a class="nav-link header-nav-link"
                   href="https://kauth.kakao.com/oauth/logout?client_id=47ad839005d8b9a94d3007b30a956894&logout_redirect_uri=http://localhost:8000/views/user/kakaoLogout">로그아웃</a></li>
-               <span class="nav-bar-line"></span>
+               <div class="vr"></div>
                <% 
                   } else if(user.getFlatform_type().equals("google")) { // google 로그아웃
                %>
                   <li class="nav-item"><a class="nav-link header-nav-link"
                   href="/views/user/logout.do">로그아웃</a></li>
-               <span class="nav-bar-line"></span>
+               <div class="vr"></div>
                <% 
                   } else if(user.getFlatform_type().equals("naver")) { // naver 로그아웃
                %>
                   <li class="nav-item"><a class="nav-link header-nav-link"
                   href="/views/user/logout.do">로그아웃</a></li>
-               <span class="nav-bar-line"></span>
+               <div class="vr"></div>
                <% 
                   } else { // 기존 로그아웃
                %>
                   <li class="nav-item"><a class="nav-link header-nav-link"
                   href="/views/user/logout.do">로그아웃</a></li>
-               <span class="nav-bar-line"></span>
+               <div class="vr"></div>
                <% 
                   }
                %>
-               
-               <li class="nav-item"><a class="nav-link header-nav-link"
-                  href="#">고객센터</a></li>
-               <span class="nav-bar-line"></span>
                <li class="nav-item"><a class="nav-link header-nav-link"
                   href="/mypage/main">마이페이지</a></li>
-               <span class="nav-bar-line"></span>
+               <%
+              	if(user.getUser_level() == 1) {
+               %>
+               <div class="vr"></div>
                <li class="nav-item"><a
-                  class="nav-link header-nav-link" href="/views/admin/login.jsp" tabindex="-1"
+                  class="nav-link header-nav-link" href="/views/admin/admin.jsp" tabindex="-1"
                   aria-disabled="true">관리자 </a></li>
+              <%
+              	}
+              %>
             </ul>
          </div>
        

@@ -77,6 +77,8 @@ public class BookController {
 			num=((num-1)*PAGE_DIVISION_NUMBER)+1;
 		}
 		
+		
+		
 		for( int i = num ; i < num+PAGE_DIVISION_NUMBER ; i ++) {
 			if(i<=all_book_list.size()) {
 				book.add(all_book_list.get(i-1));
@@ -85,9 +87,18 @@ public class BookController {
 			}
 		}
 		
+		//조회된 책에 매핑된 리뷰 평균
+		Map<String, String> reviewAVG  = new HashMap<String, String>();
+		for(int i = 0; i <book.size(); i++) {
+			String key = Integer.toString(book.get(i).getBook_no());
+			String value = Double.toString( reviewService.avgReview(book.get(i).getBook_no()));
+			reviewAVG.put(key,value);
+			
+		}
+		
 		model.addAttribute("book", book);// Model 정보 저장
 		model.addAttribute("lastIndex", pageLastIndex);
-		
+		model.addAttribute("review_star", reviewAVG);
 		
 		return "booklist/bookListSearchByKeyword"; //조회된 책 뿌리기
 	}

@@ -122,8 +122,8 @@ CREATE TABLE orders(
     order_address       varchar2(100)  not null,
     order_tel           varchar2(40)   not null,
     order_status        number(10)     default 0 not null,
-    cancel_date         data           DEFAULT '',
-    prchsCnfrm_date     data           DEFAULT ''   
+    cancel_date         date           DEFAULT '',
+    prchsCnfrm_date     date           DEFAULT ''   
 );
 -- 02-15 추가
 alter table orders add cancel_date  date DEFAULT '';
@@ -219,6 +219,8 @@ create table BOOK (
     BOOK_CATEGORY varchar(500) not null,
     constraint PK_BOOK primary key (BOOK_NO)
 );
+
+alter table BOOK add discount  number(10) DEFAULT 0;
 
 select * from BOOK;
 select count(*) from BOOK;

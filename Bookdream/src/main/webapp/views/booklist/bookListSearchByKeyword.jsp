@@ -9,6 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+<!-- alert -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
 <!-- 자동 검색시 필요 (페이지마다 다 넣어줘야 함?)-->
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 
@@ -50,30 +54,44 @@
 			<c:choose>
 			<c:when test="${empty search_keyword}">
 				<script type="text/javascript">
-				alert('키워드를 입력하세요. ');
+				 Swal.fire(
+						 '키워드를 입력하세요.',
+				          '',
+				          'info'
+				 )
 				</script>
 
 			</c:when>
 			<c:otherwise>
 				<c:forEach var="book" items="${book}" varStatus="status">
 					<div class="container-fluid mt-3">
-						<div class="row" >
+						<div class="row" id="book_row" >
 							<div class="col-md-3">
-								<img alt="${book.title }" src="${book.book_img }" />
+								<span><img alt="${book.title }" src="${book.book_img }" /></span>
 							</div>
 						<div class="col-md-6 mt-5 pt-2" onclick="location.href='/getBook?book_no=${book.book_no}'">
-							<span  id="detail-badge" class="badge bg-primary rounded-pill">${book.book_category }</span>
-							<span id="book_title">${book.title }</span>
+							<span  id="detail-badge" >${book.book_category }</span> 
+							<span id ="reviewAVG"> </span>
+							<span id="book_title"> ${book.title }</span>
 						<div class="row">
-							<div class="col-md-4 mt-2">${book.author }</div>
-							<div class="col-md-8 mt-2">
-							<fmt:formatDate pattern="yyyy년 MM월 dd일" value="${book.pblic_date }"/></div>
-							<div id="book_content">${book.book_content }</div>
+							<div class="mt-2">
+								${book.author } | 
+							<fmt:formatDate pattern="yyyy년 MM월 dd일" value="${book.pblic_date }"/>
+							
+							
+							</div>
+							
+							
+							<div id="book_content"> ${book.book_content }</div>
 						</div>
 						</div>
 						<div class="col-md-3  mt-5 pt-5">
-							<button type="button" class="btn btn-success" onclick="bookList_cart(this.value)" value="${book.book_no}" >Cart</button> 
-							<button type="button" class="btn btn-success" onclick="bookList_buy(this.value)" value="${book.book_no}">Buy</button>
+						<div>
+							<button type="button" class="btn btn-outline-primary" onclick="bookList_cart(this.value)" value="${book.book_no}" >장바구니</button> 
+						</div>
+						<div class="mt-1">
+							<button type="button" class="btn btn-outline-primary" onclick="bookList_buy(this.value)" value="${book.book_no}">바로구매</button>
+						</div>
 						</div>
 					</div>
 					</div>	
@@ -81,7 +99,7 @@
 			</c:otherwise>
 			</c:choose>		
 </div>
-
+<c:if test="${!empty search_keyword}"  >
 <div class="mt-5 mb-5 text-center">
 	<nav aria-label="Page navigation example" >
 		<ul class="pagination justify-content-center">
@@ -101,6 +119,7 @@
 		</ul>
 	</nav>
 </div>
+</c:if>
 
 </main>
 		
@@ -110,7 +129,13 @@
 	
 
 <script type="text/javascript" >
-
+$(function(){
+	
+let dataArr = '${review_star}'; 
+console.log(dataArr);
+console.log(dataArr[2])
+	
+});
 
 function bookList_buy(val){
 	let user_id = '<%=session.getAttribute("user_id")%>';
@@ -146,7 +171,11 @@ function next(){
 	const num = urlParams.get('num');
 	let nextNum = parseInt(num) + 1; // 앞 번호로 가기
 	if(num==lastIndex){
-		alert('마지막 페이지입니다. ');
+		 Swal.fire(
+				 '마지막 페이지입니다.',
+		          '',
+		          'info'
+		 )
 	}else{
 		location.replace("/bookListSearchByKeyword?num="+nextNum+"&keyword="+keyword);
 	}
@@ -158,7 +187,11 @@ function prev(){
 	const num = urlParams.get('num');
 	let prevNum = parseInt(num) - 1; // 뒷 번호로 가기
 	if(num==1){
-		alert('첫번째 페이지입니다. ');
+		 Swal.fire(
+				 '첫번째 페이지입니다.',
+		          '',
+		          'info'
+		 )
 	}else{
 		location.replace("/bookListSearchByKeyword?num="+prevNum+"&keyword="+keyword);
 	}
