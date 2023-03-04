@@ -200,7 +200,7 @@ uri="http://java.sun.com/jsp/jstl/fmt"%>
             <div class="card-header">
               <div class="qna-title-header">
                 <div class="qna-title-header-left">
-                  <a href="/admin/user/QnADashBoard">문의 대시보드</a>
+                  		문의 대시보드
                 </div>
                 <div class="qna-title-header-right">
                   <a href="/admin/user/getAllQnAList">+더보기</a>
@@ -209,7 +209,12 @@ uri="http://java.sun.com/jsp/jstl/fmt"%>
             </div>
             <div class="card-body">
               <div class="list-group">
-                <c:forEach items="${qnaAllList }" var="list" varStatus="vs">
+              <c:choose>
+              	<c:when test="${qnaAllList eq null }">
+              		문의 내역이 없습니다.
+              	</c:when>
+              	<c:otherwise>
+              		<c:forEach items="${qnaAllList }" var="list" varStatus="vs">
                   <div class="qna-Alllist">
                     <div class="qna-dashboardList">
                       <a
@@ -262,6 +267,8 @@ uri="http://java.sun.com/jsp/jstl/fmt"%>
                     </div>
                   </div>
                 </c:forEach>
+              	</c:otherwise>
+              </c:choose>
               </div>
             </div>
           </div>

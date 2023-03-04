@@ -51,7 +51,7 @@
 							</c:when>
 							<c:when test="${!empty qnaAllList }">
 								<table class="table">
-									<tr>
+									<tr class="table-header">
 										<th width="10%">문의 일자</th>
 										<th width="20%">문의한 유저</th>
 										<th width="70%">문의 제목</th>
