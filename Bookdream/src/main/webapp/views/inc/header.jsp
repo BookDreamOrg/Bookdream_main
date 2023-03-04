@@ -118,31 +118,10 @@ margin-right:3px;
                   		src="/resources/images/logo/logo_text.png" alt="logo_text" />
                </a>
            </div>
-            <!-- 장바구니, 마이페이지 
-            -->
-            <div class="col-lg-1 flex-grow-1 header-col-btn justify-content-sm-between justify-content-lg-end">
-<!--  cart btn -------------------------- -->
-               <button type="button" class="header-btn btn position-relative mx-lg-3" 
-                        onclick="location.href='/itemorder/cart/list'">
-                  <i class="fa-solid fa-cart-shopping"></i>
-               </button>
-               <button type="button" class="header-btn btn-circle border-0"
-                  			onclick="location.href='/mypage/main'">
-                     <i class="fa-solid fa-user"></i>
-                </button>
-            </div>
             <!-- 검색창 -->
             <form action="/bookListSearchByKeyword" method="get">
             <div class="col-lg-6 p-2 header-col-search input-group">
                <div class="input-group mb-2 col-search">
-                  <button
-                     class="btn btn-outline-secondary dropdown-toggle search-toggle"
-                     type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                     통합검색</button>
-                  <ul class="dropdown-menu">
-                     <li><a class="dropdown-item" href="#">베스트</a></li>
-                     <li><a class="dropdown-item" href="#">신상품</a></li>
-                  </ul>
                   <input type="text" name="keyword" id="keyword_text" class="form-control search-input"
                      aria-label="Text input with dropdown button"
                      placeholder="성공적인 프로젝트를 위하여!!👍" />
@@ -217,7 +196,7 @@ margin-right:3px;
            </div>
             
             <div class="col-lg-1 flex-grow-1 header-col-btn justify-content-sm-between justify-content-lg-end">
-<!--  cart btn -------------------------- -->
+				<!--  cart btn -------------------------- -->
                <button type="button" class="header-btn btn position-relative mx-lg-3" 
                         onclick="location.href='/itemorder/cart/list'">
                   <i class="fa-solid fa-cart-shopping"></i>
@@ -228,24 +207,12 @@ margin-right:3px;
                        </span>
                <input id="user_no" value="${user.user_no}" type="hidden">
                </button>
-                  <button type="button" class="header-btn btn-circle border-0"
-                  			onclick="location.href='/mypage/main'">
-                     <i class="fa-solid fa-user"></i>
-                  </button>
             </div>
          </div>
             
             <form action="/bookListSearchByKeyword" method="get">
             <div class="col-lg-6 p-2 header-col-search input-group">
                <div class="input-group mb-2 col-search">
-                  <button
-                     class="btn btn-outline-secondary dropdown-toggle search-toggle"
-                     type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                     통합검색</button>
-                  <ul class="dropdown-menu">
-                     <li><a class="dropdown-item" href="#">베스트</a></li>
-                     <li><a class="dropdown-item" href="#">신상품</a></li>
-                  </ul>
                   <input type="text" name="keyword" id="keyword_text" class="form-control search-input"
                      aria-label="Text input with dropdown button"
                      placeholder="성공적인 프로젝트를 위하여!!👍" />
@@ -261,25 +228,6 @@ margin-right:3px;
    %>
    
          <div class="header-menu mb-1 flex-lg-row flex-sm-column justify-content-between ">
-	         <div class="d-flex justify-content-start">
-	            <ul class="nav header-menu-list ">
-	               <li class="nav-item">
-	                  <form action="/getBook" method="get" id="go_detail">
-	                  <input type="hidden" name="book_no" value="<%=book_no%>">
-	               	</form>
-	               <a class="nav-link menu-link" onclick="document.getElementById('go_detail').submit();" >베스트</a></li>
-	               </li>
-	               <div class="dot"></div>
-	               <li class="nav-item"><a class="nav-link menu-link" href="#">신상품</a>
-	               </li>
-	               <div class="dot"></div>
-	               <li class="nav-item"><a class="nav-link menu-link" href="#">이벤트</a>
-	               </li>
-	               <div class="dot"></div>
-	               <li class="nav-item"><a class="nav-link menu-link disabled"
-	                  href="#" tabindex="-1" aria-disabled="true">Disabled</a></li>
-	            </ul>
-	         </div>
                 <!---------------------------검색 상위 키워드 10개-------------------------------->
             <div class="flex-sm">
       			<span class="small">인기 검색어 </span>
