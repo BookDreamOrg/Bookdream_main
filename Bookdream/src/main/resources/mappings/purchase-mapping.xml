@@ -3,51 +3,173 @@
 			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="PurchaseDAO">
-
-	<resultMap type="purchase" id="purchaselist">
-		<result property="cart_no" column="PURCHASE_NO" />
-		<result property="user_no" column="USER_NO" />	
-		<result property="book_no" column="BOOK_NO" />	
-		<result property="total_count" column="ORDER_NO" />	
-		<result property="product_count" column="PRODUCT_COUNT" />	
-		<collection property="userVO" resultMap="userList"></collection>		
-		<collection property="bookVO" resultMap="bookList"></collection>
-		<collection property="cartVO" resultMap="cartList"></collection>
-	</resultMap>	
-
-	<resultMap type="user" id="userList">
-		<result property="user_no" column="USER_NO" />
-	</resultMap>
-
-	<resultMap type="book" id="bookList">
-		<result property="book_no" column="BOOK_NO"/>	
-	</resultMap>
-
-	<resultMap type="cart" id="cartList">
-		<result property="book_no" column="BOOK_NO"/>
-		<result property="product_count" column="PRODUCT_COUNT"/>
-
-	</resultMap>	
-
-	<!-- user_no 수정필요 -->
+	     
+ 	<!-- 구매목록저장 (장바구니)-->
 	<insert id="insertPurchase">
 		INSERT INTO PURCHASE (purchase_no, 
 							  user_no, 
 							  book_no, 
 							  order_no, 
-							  product_count)
+							  product_count,
+							  order_address)
 		SELECT numplus.nextval, 
-		       u.user_no, 
+		       c.user_no, 
 		       b.book_no, 
 		       o.order_no, 
-		       c.product_count
-		FROM   users u, 
-		       book b, 
+		       c.product_count,
+		       o.order_address
+		FROM   book b, 
 		       cart c, 
 		       orders o
-		WHERE  1 = c.user_no AND b.book_no = c.book_no AND o.order_no = #{order_no}
-	
+		WHERE  c.user_no = #{user_no} AND 
+			   b.book_no = c.book_no AND 
+			   o.order_no = #{order_no} AND
+			   c.cart_no IN (
+		        <foreach collection="arrCart" item="item" index="index" separator=",">
+		            ${item}
+		        </foreach>   			   
+			   )
 	</insert>
+
+    <!-- 구매목록저장 (바로구매) -->	   	
+	<insert id="insertPurchase_now">
+		INSERT INTO PURCHASE (purchase_no, 
+							  user_no, 
+							  book_no, 
+							  order_no, 
+							  product_count,
+							  order_address)
+					VALUES   (numplus.nextval,
+							  #{user_no},
+							  #{book_no},
+							  #{order_no},
+							  #{product_count},
+							  #{order_address})
+	</insert>
+
+	<!-- 마이페이지에서 확인하는 제품 상세 표기 -->	
+	<select id="getPurchaseList" resultType="HashMap">
+		SELECT b.book_img, 
+    		   b.title, 
+    		   b.book_no,
+               b.book_price,
+       		   p.product_count,
+       		   p.purchase_no,                 
+      		   o.order_no,
+      		   o.order_date,
+      		   o.order_receiver, 
+     		   o.order_tel, 
+     		   o.order_address,
+     		   o.order_status,
+     		   y.total_price,
+     		   y.final_price,
+     		   y.pay_fee,
+    		   y.discount_price,
+     		   y.use_point,
+     		   y.save_point,
+     		   TO_CHAR(d.cmplt_date, 'YY.MM.DD HH24:MI') AS cmplt_date,
+     		   TO_CHAR(d.start_date, 'YY.MM.DD HH24:MI') AS start_date
+     		   
+		FROM   purchase p, 
+		       orders o, 
+		       book b, 
+		       pay y,
+		       delivery d
+		       
+ 		WHERE  p.order_no = o.order_no AND 
+       		   p.order_no = y.pay_no AND
+         	   p.book_no = b.book_no AND
+			   o.order_no = d.order_no AND         	   
+			   p.user_no = #{user_no} AND
+      		   p.order_no = #{order_no}
+      	
+      	ORDER BY book_no	     	       		   	   
+	</select>
+	
+	<!-- 관리자 : 주문당 구매도서수 비율 -->
+	<select id="purchaseBookRatio" resultType="HashMap">
+		SELECT	COUNT(*) as total_orders,
+		  		SUM(CASE WHEN product_count = 1 THEN 1 ELSE 0 END) as pq1,
+				SUM(CASE WHEN product_count = 2 THEN 1 ELSE 0 END) as pq2,
+			    SUM(CASE WHEN product_count = 3 THEN 1 ELSE 0 END) as pq3,
+			    SUM(CASE WHEN product_count >= 4 THEN 1 ELSE 0 END) as pq4more
+
+		FROM	(SELECT COUNT(product_count) as product_count, 
+				 		order_no
+		 		 FROM   purchase
+				 GROUP BY order_no)
+	</select>
+	
+	<!-- 관리자 : 배송시 재고차감 -->
+	<update id="updateBookStock">
+		UPDATE book b
+		SET    stock = (SELECT stock - product_count as stock
+		                FROM   purchase p
+		                WHERE  order_no = #{order_no} AND
+		                       p.book_no = b.book_no)
+		WHERE EXISTS   (SELECT 1
+		                FROM   purchase p
+		                WHERE  order_no = #{order_no} AND
+		                       p.book_no = b.book_no)		
+	
+	</update>	
+
+	<!-- 관리자 : 반품완료시 재고반환 -->	
+	<update id="bookStockReturn">	
+		UPDATE book b
+		SET    b.stock = (SELECT stock + p.product_count as stock
+                 		  FROM   purchase p
+                 		  WHERE  p.book_no = b.book_no AND                 		   
+                 		  		 p.order_no = #{order_no})
+                  
+		WHERE  EXISTS 	 (SELECT 1
+                 	      FROM   purchase p
+                  	      WHERE  p.book_no = b.book_no AND    
+                 		  	     p.order_no = #{order_no})
+	</update>	
+
+	<!-- 마이페이지 주문조회 (간단) (관리자 페이지로 넘길예정 : 페이징처리추가됨)
+		
+	<select id="searchOrder" parameterType="order" resultMap="orderList">		
+		select order_no,
+			   order_name,
+			   book_img, 
+      		   order_date,
+			   final_price,
+			   order_status				   
+		FROM  (SELECT  ROW_NUMBER() OVER (ORDER BY rnum DESC) AS rnum,
+		              order_no, 
+		              order_name, 
+		              book_img,
+		              order_date,	
+		              final_price, 
+		              order_status
+		      from   (select rownum rnum, 
+		      				 o.order_no, 
+		                     o.order_name, 
+		                     b.book_img, 
+		                     o.order_date,
+		                     y.final_price,
+		                     o.order_status,
+		                     ROW_NUMBER() OVER(PARTITION BY o.order_no ORDER BY o.order_name DESC) AS rn                       
+		              from   orders o, 
+		                     purchase p, 
+		                     book b,
+		                     pay y
+		              where  p.book_no = b.book_no   AND
+		                     p.order_no = o.order_no AND
+		                     y.pay_no = o.order_no   AND
+		                     o.user_no = #{user_no}
+		              )
+		     where rn = 1
+		     order by rnum desc)
+		     
+		WHERE rnum between ((#{pageNum}-1) * #{amount})+1 AND 
+		                     #{pageNum} * #{amount}	
+		order by order_no desc                     
+	</select>	
+	
+	-->	
 	
 	
 </mapper>

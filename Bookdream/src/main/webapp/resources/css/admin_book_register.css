@@ -1,0 +1,76 @@
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+#section_title1{
+color:var(--main-color-shadow2);
+font-weight: 800;
+}
+
+#book_content{
+	resize: none;
+	width: 50em;
+	height: 10em;
+	padding: 8px;
+	border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+}
+
+#star{
+	color: red;
+	font-weight: bold;
+}
+
+input {
+	width: 50em;
+	padding: 8px;
+	border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+}
+
+input#pblic_date,select#book_category{
+	width: 15em;
+	padding: 5px;
+}
+
+
+.btn.btn-primary{
+	    --bs-btn-color: #fff;
+    --bs-btn-bg: #6768ab;
+    --bs-btn-border-color: #6768ab;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #484877;
+    --bs-btn-hover-border-color: #484877;
+    --bs-btn-focus-shadow-rgb: 49,132,253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #484877;
+    --bs-btn-active-border-color: #484877;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #6768ab;
+    --bs-btn-disabled-border-color: #6768ab;
+}
+
+div.col-3{
+	padding: 5px;
+	align-self:center;
+	line-height: inherit;
+	margin-left : 10px;
+	color: var(--main-color-shadow2);
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+div.row.mt-3{
+margin-left: 5em;
+}
+
+#preview{
+	align-self:center;
+	align-content: center;
+	width: 15em;
+	margin-left : 6em;
+}

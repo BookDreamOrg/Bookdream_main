@@ -37,20 +37,20 @@ public class LoginController {
 		System.out.println("로그인 인증 처리 ...");
 		System.out.println(vo.getUser_id());
 		System.out.println(vo.getUser_password());
-		
-		
+			
 		boolean result = userService.loginCheck(vo, model);
 		UserVO user = userService.getUser(vo);
 		
 		if (result) { //로그인 성공
 			System.out.println("로그인 처리");
+			session.setAttribute("authUser", user);
 			
 			session.setAttribute("user_id", user.getUser_id());
 			session.setAttribute("user_no", user.getUser_no());
-			
+			 
 			session.setAttribute("flatform", user.getFlatform_type());
 			
-			return "/main/main_teset";
+			return "/main/main";
 		} else { //로그인 실패
 			System.out.println("로그인 실패");
 			
@@ -74,25 +74,20 @@ public class LoginController {
 			System.out.println("###nickname#### : " + userInfo.getUser_name());
 			System.out.println("###email#### : " + userInfo.getUser_email());
 			
-//			session.invalidate();
-//			
 			session.setAttribute("kakaoName", userInfo.getUser_name());
 			session.setAttribute("kakaoEmail", userInfo.getUser_email());
 			
-//			model.addAttribute("kakaoN", userInfo.getUser_name());
-//			model.addAttribute("kakaoE", userInfo.getUser_email());
-			
-//			System.out.println(session.getAttribute("kakaoName"));
-//			System.out.println(session.getAttribute("kakaoEmail"));
-			
-		return "/main/main_teset";
+			session.setAttribute("authUser", userInfo);
+			session.setAttribute("user_id", userInfo.getUser_id());
+			session.setAttribute("user_no", userInfo.getUser_no());		
+		return "/main/main";
 		
     	}
 	
 	@RequestMapping(value="/kakaoLogout", method=RequestMethod.GET)
 	public String kakaoLogout() {
 		session.invalidate();
-		return "/main/main_teset";
+		return "/main/main";
 	}
 
 

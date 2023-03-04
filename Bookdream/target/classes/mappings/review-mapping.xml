@@ -7,7 +7,7 @@
 
 	<resultMap type="review" id="reviewResult" >
 		<result property="review_no" column="REVIEW_NO" />
-		<result property="user_no" column="USER_NO" />
+		<result property="user_id" column="USER_id" />
 		<result property="book_no" column="BOOK_NO" />
 		<result property="review_content" column="REVIEW_CONTENT" />
 		<result property="review_date" column="REVIEW_DATE" />
@@ -15,22 +15,18 @@
 	</resultMap>
 
 
-
-
-
+<!-- 리뷰 가져오기 -->
 	<select id="getReview"  resultMap="reviewResult">
-	<![CDATA[ SELECT r.*,u.USER_ID 
-	FROM review r LEFT JOIN  users u 
-	ON r.USER_NO = u.USER_NO 
-	WHERE BOOK_NO = #{book_no} ORDER BY r.REVIEW_NO desc
+	<![CDATA[ SELECT * From review
+	WHERE BOOK_NO = #{book_no} ORDER BY REVIEW_NO desc
 	]]>
 	</select>
 	
-	
+<!-- 리뷰 등록 -->
 	<insert id="insertReview" parameterType="review" >
-		<![CDATA[ INSERT INTO review (REVIEW_NO,USER_NO,BOOK_NO,REVIEW_CONTENT,REVIEW_DATE,REVIEW_RECOMMEND,REVIEW_STAR)
+		<![CDATA[ INSERT INTO review (REVIEW_NO,USER_ID,BOOK_NO,REVIEW_CONTENT,REVIEW_DATE,REVIEW_RECOMMEND,REVIEW_STAR)
 		values ( (select NVL(max(REVIEW_NO),0)+1 from review),
-				 (select USER_NO from users where USER_ID = "test",		
+				 #{user_id},
 				 #{book_no}, 
                  #{review_content}, 
                  sysdate,
@@ -38,10 +34,83 @@
                  #{review_star}) ]]>
 	</insert>
 	
+<!-- 리뷰 추천 -->
 	<update id="updateReviewRecommend">
 		UPDATE review 
 		SET review_recommend = (SELECT (review_recommend + 1) FROM review WHERE review_no = #{review_no}) 
 		WHERE review_no = #{review_no}
 	</update>
 	
+<!-- 리뷰 수정 -->	
+	<update id="updateReview">
+		UPDATE review 
+		SET review_content = #{review_content}
+		WHERE review_no = #{review_no}
+	</update>
+	
+<!-- 리뷰 삭제 -->	
+	<delete id="deleteReview">
+		DELETE from review 
+		where review_no=#{review_no}
+	</delete>
+
+<!-- 리뷰 존재여부 확인 -->	
+	<select id="existReview" resultType="integer">
+	SELECT count(*) 
+	FROM review 
+	WHERE book_no=#{book_no} and user_id=#{user_id}
+	</select>
+
+<!-- 리뷰 평점 (소수점 1자리 까지) -->	
+	<select id="avgReview" resultType="double">
+	SELECT NVL(round(sum(review_star)/COUNT(*),1),0) 
+	FROM review 
+	WHERE BOOK_NO = #{book_no}
+	</select>
+
+<!-- 리뷰 별점 별 갯수,퍼센트 계산 -->	
+	<select id="progressStar" resultType="java.util.HashMap">
+	SELECT review_star,
+		   COUNT(review_star) as starCount,
+		   NVL(ROUND((COUNT(review_star)/(SELECT COUNT(*) FROM review WHERE book_no=#{book_no}))*100,2),0) as proportion 
+	FROM   review 
+	WHERE book_no = #{book_no}
+	GROUP BY review_star 
+	ORDER BY review_star
+	</select>
+
+<!-- 내가 작성한 리뷰 리스트 -->	
+	<select id="myReview" resultType="HashMap">
+		SELECT review_no, 
+			   review_content,
+			   review_recommend,
+			   review_star,
+			   TO_CHAR(review_date, 'YY.MM.DD HH24:MI') AS review_date,
+			   title,
+			   book_img
+		FROM   (SELECT ROW_NUMBER() OVER (ORDER BY review_date DESC) AS rnum,
+		               review_no,
+					   review_content,
+					   review_recommend,
+					   review_star,
+				       review_date,
+				       b.title, 
+				       b.book_img
+				FROM   review r, book b
+				WHERE  r.book_no = b.book_no AND
+					   user_id = #{user_id}
+				ORDER BY review_date DESC)
+				
+		WHERE rnum between ((#{pageNum}-1) * #{amount})+1 AND 
+		                     #{pageNum} * #{amount}
+	</select>
+
+<!-- 내가 작성한 리뷰 개수, 총 추천수, 평균평점 -->
+	<select id="myReviewCount" resultType="HashMap">
+		SELECT COUNT(*) as cnt, 
+			   SUM(review_recommend) as sum_rcmnd, 
+			   AVG(review_star) as avg_star
+		FROM   review
+		WHERE  user_id = #{user_id}
+	</select>	
 </mapper>

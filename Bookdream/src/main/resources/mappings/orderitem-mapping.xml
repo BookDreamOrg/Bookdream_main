@@ -4,72 +4,100 @@
 
 <mapper namespace="OrderitemDAO">
 
-	<resultMap type="orderitem" id="orderitemList">
-		<result property="cart_no" column="CART_NO" />
-		<result property="user_no" column="USER_NO" />	
-		<result property="book_no" column="BOOK_NO" />	
-		<result property="total_count" column="TOTAL_COUNT" />	
-		<result property="product_count" column="PRODUCT_COUNT" />	
-		<result property="col_count" column="COL_COUNT" />	
-		<collection property="userVO" resultMap="userList"></collection>		
-		<collection property="bookVO" resultMap="bookList"></collection>
-	</resultMap>	
-
-	<resultMap type="user" id="userList">
-		<result property="user_no" column="USER_NO" />
-		<result property="user_id" column="USER_ID" />
-	</resultMap>
-
-	<resultMap type="book" id="bookList">
-		<result property="book_no" column="BOOK_NO"/>
-		<result property="title" column="TITLE" />
-		<result property="author" column="AUTHOR" />
-		<result property="publisher" column="PUBLISHER" />
-		<result property="book_price" column="BOOK_PRICE" />
-		<result property="book_img" column="BOOK_IMG" />		
-	</resultMap>
-
-	<!-- user_no 변경필요 -->
-	<select id="getOrderitemList" parameterType="orderitem" resultMap="orderitemList">
-	<![CDATA[
-		SELECT c.cart_no, u.user_no, b.book_img, b.title, b.book_price, c.product_count, c.product_count * b.book_price AS total_count
-		FROM cart c, users u, book b
-		WHERE c.book_no = b.book_no AND u.user_no = c.user_no AND u.user_no = 1
-		order by cart_no
-	]]>
+	<!-- 장바구니에서 선택한 상품 표기 -->
+	<select id="getOrderitemList" resultType="HashMap">
+		SELECT c.cart_no, 
+			   u.user_no, 
+			   b.book_no, 
+			   b.book_img, 
+			   b.title, 
+			   b.book_price, 
+			   c.product_count
+			   
+		FROM   cart c, 
+			   users u, 
+			   book b
+			   
+		WHERE  c.book_no = b.book_no AND
+               u.user_no = c.user_no AND 
+			   u.user_no = ${user_no} AND
+               c.cart_no IN (
+		        <foreach collection="arrCart" item="item" index="index" separator=",">
+		            ${item}
+		        </foreach>               
+               )
+               
+		ORDER BY book_no	
 	</select>
 
-	<!-- user_no 변경필요 -->
-	<select id="getOrderitemCount" parameterType="orderitem" resultMap="orderitemList">
-	<![CDATA[
-		SELECT sum(product_count) as total_count, count(*) as col_count
-		FROM cart c, users u, book b
-		WHERE c.book_no = b.book_no 
-		AND   u.user_no = c.user_no
-	]]>
+	<!-- 장바구니에서 선택한 상품의 개수, 총 가격, 종류  -->
+	<select id="getOrderitemCount" resultType="HashMap">
+		SELECT SUM(product_count) AS total_count, 
+			   COUNT(*) AS col_count, 
+			   SUM(c.product_count * b.book_price) AS total_price
+			   
+		FROM   cart c, 
+			   users u, 
+			   book b
+			   
+		WHERE  c.book_no = b.book_no AND   
+			   u.user_no = c.user_no AND
+			   u.user_no = #{user_no} AND
+               c.cart_no IN (
+		        <foreach collection="arrCart" item="item" index="index" separator=",">
+		            ${item}
+		        </foreach>               
+               )			   
 	</select>
-
-	<!-- user_no 변경필요 -->	
-	<update id="updateBookStock">
-		UPDATE book b
-		SET    b.stock = (select (b.stock - c.product_count) as stock
-                 		  from  cart c, users u
-                 		  where c.book_no = b.book_no AND u.user_no = c.user_no)
-                  
-		WHERE  exists (select 1
-               from    cart c, users u
-               where   c.book_no = b.book_no 
-               and     u.user_no = c.user_no)
 	
-	</update>
-
-	<!-- user_no 변경필요 -->	
+	<!-- 바로구매에서 결제화면으로 전송함 -->
+	<select id="getBuyNow" resultType="HashMap">
+		SELECT b.book_no,
+			   b.book_img, 
+			   b.title, 
+			   b.book_price   
+			   
+		FROM   users u, 
+			   book b
+			   
+		WHERE  u.user_no = #{user_no} AND
+			   b.book_no = #{book_no}
+	</select>
+		
+	<!-- 구입한 상품 장바구니 제거 (장바구니만)-->
 	<delete id="deleteCartList">
 		DELETE
-		FROM (select u.user_no, c.cart_no
-	    FROM  users U, book B, cart C
-        	  where u.user_no = c.user_no  AND c.book_no = b.book_no)      
-		WHERE user_no = 1
+		
+		FROM (select u.user_no, 
+					 c.cart_no
+	    	  from   users u, 
+	    	         book b, 
+	    	         cart c
+        	  where  u.user_no = c.user_no AND 
+        	         c.book_no = b.book_no AND
+        	         c.cart_no IN (
+			        <foreach collection="arrCart" item="item" index="index" separator=",">
+			            ${item}
+			        </foreach>         	         
+        	         )
+        	 )      
+        	 
+		WHERE user_no = #{user_no}
 	</delete>
+	
+	
+	<!-- 결제 후 포인트 정산 -->
+	<update id="updateUserPoint">
+		UPDATE users u
+		SET    user_point = (SELECT (user_point - (use_point - save_point)) AS user_point
+                  			 FROM    pay p
+                  			 WHERE   user_no = #{user_no} AND 
+                  			 		 pay_no = #{pay_no})
+		WHERE  EXISTS (SELECT 1 
+         		       FROM  
+         		       		  pay p 
+             	       WHERE  user_no = #{user_no} AND 
+             	       		  pay_no = #{pay_no}) 	
+	</update>
 </mapper>
 

@@ -16,13 +16,221 @@
 		<result property="book_img" column="BOOK_IMG" />
 		<result property="pblic_date" column="PBLIC_DATE" />
 		<result property="book_category" column="BOOK_CATEGORY" />
+		<result property="discount" column="DISCOUNT" />
+	</resultMap>
+	
+	
+	<resultMap type="book" id="bookResultPasing">
+		<id property="book_no" column="BOOK_NO" />
+		<result property="isbn_no" column="ISBN_NO" />
+		<result property="title" column="TITLE" />
+		<result property="author" column="AUTHOR" />
+		<result property="publisher" column="PUBLISHER" />
+		<result property="book_content" column="BOOK_CONTENT" />
+		<result property="stock" column="STOCK" />
+		<result property="book_price" column="BOOK_PRICE" />
+		<result property="book_img" column="BOOK_IMG" />
+		<result property="pblic_date" column="PBLIC_DATE" />
+		<result property="book_category" column="BOOK_CATEGORY" />
+		<result property="discount" column="DISCOUNT" />
+		<result property="index" column="INDEX" />
+		<result property="startIndex" column="STARTINDEX" />
+		<result property="endIndex" column="ENDINDEX" />
+		<result property="finalIndex" column = "FINALINDEX" />
 	</resultMap>
 
-	
+	<!-- 책 한권 정보 가져오기 -->
 	<select id="getBook" resultMap="bookResult">
 		SELECT * 
 		FROM book where book_no = #{book_no}
 	</select>
+	
+	<!-- 검색한 책 정보 가져오기 -->
+	<select id="getBookKeyword" resultMap="bookResult">
+		SELECT * 
+		FROM book 
+		WHERE title like '%' ||  #{keyword} || '%' 
+	</select>
+	
+	<!-- [페이징] 책 키워드 검색 시 결과 값 count -->
+	<select id="getBookByKeywordCount" resultType="Double">
+		SELECT COUNT(*) 
+		FROM book 
+		WHERE title like '%' ||  #{keyword} || '%' 
+	</select>
+	
+	
+	<!-- 구매수량이 많은 상위 5개 도서 정보 가져오기 -->
+	<select id="bestSeller" resultMap="bookResult">
+		<![CDATA[
+		select * from book 
+        inner join (select book_no,sum(product_count) ,rank()over (order by sum(product_count) desc) rank 
+                     from purchase 
+                     group by book_no) order_item
+         on book.book_no =  order_item.book_no
+         where rank <=5 and rownum <=5
+         order by rank    
+         ]]>  
+	</select>
+	
+	<!-- 리뷰 많이 등록된 상위 5개 도서 정보 가져오기 -->
+	<select id="bestSellerByReviewCount" resultMap="bookResult">
+	<![CDATA[
+	 select * 
+     from book 
+     inner join(
+                     select book_no, count(*), rank()over (order by count(*) desc) rank 
+                     from review group by book_no) review_item
+     on book.book_no = review_item.book_no
+     where rank <=5 and rownum <=5
+     order by rank   
+	 ]]> 
+	</select>
+	
+	
+	<!-- 평균 리뷰가 높은 상위 5개 도서 정보 가져오기 -->
+	<select id="bestSellerByReviewGrade" resultMap="bookResult">
+	   <![CDATA[ 
+	   select * from book 
+        inner join 
+                (select book_no, round(sum(review_star)/count(*),2),rank()over (order by sum(review_star)/count(*) desc) rank  
+                 from 
+                 review group by book_no) review_item
+         on book.book_no =  review_item.book_no
+         where rank <=5 and rownum <=5
+         order by rank
+	   ]]>  
+	</select>
+	
+	
+	<!-- [어드민] 필터링 된 도서 정보 가져오기 -->
+	<select id="adminBookList" resultMap="bookResultPasing">
+			SELECT * 
+			FROM book  
+			<where>
+			<if test="title != null || title != ''  ">
+			AND title like '%' ||  #{title} || '%' 
+			</if>	
+			<if test="author != null || author != '' ">
+			AND  author  like '%' ||  #{author} || '%' 
+			</if>
+			<if test="publisher != null || publisher !='' ">
+			AND  publisher like '%' ||  #{publisher} || '%'
+			</if>
+			<if test="!book_category.equals('all')">
+			AND book_category = #{book_category}
+			</if>
+			</where>
+
+	</select>
+	
+	<!-- [어드민] 필터링 된 도서 정보 가져오기 -->
+	<select id="adminBookListCount" resultType="double">
+			SELECT COUNT(*) 
+			FROM book  
+			<where>
+			<if test="title != null || title != ''  ">
+			AND title like '%' ||  #{title} || '%' 
+			</if>	
+			<if test="author != null || author != '' ">
+			AND  author  like '%' ||  #{author} || '%' 
+			</if>
+			<if test="publisher != null || publisher !='' ">
+			AND  publisher like '%' ||  #{publisher} || '%'
+			</if>
+			<if test="!book_category.equals('all')">
+			AND book_category = #{book_category}
+			</if>
+			</where>
+
+	</select>
+	
+	
+	
+	<!-- [어드민/모달] 기존 재고에 수량 추가-->
+	<update id="updateBookStock">
+	   <![CDATA[ 
+	   UPDATE book SET stock = ((SELECT stock 
+	   							FROM book 
+	   							WHERE book_no = #{book_no} ) + #{stock}) 
+	   WHERE book_no = #{book_no}
+	   ]]>  
+	</update>
+	
+	<!-- [어드민/모달] 도서 삭제 -->
+	<delete id="deleteBook">
+	 <![CDATA[  DELETE FROM book WHERE book_no = #{book_no}  ]]>  
+		
+	</delete>
+	
+	<insert id="bookRegister"   >
+	 <![CDATA[ insert into book (
+		BOOK_NO,
+		ISBN_NO,
+		TITLE,
+		AUTHOR,
+		PUBLISHER,
+		BOOK_CONTENT,
+		STOCK,
+		BOOK_PRICE,
+		BOOK_IMG,
+		PBLIC_DATE,
+		BOOK_CATEGORY
+		) 
+		values 
+		( 
+		(select nvl(max(book_no),0)+1 from book),
+		#{isbn_no, jdbcType=VARCHAR},
+		#{title},
+		#{author},
+		#{publisher},
+		#{book_content},
+		#{stock, jdbcType=INTEGER},
+		#{book_price},
+		#{book_img},
+		#{pblic_date},
+		#{book_category}
+		)  ]]>  
+	</insert>
+	
+		<!-- 이미지 이름으로 사용  -->
+	<select id="bookImgName" resultType="Integer">
+	   <![CDATA[ 
+	   select nvl(max(book_no),0)+1 from book 
+	   ]]>  
+	</select>
+	
+	
+	<!-- 검색한 책 정보 가져오기 -->
+	<select id="checkGetBook" resultMap="bookResult">
+		SELECT * 
+		FROM book 
+		WHERE book_no 
+		IN
+	<foreach collection="list" item="list" index="index"
+            separator="," open="(" close=")">
+            #{list}
+	</foreach>
+
+	</select>
+	
+	
+	<update id="chkBookUpd" parameterType="java.util.List">
+
+	<foreach collection="list" item="item" separator=";" open="DECLARE BEGIN" close="; END;">
+	UPDATE book 
+	
+	<trim prefix="SET" suffixOverrides=",">
+      <if test=" item.book_price != 0 ">book_price = #{item.book_price},</if>
+      <if test=" item.discount != 0 ">discount = #{item.discount},</if>
+      <if test=" item.stock != 0 ">stock = #{item.stock},</if>
+   </trim>
+   	WHERE  book_no = #{item.book_no}
+	</foreach>
+	
+	
+	</update>
+	
 	
 </mapper>
 

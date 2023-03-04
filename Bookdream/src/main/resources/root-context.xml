@@ -75,5 +75,12 @@
 		<property name="redirectUri" ref="googleRedirectUrl" />
 	</bean>
 	
+	
+	<!-- 파일 등록 관련 bean 추가 -->
+<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+   <property name="maxUploadSize" value="209715200" />
+   <property name="maxInMemorySize" value="10485760" />
+</bean>
+	
 
 </beans>

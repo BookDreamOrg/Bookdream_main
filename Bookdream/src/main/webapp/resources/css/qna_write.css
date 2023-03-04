@@ -1,0 +1,46 @@
+
+.rside {
+	height: auto;
+	width: 950px;
+	min-height: 1200px;
+	float: right;
+	margin-top: 130px;
+}
+
+.main {
+	line-height: 180%;
+	position: relative;
+	margin: 0 auto;
+	width: 1240px;
+	height: auto;
+	min-height: 1000px;
+}
+
+.user-btn {
+	color: var(- -main-color-shadow6);
+	font-size: 2rem;
+}
+
+.qna_title {
+	font-size: 30px;
+	float: left;
+}
+
+.qna_btn {
+	float: right;
+	color: #484877;
+	border-color: #484877;
+}
+
+.qna_btn:hover{
+	background-color: #484877;	
+}
+
+.form_textarea {
+	width: 100%;
+	margin-top: 5px;
+}
+
+.qna_btn{
+	float: right;	
+}

@@ -10,6 +10,7 @@
 		<param-value>
 			classpath:root-context.xml
 			classpath:mail-context.xml
+			classpath:visit-context.xml
 		</param-value>
 	</context-param>
 	
@@ -64,8 +65,12 @@
 
 	<filter-mapping>
 		<filter-name>characterEncoding</filter-name>
-		<url-pattern>/</url-pattern>
+		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
+	
+	 <listener>
+        <listener-class>com.spring.bookdream.visit.VisitSessionListener</listener-class>
+    </listener>
 
 
 

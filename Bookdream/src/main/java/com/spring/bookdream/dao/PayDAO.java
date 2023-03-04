@@ -1,5 +1,8 @@
 package com.spring.bookdream.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -18,6 +21,43 @@ public class PayDAO {
 		System.out.println("---> PayDAO inserPay 실행 <---");
 		mybatis.insert("PayDAO.insertPay", vo);		
 	}
+
+	public PayVO searchPay(PayVO vo) {
+		
+		System.out.println("---> PayDAO searchPay 실행 <---");
+
+		return mybatis.selectOne("PayDAO.searchPay", vo);	
+	}
 	
+	public Map<String, Object> lastPayment(PayVO vo) {
+		
+		System.out.println("---> PayDAO lastPayment 실행 <---");
+
+		return mybatis.selectOne("PayDAO.lastPayment", vo);	
+	}
+
+	public List<Map<String, Object>> payWekTotalPrice(PayVO vo) {
+		
+		return mybatis.selectList("PayDAO.payWekTotalPrice", vo);	
+	}
+
+	// 월간 결제 금액
+	public List<Map<String, Object>> payMlyTotalPrice(PayVO vo) {
+		
+		return mybatis.selectList("PayDAO.payMlyTotalPrice", vo);	
+	}
+
+	// 총 결제 금액
+	public Map<String, Object> totalPaymentAmount(PayVO vo) {
+
+		return mybatis.selectOne("PayDAO.totalPaymentAmount", vo);	
+
+	}
+
+	// 결제수단 비율
+	public Map<String, Object> payMethodRate() {
+		
+		return mybatis.selectOne("PayDAO.payMethodRate");	
+	}	
 
 }

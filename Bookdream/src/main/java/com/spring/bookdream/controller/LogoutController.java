@@ -17,7 +17,7 @@ public class LogoutController {
 		session.invalidate();
 
 		// 2. 세션 종료후, 메인 화면으로 이동한다.
-		return "/main/main_teset";
+		return "redirect:/views/main/main.jsp";
 
 	}
 

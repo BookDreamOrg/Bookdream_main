@@ -1,0 +1,389 @@
+@charset "UTF-8";
+
+.wrapper {
+	height: auto;
+}
+
+.main {
+	line-height: 180%;
+	position:relative;
+	margin: 0 auto;
+	width: 1240px;
+	height: auto;
+	min-height: 1200px;
+}
+
+/***************************** 주문내역 카운터 *****************************/
+.main_tracking {
+	height: auto;
+	min-height: 1000px;
+	width: 950px;
+	float: right;	
+	padding: 0px 40px;
+}
+
+.tracking {
+	position: relative;
+	width: 870px;
+	height: 200px;
+	margin-bottom: 30px;
+}
+
+.tracking_title {
+	height: 100px;
+	padding: 30px 0px 30px 30px;
+	vertical-align: middle;
+	margin-top: 30px;
+	font-weight:bold;
+	font-size: 20px;
+}
+
+.order_search_title {
+	font-weight: normal;
+	float: right;
+	font-size: 12px;
+}
+
+.order_search_btn {
+	
+	margin-left: 20px;
+	font-weight: bold;
+	font-size: 14px;
+	
+}
+
+.tracking_history {
+	vertical-align:middle;
+	height: 200px;
+	margin-bottom: 20px;
+}
+
+
+.tracking_main_table {
+	width:100%;
+	height:100px;
+	background-color: #f7f7f7; 
+}
+
+.tracking_main_table_col1, .tracking_main_table_col2, .tracking_main_table_col3, .tracking_main_table_col4, .tracking_main_table_col5 {
+	width: 310px;
+	padding: 0px 30px;
+	font-size: 12px;
+	vertical-align: middle;
+}
+
+.tracking_main_table_col1 {
+	font-weight: bold;
+	font-size: 16px;	
+}
+.order_count {
+	color: #3d3e66;
+	font-size: 22px;
+	font-weight: 900;
+}
+
+.btns {
+	font-size: 10px;
+	text-decoration-line: none; 	
+}
+
+/* */
+.paging, .orderCnt {
+	display: inline-block;
+}
+
+.paging_btn {
+	height: 30px;
+	font-size: 12px;
+	line-height: 12px;
+}
+.orderCnt {
+	float: right;
+}
+
+/***************************** offcanvas *****************************/
+.offcanvas {
+	padding: 0px 20px;
+}
+
+
+.offcanvas_text {
+	margin-bottom: 20px;
+	padding:10px;
+	font-size: 12px;
+	background-color: #f7f7f7; 
+}
+
+.srch_date {
+	height: 35px;
+	text-align: center;
+	font-size: 14px;
+	line-height: 35px;
+	border: 1px solid #ced4da;
+	margin-bottom: 30px;
+	margin-top: 6px;
+	cursor: pointer;
+
+}
+
+.order_status_select  {
+	line-height:150%;
+	font-size: 14px;
+	margin: 5px 0px 30px 0px;
+}
+
+.order_search_reset_btn, .order_search_view_btn {
+	width: 100px;
+	height: 40px;
+	margin-top: 20px;
+
+}
+
+.order_search_reset_btn {
+	margin-left: 50px;
+}
+
+
+/***************************** 주문내역 리스트 *****************************/
+
+.trackinglist {
+	height: auto;
+	min-height: 100px;
+}
+
+
+.trackinglist_null {
+	margin-top:50px;
+	font-size: 30px;
+	opacity:0.5;
+	text-align: center;
+}
+
+
+
+.trackinglist_table {
+	margin:50px 0px;
+	width: 100%;
+	font-size: 14px;
+	border-top: 2px dotted #DFDFDF;
+	border-bottom: 2px dotted #DFDFDF;
+}
+
+.trackinglist_table_th1 {
+	width: 70%;
+	height: 100px;
+	padding-left: 35px;	
+	vertical-align: middle;
+	border-bottom: 1px dotted #DFDFDF;		
+}
+
+.trackinglist_table_th2, .trackinglist_table_th3{
+	width: 15%;
+	text-align: center;
+	vertical-align: middle;	
+	border-bottom: 1px dotted #DFDFDF;	
+}
+
+
+
+.trackinglist_table_title {
+	color : #5c5d99;
+	font-weight: bold;
+}
+
+.trackinglist_table_detail_btn {
+	font-size: 12px;
+	color:black;
+	text-decoration-line: none;
+	
+}
+
+.trackinglist_table_img {
+	width: 80px;
+	height: 100px;
+	border: 1px solid black;
+}
+
+.trackinglist_table_col1, .trackinglist_table_col3, .trackinglist_table_col4 {
+	width: 15%;
+	height: 150px;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.trackinglist_table_col2 {
+	width: 55%;
+	max-width:500px;
+	height: 150px;
+	vertical-align: middle;
+}
+
+
+.trackinglist_table_col4 {
+	font-weight: bold;
+}
+
+
+.trackinglist_table_hr {
+	margin: 0px 20px 0px 20px;
+}
+
+.tracking_detail {
+	padding:20px;
+	height: 800px;
+}
+
+.tracking_detail_table {
+	width: 100%;
+	margin-top: 30px;
+	font-size: 12px;	
+}
+
+.tracking_detail_table_col1, .tracking_detail_table_col3, .tracking_detail_table_col4 {
+	width: 100px;
+	height: 100px;
+	padding: 10px 0px;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.tracking_detail_table_img {
+	width: 60px;
+	height: 80px;
+	border: 1px solid black;
+}
+
+.tracking_detail_table_col2 {
+
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap; 
+	width: 450px;
+	max-width: 400px;
+	padding: 20px 10px 10px 10px;
+
+	vertical-align: middle;	
+}
+
+.tracking_detail_title {
+	font-weight:bold;
+	margin-top: 80px;
+}
+
+.tracking_detail_address {
+	margin-left: 3px;
+	font-size: 12px;
+	
+}
+
+.tracking_detail_price_col1, .tracking_detail_price_col4 {
+	display:inline-block;
+	width: 220px;
+	height: 50px;
+	margin-left: 3px;
+	font-size:12px;
+ 	border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.tracking_detail_price_col2 {
+	display:inline-block;
+	width: 220px;
+	height: 20px;
+	margin-left:10px;
+	font-size:12px;
+ 	border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.tracking_detail_price_col3 {
+	display:inline-block;
+	width: 220px;
+	height:20px;
+	margin-left:10px;
+	font-size:12px;
+}
+
+.tracking_detail_price_right {
+	margin-right:10px;
+	float: right;
+}
+
+.tracking_detail_price_left {
+	float: left;
+	font-size: 11px;
+	opacity: 0.5;
+}
+
+.button-left {
+	float: left;
+}
+
+
+/* 배송조회 */
+.dlvry_check_modal {
+	height: 600px;
+	padding: 30px;
+}
+
+.dlvry_icon_box {
+	display: flex;
+	height: 35%;	
+	justify-content: center;
+	align-items: center;	
+	margin-top: 30px;
+
+}
+
+.dlvry_icon_text {
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0px 50px;
+}
+
+.dlvry_icon_text span {
+	margin-top: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    opacity: 0.4;
+}
+
+
+.dlvry_icon {
+	opacity: 0.1;
+	font-size: 100px;
+	
+}
+
+.dlvry_content {
+	display: flex;
+	height: 50%;
+	justify-content: center;
+	align-items: center;		
+	margin-top: 30px;
+
+}
+
+.dlvry_info_table {
+	width: 100%;
+	height: 70%;
+	margin: auto;
+	margin-top: 30px;
+	text-align:left;	
+	font-size: 12px;	
+
+}
+
+.dlvry_info_table th {
+	padding-left: 10px;
+	vertical-align:middle;
+	font-weight: bold;
+	width: 18%;
+}
+
+.dlvry_info_table td {
+	padding-left: 10px;	
+	vertical-align: middle;	
+	width: 32%;
+}

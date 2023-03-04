@@ -7,54 +7,6 @@
 main {
   flex: 1;
 }
-.banner {
-  width: 100%;
-  padding: 0.5rem 0rem 1.5rem 10rem;
-  height: 30rem;
-  background-color: var(--main-color-tint8);
-}
-
-.banner-text {
-  font-size: 3rem;
-  display: flex;
-  align-items: center;
-  margin-top: 3rem;
-  margin-bottom: 6rem;
-}
-
-.banner-img {
-  width: 100%;
-  height: 14rem;
-  border-top-left-radius: 1rem;
-  border-bottom-left-radius: 1rem;
-  background-color: var(--main-color-tint9);
-}
-
-.banner-books {
-  display: flex;
-  align-items: flex-end;
-  position: relative;
-  bottom: 22rem;
-  left: 45rem;
-}
-
-.banner-book {
-  margin-right: 0.3rem;
-  width: 10rem;
-  height: 12rem;
-  border-radius: 10px;
-  background-color: var(--main-color-shadow2);
-}
-
-.banner-book-lg {
-  width: 12rem;
-  height: 14rem;
-}
-
-.banner-book-xl {
-  width: 12rem;
-  height: 16rem;
-}
 
 .book-section-nav {
   margin-top: 3rem;
@@ -63,6 +15,6 @@ main {
 
 .book-section {
   width: 100%;
-  height: 50rem;
+  height: auto;
   background-color: #ececec;
 }

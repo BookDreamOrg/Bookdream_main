@@ -37,6 +37,12 @@ html, body{
         
         .login_btn{
         	height: 50px;
+        	color: #484877;
+        	border-color: #484877;
+        }
+        
+        .login_btn:hover{
+        	background-color: #484877;
         }
         
         .login_btn .text{
@@ -73,10 +79,26 @@ html, body{
         }
         
         .sns_login_box .sns_login_list .sns_login_item{
+        	border-color: white;
         }
         
+        .sns_login_btn{
+        	border: none;
+        	background-color: white;
+        }
         
+         .id_chk_btn{
+        	color: #484877;
+        	border-color: #484877;
+        }
         
+        .id_chk_btn:hover{
+        	background-color: #484877;
+        }
         
-        
+        .tab-pane{
+        	width: 370px;
+        	height: 370px;
+        	
+        }
         

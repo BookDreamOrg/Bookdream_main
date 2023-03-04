@@ -72,5 +72,24 @@ html, body{
 		
 		
 		.id_chk_btn{
+			border-radius: 5px;
         	height: 50px;
+        	color: #484877;
+        	border-color:  #484877;
+        }
+        
+        .id_chk_btn:hover{
+        	background-color: #484877;
+        }
+        
+        .join-submit{
+        	font-size: 16px;
+			font-weight: bold;
+			width: 100%;
+			color: #484877;
+        	border-color:  #484877;
+        }
+        
+        .join-submit:hover{
+        	background-color: #484877;
         }

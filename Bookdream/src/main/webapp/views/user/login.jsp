@@ -30,52 +30,54 @@
           </div>
           <div class="btn_wrap justify">
           	<div class="d-grid">
-          	 <button class="login_btn w-20 btn btn-sm btn-secondary" type="submit">
+          	 <button class="login_btn w-20 btn btn-sm btn-outline-primary" type="submit">
           	 	<span class="text"><b>로그인</b></span>
           	 </button>
           	</div>
           <div class="save_id_box">
           	<span class="form_chk">
           		<label class="formSaveId">
-          			<input type="checkbox" value="remember-me" id="saveId"> <a href="" class="btn_text_link">아이디 저장</a>
+          			<input type="checkbox" value="remember-me" id="saveId"> <span class="btn_text_link">아이디 저장</span>
           		</label>
           	</span>
-          	<a href="" class="btn_text_link">아이디 비밀번호 찾기</a>
+          	<a href="idfind.jsp" class="btn_text_link">아이디 비밀번호 찾기</a>
           </div>
           
         
         </div>
         
-        <div class="sns_login_box">
+   
+       </form>
+       
+ 		<div class="sns_login_box">
           	<ul class="sns_login_list">          	
           		<li class="sns_login_item">
-          			<a href="https://kauth.kakao.com/oauth/authorize?client_id=47ad839005d8b9a94d3007b30a956894&redirect_uri=http://localhost:8000/views/user/kakaoLogin&response_type=code">
-          				<img src="/resources/images/kakao_login2.PNG" class="rounded-circle" width="50px" height="45px">
-          			 
-          			 </a>
+          		<button onclick="kakaoLogin()" class="sns_login_btn">
+          			<img src="/resources/images/kakao_login2.PNG" class="rounded-circle" width="50px" height="45px">
+          		</button>	 
           		</li>
           		<li class="sns_login_item">
-          			<a href="">
+	          		<button onclick="naverLogin()" class="sns_login_btn">
           				<img src="/resources/images/naver_login.png" class="rounded-circle" width="50px" height="45px">
-          			 
-          			 </a>
+          			 </button>
           		</li>
-          		<li class="sns_login_item">
-          			<a href="">
+          		<li class="sns_login_item">	
+          			<button onclick="googleLogin()" class="sns_login_btn">
           				<img src="/resources/images/google_login.PNG" class="rounded-circle" width="50px" height="45px">
-          			 
-          			 </a>
+          			</button>
           		</li>
           	</ul>
           </div>
           
           <div class="d-grid">
-          	 <button class="login_btn w-20 btn btn-sm btn-light" type="button" onclick="location.href='join.jsp'">
+          	 <button class="login_btn w-20 btn btn-sm btn-outline-primary" type="button" onclick="location.href='join.jsp'">
           	 	<span class="text"><b>회원가입</b></span>
           	 </button>
           </div>
-       </form>
     </main>
+    
+    <script src="/resources/js/socialLogin.js"></script>
+     
      
     <!-- 로그인 실패시  -->
     <script type="text/javascript"> 
@@ -138,10 +140,10 @@
 	    function saveid() {
 	        var expdate = new Date();
 	        if ($("#saveId").is(":checked")){
-	            expdate.setTime(expdate.getTime() + 1000 * 3600 * 24 * 30);
+	            expdate.setTime(expdate.getTime() + 1000 * 3600 * 24 * 3);
 	            setCookie("saveid", $("#user_id").val(), expdate);
             }else{
-	           expdate.setTime(expdate.getTime() - 1000 * 3600 * 24 * 30);
+	           expdate.setTime(expdate.getTime() - 1000 * 3600 * 24 * 3);
 	            setCookie("saveid", $("#user_id").val(), expdate);
 	             
 	        }
@@ -157,5 +159,6 @@
 		
 		
 	</script>
+	
  </body>
 </html>

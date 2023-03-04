@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="QnADAO"> 
+
+	<resultMap type="qna" id="qnaResult">
+		<result property="qna_no" column="qna_no"/>
+		<result property="user_no" column="user_no"/>
+		<result property="qna_title" column="qna_title"/>
+		<result property="qna_content" column="qna_content"/>
+		<result property="qna_type" column="qna_type"/>
+		<result property="reg_date" column="reg_date"/>
+		<result property="ans_check" column="ans_check"/>
+		<result property="displayPost" column="displayPost;"/>
+		<result property="postNum" column="postNum"/>
+	</resultMap>
+
+	<resultMap type="answer" id="answerResult">
+		<result property="ans_no" column="ans_no"/>
+		<result property="ans_content" column="ans_content"/>
+		<result property="user_no" column="user_no"/>
+		<result property="qna_no" column="qna_no"/>
+	</resultMap>
+
+	<resultMap type="map" id="answerMapList">
+		<result property="qna_no" column="qna_no"/>
+     	<result property="ans_no" column="ans_no"/>
+		<result property="ans_content" column="ans_content"/>
+		<result property="user_no" column="user_no"/>
+    </resultMap>
+	
+	<resultMap type="user" id="userResult">
+		<result property="user_id" column="user_id"/>
+		<result property="user_password" column="user_password"/>
+		<result property="user_name" column="user_name"/>
+		<result property="user_tel" column="user_tel"/>
+		<result property="user_level" column="user_level"/>
+		<result property="blacklist_yn" column="blacklist_yn"/>
+		<result property="flatform_type" column="flatform_type"/>		
+		<result property="user_email" column="user_email"/>
+		<result property="user_point" column="user_point"/>
+		<result property="user_regdate" column="user_regdate"/>
+		<result property="searchUserKeyword" column="searchUserKeyword"/>
+		<result property="displayPost" column="displayPost"/>
+		<result property="postNum" column="postNum"/>
+		<result property="countlistnum" column="countlistnum"/>
+	</resultMap>
+	
+	<!-- 문의 insert  -->	
+	<insert id="qnaInsert">
+		insert into QNA(QNA_NO, USER_NO, QNA_TITLE, QNA_CONTENT, QNA_TYPE) 
+		values(qna_seq.nextval, #{user_no}, #{qna_title} ,#{qna_content}, #{qna_type})
+	</insert> 
+	
+	<!-- 나의 문의 리스트 가져오기  -->
+	<select id="getMyQnAList" resultMap="qnaResult" parameterType="int">
+		select * from QNA where user_no = #{user_no} order by reg_date DESC
+	</select>
+	
+	<!-- 문의정보 가져오기 -->
+	<select id="getQnA" resultType="qna">
+		select * from QNA where qna_no = #{qna_no}
+	</select>
+	
+	<!-- 문의 수정  -->
+	<update id="updateQnA" parameterType="qna">
+		update QNA set qna_title=#{qna_title}, qna_content=#{qna_content}, qna_type=#{qna_type} where qna_no = #{qna_no}
+	</update>
+	
+	<!-- 문의 삭제  -->
+	<delete id="deleteQnA" parameterType="qna">
+		delete from QNA where qna_no = #{qna_no}
+	</delete>
+	
+	<!-- 답변대기 리스트 가져오기 -->
+	<select id="getWaitQnAList" resultMap="qnaResult">
+		select * from QNA where ans_check = '0' order by reg_date
+	</select>
+
+	<!-- 답변완료 리스트 가져오기 -->
+	<select id="getClearQnAList" resultMap="qnaResult">
+		select * from QNA where ans_check = '1' order by reg_date
+	</select>
+
+	<!-- 답변 insert -->
+	<insert id="insertAnswer">
+		insert into ANSWER (ans_no, ans_content, user_no, qna_no) 
+		values (answer_seq.nextval, #{ans_content}, #{user_no}, #{qna_no})
+	</insert>
+	
+	<!-- 답변 체크 -->
+	<update id="answerCheck" parameterType="qna">
+		update QNA set ans_check = 1 where qna_no = #{qna_no}
+	</update>
+	
+	<!-- 답변 가져오기 -->
+	<select id="getAnswer" resultMap="answerResult" parameterType="qna">
+		select * from answer where user_no = #{user_no}
+	</select>
+
+	<!-- 나의 문의 리스트 가져오기  -->
+	<select id="getRecentMyQnAList" resultType="HashMap">
+		select * 
+		from QNA 
+		where user_no = #{user_no} and 	
+		<![CDATA[ rownum <= 3]]> 
+		order by qna_no desc
+	</select>	
+	
+	<!-- 답변 대기 중인 유저정보 가져오기 -->
+	<select id="getQnAUser" resultType="user">
+		select u.* from QNA q, USERS u where q.user_no = u.user_no
+	</select>
+	
+	<!-- 답변 페이징 처리로 답변 대기 리스트 가져오기 -->
+	<select id="getAllQnAPageList" resultMap="qnaResult" parameterType="qna">
+	 select * from (select ROW_NUMBER() over (order by qna_no desc) NUM, A.* from QNA A where ans_check = '0' order by reg_date desc)
+ 					where NUM between #{displayPost} AND (#{displayPost} + #{postNum})
+	</select>
+	
+	<!-- 답변 페이징 처리로 답변 완료 리스트 가져오기 -->
+	<select id="getClearQnAPageList" resultMap="qnaResult" parameterType="qna">
+	 select * from (select ROW_NUMBER() over (order by qna_no desc) NUM, A.* from QNA A where ans_check = '1' order by reg_date desc)
+ 					<if test="displayPost != null">
+ 						where NUM between #{displayPost} AND (#{displayPost} + #{postNum})
+ 					</if>
+	</select>
+	
+	<!-- 문의 전체리스트 가져오기 -->
+	<select id="getAllQnAList" resultMap="qnaResult">
+		select * from QNA order by reg_date DESC
+	</select>
+</mapper>

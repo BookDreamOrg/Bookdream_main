@@ -1,0 +1,105 @@
+
+.rside {
+	height: auto;
+	width: 950px;
+	min-height: 1200px;
+	float: right;
+}
+
+.main {
+	line-height: 180%;
+	position: relative;
+	margin: 0 auto;
+	width: 1240px;
+	height: auto;
+	min-height: 1000px;
+}
+
+.user-btn {
+	color: var(- -main-color-shadow6);
+	font-size: 2rem;
+}
+
+.qna_title {
+	padding: 30px;
+    vertical-align: middle;
+    height: 100px;
+	margin-top: 30px;    
+    font-size: 20px;
+    font-weight: bold;
+	
+}
+
+.qna_button {
+	float: right;
+	font-weight:bold;
+	height: 40px;
+	margin-top: 50px;
+	color: #484877;
+	border-color: #484877;
+}
+
+.qna_button:hover{
+	background-color: #484877;	
+}
+
+.qna_body {
+}
+
+.qna_header{
+	display: flex;
+	justify-content: space-between;
+}
+
+.qna_list_title {
+	font-size: 16px;
+}
+
+.qna_list_date {
+	float: right;
+}
+
+.qna_sumbmit {
+	display: flex;
+	margin-top: 20px;
+}
+
+.qna_submit_btn {
+	display: flex;
+	margin-left: auto;
+}
+
+.qna_update_btn {
+	margin-right: 10px;
+}
+.drop_btn {
+	font-size: 2rem;
+}
+.ans_text{
+	font-size: 20px;
+	margin-left: 5px;
+}
+.card{
+	font-size: 14px;
+}
+.qna-update{
+	text-decoration: none;
+	color: #484877;
+	border: none;
+}
+.qna-update:hover{
+	background-color: #484877;
+	transition: 0.7s;
+}
+.qna-delete{
+	text-decoration: none;
+	color: #484877;
+	border: none;
+}
+.qna-delete:hover{
+	background-color: #484877;
+	transition: 0.7s;
+}
+.table-header{
+	background-color: #F7F7F7;
+}

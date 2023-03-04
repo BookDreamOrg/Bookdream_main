@@ -4,19 +4,127 @@
 			
 <mapper namespace="PayDAO">
 
+	<resultMap type="pay" id="payList">
+		<result property="pay_no" column="PAY_NO" />
+		<result property="pay_date" column="PAY_DATE" />		
+	</resultMap>
 
 	<insert id="insertPay" >
 		INSERT INTO pay(PAY_NO, 
 						PAY_METHOD, 
+						PAY_FEE,
 						DISCOUNT_PRICE, 
+						TOTAL_PRICE,
 						FINAL_PRICE, 
-						SAVE_POINT) 
+						SAVE_POINT,
+						USE_POINT) 
 		VALUES ((select nvl(max(PAY_NO), 0) + 1 from pay), 
 				 #{pay_method}, 
+				 #{pay_fee},				 
 				 #{discount_price}, 
+				 #{total_price}, 
 				 #{final_price}, 
-				 #{save_point}
-				 )
+				 #{save_point},
+				 #{use_point}
+			    )
 	</insert>
+
+	<!-- 결제번호, 결제시간 -->
+	<select id="searchPay" resultMap="payList">
+	<![CDATA[	
+		SELECT pay_no, 
+			   pay_date
+		FROM   ( select * 
+                 from pay 
+                 order by pay_no desc
+               )
+        WHERE  rownum = 1
+     ]]>
+	</select>
+
+	<!-- 마지막 결제 수단 -->
+	<select id="lastPayment" resultType="HashMap">
+		SELECT y.pay_method, 
+		       y.pay_no
+		FROM   pay y, 
+		       orders o
+		WHERE  o.user_no = ${user_no} AND
+		       o.order_no = y.pay_no AND
+		       rownum = 1
+		order by pay_no desc		
+	</select>
+	
+	<!-- 주간 결제금액 -->
+	<select id="payWekTotalPrice" resultType="HashMap">
+	<![CDATA[		
+		SELECT to_char(b.dt, 'MM-DD')as pay_date, 
+               nvl(sum(a.total_prcie), 0) price
+		FROM  (select to_date(pay_date, 'YY-MM-DD') as pay_date,
+		              sum(final_price) total_prcie
+		       from pay p, orders o
+		       where (to_date(pay_date, 'YY-MM-DD') between to_date(sysdate-4, 'YY-MM-DD') AND to_date(sysdate, 'YY-MM-DD') AND
+                      p.pay_no = o.order_no) and
+                      (o.order_status between 0 and 3 or
+                      o.order_status = 10 or
+                      o.order_status = 12)
+		       group by pay_date) a,      
+		       
+		      (select to_date(TO_DATE(sysdate-6,'YY/MM/DD') + LEVEL - 1, 'YY/MM/DD') AS dt
+		       from dual 
+		       CONNECT BY LEVEL <= (TO_DATE(sysdate,'YY/MM/DD') - TO_DATE(sysdate-6,'YY/MM/DD') + 1)) b
+		WHERE b.dt = pay_date(+)
+		group by b.dt
+		order by b.dt 		
+	]]>	
+	</select>
+
+	<!-- 월간 결제금액 -->
+	<select id="payMlyTotalPrice" resultType="HashMap">
+	<![CDATA[		
+		SELECT TO_CHAR(b.dt, 'YY-MM')as pay_date, 
+               nvl(sum(a.total_price), 0) price
+		FROM  (select to_date(pay_date, 'YY-MM-DD') as pay_date,
+		              sum(final_price) total_price
+		       from pay p, orders o
+		       where (to_date(pay_date, 'YY-MM-DD') between to_date('220901', 'YY-MM-DD') AND to_date('230331', 'YY-MM-DD') AND
+                      p.pay_no = o.order_no) and
+                     (o.order_status between 0 and 3 or
+                      o.order_status = 10 or
+                      o.order_status = 12)
+		       group by pay_date) a,      
+		       
+		      (select to_date(TO_DATE('220901','YY/MM/DD') + LEVEL - 1, 'YY/MM/DD') AS dt
+		       from dual 
+		       CONNECT BY LEVEL <= (TO_DATE('230331','YY/MM/DD') - TO_DATE('220901','YY/MM/DD') + 1)) b
+		WHERE b.dt = pay_date(+)
+		group by TO_CHAR(b.dt, 'YY-MM')
+		order by TO_CHAR(b.dt, 'YY-MM') 		
+	]]>	
+	</select>
+
+	<!-- 총 결제 금액 -->
+	<select id="totalPaymentAmount" resultType="HashMap">
+		SELECT sum(final_price) total_price
+		FROM   pay y, orders o
+		WHERE  (y.pay_no = o.pay_no) AND
+			   (o.order_status between 0 and 3 OR
+			   o.order_status = 10 OR
+			    o.order_status = 12)
+	
+	</select>
+
+	<select id="payMethodRate" resultType="HashMap">
+		SELECT sum(CASE WHEN pay_method = '카드' THEN 1 ELSE 0 END) as card,
+		       sum(CASE WHEN pay_method = '토스페이' THEN 1 ELSE 0 END) as tossPay,
+		       sum(CASE WHEN pay_method = '가상계좌' THEN 1 ELSE 0 END) as vrtlAcnt,
+		       sum(CASE WHEN pay_method = '계좌이체' THEN 1 ELSE 0 END) as acntTrnsf,
+		       sum(CASE WHEN pay_method = '휴대폰' THEN 1 ELSE 0 END) as phone,
+		       sum(CASE WHEN pay_method = '문화상품권' THEN 1 ELSE 0 END) as cltmrCrtfc,
+		       sum(CASE WHEN pay_method = '도서문화상품권' THEN 1 ELSE 0 END) as bkcgfCrtfc,
+		       sum(CASE WHEN pay_method = '게임문화상품권' THEN 1 ELSE 0 END) as gmcgfCrtfc
+		FROM   pay
+	
+	</select>
+
 	
 </mapper>
