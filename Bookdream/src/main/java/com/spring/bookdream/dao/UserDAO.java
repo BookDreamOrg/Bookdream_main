@@ -165,18 +165,6 @@ public class UserDAO {
 			return mybatis.selectOne("UserDAO.userPoint", vo);
 		}
 		
-		// 사용자 포인트 내역
-		public List<Map<String, Object>> userPointHistory(UserVO user) {
-			return mybatis.selectList("UserDAO.userPointHistory", user);
-		}
-
-		// 구매확정 포인트 적립
-		public void pointEarned(UserVO user) {
-			 
-			mybatis.update("UserDAO.pointEarned", user);
-			
-		}
-			
 		// 관리자 회원가입
 		public void insertAdmin(UserVO vo) {
 			System.out.println("insertAdmin처리");
@@ -194,5 +182,14 @@ public class UserDAO {
 				result = true;
 			}
 			return result;
+		}
+		// 사용자 포인트 내역
+		public List<Map<String, Object>> userPointHistory(UserVO user) {
+			return mybatis.selectList("UserDAO.userPointHistory", user);
+		}
+
+		// 구매확정 포인트 적립
+		public void pointEarned(UserVO user) {
+			mybatis.update("UserDAO.pointEarned", user);
 		}
 }

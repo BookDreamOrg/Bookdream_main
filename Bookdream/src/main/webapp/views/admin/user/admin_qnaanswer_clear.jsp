@@ -34,45 +34,12 @@
 <body class="admin_body">
 		<jsp:include page="/views/inc/admin_aside.jsp"/>
 	
-	<main class="container-fluid main_container"> <header
-		class="shadow-sm">
-		<nav class="navbar navbar-expand-xl navbar-light bg-white">
-			<div class="container-fluid">
-				<a class="navbar-brand" href="#">관리자</a>
-				<button class="navbar-toggler" type="button"
-					data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo2"
-					aria-controls="navbarTogglerDemo2" aria-expanded="false"
-					aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse show" id="navbarTogglerDemo2">
-					<ul class="navbar-nav me-auto mb-2 mb-xl-0">
-						<li class="nav-item"><a class="nav-link" aria-current="page"
-							href="#">Home</a></li>
-						<li class="nav-item"><a class="nav-link" href="/views/main/main.jsp">Logout</a>
-						</li>
-						<li class="nav-item"><a class="nav-link disabled" href="#"
-							tabindex="-1" aria-disabled="true">Disabled</a>
-						</li>
-					</ul>
-					<form class="d-flex">
-						<input class="form-control me-2" type="search"
-							placeholder="Search" aria-label="Search" />
-						<button class="btn btn-outline-success" type="submit">
-							Search</button>
-					</form>
-				</div>
-			</div>
-		</nav>
-	</header>
+	<main class="container-fluid main_container">
+		<section class="mb-3 mt-3">
+		<div class="h3 mb-3" id="admin_section_title">답변완료</div>
+		<hr>
+	</section>
 	<!------------------------------------- Main --------------------------------------------->
-	<div class="section_div">
-				<div class="card-body">
-					<div class="admin_answer_title card-title">1:1문의 답변 완료</div>
-				</div>
-	</div>
-	
-	
 		<div class="container">
 
 			<div class="main">
@@ -84,7 +51,7 @@
 							</c:when>
 							<c:when test="${!empty qnaAllList }">
 								<table class="table">
-									<tr>
+									<tr class="table-header">
 										<th width="10%">문의 일자</th>
 										<th width="20%">문의한 유저</th>
 										<th width="70%">문의 제목</th>

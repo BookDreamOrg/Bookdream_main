@@ -69,7 +69,7 @@
 							<div class="col-md-3">
 								<span><img alt="${book.title }" src="${book.book_img }" /></span>
 							</div>
-						<div class="col-md-6 mt-5 pt-2" onclick="location.href='/getBook?book_no=${book.book_no}'">
+						<div class="col-md-6 mt-5 pt-2" onclick="location.href='/getBook?book_no=${book.book_no}'" style="cursor:pointer">
 							<span  id="detail-badge" >${book.book_category }</span> 
 							<span id ="reviewAVG"> </span>
 							<span id="book_title"> ${book.title }</span>
@@ -109,7 +109,7 @@
 			<c:forEach begin="1" end="${ lastIndex }" var="num">
 			<input type="hidden" id="SearchKeyword" value="${search_keyword}">
 				<li class="page-item">
-					<a class="page-link" href="bookListSearchByKeyword?num=${num}&keyword=${search_keyword}">${ num }</a>
+					<a class="page-link" id="page_link_${num}" href="bookListSearchByKeyword?num=${num}&keyword=${search_keyword}">${ num }</a>
 				</li>
 			</c:forEach>
 				
@@ -130,11 +130,11 @@
 
 <script type="text/javascript" >
 $(function(){
+	const urlParams = new URL(location.href).searchParams;
+	let num = urlParams.get('num');
+	const page= 'page_link_';
 	
-let dataArr = '${review_star}'; 
-console.log(dataArr);
-console.log(dataArr[2])
-	
+	document.getElementById(page+num).className = 'page-link active';
 });
 
 function bookList_buy(val){

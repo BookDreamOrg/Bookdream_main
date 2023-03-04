@@ -4,7 +4,6 @@
 	width: 950px;
 	min-height: 1200px;
 	float: right;
-	margin-top: 130px;
 }
 
 .main {
@@ -22,16 +21,29 @@
 }
 
 .qna_title {
-	font-size: 20px;
-	float: left;
+	padding: 30px;
+    vertical-align: middle;
+    height: 100px;
+	margin-top: 30px;    
+    font-size: 20px;
+    font-weight: bold;
+	
 }
 
 .qna_button {
 	float: right;
+	font-weight:bold;
+	height: 40px;
+	margin-top: 50px;
+	color: #484877;
+	border-color: #484877;
+}
+
+.qna_button:hover{
+	background-color: #484877;	
 }
 
 .qna_body {
-	margin-top: 30px;
 }
 
 .qna_header{
@@ -69,4 +81,25 @@
 }
 .card{
 	font-size: 14px;
+}
+.qna-update{
+	text-decoration: none;
+	color: #484877;
+	border: none;
+}
+.qna-update:hover{
+	background-color: #484877;
+	transition: 0.7s;
+}
+.qna-delete{
+	text-decoration: none;
+	color: #484877;
+	border: none;
+}
+.qna-delete:hover{
+	background-color: #484877;
+	transition: 0.7s;
+}
+.table-header{
+	background-color: #F7F7F7;
 }

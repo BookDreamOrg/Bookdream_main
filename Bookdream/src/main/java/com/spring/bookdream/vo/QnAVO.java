@@ -18,4 +18,5 @@ public class QnAVO {
 	private int displayPost; 
 	private int postNum;
 	private int pageNum;
+	private PageVO page;
 }
