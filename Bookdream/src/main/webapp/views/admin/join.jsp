@@ -20,7 +20,7 @@
 
     <body class="text-center">
         <main class="form-signin">
-           <form action="insertUser.do" method="post" id="frm">
+           <form action="join" method="post" id="frm">
               <img class="mb-4" src="/resources/images/bookdream_img.png" alt="" width="160" height="70">
 				<div>              
             		<div class="form-floating">
@@ -29,7 +29,7 @@
 	             	</div>
 					<div class="d-grid">
 						<button class="id_chk_btn w-20 btn btn-sm btn-outline-primary" id="btn" onclick="checkId()" type="button">
-							<span class="text"><b>아이디 중복 확인</b></span>
+							<span class=""><b>아이디 중복 확인</b></span>
 						</button>
 					</div>    
 		             	<span class="id_ok">멋진 아이디네요!</span>
@@ -63,12 +63,14 @@
 		                <input type="text" class="form-control" id="user_email" name="user_email" placeholder="이메일 입력...">
 		                <label for="email">이메일</label>
               		</div>
-              		 <input type="text" class="form-control" id="user_email2" name="user_email2" value="@">
-		       
+              		<div class="form-floating">
+		                <input type="text" class="form-control" value="@" id="user_email2" name="user_email2" placeholder="이메일 입력...">
+		                <label for="email">도메인</label>
+              		</div>
               	</div>
            	<div class="input-group-addon d-grid">
 				<button type="button" class="id_chk_btn w-20 btn btn-sm btn-outline-primary" id="btn_in" onclick="mailCheckBtn()">
-					<span class="text"><b>본인인증</b></span>
+					<span class=""><b>본인인증</b></span>
 				</button>
 			</div>
 			
@@ -77,9 +79,8 @@
 			</div>
 			<span id="mail-check-warn"></span>
 		
-             <div>
-             	<button class="join-submit w-70 btn btn-lg btn-outline-primary" id="join-btn" disabled="disabled" type="submit">회원가입 완료</button>
-             </div> 
+              
+              <button class="join-submit w-70 btn btn-lg btn-outline-primary" id="join-btn" disabled="disabled" type="submit">회원가입 완료</button>
               
            </form>
            <input type="hidden" name="idChk" value="invalid" />

@@ -7,7 +7,10 @@ function updateQnAIn(){
 			console.log(qna_type);
 			console.log(qna_title);
 			console.log(qna_content);
-			
+			let title = '문의 수정'
+				let text = '문의를 수정하시겠습니까?'
+				let msg = '문의가 수정되었습니다.'
+				let icon = 'question'
 			$.ajax({
 				type : "POST",
 				url : "/mypage/updateQnAInfo",
@@ -18,8 +21,17 @@ function updateQnAIn(){
 						qna_content : qna_content
 						},
 				success : function(data){
-					alert('수정되었습니다.');
-					location.href='/mypage/getMyQnAList';
+					if(data == 1){
+						confirmed(title, text, icon, msg, function() {
+							location.href = '/mypage/getMyQnAList';
+					    })   
+					} else if(data == -1) {
+						alert('문의유형을 선택해주세요!');
+						 history.go(1);
+					} else {
+						alert('빈칸이 있습니다!');
+						 history.go(1);
+					}
 				},
 				error : function(){
 					alert('서버에러입니다.');
