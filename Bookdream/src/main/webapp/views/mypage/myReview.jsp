@@ -151,7 +151,7 @@
     content: "\f005 \f005 \f005 \f005 \f005";
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
-	color: #5c5d99;
+	color: #FFCE56;
 	/* color: #5c5d99; */
 }
 
