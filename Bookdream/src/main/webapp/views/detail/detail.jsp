@@ -11,6 +11,9 @@
 <html>
 <head>
 
+ <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
 <!-- alert -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
@@ -58,9 +61,9 @@
 					
 	<div class="row">
 		<div class="col-6 text-center mt-5 ">
-			<img id="detail-img" alt="${book.title }" src="${book.book_img }" class="img-thumbnail" />
+			<img id="detail-img" alt="${book.title }" src="${book.book_img }" class="img-thumbnail animate__animated animate__fadeInLeft" />
 		</div>
-		<div class="col-6 mt-5">
+		<div class="col-6 mt-5 animate__animated animate__fadeInRight">
 				 <div class="display-6 mt-5 mb-2" id="book_title">${book.title }</div>
 				
 				<ul class=" list-group-horizontal">
@@ -100,7 +103,7 @@
 	<div class="row  mt-5">
 		<div class="col-md-1">
 		</div>
-		<div class="col-md-10">
+		<div class="col-md-10 animate__animated animate__fadeInLeft">
 			<span class="h2" id="detail-bookinfo">책 소개 &nbsp; &nbsp;</span>
 			<p class="pt-3 h5" id="book_content">
 			${book.book_content }
@@ -119,21 +122,21 @@
 <div id="detail-review">
 
 <!-- 리뷰 평가  -->
-<div class="row mt-5">
+<div class="row mt-5 mb-5">
 		<div class="col-md-5 text-end">
 		<img class="header-row-logo ms-4"src="/resources/images/logo/logo_white.png" alt="logo_white" />
 		<img class="header-row-logo_text" src="/resources/images/logo/logo_text.png" alt="bookdream" /></div>
-		<div class="col-md-7 h1 text-start mt-2"> 회원이 평가한 리뷰 </div> 
+		<div class="col-md-7 h1 text-start mt-4"> 회원이 평가한 리뷰 </div> 
 </div>
 
 
 
-<div class="row mt-5 mb-5 h3">
 	<c:forEach var="progressStar" items="${progressStar}" varStatus="status">
-			
-<div class="col-md-5 text-end" id="star_box">
-			<!--  -->
-			<div class="row">
+<div class="row h3">
+	
+<!--  별(하트) 이미지 -->
+	
+	<div class="col-5 text-end" id="star_box">
 			<c:forEach var="i" begin="1" end="5">
 			<c:choose>
 				<c:when test="${i <= progressStar.key }">
@@ -144,17 +147,17 @@
 				</c:otherwise>
 			</c:choose>
 			</c:forEach>
-			</div>
-</div>	
-				
-			<div class="col-md-7 mt-3 text-start" id="progress_box">
+	</div>	
+	
+	<!--  리뷰 비율 프로그래스 -->				
+		<div class="col-7 mt-3 text-start" id="progress_box">
 			<div class="progress">
 				<div class="progress-bar" id="progress" role="progressbar" style="width: ${progressStar.value.PROPORTION}%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">${progressStar.value.PROPORTION}%</div>
 			</div>
-			</div>
+		</div>
+</div>				
 	</c:forEach>
 
-</div>				
 
 
 <!-- 리뷰 등록 창 -->
@@ -613,7 +616,7 @@ function modal_close(){
 		 document.getElementById('delivery').innerHTML = '무료배송';
 		 
 	 }else{
-		 document.getElementById('delivery').innerHTML = '배송비 3만원 추가';
+		 document.getElementById('delivery').innerHTML = '배송비 3천원 추가';
 	 }
 	 
 
@@ -625,16 +628,17 @@ function modal_close(){
 	 
 	 let price = ${book.book_price - (book.book_price*book.discount/100)};
 	 let org_price = ${book.book_price};
+	 let won = '원';
 	 
 	 if(${ book.discount} != 0){
-		 document.getElementById('dis_org_price').innerHTML = AddComma(org_price * val);
-		 document.getElementById('dis_price').innerHTML = AddComma(price * val);
+		 document.getElementById('dis_org_price').innerHTML = AddComma(org_price * val) + won;
+		 document.getElementById('dis_price').innerHTML = AddComma(price * val)+ won;
 		 
-		 document.getElementById('price_btn_box').innerHTML = AddComma(org_price * val);
-		 document.getElementById('dis_btn_box').innerHTML = AddComma(price * val);
+		 document.getElementById('price_btn_box').innerHTML = AddComma(org_price * val)+  won;
+		 document.getElementById('dis_btn_box').innerHTML = AddComma(price * val)+ won;
 	 }else{
-		 document.getElementById('price_org').innerHTML = AddComma(org_price * val);
-		document.getElementById('org_btn_box').innerHTML = AddComma(org_price * val);
+		 document.getElementById('price_org').innerHTML = AddComma(org_price * val)+ won;
+		document.getElementById('org_btn_box').innerHTML = AddComma(org_price * val)+ won;
 
 	 }
 	
@@ -644,7 +648,7 @@ function modal_close(){
 		 document.getElementById('delivery').innerHTML = '무료배송';
 
 	 }else{
-		 document.getElementById('delivery').innerHTML = '배송비 3만원 추가';
+		 document.getElementById('delivery').innerHTML = '배송비 3천원 추가';
 	 }
 	 
 	 

@@ -41,6 +41,7 @@
  }
  
 #block ul, #block li {
+ border-color: white;
  margin:0;
  padding:0;
  list-style:none;
@@ -76,6 +77,10 @@ margin-right:3px;
     border-radius: 10px;
     border: 3px solid #c2c2dd;
 }
+
+
+
+
 
 </style>
 
