@@ -17,7 +17,9 @@ const urlParams = new URL(location.href).searchParams;
 
 			if (num == 1) {
 				page[0].parentNode.classList.add("disabled");
-			} else if(num == (page.length - 2)) {
+				page[page.length-1].parentNode.classList.add("disabled")
+			} 
+			else if(num == (page.length - 2)) {
 				page[page.length-1].parentNode.classList.add("disabled");
 			};
 
