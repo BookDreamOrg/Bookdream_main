@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+.visitChart_container {
+	display : flex;
+	justify-content : center;
+	align-items : center;
+}
+
+#visitChart {
+	width : 35em;
+}

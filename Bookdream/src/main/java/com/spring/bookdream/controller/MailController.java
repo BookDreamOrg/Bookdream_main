@@ -28,7 +28,9 @@ public class MailController {
 	public String mailCheck(String email) {
 		System.out.println("이메일 인증 요청이 들어옴! ");
 		System.out.println("이메일 인증 이메일: " + email);
-		
+		if(email.equals("")) {
+			return null;
+		}
 		 return mailService.joinEmail(email);
 	}
 	

@@ -1,92 +1,112 @@
 @charset "UTF-8";
 
 .admin-user-mngmn {
-  grid-area: section1;
+	grid-area: section1;
 }
 
 .admin-user-mngmn-title {
-  display: flex;
-  justify-content: center;
-  align-content: center;
+	display: flex;
+	justify-content: center;
+	align-content: center;
 }
 
 .admin-user-mngmn-cotent {
-  height: 600px;
+	height: 600px;
 }
 
 /* user-modal */
 .admin-user-modal-body {
-  min-height: 200px;
-  border-radius: 20px;
-  padding: 20px;
-  background-color: #f7f7f7;
-  margin-bottom: 16px;
+	min-height: 200px;
+	border-radius: 20px;
+	padding: 20px;
+	background-color: #f7f7f7;
+	margin-bottom: 16px;
 }
 
 .admin-user-modal-profile-box {
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .admin-user-modal-profile {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background-color: white;
-  margin-right: 16px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	background-color: white;
+	margin-right: 16px;
 }
 
 .admin-user-modal-icon {
-  color: #e0e0ee;
+	color: #e0e0ee;
 }
 
 .admin-user-modal-table {
-  margin-top: 16px;
-  border: 1px solid #e0e0ee;
+	margin-top: 16px;
+	border: 1px solid #e0e0ee;
 }
 
 .admin-user-modal-table tr {
-  border-bottom: 1px solid #e0e0ee;
+	border-bottom: 1px solid #e0e0ee;
 }
 
 .admin-user-modal-table th {
-  border-right: 0.8px solid #e0e0ee;
-  font-weight: bold;
-  background-color: var(--main-color-tint9);
+	border-right: 0.8px solid #e0e0ee;
+	font-weight: bold;
+	background-color: var(- -main-color-tint9);
 }
 
 .adimn-user-modal-nav-content {
-  padding: 18px;
+	padding: 18px;
+}
+
+.admin-user-mngmn-search {
+	display: flex;
+	justify-content: flex-end;
+	margin-bottom: 16px;
+	padding-bottom: 8px;
+	border-bottom: 2px solid var(--main-color-shadow3);
 }
 
 /* blacklist */
 .blacklist-content {
-  min-height: 100px;
-  border-radius: 20px;
-  background-color: #f7f7f7;
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  color: red;
+	min-height: 100px;
+	border-radius: 20px;
+	background-color: #f7f7f7;
+	padding: 18px;
+	display: flex;
+	flex-direction: column;
+	color: red;
 }
 
 .blacklist-content span {
-  margin-top: 8px;
+	margin-top: 8px;
 }
 
 .blacklist-content div {
-  margin-top: 16px;
-  display: flex;
-  justify-content: flex-end;
+	margin-top: 16px;
+	display: flex;
+	justify-content: flex-end;
 }
 
-.form-select-user-search{
+.form-select-user-search {
 	margin-right: 10px;
-	border-radius: 7px;	
+	border-radius: 7px;
 	font-size: 12px;
 	padding: 5px;
 	width: 170px;
 }
+
+.bookdream_btn {
+	color : var(--main-color);
+	border-color : var(--main-color);
+}
+
+.bookdream_btn:hover,
+.bookdream_btn:active,
+.bookdream_btn:focus {
+	background-color : var(--main-color);
+}
+

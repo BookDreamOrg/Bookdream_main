@@ -197,7 +197,7 @@ margin-right:3px;
                %>
                <div class="vr"></div>
                <li class="nav-item"><a
-                  class="nav-link header-nav-link" href="/views/admin/admin.jsp" tabindex="-1"
+                  class="nav-link header-nav-link" href="/views/admin/adminS" tabindex="-1"
                   aria-disabled="true">관리자 </a></li>
               <%
               	}
