@@ -7,6 +7,10 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- alert -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <!-- Favicon -->
 <link rel="apple-touch-icon" sizes="180x180"
 	href="/resources/images/favicon/apple-touch-icon.png" />
@@ -42,7 +46,7 @@
 							<tr>
 								<td>문의 유형</td>
 								<td><select class="form-select" id="qna_type" onchange="">
-										<option selected>문의유형을 선택해주세요!</option>
+										<option selected value="select">문의유형을 선택해주세요!</option>
 										<option value="배송/수령일정일안내">배송/수령일정일안내</option>
 										<option value="주문/결제">주문/결제</option>
 										<option value="검색기능관련">검색기능관련</option>
@@ -74,8 +78,7 @@
 
 							</tr>
 						</table>
-						<div class="qna_btn btn btn-success" type="button"
-							onclick="qna_btn()">문의하기</div>
+						<button class="btn btn-outline-primary qna_btn" type="button" onclick="qna_btn()">문의하기</button>
 						</div>
 				</div>
 
@@ -86,7 +89,7 @@
 			<jsp:include page="/views/inc/footer.jsp" />
 		</div>
 
-
+	<script type="text/javascript" src="/resources/js/commonFunction.js"></script>
 	<script src="/resources/js/qna_write.js"></script>
 	<!-- Script Bootstrap, jqurey-3.6.3 -->
 	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>

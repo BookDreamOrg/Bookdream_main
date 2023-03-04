@@ -28,6 +28,12 @@
 
 .qna_button {
 	float: right;
+	color: #484877;
+	border-color: #484877;
+}
+
+.qna_button:hover{
+	background-color: #484877;	
 }
 
 .qna_body {
@@ -69,4 +75,22 @@
 }
 .card{
 	font-size: 14px;
+}
+.qna-update{
+	text-decoration: none;
+	color: #484877;
+	border: none;
+}
+.qna-update:hover{
+	background-color: #484877;
+	transition: 0.7s;
+}
+.qna-delete{
+	text-decoration: none;
+	color: #484877;
+	border: none;
+}
+.qna-delete:hover{
+	background-color: #484877;
+	transition: 0.7s;
 }

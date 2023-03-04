@@ -19,6 +19,7 @@
 	<resources mapping="/resources/js/**" location="/js/" />
     <resources mapping="/resources/images/**" location="/images/" />
     <resources mapping="/resources/css/**" location="/css/" />
+	<resources mapping="/bookImg/**" location="/bookImg/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -38,7 +39,5 @@
       <property name="definitions" value="/WEB-INF/tiles.xml" />
    </bean> -->
    
-	
-	
 	
 </beans:beans>

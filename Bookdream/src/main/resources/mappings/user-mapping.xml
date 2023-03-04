@@ -229,7 +229,7 @@
                     end where user_no = #{user_no}
 	</update>
 	
-	<!-- 사용자의 적립금 호출 -->
+	<!-- 사용자의 포인트 호출 -->
 	<select id="userPoint" resultType="int">
 		SELECT user_point as point   
 		FROM   users
@@ -246,5 +246,29 @@
 		from (select * from users where user_level = 1)
 		where user_id=#{user_id} and user_password=#{user_password}
 	</select>
+	
+	<!-- 사용자의 포인트 현황 -->
+	<select id="userPointHistory" resultType="HashMap">
+		SELECT save_point, 
+		       use_point, 
+		       pay_date, 
+		       cancel_date,
+		       prchsCnfrm_date,
+		       order_status,        
+		       CASE WHEN o.prchsCnfrm_date IS NOT NULL THEN 1000 ELSE NULL END AS prchsCnfrm_point		
+		FROM   pay y, users u, orders o
+		WHERE  u.user_no = #{user_no} 
+		AND    y.pay_no = o.pay_no 
+		AND    o.user_no = u.user_no
+	</select>
+	
+	<!-- 구매확정 사용자 포인트 적립 -->
+	<update id="pointEarned">
+		UPDATE users
+		SET    user_point = user_point + 1000
+		WHERE  user_no = #{user_no}
+	
+	
+	</update>
 	
 </mapper>

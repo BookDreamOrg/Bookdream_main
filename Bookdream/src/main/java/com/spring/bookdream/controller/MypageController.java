@@ -20,13 +20,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.spring.bookdream.service.AddressService;
 import com.spring.bookdream.service.OrderService;
 import com.spring.bookdream.service.QnAService;
+import com.spring.bookdream.service.ReviewService;
 import com.spring.bookdream.service.SearchKeywordService;
 import com.spring.bookdream.service.UserService;
 import com.spring.bookdream.vo.AddressVO;
 import com.spring.bookdream.vo.AnswerVO;
 import com.spring.bookdream.vo.KeywordHistoryVO;
 import com.spring.bookdream.vo.OrderVO;
+import com.spring.bookdream.vo.PageVO;
 import com.spring.bookdream.vo.QnAVO;
+import com.spring.bookdream.vo.ReviewVO;
 import com.spring.bookdream.vo.SearchCriteria;
 import com.spring.bookdream.vo.UserVO;
 
@@ -47,6 +50,9 @@ public class MypageController {
 	private SearchKeywordService keywordService;
 	
 	@Autowired
+	private ReviewService reviewService;
+	
+	@Autowired
 	private QnAService qnaService;
 	
 	@Autowired
@@ -56,22 +62,6 @@ public class MypageController {
 	// 마이페이지 - 메인 
 	@RequestMapping(value="/main")
 	public String mypage(HttpServletResponse response, AddressVO address, OrderVO order, QnAVO qna, UserVO user, Model model) {
-
-		// 로그인해야 진입됨
-		if (session.getAttribute("user_no") == null) {
-			String msg = "로그인 후 이용해주세요";
-			String url ="/views/user/login.jsp";	
-		    try {
-		        response.setContentType("text/html; charset=utf-8");
-		        PrintWriter w = response.getWriter();
-		        w.write("<script>alert('"+msg+"');location.href='"+url+"';</script>");
-		        w.flush();
-		        w.close();
-		    } catch(Exception e) {
-		        e.printStackTrace();
-		    }
-					
-		}
 		
 		int user_no = (int) session.getAttribute("user_no");
 		
@@ -81,6 +71,7 @@ public class MypageController {
 		qna.setUser_no(user_no);
 		user.setUser_no(user_no);
 		
+		model.addAttribute("userPointHistory", userService.userPointHistory(user));
 		model.addAttribute("userPoint", userService.userPoint(user));
 		model.addAttribute("address", addressService.getDefaultAddress(address));
 		model.addAttribute("order", orderService.recentOrder(order));		
@@ -95,6 +86,8 @@ public class MypageController {
 				answerCnt++;
 			}
 		}
+		
+		System.out.println("answerCnt : " + answerCnt);
 		model.addAttribute("answerCnt", answerCnt);
 		return "mypage/mypage";
 				
@@ -113,7 +106,20 @@ public class MypageController {
 		return list;
 				
 	}		
-	
+
+	// 마이페이지 메인 : 포인트사용현황
+	@RequestMapping(value="/userPointHistory")
+	@ResponseBody	
+	public List<Map<String, Object>> userPointHistory(UserVO user) {
+
+		int user_no = (int) session.getAttribute("user_no");
+		user.setUser_no(user_no);
+		
+		List<Map<String, Object>> list = userService.userPointHistory(user);
+		
+		return list;
+				
+	}		
 
 	// 마이페이지 - 주문목록 조회 (간단)
 	@RequestMapping(value="/tracking")
@@ -164,7 +170,63 @@ public class MypageController {
 			
 	}
 		
+	// 마이페이지(내가작성한 리뷰)
+	@RequestMapping(value="/review")
+	public String mypageReview(HttpServletResponse response) {
+
+		// 로그인해야 진입됨
+		if (session.getAttribute("user_no") == null) {
+			String msg = "로그인 후 이용해주세요";
+			String url ="/views/user/login.jsp";	
+		    try {
+		        response.setContentType("text/html; charset=utf-8");
+		        PrintWriter w = response.getWriter();
+		        w.write("<script>alert('"+msg+"');location.href='"+url+"';</script>");
+		        w.flush();
+		        w.close();
+		    } catch(Exception e) {
+		        e.printStackTrace();
+		    }
+					
+		}
+					
+		return "mypage/myReview";
+			
+	}	
 	
+	// 작성한 리뷰 리스트 및 리뷰개수, 총 추천수, 평균 별점
+	@RequestMapping(value="/reviewList")
+	@ResponseBody
+	public ReviewVO reviewList(SearchCriteria cri) {
+
+		String user_id = (String) session.getAttribute("user_id");
+		cri.setUser_id(user_id);
+		
+		// 한 페이지의 표시 개수
+		cri.setAmount(3);	
+		
+		// 페이지 블록의 개수
+		int pageBlcok = 3;		
+		
+		// 리뷰 목록
+		List<Map<String, Object>> list = reviewService.myReview(cri);
+		
+		// 리뷰개수, 추천수, 평균 별점
+		Map<String, Object> cnt = reviewService.myReviewCount(cri);		
+
+		// 리뷰개수 추출
+		int count = Integer.parseInt(String.valueOf(cnt.get("CNT")));	
+			
+		PageVO pageMaker = new PageVO(cri, count, pageBlcok);		
+				
+		ReviewVO result = new ReviewVO();
+		result.setList(list);
+		result.setCnt(cnt);
+		result.setPage(pageMaker);
+		
+		return result;
+			
+	}		
 	
 	
 	//회원정보 수정
@@ -249,21 +311,27 @@ public class MypageController {
 	// 1:1문의 insert
 	@RequestMapping(value="/insertQnA")
 	@ResponseBody
-	public QnAVO qnaInsert(HttpServletResponse response, QnAVO qnaVO) {
+	public int qnaInsert(HttpServletResponse response, QnAVO qnaVO) {
 		
 		System.out.println("QnAInsert실행");
-		
 		System.out.println(qnaVO);
+		if(qnaVO.getQna_type().equals("select")) {
+			return -1;
+		} else if(qnaVO.getQna_title().equals("") || qnaVO.getQna_content().equals("")) {
+			return 0;
+		}
 		qnaService.QnAInsert(qnaVO);
 		
-		return qnaVO;
+		return 1;
 	}
 	
 	// 나의 문의 리스트 가져오기
 	@RequestMapping(value="/getMyQnAList")
-	public String getMyQnAList(HttpServletResponse response, Model model){
+	public String getMyQnAList(HttpServletResponse response, Model model, SearchCriteria cri){
 		
 		System.out.println("getMyQnAList실행");
+		
+		int num = 1;
 		
 		UserVO user = (UserVO)session.getAttribute("authUser");
 		QnAVO qnaVO = new QnAVO();
@@ -290,6 +358,29 @@ public class MypageController {
 		}
 		model.addAttribute("answerCnt", answerCnt);
 		
+		
+//		String user_id = (String) session.getAttribute("user_id");
+//		cri.setUser_id(user_id);
+//		
+//		// 한 페이지의 표시 개수
+//		cri.setAmount(3);	
+//		
+//		// 페이지 블록의 개수
+//		int pageBlcok = 3;		
+//		
+//		// 문의 목록
+//		List<QnAVO> list = qnaMyList;
+//		
+//		// 문의개수 추출
+//		int count = list.size();	
+//			
+//		PageVO pageMaker = new PageVO(cri, count, pageBlcok);		//cri, 11, 3
+//				
+//		QnAVO qna = new QnAVO();
+//		
+//		qna.setPageNum(count);
+//		qna.setPage(pageMaker);
+		
 		return "mypage/qna";
 	}
 	
@@ -315,23 +406,23 @@ public class MypageController {
 	// 1:1문의 수정
 	@RequestMapping(value="/updateQnAInfo")
 	@ResponseBody
-	public String updateQnA(HttpServletRequest request, QnAVO qnaVO, Model model) {
+	public int updateQnA(HttpServletRequest request, QnAVO qnaVO, Model model) {
 		
 		System.out.println("updateQnA실행");
-		String qna_type = request.getParameter("qna_type");
-		String qna_title = request.getParameter("qna_title");
-		String qna_content = request.getParameter("qna_content");
 		
-		qnaVO.setQna_type(qna_type);
-		qnaVO.setQna_title(qna_title);
-		qnaVO.setQna_content(qna_content);
+		if(qnaVO.getQna_type().equals("select")) {
+			System.out.println("typenull");
+			return -1;
+		} else if(qnaVO.getQna_title().equals("") || qnaVO.getQna_content().equals("")) {
+			return 0;
+		}
 		
 		System.out.println(qnaVO);
 		
 		qnaService.updateQnA(qnaVO);
-		return "mypage/qna";
+		return 1;
 	}
-	 
+	  
 	// 1:1문의 삭제
 	@RequestMapping(value="/deleteQnA")
 	public String deleteQnA(HttpServletRequest request, HttpServletResponse response, QnAVO qnaVO, Model model) throws IOException {

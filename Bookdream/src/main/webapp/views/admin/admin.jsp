@@ -37,9 +37,126 @@
     <link rel="stylesheet" href="/resources/css/admin_screen.css" />
         <link rel="stylesheet" href="/resources/css/admin_qnadashboard.css" />
     
-    
 <title>Admin Page</title>
+
+<style type="text/css">
+
+.biv_box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px; /* 부모 요소의 높이 값 */
+}
+
+.biv_box > div {
+  	width: 100%;
+  	height: 33%; 
+  	margin: 10px; 
+  	font-size: 12px;
+ 
+	display: flex;
+	flex-direction: column;
+	justify-content: center;	  
+	cursor: pointer;
+}
+
+.biv_box > div:nth-child(1) {
+	border-left: 5px solid #36A2EB;
+	background-color: rgba(54, 162, 235, 0.1);
+}
+
+.biv_box > div:nth-child(1):hover {
+    background-color: rgba(54, 162, 235, 0.2);
+}
+
+.biv_box > div:nth-child(2) {
+	border-left: 5px solid #FF6384;
+	background-color: rgba(255, 99, 132, 0.1);
+}
+
+.biv_box > div:nth-child(2):hover {
+    background-color: rgba(255, 99, 132, 0.2);
+}
+
+.biv_box > div:nth-child(3) {
+	border-left: 5px solid #4BC0C0;
+	background-color: rgba(75, 192, 192, 0.1);
+}
+
+.biv_box > div:nth-child(3):hover {
+    background-color: rgba(75, 192, 192, 0.2);
+}
+
+.dshbr_title {
+	font-weight: bold;
+	font-size: 12px;	
+	margin: 0px 0px 10px 10px;
+}
+
+.dshbr_content {
+	margin-left: 10px;
+	line-height: 180%;
+}
+
+.dshbr_content > span {
+	color: #484877;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.dshbr_content > div {
+	display: inline-block;
+}
+
+/* */
+
+.bell_icon {
+	margin-left: 5px;
+}
+
+.bell_icon.shaking {
+	transform-origin: 50% 0%;
+    animation-name: shake;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-delay: 0.5s;
+    color: red;
+}
+
+    @keyframes shake{
+    	0%{
+        	transform: rotate(0deg);
+        }
+        10%{
+        	transform: rotate(45deg);
+        }
+        20%{
+        	transform: rotate(-45deg);
+        }
+        30%{
+        	transform: rotate(30deg);
+        }
+        40%{
+        	transform: rotate(-30deg);
+        }
+        50%{
+        	transform: rotate(10deg);
+        }
+        60%{
+        	transform: rotate(-10deg);
+        }
+        70%{
+        	transform: rotate(0deg);
+        }
+        100%{
+        	transform: rotate(0deg);
+        }
+    }
+    
+</style>
 </head>
+
 <body class="admin_body">
 <jsp:include page="/views/inc/admin_aside.jsp"/>
 	<main class="container-fluid main_container"> <header
@@ -164,11 +281,30 @@
 		</section>
 		<section class="content_review">
 			<div class="card">
-				<div class="card-header">Featured</div>
+				<div class="card-header">배송 현황</div>
 				<div class="card-body">
-					<h5 class="card-title">Special title treatment</h5>
-					<p class="card-text">With supporting text below as a natural
-						lead-in to additional content.</p>
+						
+					<div class="biv_box">
+						<div class="href_biv">
+							<div class="dshbr_title">결제완료 <span class="fa fa-bell bell_icon" id="pymntCmplt_icon"></span> </div>
+							<div class="dshbr_content">결제가 완료된 상품은 모두 <span id="pymntCmplt">0</span> 건입니다. &nbsp;<div id="pymntCmplt_text"></div></div>
+							<input type="hidden" value="0">
+						</div>
+						
+						<div class="href_biv">
+							<div class="dshbr_title">취소요청 <span class="fa fa-bell bell_icon"  id="pymcnRqst_icon"></span> </div>
+							<div class="dshbr_content">결제 취소 요청이 접수된 상품은 모두 <span id="pymcnRqst">0</span> 건입니다. &nbsp;<div id="pymcnRqst_text"></div></div>						
+							<input type="hidden" value="10">
+						</div>
+						
+						<div class="href_biv">
+							<div class="dshbr_title">반품요청 <span class="fa fa-bell bell_icon" id="rqstRtrn_icon"></span> </div>
+							<div class="dshbr_content">반품 요청이 접수된 상품은 모두 <span id="rqstRtrn" >0</span> 건입니다. &nbsp;<div id="rqstRtrn_text"></div></div>						
+							<input type="hidden" value="12">
+						</div>
+					</div>
+					
+					
 				</div>
 			</div>
 		</section>
@@ -180,17 +316,17 @@
 	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 
 	<!-- Script FontAwesome-->
-	<script src="https://kit.fontawesome.com/4bf42f841a.js"
-		crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/4bf42f841a.js" crossorigin="anonymous"></script>
 
  	<!-- 차트 링크 -->
  	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 		
 	<!-- J쿼리 -->
-	<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 	
     <!-- JavaScript  -->
     <script type="text/javascript" src="/resources/js/admin_main.js"></script>
+	<script type="text/javascript" src="/resources/js/commonFunction.js"></script>
 	
 		
 		

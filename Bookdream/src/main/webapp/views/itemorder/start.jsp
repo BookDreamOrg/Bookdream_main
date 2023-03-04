@@ -7,32 +7,43 @@
 <meta charset="UTF-8">
 <title>테스트페이지</title>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_orange.css">
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.6/css/star-rating.min.css" rel="stylesheet" type="text/css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.6/js/star-rating.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-qPGrC/9Gvlt8xCHp1Mya4Nz/zfTqbV7TJwNiO+DTgmLbIYQ9z7eBDCWNYsV7KjykPV/QFVlALUwokI0kixRk6Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<style type="text/css">
+
+/* 별점 */
+.rating-stars {
+  display: inline-block;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.rating-stars:before {
+  content: "\f006 \f006 \f006 \f006 \f006";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: #e4e5e9;
+}
+
+.rating-stars .filled-stars:before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  color: #ffc107;
+}
+
+</style>
 
 </head>
 <body>
 
-<div class="col-6">
-    <label class="form-label" for="birth">학생 생년월일</label>
-    <input class="form-control" id="birth" pattern="\d{4}-\d{2}-\d{2}" placeholder=""
-           required th:field="*{birth}" type="text" value="">
-    <div class="invalid-feedback">
-        학생 생년월일을 입력해주세요.(예시 2021-01-01)
-    </div>
-</div>
+<input id="star-rating" type="number" class="rating" min=0 max=5 step=0.5>
+
 
 <script type="text/javascript">
 
 
-	var fp = flatpickr(document.getElementById("birth"), {
-		'monthSelectorType' : 'static',
-		"locale": "ko" 
-	
-	});
-	fp.setDate();
 
 
 </script>

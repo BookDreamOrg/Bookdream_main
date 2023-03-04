@@ -1,10 +1,10 @@
 package com.spring.bookdream.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.ui.Model;
 
-import com.spring.bookdream.vo.OrderitemVO;
 import com.spring.bookdream.vo.UserVO;
 
 //@Service("userService")
@@ -62,12 +62,17 @@ public interface UserService {
 	// 블랙리스트 수정
 	public void setBlack(int no);
 	
-	// 사용자 포인트 조회
-	int userPoint(UserVO vo);
-	
 	// 관리자 회원가입
 	public void insertAdmin(UserVO vo);
 	
 	// 관리자 로그인 아이디 체크
 	public boolean adminLoginCheck(UserVO vo, Model model);
+
+	public int userPoint(UserVO user);	
+	
+	// 사용자 포인트 내역
+	public List<Map<String,Object>> userPointHistory(UserVO user);
+	
+	// 구매확정 포인트 적립
+	public void pointEarned(UserVO user);
 }

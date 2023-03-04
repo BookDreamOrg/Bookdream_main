@@ -9,6 +9,9 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- alert -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <!-- Favicon -->
 <link rel="apple-touch-icon" sizes="180x180"
 	href="/resources/images/favicon/apple-touch-icon.png" />
@@ -37,7 +40,7 @@
 				<div class="rside">
 					<div class="qna_header">
 						<div class="qna_title">1:1 문의</div>
-						<button class="qna_button btn btn-success" type="button" onclick="location.href='/views/mypage/qna_write.jsp'">1:1문의하기</button>
+						<button class="qna_button btn btn-outline-primary" type="button" onclick="location.href='/views/mypage/qna_write.jsp'">1:1문의하기</button>
 					</div>
 					<input type="hidden" id="answerCnt" value="${answerCnt }">
 					<div class="qna_body">
@@ -79,7 +82,6 @@
 											</c:choose>
 										</tr>
 									</table>
-
 									<c:choose>
 										<c:when test="${list.getAns_check() == '0' }">
 										<!-- 답변대기 -->
@@ -88,12 +90,13 @@
 													<div class="qna_sumbmit">
 														<div class="qna_submit_btn">
 															<div class="qna_update_btn">
-																<button class="btn btn-secondary" type="button"
-																	onclick="location.href='getQnA?qna_no=${list.getQna_no() }'">수정</button>
+															<button class="btn btn-outline-primary qna-update" type="button" onclick="location.href='getQnA?qna_no=${list.getQna_no() }'">
+															<i class="bi bi-pen"><span style="font-size:12px; font-weight: bold;"> 수정<span></i> </button>
 															</div>
 															<div class="qna_delete_btn">
-																<button class="btn btn-secondary" type="button"
-																	onclick="delete_btn(${list.getQna_no() })">삭제</button>
+															<button class="btn btn-outline-primary qna-delete" type="button"
+																	onclick="delete_btn(${list.getQna_no() })">
+															<i class="bi bi-trash"><span style="font-size:12px; font-weight: bold;"> 삭제<span></i></button>
 															</div>
 														</div>
 													</div>

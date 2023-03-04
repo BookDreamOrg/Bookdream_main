@@ -40,3 +40,12 @@
 .user_delete_title{
 	font-size: 14px;
 }
+
+.edit-btn{
+	color: #484877;
+	border-color: #484877;
+}
+
+.edit-btn:hover{
+	background-color: #484877;
+}

@@ -78,7 +78,8 @@ public class LoginController {
 			session.setAttribute("kakaoEmail", userInfo.getUser_email());
 			
 			session.setAttribute("authUser", userInfo);
-			
+			session.setAttribute("user_id", userInfo.getUser_id());
+			session.setAttribute("user_no", userInfo.getUser_no());		
 		return "/main/main";
 		
     	}

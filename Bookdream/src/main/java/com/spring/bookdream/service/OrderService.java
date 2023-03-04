@@ -3,6 +3,7 @@ package com.spring.bookdream.service;
 import java.util.List;
 import java.util.Map;
 import com.spring.bookdream.vo.OrderVO;
+import com.spring.bookdream.vo.SearchCriteria;
 
 public interface OrderService {
 	
@@ -12,13 +13,13 @@ public interface OrderService {
 	void insertOrder(OrderVO vo);
 	
 	// 마이페이지 주문 조회
-	List<Map<String, Object>> searchOrder(OrderVO vo);
+	List<Map<String, Object>> searchOrder(SearchCriteria cri);
 	
 	// 마이페이지 주문 조회 개수
-	int searchOrderCount(OrderVO vo);
+	int searchOrderCount(SearchCriteria cri);
 	
 	// 결제 취소, 반품 신청
-	void cancelOrder(OrderVO vo);
+	void updateOrderStatus(OrderVO vo);
 
 	// 사용, 적립 포인트 반환
 	int updateUserPoint(OrderVO vo);
@@ -54,10 +55,10 @@ public interface OrderService {
 	void orderAprvl(OrderVO vo);
 
 	// 주문 총 관리 리스트
-	List<Map<String, Object>> orderMngmn(OrderVO vo);	
+	List<Map<String, Object>> orderMngmn(SearchCriteria cri);	
 	
 	// 주문 총 관리 : 개수
-	int orderMngmnCount(OrderVO vo);
+	int orderMngmnCount(SearchCriteria cri);
 	
 	// 주문 총 관리 세부내역 
 	List<Map<String, Object>> orderMngmnDtls(OrderVO vo);		

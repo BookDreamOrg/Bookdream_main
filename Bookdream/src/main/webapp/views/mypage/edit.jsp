@@ -1,4 +1,6 @@
 <%@page import="com.spring.bookdream.vo.UserVO"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -44,21 +46,61 @@
 						<tr>
 							<td>아이디</td>
 							<td><input type="text" disabled class="form-control"
-								id="user_id" name="user_id" value="<%=user.getUser_id()%>"></td>
+								id="user_id" name="user_id" value="${authUser.getUser_id() }"></td>
+						</tr>
+						<c:choose>
+						 <c:when test="${authUser.getUser_id() eq null }">
+						 	<tr>
+							<td>새 비밀번호</td>
+							<td><input type="password" disabled class="form-control"
+								id="user_password" name="user_password"
+								onchange="PasswordCheck()"></td>
+							</tr>
+							<tr>
+								<td>새 비밀번호 확인</td>
+								<td><input type="password" disabled class="form-control"
+									id="user_passwordcheck" name="user_passwordcheck"
+									onchange="PasswordCheck()"></td>
+							</tr>
+							<tr>
+							<td></td>
+							<td>
+								<div>
+									<span class="pw_ok">비밀번호가 일치합니다!</span> <span class="pw_no">비밀번호가
+										일치하지 않습니다!</span>
+								</div>
+							</td>
 						</tr>
 						<tr>
+							<td>이름</td>
+							<td><input type="input"  disabled class="form-control" id="user_name"
+								name="user_name" value="<%=user.getUser_name()%>"></td>
+						</tr>
+						<tr>
+							<td>이메일</td>
+							<td><input type="input" disabled class="form-control" id="user_email"
+								name="user_email" value="<%=user.getUser_email()%>"></td>
+						</tr>
+					</table>
+
+					<div class="d-grid gap-2">
+						<div style="text-align: center">소셜 로그인 회원은 회원정보를 수정할 수 없습니다!</div>
+					</div>
+						 </c:when>
+						 <c:otherwise>
+						 	<tr>
 							<td>새 비밀번호</td>
 							<td><input type="password" class="form-control"
 								id="user_password" name="user_password"
 								onchange="PasswordCheck()"></td>
-						</tr>
-						<tr>
-							<td>새 비밀번호 확인</td>
-							<td><input type="password" class="form-control"
-								id="user_passwordcheck" name="user_passwordcheck"
-								onchange="PasswordCheck()"></td>
-						</tr>
-						<tr>
+							</tr>
+							<tr>
+								<td>새 비밀번호 확인</td>
+								<td><input type="password" class="form-control"
+									id="user_passwordcheck" name="user_passwordcheck"
+									onchange="PasswordCheck()"></td>
+							</tr>
+							<tr>
 							<td></td>
 							<td>
 								<div>
@@ -80,14 +122,20 @@
 					</table>
 
 					<div class="d-grid gap-2">
-						<button type="button" class="btn btn-light " id="modal_reg_check"
+						<button type="button" class="btn btn-outline-primary edit-btn" id="modal_reg_check"
 							onclick="updateUser()">저장</button>
 					</div>
+						 </c:otherwise>
+						</c:choose>
+						
+					</table>
+
+					
 			<!--------------------------- 회원탈퇴 --------------------------->		
 			<!-- Button trigger modal -->
 			<div class="user_delete_info_list">
 				<span class="user_delete_title">회원탈퇴 후 동일 아이디로 재가입이 불가합니다. </span>
-				<button type="button" class="btn btn-light" id="deleteUserBtn" data-bs-toggle="modal"
+				<button type="button" class="btn btn-outline-primary edit-btn" id="deleteUserBtn" data-bs-toggle="modal"
 				data-bs-target="#unregisterModal">회원탈퇴</button>
 			</div>
 
@@ -194,7 +242,7 @@
 
 		</div>
 	</div>
-	<script src="/resources/js/edit.js"></script>
+		<script src="/resources/js/edit.js"></script>
 	
 	<jsp:include page="/views/inc/footer.jsp" />
 	</div>

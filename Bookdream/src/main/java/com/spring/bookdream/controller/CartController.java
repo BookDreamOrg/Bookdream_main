@@ -76,13 +76,14 @@ public class CartController {
 		System.out.println("---> [장바구니] addCart() 실행...");
 		
 		UserVO user = (UserVO)session.getAttribute("authUser");
-		cart.setUser_no(user.getUser_no());
+		System.out.println(user);
 		
 		int result = 1; // 1 : 장바구니 추가 성공, 0 : 장바구니 추가 실패
 		
 		System.out.print("[장바구니] 로그인 check : ");
 		if (user != null) {
 			System.out.println("Y");// do 로그인 yes
+			cart.setUser_no(user.getUser_no());
 			
 			if (initCount(cart)) {
 				// ooooooooooooooooooo 중복 있음. ooooooooooooooooooo
@@ -112,7 +113,11 @@ public class CartController {
 				result = 1;	// 1 : 장바구니 추가 성공
 			}
 
-		} 
+		} else if (user == null) {
+			System.out.println("N");// do 로그인 NO
+			result = 0;	// 0 : 장바구니 추가 실패, 로그인 x
+			
+		}
 		
 		return result;
 		
@@ -198,6 +203,10 @@ public class CartController {
 				cartService.deleteCart(cart);
 			}
 			result = 1;	 // 1 : 장바구니 삭제 성공, 0 : 장바구니 삭제 실패
+			
+		}else if (user == null) {
+			System.out.println("N");// do 로그인 NO
+			result = 0;	// 0 : 장바구니 삭제 실패, 로그인 x
 			
 		}	
 		return result;

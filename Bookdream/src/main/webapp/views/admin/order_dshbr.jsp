@@ -168,7 +168,7 @@
 	<main class="container-fluid main_container"> 
 	
 	<div class="container">
-		
+				
 		<div class="order_dshbr">
 			<table class="order_dshbr_table">
 				<tr>
@@ -264,11 +264,9 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Script FontAwesome-->
-	<script src="https://kit.fontawesome.com/4bf42f841a.js"
-		crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/4bf42f841a.js" crossorigin="anonymous"></script>
 
 	<!-- Chart.js -->
-	
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>		
 			

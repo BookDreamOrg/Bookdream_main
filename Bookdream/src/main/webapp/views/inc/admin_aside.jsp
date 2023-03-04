@@ -22,6 +22,26 @@
 	margin-top: 10px;
 	margin-left: 35px;
 	display: none;
+	
+}
+
+/* 스크롤바 스타일 변경 */
+::-webkit-scrollbar {
+	width: 10px;
+    height: 10px;
+}
+    
+::-webkit-scrollbar-thumb {
+	background-color: #c2c2dd;
+    border-radius: 10px;
+    border: 3px solid #c2c2dd;
+}
+
+
+.hidden_item_text{
+	margin-top: 10px;
+	margin-left: 35px;
+	display: none;
 }
 </style>
 </head>
@@ -62,8 +82,8 @@
 						class="fa-solid fa-user-gear"></i></span><span class="list_text"><a href="/admin/user/userListPage.do?num=1&searchUserKeyword=">사용자 관리</a></span></li>
 				<li class="list-group-item"><span class="list_icon">
 				<i class="bi bi-book"></i></span> <span class="list_text item_toggle"><a href='#'>상품 관리</a></span></li>
-				<li class="item_hidden_text"><a href="#">- 도서 등록</a></li>
-				<li class="item_hidden_text"><a href="/views/admin/item_mngmn.jsp">- 수정/삭제</a></li>
+				<li class="hidden_item_text"><a href="/views/admin/book_register.jsp">- 도서 등록</a></li>
+				<li class="hidden_item_text"><a href="/views/admin/item_mngmn.jsp">- 수정/삭제</a></li>
 				<li class="list-group-item"><span class="list_icon">
 				<i class="fa-solid fa-bullhorn"></i></span> <span class="list_text toggle"><a href="#">결제 관리</a></span></li>
 				<li class="hidden_text"><a href="/admin/order">- 주문현황</a></li>
@@ -141,9 +161,9 @@
 	/***************************** 상품 관리  토글 *****************************/
 	$(document).on("click", ".item_toggle", function(e) {	
 			
-		var toggle = document.getElementsByClassName('item_hidden_text');
+		var toggle = document.getElementsByClassName('hidden_item_text');
 			
-		if ($(".item_hidden_text").css("display") == "none") {
+		if ($(".hidden_item_text").css("display") == "none") {
 		
 			for (var i=0; i<toggle.length; i++) {
 				toggle[i].style.display = "block";
