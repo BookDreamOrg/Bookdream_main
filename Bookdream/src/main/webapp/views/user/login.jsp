@@ -30,14 +30,14 @@
           </div>
           <div class="btn_wrap justify">
           	<div class="d-grid">
-          	 <button class="login_btn w-20 btn btn-sm btn-secondary" type="submit">
+          	 <button class="login_btn w-20 btn btn-sm btn-outline-primary" type="submit">
           	 	<span class="text"><b>로그인</b></span>
           	 </button>
           	</div>
           <div class="save_id_box">
           	<span class="form_chk">
           		<label class="formSaveId">
-          			<input type="checkbox" value="remember-me" id="saveId"> <a href="" class="btn_text_link">아이디 저장</a>
+          			<input type="checkbox" value="remember-me" id="saveId"> <span class="btn_text_link">아이디 저장</span>
           		</label>
           	</span>
           	<a href="idfind.jsp" class="btn_text_link">아이디 비밀번호 찾기</a>
@@ -70,7 +70,7 @@
           </div>
           
           <div class="d-grid">
-          	 <button class="login_btn w-20 btn btn-sm btn-light" type="button" onclick="location.href='join.jsp'">
+          	 <button class="login_btn w-20 btn btn-sm btn-outline-primary" type="button" onclick="location.href='join.jsp'">
           	 	<span class="text"><b>회원가입</b></span>
           	 </button>
           </div>

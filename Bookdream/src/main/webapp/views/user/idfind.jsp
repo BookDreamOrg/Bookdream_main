@@ -40,7 +40,7 @@
 		        
 		         <br>
 		         <div class="d-grid">
-		         	 <button class="login_btn w-20 btn btn-sm btn-light" onclick="idFind()">
+		         	 <button class="login_btn w-20 btn btn-sm btn-outline-primary" onclick="idFind()">
 		         	 	<span class="text"><b>아이디 찾기</b></span>
 		         	 </button>
 		         </div>
@@ -60,13 +60,10 @@
 				                <input type="text" class="form-control" id="user_email_2" name="user_email" placeholder="이메일 입력...">
 				                <label for="tel">이메일</label>
 		              		</div>
-		              		<select class="form-control" name="user_email2_2" id="user_email2_2" >
-						       <option>@naver.com</option>
-						       <option>@daum.net</option>
-						       <option>@gmail.com</option>
-						       <option>@hanmail.com</option>
-						        <option>@yahoo.co.kr</option>
-					       	</select>    
+		              		<div class="form-floating">
+				                <input type="text" class="form-control" value="@" id="user_email2" name="user_email2" placeholder="이메일 입력...">
+				                <label for="email">도메인</label>
+              				</div>
 				       
 		              	</div>
 		          <br>
@@ -77,13 +74,13 @@
 					<span id="mail-check-warn"></span>
 					<br>
 		         <div class="input-group-addon d-grid">
-						<button type="button" class="id_chk_btn w-20 btn btn-sm btn-info" id="btn_in" onclick="mailCheckBtn()">
+						<button type="button" class="id_chk_btn w-20 btn btn-sm btn-outline-primary" id="btn_in" onclick="mailCheckBtn()">
 							<span class="text"><b>본인인증</b></span>
 						</button>
 				</div>
 		          <br>
 		          <div class="d-grid">
-		          	 <button class="login_btn w-20 btn btn-sm btn-light" id="pwfind-btn" disabled="disabled" onclick="pwFind()">
+		          	 <button class="login_btn w-20 btn btn-sm btn-outline-primary" id="pwfind-btn" disabled="disabled" onclick="pwFind()">
 		          	 	<span class="text"><b>비밀번호 찾기</b></span>
 		          	 </button>
 		          </div>

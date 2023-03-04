@@ -51,9 +51,14 @@ function checkId(){
 			url : '/user/mailCheck?email=' + email, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
 			success : function (data) {
 				console.log("data : " +  data);
-				checkInput.attr('disabled',false);
-				code = data;
-				alert('인증번호가 전송되었습니다.');
+				if(data == ""){
+					alert('빈칸이 있습니다!');
+				} else{
+					checkInput.attr('disabled',false);
+					code = data;
+					alert('인증번호가 전송되었습니다.');
+				}
+				
 			},
 			error:function(){
 				alert('서버 에러입니다.');
