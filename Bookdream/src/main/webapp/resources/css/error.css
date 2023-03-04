@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+.error_body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error_main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.error_title {
+  font-weight: 900;
+  font-size: 6rem;
+  margin-bottom: 8px;
+  color: var(--main-color-tint1);
+}
+
+.error_content {
+  font-size: 2.5rem;
+  margin-bottom: 8px;
+  color: var(--main-color-shadow6);
+}
+
+.error_sub_content {
+  font-size: 1.5rem;
+}
+
+.error_line {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  width: 100%;
+  height: 0.1rem;
+  background-color: var(--main-color-tint7);
+}
+
+.error_btn button {
+  color: var(--main-color);
+  border: 1px var(--main-color) solid;
+}
