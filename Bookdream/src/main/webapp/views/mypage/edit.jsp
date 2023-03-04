@@ -37,8 +37,7 @@
 			
 			<div class="rside">
 				<div class="user_info_title">
-					<p>회원정보 수정
-					<p>
+					회원정보 수정
 				</div>
 				<hr>
 				<div class="user_info_table">

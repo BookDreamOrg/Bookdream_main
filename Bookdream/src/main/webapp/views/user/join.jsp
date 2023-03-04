@@ -28,7 +28,7 @@
 		                <label for="id">아이디</label>
 	             	</div>
 					<div class="d-grid">
-						<button class="id_chk_btn w-20 btn btn-sm btn-light" id="btn" onclick="checkId()" type="button">
+						<button class="id_chk_btn w-20 btn btn-sm btn-outline-primary" id="btn" onclick="checkId()" type="button">
 							<span class="text"><b>아이디 중복 확인</b></span>
 						</button>
 					</div>    
@@ -67,7 +67,7 @@
 		       
               	</div>
            	<div class="input-group-addon d-grid">
-				<button type="button" class="id_chk_btn w-20 btn btn-sm btn-light" id="btn_in" onclick="mailCheckBtn()">
+				<button type="button" class="id_chk_btn w-20 btn btn-sm btn-outline-primary" id="btn_in" onclick="mailCheckBtn()">
 					<span class="text"><b>본인인증</b></span>
 				</button>
 			</div>
@@ -78,7 +78,7 @@
 			<span id="mail-check-warn"></span>
 		
              <div>
-             	<button class="w-70 btn btn-lg btn-secondary" id="join-btn" disabled="disabled" type="submit">회원가입 완료</button>
+             	<button class="join-submit w-70 btn btn-lg btn-outline-primary" id="join-btn" disabled="disabled" type="submit">회원가입 완료</button>
              </div> 
               
            </form>

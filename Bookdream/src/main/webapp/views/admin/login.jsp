@@ -30,7 +30,7 @@
           </div>
           <div class="btn_wrap justify">
           	<div class="d-grid">
-          	 <button class="login_btn w-20 btn btn-sm btn-secondary" type="submit">
+          	 <button class="login_btn w-20 btn btn-sm btn-outline-primary" type="submit">
           	 	<span class="text"><b>로그인</b></span>
           	 </button>
           	</div>
@@ -50,7 +50,7 @@
        </form>
           
           <div class="d-grid">
-          	 <button class="login_btn w-20 btn btn-sm btn-light" type="button" onclick="location.href='join.jsp'">
+          	 <button class="login_btn w-20 btn btn-sm btn-outline-primary" type="button" onclick="location.href='join.jsp'">
           	 	<span class="text"><b>회원가입</b></span>
           	 </button>
           </div>

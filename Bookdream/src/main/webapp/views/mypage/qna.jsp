@@ -44,18 +44,24 @@
 					</div>
 					<input type="hidden" id="answerCnt" value="${answerCnt }">
 					<div class="qna_body">
-					<hr>
 						<c:choose>
 							<c:when test="${empty myQnAList }">
 								<p>문의 내역이 없습니다.</p>
 							</c:when>
 							<c:when test="${!empty myQnAList }">
+								<table class="table table-borderless">
+									<tr class="table-header">
+										<th width="20%">날짜</th>
+										<th width="65%">문의 제목</th>
+										<th width="15%">문의 여부</th>
+									</tr>
+								</table>
 								<c:forEach var="list" items="${ myQnAList}">
-									<table class="table table-borderless">
+								<table class="table table-borderless">
 										<tr>
 											<td width="20%">
-											<fmt:formatDate value="${list.getReg_date() }" pattern="yy-MM-dd" />
-											<fmt:formatDate value="${list.getReg_date() }" pattern="HH:mm" />
+												<fmt:formatDate value="${list.getReg_date() }" pattern="yy-MM-dd" />
+												<fmt:formatDate value="${list.getReg_date() }" pattern="HH:mm" />
 											</td>
 											<td width="65%">
 												 <span class="qna_list_title" id="qna_title" name="qna_title">${list.getQna_title() }</span>

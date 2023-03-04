@@ -79,8 +79,13 @@ html, body{
         }
         
         .sns_login_box .sns_login_list .sns_login_item{
+        	border-color: white;
         }
         
+        .sns_login_btn{
+        	border: none;
+        	background-color: white;
+        }
         
          .id_chk_btn{
         	color: #484877;

@@ -52,17 +52,17 @@
  		<div class="sns_login_box">
           	<ul class="sns_login_list">          	
           		<li class="sns_login_item">
-          		<button onclick="kakaoLogin()">
+          		<button onclick="kakaoLogin()" class="sns_login_btn">
           			<img src="/resources/images/kakao_login2.PNG" class="rounded-circle" width="50px" height="45px">
           		</button>	 
           		</li>
           		<li class="sns_login_item">
-	          		<button onclick="naverLogin()">
+	          		<button onclick="naverLogin()" class="sns_login_btn">
           				<img src="/resources/images/naver_login.png" class="rounded-circle" width="50px" height="45px">
           			 </button>
           		</li>
           		<li class="sns_login_item">	
-          			<button onclick="googleLogin()">
+          			<button onclick="googleLogin()" class="sns_login_btn">
           				<img src="/resources/images/google_login.PNG" class="rounded-circle" width="50px" height="45px">
           			</button>
           		</li>

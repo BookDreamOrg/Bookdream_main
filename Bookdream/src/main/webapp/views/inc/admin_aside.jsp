@@ -60,7 +60,7 @@
 							alt="user_profile" class="user_profile" />
 					</div>
 					<span class="list_text">
-					<a href="/views/admin/admin.jsp">관리자</a></span>
+					<a href="/views/admin/adminS">관리자</a></span>
 				</li>
 				<li class="list-group-item"><span class="list_icon"><i
 						class="fa-solid fa-user"></i></span> <span class="list_text"><a href="#">프로필 관리</a></span></li>

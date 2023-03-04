@@ -224,7 +224,7 @@
 			<div class="card">
 				<div class="card-header">
 					<div class="qna-title-header">
-						<div class="qna-title-header-left"><a href="/admin/user/QnADashBoard">문의 대시보드</a></div>
+						<div class="qna-title-header-left">문의 대시보드</div>
 						<div class="qna-title-header-right"><a href="/admin/user/getAllQnAList">+더보기</a></div>
 					</div>
 				</div>
@@ -250,7 +250,7 @@
 														</c:when>
 														 <c:otherwise>
 														 	<div class="qna-dashboardlist-name">
-														 		${userlist.getUser_id() } <span class="nav-bar-line"></span> ${list.getReg_date() }
+														 		${userlist.getUser_name() } <span class="nav-bar-line"></span> ${list.getReg_date() }
 														 	</div>
 														 </c:otherwise>
 													</c:choose>

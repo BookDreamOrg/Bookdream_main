@@ -29,7 +29,7 @@
 	             	</div>
 					<div class="d-grid">
 						<button class="id_chk_btn w-20 btn btn-sm btn-outline-primary" id="btn" onclick="checkId()" type="button">
-							<span class="text"><b>아이디 중복 확인</b></span>
+							<span class=""><b>아이디 중복 확인</b></span>
 						</button>
 					</div>    
 		             	<span class="id_ok">멋진 아이디네요!</span>
@@ -70,7 +70,7 @@
               	</div>
            	<div class="input-group-addon d-grid">
 				<button type="button" class="id_chk_btn w-20 btn btn-sm btn-outline-primary" id="btn_in" onclick="mailCheckBtn()">
-					<span class="text"><b>본인인증</b></span>
+					<span class=""><b>본인인증</b></span>
 				</button>
 			</div>
 			

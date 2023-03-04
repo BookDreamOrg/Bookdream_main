@@ -109,7 +109,7 @@
 	
 	<!-- 답변 대기 중인 유저정보 가져오기 -->
 	<select id="getQnAUser" resultType="user">
-		select u.* from QNA q, USERS u where q.user_no = u.user_no and ans_check = 0
+		select u.* from QNA q, USERS u where q.user_no = u.user_no
 	</select>
 	
 	<!-- 답변 페이징 처리로 답변 대기 리스트 가져오기 -->
