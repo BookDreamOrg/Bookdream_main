@@ -26,8 +26,14 @@
 	float: left;
 }
 
-.qna_button {
+.qna_btn {
 	float: right;
+	color: #484877;
+	border-color: #484877;
+}
+
+.qna_btn:hover{
+	background-color: #484877;	
 }
 
 .form_textarea {

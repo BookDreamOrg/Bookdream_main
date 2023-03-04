@@ -10,6 +10,15 @@
 
 <html>
 <head>
+
+ <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+<!-- alert -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
+
 <!-- J쿼리 -->
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 
@@ -49,85 +58,42 @@
 		<main>
 
 		<div class="book-section">
-				<div class="container-fluid text-center">
-					<div class="display-4 mt-5 mb-5" id="book_title">${book.title }</div>
-				</div>
+					
 	<div class="row">
-		<div class="col-6 text-center ">
-			<img id="detail-img" alt="${book.title }" src="${book.book_img }" class="img-thumbnail" />
+		<div class="col-6 text-center mt-5 ">
+			<img id="detail-img" alt="${book.title }" src="${book.book_img }" class="img-thumbnail animate__animated animate__fadeInLeft" />
 		</div>
-		<div class="col-6 mt-5">
-				<div class="row">
-				<div class="col-1"></div>
-				<div class="col-5 ">
-				<ul class=" list-group-horizontal mt-3">
-					<li ><span id="detail-badge" class="badge bg-warning rounded-pill">작 &nbsp;&nbsp;가</span></li>
-					<li ><span id="detail-badge" class="badge bg-warning rounded-pill mt-2">출판사</span></li>
-					<li ><span id="detail-badge" class="badge bg-warning rounded-pill mt-2">출간일</span></li>
-				<c:choose>
-					<c:when test="${book.stock > 0 }">
-					<c:choose>
-					<c:when test="${ book.discount eq 0 }">
-							<li class="mt-4"><span class="h3">정&nbsp;&nbsp;가</span></li>
-							<li class="mt-4"><span class="h3">판매가 </span></li>
-					</c:when>
-					<c:otherwise>
-							<li class="mt-4"><span class="h3">정&nbsp;&nbsp;가</span></li>	
-							<li class="mt-4"><span class="h3">판매가</span> </li>
-					</c:otherwise>
-					</c:choose>
-						<li class="mt-4"><span class="h3">배&nbsp;&nbsp;송</span></li>
-						<li class="mt-4"><span class="h3">수&nbsp;&nbsp;량</span></li>
-					</c:when>
-					<c:otherwise>
-					</c:otherwise>
-				</c:choose>	 
-				</ul>
-				</div>
+		<div class="col-6 mt-5 animate__animated animate__fadeInRight">
+				 <div class="display-6 mt-5 mb-2" id="book_title">${book.title }</div>
 				
-				<div class="col-6">
 				<ul class=" list-group-horizontal">
-					<li class="mt-3"><span class="h4">${book.author } </span></li>
-					<li class="mt-3"><span class="h4">${book.publisher} </span></li>
-					<li class="mt-3"><span class="h4">${strdate}</span></li>
+					<li class="mt-3 book_info"><span class="h5">${book.author } | ${book.publisher} | ${strdate} </span> </li>
+					<li class="mt-3"><span class="mb-5 fw-bold text" >⭐ 평균 별점</span><span class="fw-bold">  ${avgStar} </span> /  <small class="text-muted">  5.0 </small></li>
+					
 					<c:choose>
 					<c:when test="${book.stock > 0 }">
 					<c:choose>
 						<c:when test="${ book.discount eq 0 }">
-							<li class="mt-4"><span class="h5"><fmt:formatNumber value="${book.book_price}" pattern="###,###,###원" /></span></li>
-							<li class="mt-4"><span class="h3 mark"><fmt:formatNumber value="${book.book_price}" pattern="###,###,###원" /></span></li>
+							<li class="mt-4" ><span class="h3" style="color: red;" id="price_org" ><fmt:formatNumber value="${book.book_price}" pattern="###,###,###원" /></span></li>
 						</c:when>
 						<c:otherwise>
-							<li class="mt-4"><div class=" h5 mt-5 text-muted text-decoration-line-through "><fmt:formatNumber value="${book.book_price}" pattern="###,###,###원" /></div></li>
 							<li class="mt-4">
-							 <span class="h3 mark"><fmt:formatNumber type="currency" pattern="###,###,###원" value="${book.book_price - (book.book_price*book.discount/100)} " /></span>
+							<span class=" h5 text-muted text-decoration-line-through" id="dis_org_price"><fmt:formatNumber value="${book.book_price}" pattern="###,###,###원" /></span>
+							 <span class="h3" style="color: red;" id="dis_price"><fmt:formatNumber type="currency" pattern="###,###,###원" value="${book.book_price - (book.book_price*book.discount/100)} " /></span>
 							 <span class="h6">(<fmt:formatNumber type="percent"  value="${book.discount/100} " /> 할인)</span>
 							 </li>
 						</c:otherwise>
 						</c:choose>	
-							 <li><div class=" h4 mt-4"><a style="color: red;">3만원 이상 무료배송</a></div></li>
-							 <li class="mt-4"><input class=" form-control text-center border-0 " type="number" id="product_cnt" min="1" max="${book.stock}" value="1" ></li>
-				<!-- 장바구니/결제 버튼 -->
-						<div class="container-fluid mt-5">
-							<div class="text-center">
-								<button id="btn_buy_now" class="text-center btn btn-outline-dark flex-shrink-0 btn-lg" onclick="now_buy()">
-									<i class="bi bi-basket2"></i> 바로구매
-								</button>
-								<button id="btn_cart" class="text-center btn btn-outline-dark flex-shrink-0  btn-lg me-3" onclick="cart()">
-									<i class="bi-cart-fill me-1"></i>장바구니
-								</button>
-							<input id="book_no" type="hidden" value="${book.book_no}">
-							</div>
-						</div>
+							 <li><div class=" h6 mt-4 "><a id="delivery"></a></div></li>
+							 <li class="mt-4"></li>
+				
 						</c:when>
 						<c:otherwise>
 						<div class="h1 mt-5"> 품&nbsp;&nbsp;절  </div>					
 						</c:otherwise>
 				</c:choose>	 
-						 
-				</ul>
-				</div>
-		</div>		
+				</ul>		 
+				
 	</div>					
 
 					
@@ -137,46 +103,43 @@
 	<div class="row  mt-5">
 		<div class="col-md-1">
 		</div>
-		<div class="col-md-10">
-		<i class="bi bi-info-circle"></i>
-			<span class="h2" id="detail-bookinfo">책 소개</span>
-			<p class="pt-5 h5" id="book_content">
+		<div class="col-md-10 animate__animated animate__fadeInLeft">
+			<span class="h2" id="detail-bookinfo">책 소개 &nbsp; &nbsp;</span>
+			<p class="pt-3 h5" id="book_content">
 			${book.book_content }
 			</p>	
 		</div>
 		<div class="col-md-1">
 		</div>
 	</div>
-	
-	
-	
-		
+
 </div>
 
-		
 </main>
-
+<hr>
 
 <div id="reviewList">
 <div id="detail-review">
 
 <!-- 리뷰 평가  -->
-<div class="row mt-5">
+<div class="row mt-5 mb-5">
 		<div class="col-md-5 text-end">
 		<img class="header-row-logo ms-4"src="/resources/images/logo/logo_white.png" alt="logo_white" />
 		<img class="header-row-logo_text" src="/resources/images/logo/logo_text.png" alt="bookdream" /></div>
-		<div class="col-md-7 h1 text-start mt-2"> 회원이 평가한 리뷰 </div> 
+		<div class="col-md-7 h1 text-start mt-4"> 회원이 평가한 리뷰 </div> 
 </div>
-<div class="row mt-5 h3">
-<div class="col-md-6">
+
+
+
 	<c:forEach var="progressStar" items="${progressStar}" varStatus="status">
-			<div class="row mt-2">
-			<div  class="col-md-1"></div>
-			<div class="col-md-4">
-			<!--  -->
+<div class="row h3">
+	
+<!--  별(하트) 이미지 -->
+	
+	<div class="col-5 text-end" id="star_box">
 			<c:forEach var="i" begin="1" end="5">
 			<c:choose>
-				<c:when test="${i <= progressStar.key}">
+				<c:when test="${i <= progressStar.key }">
 					💜
 				</c:when>
 				<c:otherwise>
@@ -184,36 +147,21 @@
 				</c:otherwise>
 			</c:choose>
 			</c:forEach>
-				
-			</div>
-			<div class="col-md-6 mt-3">
+	</div>	
+	
+	<!--  리뷰 비율 프로그래스 -->				
+		<div class="col-7 mt-3 text-start" id="progress_box">
 			<div class="progress">
 				<div class="progress-bar" id="progress" role="progressbar" style="width: ${progressStar.value.PROPORTION}%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">${progressStar.value.PROPORTION}%</div>
 			</div>
-			</div>
-			</div>
+		</div>
+</div>				
 	</c:forEach>
-</div>	
-<div class="col-md-6 align-self-center text-center" >
-	<div id="img_text" class="pt-3 pl-3 mt-3 align-self-center text-center">
-		<p class="mb-5 fw-bold text" >⭐ 평균 별점</p>
-		<span class="h1 fw-bold">  ${avgStar} </span> /  <small class="text-muted">  5.0 </small>
-	</div>
-	<div id="book_img">
-		<img src="/resources/image/detail/book-805405.svg" alt="book_img">
-	</div>
-	
-</div>
-
-
-</div>				
-</div>				
 
 
 
 <!-- 리뷰 등록 창 -->
-<div class="mt-5">
-	<h3 class="mb-3"><i class="bi bi-book"></i> 리뷰</h3>
+	<h3 class="mt-5"><i class="bi bi-book"></i> 리뷰</h3>
 	<select id="REVIEW_STAR"> 
 		<option selected="selected">별점 선택</option>
 		<option value="1">⭐</option>
@@ -222,9 +170,11 @@
 		<option value="4">⭐⭐⭐⭐</option>
 		<option value="5">⭐⭐⭐⭐⭐</option>
 	</select>
-	<textarea class="mt-2" rows="3" cols="150" name="review_content" id="review_content" placeholder="배송 문의나 욕설 인신공격성 글은 상품 페이지에서 노출 제외처리됩니다."></textarea>
-	<button class="text-center btn btn-outline-dark flex-shrink-0" name="btn_review" id="btn_review">등록</button>
+<div class="">
+	<textarea class="mt-2" rows="3" cols="170" name="review_content" id="review_content" placeholder="배송 문의나 욕설 인신공격성 글은 상품 페이지에서 노출 제외처리됩니다."></textarea>
+	<button class="text-center btn btn-outline-dark flex-shrink-0 mb-5" name="btn_review" id="btn_review">등록</button>
 </div>
+
 
 <div>
 <c:if test="${empty review}"  >
@@ -235,17 +185,13 @@
 		<div class="container-fluid mt-4">
 			<div class="row">
 				<div class="col-md-6">
-					<div class="row">
-						<div class="col-md-4">
+				
+						<div>
 						<i class="bi bi-person-circle fs-2"></i>
 						   ID : ${review.user_id} <br>
-						   등록 날짜 : <fmt:formatDate value="${review.review_date}" pattern="yyyy년 MM월 dd일" type="date"/> 
+						   등록 날짜 | <fmt:formatDate value="${review.review_date}" pattern="yyyy년 MM월 dd일" type="date"/> 
 						</div>
-						<div class="col-md-4">
-						</div>
-						<div class="col-md-4">
-						</div>
-					</div>
+					
 				</div>
 				<div class="col-md-4">
 				<!-- 별점 -->
@@ -254,10 +200,10 @@
 					</c:forEach>
 					<div> 추천수  (${review.review_recommend}) </div>
 				</div>
-				<div class="col-md-2">
+				<div class="col-md-2 align-self-end">
 				<c:if test="${review.user_id eq sessionScope.user_id }">
-				<button id="review_update" class="btn btn-warning" onclick="review_upd(this.value)"  value="${review.review_no }"   >수정</button>
-				<button id="review_delete" class="btn btn-warning" onclick="review_dlt(this.value)" value="${review.review_no }">삭제</button>	
+				<button id="review_update" class="btn btn-outline-primary" onclick="review_upd(this.value)"  value="${review.review_no }"   >수정</button>
+				<button id="review_delete" class="btn btn-outline-primary" onclick="review_dlt(this.value)" value="${review.review_no }">삭제</button>	
 				</c:if>
 				</div>	
 			</div>
@@ -296,7 +242,52 @@
     </div>
   </div>
 </div>
+</div>
 
+	<!-- 장바구니/결제 버튼 -->
+	
+	<c:choose>
+		<c:when test="${book.stock > 0 }">
+	
+	<div class="container-fluid mt-5 row" id="button_box">
+	<div class="text-center col-4 mt-2 ">
+	
+					<c:choose>
+						<c:when test="${ book.discount eq 0 }">
+						<span class="h4">금액 : </span> 
+						 <span class="h3" style="color: red;" id="org_btn_box"><fmt:formatNumber value="${book.book_price}" pattern="###,###,###원" /> </span>
+						</c:when>
+						<c:otherwise>
+							<span class="h4">금액 : </span> 
+							<span class=" h5 text-muted text-decoration-line-through" id="price_btn_box"><fmt:formatNumber value="${book.book_price}" pattern="###,###,###원" /></span>
+							 <span class="h3" style="color: red;" id="dis_btn_box"><fmt:formatNumber type="currency" pattern="###,###,###원" value="${book.book_price - (book.book_price*book.discount/100)} " /></span>
+							 <span class="h6">(<fmt:formatNumber type="percent"  value="${book.discount/100} " /> 할인)</span>
+							 
+						</c:otherwise>
+						</c:choose>
+		
+	</div>
+	
+	<div class="col-4">
+	<input class=" form-control text-center " type="number" id="product_cnt" min="1" max="${book.stock}" value="1" onchange="delivery_func(this.value)" >	
+	<span class="h4" id="stock_box"> 수량 : </span>		
+	</div>
+							
+							
+		<div class="text-start col-4">
+		<button id="btn_buy_now" class="text-center btn btn-outline-dark flex-shrink-0 btn-lg" onclick="now_buy()">
+									 바로구매
+								</button>
+								<button id="btn_cart" class="text-center btn btn-outline-dark flex-shrink-0  btn-lg me-3" onclick="cart()">
+									장바구니
+								</button>
+							<input id="book_no" type="hidden" value="${book.book_no}">
+		</div>					
+	</div>
+
+
+</c:when>						
+	</c:choose>
 	
 <!-- ---------------------------------- 푸터  --------------------------------- -->	
 <jsp:include page="/views/inc/footer.jsp" />
@@ -485,11 +476,26 @@ $(document).on("click", "#btn_review", function(e) {
 					contentType:"application/json;charset=UTF-8",
 					success: function (data){
 						if(star.val() ==='별점 선택'){
-							alert('별점 선택은 필수입니다.');
+							 Swal.fire(
+									 '별점 선택은 필수입니다.',
+							          '',
+							          'info'
+						
+							 )
 						}else if($('#review_content').val() === null || $('#review_content').val() === ""){
-							alert('내용을 입력하세요. ');
+							 Swal.fire(
+									 '내용을 입력해주세요',
+							          '',
+							          'info'
+						
+							 )
 						}else{
-							alert('리뷰를 등록하였습니다.');
+							 Swal.fire(
+									 '리뷰를 등록하였습니다.',
+							          '',
+							          'success'
+						
+							 )
 							getReview();
 						}
 					},
@@ -523,7 +529,12 @@ function getReview(){
 				
 		},
 		error : function(){
-			alert("에러 발생");	
+			 Swal.fire(
+					 '다시 시도해주세요.',
+			          '',
+			          'error'
+		
+			 )
 		}
 	});
 }
@@ -541,7 +552,12 @@ function review_upd(val){
 			},
 			
 			success: function (data){
-				alert('리뷰가 수정되었습니다.');
+				 Swal.fire(
+						 '리뷰가 수정되었습니다.',
+				          '',
+				          'success'
+			
+				 )
 				getReview();
 				$('#my-modal').modal('hide');
 			},
@@ -566,7 +582,12 @@ function review_upd(val){
 			},
 			
 			success: function (data){
-				alert('리뷰가 삭제되었습니다.');
+				 Swal.fire(
+						 '리뷰가 삭제되었습니다.',
+				          '',
+				          'success'
+			
+				 )
 				getReview();
 			},
 			error:function(request, status, error){
@@ -582,6 +603,74 @@ function modal_close(){
 	$('#my-modal').modal('hide');
 	
 }
+
+
+/* ------------------------ 배송 안내  / 구매 가격 ----------------------------*/	
+ 
+ 
+ $(function(){
+	
+	 let price = ${book.book_price - (book.book_price*book.discount/100)};
+	 let org_price = ${book.book_price};
+	 if( price  >= 30000 ){
+		 document.getElementById('delivery').innerHTML = '무료배송';
+		 
+	 }else{
+		 document.getElementById('delivery').innerHTML = '배송비 3천원 추가';
+	 }
+	 
+
+	 
+ });
+
+ function delivery_func(val){
+	 
+	 
+	 let price = ${book.book_price - (book.book_price*book.discount/100)};
+	 let org_price = ${book.book_price};
+	 let won = '원';
+	 
+	 if(${ book.discount} != 0){
+		 document.getElementById('dis_org_price').innerHTML = AddComma(org_price * val) + won;
+		 document.getElementById('dis_price').innerHTML = AddComma(price * val)+ won;
+		 
+		 document.getElementById('price_btn_box').innerHTML = AddComma(org_price * val)+  won;
+		 document.getElementById('dis_btn_box').innerHTML = AddComma(price * val)+ won;
+	 }else{
+		 document.getElementById('price_org').innerHTML = AddComma(org_price * val)+ won;
+		document.getElementById('org_btn_box').innerHTML = AddComma(org_price * val)+ won;
+
+	 }
+	
+	 
+	
+	 if( (price * val) >= 30000 ){
+		 document.getElementById('delivery').innerHTML = '무료배송';
+
+	 }else{
+		 document.getElementById('delivery').innerHTML = '배송비 3천원 추가';
+	 }
+	 
+	 
+ }
+	
+
+ 
+ 
+
+
+
+
+
+/* ------------------------ [수식] 천 단위 콤마 찍기   ----------------------------*/
+
+function AddComma(num) {	
+	var regexp = /\B(?=(\d{3})+(?!\d))/g;
+	return num.toString().replace(regexp, ',');
+}
+
+
+
 
 </script>
 

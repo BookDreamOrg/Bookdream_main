@@ -46,8 +46,8 @@ uri="http://java.sun.com/jsp/jstl/fmt"%>
     <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
     <link rel="stylesheet" href="/resources/css/styles.css" />
     <link rel="stylesheet" href="/resources/css/admin_screen.css" />
-
     <link rel="stylesheet" href="/resources/css/admin_qnadashboard.css" />
+    <link rel="stylesheet" href="/resources/css/admin_userboard.css" />
 
     <title>Admin Page</title>
 
@@ -170,66 +170,11 @@ uri="http://java.sun.com/jsp/jstl/fmt"%>
   <body class="admin_body">
     <jsp:include page="/views/inc/admin_aside.jsp" />
     <main class="container-fluid main_container">
-      <header class="shadow-sm">
-        <nav class="navbar navbar-expand-xl navbar-light bg-white">
-          <div class="container-fluid">
-            <a class="navbar-brand" href="#">관리자</a>
-            <button
-              class="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarTogglerDemo2"
-              aria-controls="navbarTogglerDemo2"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse show" id="navbarTogglerDemo2">
-              <ul class="navbar-nav me-auto mb-2 mb-xl-0">
-                <li class="nav-item">
-                  <a class="nav-link" aria-current="page" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="logout">Logout</a>
-                </li>
-                <li class="nav-item">
-                  <a
-                    class="nav-link disabled"
-                    href="#"
-                    tabindex="-1"
-                    aria-disabled="true"
-                    >Disabled</a
-                  >
-                </li>
-              </ul>
-              <form class="d-flex">
-                <input
-                  class="form-control me-2"
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-                <button class="btn btn-outline-success" type="submit">
-                  Search
-                </button>
-              </form>
-            </div>
-          </div>
-        </nav>
-      </header>
+		<section class="mb-3 mt-3" >
+		<div class="h3 mb-3" id="admin_section_title">대시보드</div>
+		<hr>
+		</section>
       <div class="section_div">
-        <section class="today_state">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">오늘의 할일</h5>
-              <p class="card-text">
-                With supporting text below as a natural lead-in to additional
-                content.
-              </p>
-            </div>
-          </div>
-        </section>
         <section class="todo_list">
           <div class="card">
             <div class="card-header">도서 일일 판매량(주간)</div>
@@ -242,13 +187,11 @@ uri="http://java.sun.com/jsp/jstl/fmt"%>
         </section>
         <section class="calandar">
           <div class="card">
-            <div class="card-header">Featured</div>
+            <div class="card-header">유저 방문 수(주간)</div>
             <div class="card-body">
-              <h5 class="card-title">Special title treatment</h5>
-              <p class="card-text">
-                With supporting text below as a natural lead-in to additional
-                content.
-              </p>
+             <div class="container visitChart_container">
+					<canvas id="visitChart"></canvas>
+			</div>
             </div>
           </div>
         </section>
@@ -257,7 +200,7 @@ uri="http://java.sun.com/jsp/jstl/fmt"%>
             <div class="card-header">
               <div class="qna-title-header">
                 <div class="qna-title-header-left">
-                  <a href="/admin/user/QnADashBoard">문의 대시보드</a>
+                  		문의 대시보드
                 </div>
                 <div class="qna-title-header-right">
                   <a href="/admin/user/getAllQnAList">+더보기</a>
@@ -266,7 +209,12 @@ uri="http://java.sun.com/jsp/jstl/fmt"%>
             </div>
             <div class="card-body">
               <div class="list-group">
-                <c:forEach items="${qnaAllList }" var="list" varStatus="vs">
+              <c:choose>
+              	<c:when test="${qnaAllList eq null }">
+              		문의 내역이 없습니다.
+              	</c:when>
+              	<c:otherwise>
+              		<c:forEach items="${qnaAllList }" var="list" varStatus="vs">
                   <div class="qna-Alllist">
                     <div class="qna-dashboardList">
                       <a
@@ -319,6 +267,8 @@ uri="http://java.sun.com/jsp/jstl/fmt"%>
                     </div>
                   </div>
                 </c:forEach>
+              	</c:otherwise>
+              </c:choose>
               </div>
             </div>
           </div>
@@ -403,6 +353,10 @@ uri="http://java.sun.com/jsp/jstl/fmt"%>
     <script
       type="text/javascript"
       src="/resources/js/commonFunction.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="/resources/js/admin_userboard.js"
     ></script>
   </body>
 </html>

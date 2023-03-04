@@ -311,21 +311,27 @@ public class MypageController {
 	// 1:1문의 insert
 	@RequestMapping(value="/insertQnA")
 	@ResponseBody
-	public QnAVO qnaInsert(HttpServletResponse response, QnAVO qnaVO) {
+	public int qnaInsert(HttpServletResponse response, QnAVO qnaVO) {
 		
 		System.out.println("QnAInsert실행");
-		
 		System.out.println(qnaVO);
+		if(qnaVO.getQna_type().equals("select")) {
+			return -1;
+		} else if(qnaVO.getQna_title().equals("") || qnaVO.getQna_content().equals("")) {
+			return 0;
+		}
 		qnaService.QnAInsert(qnaVO);
 		
-		return qnaVO;
+		return 1;
 	}
 	
 	// 나의 문의 리스트 가져오기
 	@RequestMapping(value="/getMyQnAList")
-	public String getMyQnAList(HttpServletResponse response, Model model){
+	public String getMyQnAList(HttpServletResponse response, Model model, SearchCriteria cri){
 		
 		System.out.println("getMyQnAList실행");
+		
+		int num = 1;
 		
 		UserVO user = (UserVO)session.getAttribute("authUser");
 		QnAVO qnaVO = new QnAVO();
@@ -352,6 +358,29 @@ public class MypageController {
 		}
 		model.addAttribute("answerCnt", answerCnt);
 		
+		
+//		String user_id = (String) session.getAttribute("user_id");
+//		cri.setUser_id(user_id);
+//		
+//		// 한 페이지의 표시 개수
+//		cri.setAmount(3);	
+//		
+//		// 페이지 블록의 개수
+//		int pageBlcok = 3;		
+//		
+//		// 문의 목록
+//		List<QnAVO> list = qnaMyList;
+//		
+//		// 문의개수 추출
+//		int count = list.size();	
+//			
+//		PageVO pageMaker = new PageVO(cri, count, pageBlcok);		//cri, 11, 3
+//				
+//		QnAVO qna = new QnAVO();
+//		
+//		qna.setPageNum(count);
+//		qna.setPage(pageMaker);
+		
 		return "mypage/qna";
 	}
 	
@@ -377,23 +406,23 @@ public class MypageController {
 	// 1:1문의 수정
 	@RequestMapping(value="/updateQnAInfo")
 	@ResponseBody
-	public String updateQnA(HttpServletRequest request, QnAVO qnaVO, Model model) {
+	public int updateQnA(HttpServletRequest request, QnAVO qnaVO, Model model) {
 		
 		System.out.println("updateQnA실행");
-		String qna_type = request.getParameter("qna_type");
-		String qna_title = request.getParameter("qna_title");
-		String qna_content = request.getParameter("qna_content");
 		
-		qnaVO.setQna_type(qna_type);
-		qnaVO.setQna_title(qna_title);
-		qnaVO.setQna_content(qna_content);
+		if(qnaVO.getQna_type().equals("select")) {
+			System.out.println("typenull");
+			return -1;
+		} else if(qnaVO.getQna_title().equals("") || qnaVO.getQna_content().equals("")) {
+			return 0;
+		}
 		
 		System.out.println(qnaVO);
 		
 		qnaService.updateQnA(qnaVO);
-		return "mypage/qna";
+		return 1;
 	}
-	 
+	  
 	// 1:1문의 삭제
 	@RequestMapping(value="/deleteQnA")
 	public String deleteQnA(HttpServletRequest request, HttpServletResponse response, QnAVO qnaVO, Model model) throws IOException {

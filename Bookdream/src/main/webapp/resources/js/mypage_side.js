@@ -1,29 +1,5 @@
 	/***************************** 페이지 로딩 *****************************/
 	$(function() {
-		// new표시 Check 쿠키 설정
-		var answerCnt = $('#answerCnt').val();
-		console.log('answerCnt: ' + answerCnt);
-		console.log('getCookie: ' + getCookie("answerCnt"));
-		console.log('쿠키 정보: ' + document.cookie);
-		console.log('saveid정보: ' + getCookie("saveid"));
-		if(document.cookie.length == 0){
-			setCookie(answerCnt);
-		} else{
-			if(answerCnt != getCookie("answerCnt")){
-				console.log(getCookie(answerCnt));
-				console.log('전값과 다름');
-				if($('#qnanew-icon').css("display") == "none"){
-					$('#qnanew-icon').show();
-				}
-			} else{
-				console.log('전값과 같음');
-				$('#qnanew-icon').hide();
-			}
-		}
-		
-//		deleteCookie('answerCnt');
-		
-		
 		rcmnd_book();
 	})
 	

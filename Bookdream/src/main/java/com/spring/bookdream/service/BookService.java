@@ -1,6 +1,8 @@
 package com.spring.bookdream.service;
 
 import java.util.List;
+import java.util.Map;
+
 import com.spring.bookdream.vo.BookVO;
 import java.util.ArrayList;
 
@@ -40,4 +42,8 @@ public interface BookService {
 	
 	//[어드민/체크박스] 도서 업데이트
 	void chkBookUpd(ArrayList<BookVO> voList);
+	
+	// 신간도서 10권 (book_no 역순)
+	List<Map<String, Object>> newBookList();
+	
 }

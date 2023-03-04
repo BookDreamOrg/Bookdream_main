@@ -1,11 +1,13 @@
 package com.spring.bookdream.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,7 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.spring.bookdream.dao.UserDAO;
+import com.spring.bookdream.service.QnAService;
 import com.spring.bookdream.service.UserService;
+import com.spring.bookdream.vo.QnAVO;
 import com.spring.bookdream.vo.UserVO;
 
 @Controller
@@ -26,6 +30,9 @@ public class AdminLoginController {
 	@Autowired
 	private HttpSession session;
 
+	@Autowired
+	private QnAService qnaService;
+	
 	// 기존 회원 로그인
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView login(@ModelAttribute UserVO vo, UserDAO userDAO, Model model) {
@@ -41,9 +48,11 @@ public class AdminLoginController {
 		if (result) { // 로그인 성공
 			System.out.println("로그인 처리");
 			RedirectView rv = new RedirectView();
-			rv.setUrl("admin.jsp");
-			rv.setExposeModelAttributes(false);
-			mav.setView(rv);
+			mav.setViewName("redirect:/views/admin/adminS");
+			
+//			rv.setUrl("admin.jsp");
+//			rv.setExposeModelAttributes(false);
+//			mav.setView(rv);
 			session.setAttribute("authUser", user);
 			
 			session.setAttribute("user_id", user.getUser_id());
@@ -86,6 +95,51 @@ public class AdminLoginController {
 
 		userService.insertAdmin(vo);
 		return "redirect:/";
+
+	}
+	
+	@RequestMapping(value = "/adminS", method = RequestMethod.GET)
+	public String AdminStart(UserVO vo, UserDAO userDAO, Model model, QnAVO qnaVO) {
+		System.out.println("관리자 시작 ");
+
+		System.out.println("QnADashBoard실행");
+		List<QnAVO> qnaWaitList = qnaService.getWaitQnAList(); //답변 대기 문의 리스트
+		
+			int count = qnaWaitList.size();
+			int num = 1;
+			int postNum = 6;
+			
+			int pageNum = (int)Math.ceil((double)count/postNum);
+			
+			int displayPost = 0;
+			
+			if(num > 1) {
+				displayPost = ((num - 1) * postNum) + 1;
+				postNum = (postNum - 1);
+			} 
+		
+			qnaVO.setDisplayPost(displayPost);
+			qnaVO.setPostNum(postNum);
+			
+			System.out.println(num);
+			System.out.println(displayPost);
+			System.out.println(postNum);
+			
+			List<QnAVO> qnaAllList2 = qnaService.getAllQnAList();
+			List<QnAVO> qnaAllList = new ArrayList<>();
+			
+			for(int i=0;i<qnaAllList.size(); i++) {
+				qnaAllList.add(qnaAllList2.get(i));
+				System.out.println(qnaAllList.get(i));
+			}
+			
+		List<UserVO> user = qnaService.getQnAUser();
+		
+		model.addAttribute("userList", user);
+		model.addAttribute("qnaAllList", qnaAllList2);
+		model.addAttribute("pageNum", pageNum);
+		
+		return "admin/admin";
 
 	}
 

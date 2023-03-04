@@ -8,6 +8,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <!-- Favicon -->
+<!-- alert -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <link rel="apple-touch-icon" sizes="180x180"
 	href="/resources/images/favicon/apple-touch-icon.png" />
 <link rel="icon" type="image/png" sizes="32x32"
@@ -42,7 +45,7 @@
 									<td>문의 유형</td>
 									<td>
 										<select class="form-select" id="qna_type" onchange="">
-												<option selected>문의유형을 선택해주세요!</option>
+												<option selected value="select">문의유형을 선택해주세요!</option>
 												<option value="배송/수령일정일안내">배송/수령일정일안내</option>
 												<option value="주문/결제">주문/결제</option>
 												<option value="검색기능관련">검색기능관련</option>
@@ -62,8 +65,7 @@
 											<div class="col_box">
 												<div class="box_area">
 													<textarea class="form_textarea" id="qna_content" name="qna_content" maxlength="500" style="height: 246px"
-													placeholder="빠른 답변을 위해  10자 이상의 문의 내용을 입력해주세요" >${getQnA.getQna_content() }
-													</textarea>
+													placeholder="빠른 답변을 위해  10자 이상의 문의 내용을 입력해주세요" >${getQnA.getQna_content() }</textarea>
 												</div>
 											</div>
 										</div>
@@ -72,7 +74,7 @@
 								
 								</tr>
 							</table>
-							<div class="qna_btn btn btn-success" type="button" onclick="updateQnAIn()">
+							<div class="qna_btn btn btn-outline-primary" type="button" onclick="updateQnAIn()">
 								수정하기
 							</div>
 						</div>
@@ -86,6 +88,7 @@
 		<jsp:include page="/views/inc/footer.jsp" />
 </div>	
 
+	<script type="text/javascript" src="/resources/js/commonFunction.js"></script>
 		<script src="/resources/js/qna_updatewrite.js"></script>
 	<!-- Script Bootstrap, jqurey-3.6.3 -->
 	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>

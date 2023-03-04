@@ -22,7 +22,6 @@
 <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
 <link rel="stylesheet" href="/resources/css/styles.css" />
 
-
 <title>주문완료 페이지</title>
 
 <!-- jQuery -->
@@ -33,7 +32,10 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap_icon.css">
 
 <!--  맨위 자동 검색시 필요 (페이지마다 다 넣어줘야 함?)-->
-<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Script FontAwesome-->
+<script src="https://kit.fontawesome.com/4bf42f841a.js" crossorigin="anonymous"></script>
 
 </head>
 
@@ -56,8 +58,44 @@
 				
 		<!-- ----------------------- main -------------------- -->
 			<div class="main">
-			
-			
+
+		<div class="newBook_carousel">
+
+			<div style="font-weight: bold;">금주 신간도서</div>
+			<hr>
+					<div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+					  					  
+					  <div class="carousel-inner" id="carousel-inner">
+						<c:forEach items="${newBook}" var="book" varStatus="bookIdx">
+						
+						<c:set var="active" value="${bookIdx.first eq true ? 'active' : '' }"></c:set>
+										  
+						    <div class="carousel-item ${active}" data-bs-interval="1000">
+						    
+								<div class="card d-block newBookCard">
+								  <img class="newBookCard_img" src="${book.BOOK_IMG }" class="card-img-top" alt="...">
+								  <div class="card-body">
+								    <h5 class="card-title newBookCard_title">${book.TITLE}</h5>
+								  </div>
+								  
+								</div>
+						    </div>
+						    
+						</c:forEach> 
+
+					  </div>
+					  
+					  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+					    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					    <span class="visually-hidden">Previous</span>
+					  </button>
+					  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+					    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+					    <span class="visually-hidden">Next</span>
+					  </button>
+					</div>			
+		</div>
+		
 		<!-- ----------------------- orderlist -------------------- -->
 				<div class="orderlist">
 				
@@ -134,24 +172,20 @@
 	</div>
 
 
-	<!-- Script Bootstrap, jqurey-3.6.3 -->
-	<script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
-	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
-
-	<!-- Script FontAwesome-->
-	<script src="https://kit.fontawesome.com/4bf42f841a.js" crossorigin="anonymous"></script>
+   <!-- Script Bootstrap, jqurey-3.6.3 -->
+   <script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>
+   <script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 
    <!-- 아래 자동 검색시 필요 (페이지마다 다 넣어줘야 함?)-->
    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
-	<script type="text/javascript">
+   <script type="text/javascript">
 
 	/***************************** getElementById function *****************************/
 	function ById(id) {
 		return document.getElementById(id);
 	}
-	
 
 	/***************************** 주문 상품 토글 *****************************/
 	$(document).on("click", "#orderlist_table_toggle", function(e) {	
@@ -193,10 +227,10 @@
 	
 	</script>
 	
-	   <script>
+	<script>
    		let user_no = <%= (int)session.getAttribute("user_no") %>;
    		<%@include file="/resources/js/cartLIstCount.js"%>
-	   </script>
+	</script>
 	
 
 </body>

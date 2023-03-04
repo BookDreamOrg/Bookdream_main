@@ -28,8 +28,8 @@
 		                <label for="id">아이디</label>
 	             	</div>
 					<div class="d-grid">
-						<button class="id_chk_btn w-20 btn btn-sm btn-info" id="btn" onclick="checkId()" type="button">
-							<span class="text"><b>아이디 중복 확인</b></span>
+						<button class="id_chk_btn w-20 btn btn-sm btn-outline-primary" id="btn" onclick="checkId()" type="button">
+							<span class=""><b>아이디 중복 확인</b></span>
 						</button>
 					</div>    
 		             	<span class="id_ok">멋진 아이디네요!</span>
@@ -61,20 +61,16 @@
      			<div class="d-flex">
               		<div class="form-floating">
 		                <input type="text" class="form-control" id="user_email" name="user_email" placeholder="이메일 입력...">
-		                <label for="tel">이메일</label>
+		                <label for="email">이메일</label>
               		</div>
-              		<select class="form-control" name="user_email2" id="user_email2" >
-				       <option>@naver.com</option>
-				       <option>@daum.net</option>
-				       <option>@gmail.com</option>
-				       <option>@hanmail.com</option>
-				        <option>@yahoo.co.kr</option>
-			       	</select>    
-		       
+              		<div class="form-floating">
+		                <input type="text" class="form-control" value="@" id="user_email2" name="user_email2" placeholder="이메일 입력...">
+		                <label for="email">도메인</label>
+              		</div>
               	</div>
            	<div class="input-group-addon d-grid">
-				<button type="button" class="id_chk_btn w-20 btn btn-sm btn-info" id="btn_in" onclick="mailCheckBtn()">
-					<span class="text"><b>본인인증</b></span>
+				<button type="button" class="id_chk_btn w-20 btn btn-sm btn-outline-primary" id="btn_in" onclick="mailCheckBtn()">
+					<span class=""><b>본인인증</b></span>
 				</button>
 			</div>
 			
@@ -84,7 +80,7 @@
 			<span id="mail-check-warn"></span>
 		
               
-              <button class="w-70 btn btn-lg btn-primary" id="join-btn" disabled="disabled" type="submit">회원가입 완료</button>
+              <button class="join-submit w-70 btn btn-lg btn-outline-primary" id="join-btn" disabled="disabled" type="submit">회원가입 완료</button>
               
            </form>
            <input type="hidden" name="idChk" value="invalid" />
