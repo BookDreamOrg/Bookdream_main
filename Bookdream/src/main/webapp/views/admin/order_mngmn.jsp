@@ -65,7 +65,10 @@
 
 	<jsp:include page="/views/inc/admin_aside.jsp"/>
 	<main class="container-fluid main_container">
-	
+	<section class="mb-3 mt-3">
+      <div class="h3 mb-3" id="admin_section_title">주문현황</div>
+      <hr>
+    </section>
 	<div class="container" >
 		
 		<div class="test">
