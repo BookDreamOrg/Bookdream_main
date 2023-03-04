@@ -217,6 +217,8 @@ create table BOOK (
     constraint PK_BOOK primary key (BOOK_NO)
 );
 
+alter table BOOK add discount  number(10) DEFAULT 0;
+
 select * from BOOK;
 select count(*) from BOOK;
 commit;
