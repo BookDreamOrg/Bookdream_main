@@ -12,6 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
    <link rel="stylesheet" href="/resources/css/login.css">
+   <link rel="stylesheet" href="/resources/css/styles.css" />
     <title>북드림 로그인 페이지</title>
     
 </head>
@@ -37,7 +38,7 @@
           <div class="save_id_box">
           	<span class="form_chk">
           		<label class="formSaveId">
-          			<input type="checkbox" value="remember-me" id="saveId"> <span class="btn_text_link">아이디 저장</span>
+          			<input class="form-check-input" type="checkbox" value="remember-me" id="saveId"> <span class="btn_text_link">아이디 저장</span>
           		</label>
           	</span>
           	<a href="idfind.jsp" class="btn_text_link">아이디 비밀번호 찾기</a>
