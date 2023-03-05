@@ -53,11 +53,13 @@
 							<c:when test="${!empty qnaAllList }">
 								<table class="table">
 									<tr class="table-header">
-										<th width="10%">문의 일자</th>
-										<th width="20%">문의한 유저</th>
-										<th width="65%">문의 제목</th>
+										<th width="10%" class="table-header-text">문의 일자</th>
+										<th width="20%" class="table-header-text">문의한 유저</th>
+										<th width="65%" class="table-header-text">문의 제목</th>
 									</tr>
 								</table>
+								<div class="bot-table">
+									<div class="bot-table-in">
 								<c:forEach var="list" items="${ qnaAllList}" varStatus="vs">
 									<div>
 										<div>
@@ -98,8 +100,8 @@
 											
 										</div>
 									</div>
-
-									<div class="collapse" id="collapseEx${list.getQna_no() }">
+									<div class="table-div">
+									<div class="collapse qna-card" id="collapseEx${list.getQna_no() }">
 										<div class="card card-body" id="qna_content"
 											name="qna_content">${list.getQna_content() }</div>
 										<div class="qna_sumbmit">
@@ -138,9 +140,11 @@
 										</div>
 										<hr>
 									</div>
-
+								</div>
 								</c:forEach>
-								
+								</div>
+								</div>
+								<br>
 								<nav aria-label="Page navigation example">
 									<ul class="pagination justify-content-center">
 										<c:forEach begin="1" end="${ pageNum }" var="num">

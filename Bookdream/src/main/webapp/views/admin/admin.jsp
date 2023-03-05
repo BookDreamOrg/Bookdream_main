@@ -217,10 +217,9 @@ uri="http://java.sun.com/jsp/jstl/fmt"%>
               		<c:forEach items="${qnaAllList }" var="list" varStatus="vs">
                   <div class="qna-Alllist">
                     <div class="qna-dashboardList">
-                      <a
-                        href="#"
+                      <span
                         class="list-group-item-qna list-group-item-action"
-                        >${list.getQna_title() }</a
+                        >${list.getQna_title() }</span
                       >
 
                       <span class="qna_list_title" id="user_id" name="user_id">
