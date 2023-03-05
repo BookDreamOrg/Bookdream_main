@@ -104,6 +104,7 @@ public class AdminLoginController {
 
 		System.out.println("QnADashBoard실행");
 		List<QnAVO> qnaWaitList = qnaService.getWaitQnAList(); //답변 대기 문의 리스트
+		
 			int count = qnaWaitList.size();
 			int num = 1;
 			int postNum = 6;
@@ -127,7 +128,7 @@ public class AdminLoginController {
 			List<QnAVO> qnaAllList2 = qnaService.getAllQnAList();
 			List<QnAVO> qnaAllList = new ArrayList<>();
 			
-			for(int i=0;i<6; i++) {
+			for(int i=0;i<qnaAllList.size(); i++) {
 				qnaAllList.add(qnaAllList2.get(i));
 				System.out.println(qnaAllList.get(i));
 			}
@@ -135,7 +136,7 @@ public class AdminLoginController {
 		List<UserVO> user = qnaService.getQnAUser();
 		
 		model.addAttribute("userList", user);
-		model.addAttribute("qnaAllList", qnaAllList);
+		model.addAttribute("qnaAllList", qnaAllList2);
 		model.addAttribute("pageNum", pageNum);
 		
 		return "admin/admin";

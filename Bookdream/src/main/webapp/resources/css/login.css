@@ -50,12 +50,20 @@ html, body{
         }
         
         /* 아이디 저장, 아이디,비밀번호찾기 */
-        .save_id_box{
-        	margin: 10px;
+        .save_id_box {
+        	display : flex;
+        	align-items : center;	
+        	justify-content : space-between;
+        	margin-top : 4px;	
         }
         
-        .save_id_box .form_chk{
-        	margin-right: 78px;
+		#saveId {
+			margin-right : 4px;
+		}
+        
+        .formSaveId {
+        	display : flex;
+        	align-items : center;
         }
         
         .save_id_box .btn_text_link{
@@ -66,7 +74,12 @@ html, body{
         /* sns login box */
         
         .sns_login_box{
+        	display : flex;
+        	justify-content : center;
+        	align-items : center;
         	height:60px;
+        	margin-top : 24px;
+        	margin-bottom : 32px;
         }
         
         .sns_login_box .sns_login_list{
@@ -74,7 +87,6 @@ html, body{
         	justify-content: center;
         	flex-direction: row;
         	list-style: none;
-        	margin-right: 50px;
         	margin-top: 50px;
         }
         

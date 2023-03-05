@@ -78,8 +78,8 @@ function reviewList(pageNum) {
 								<td colspan="3">${review.REVIEW_CONTENT}</td>
 
 								<td>
-									<button class="btn btn-outline-primary review_update_btn" value="${review.REVIEW_NO}"><i class="bi bi-pen"><span style="font-size:10px; font-weight: bold;"> 수정<span></i>
-									<button class="btn btn-outline-primary review_delete_btn" value="${review.REVIEW_NO}"><i class="bi bi-trash"><span style="font-size:10px; font-weight: bold;"> 삭제<span></i>
+									<button class="btn btn-outline-primary-nb review_update_btn" value="${review.REVIEW_NO}"><i class="bi bi-pen"><span style="font-size:10px; font-weight: bold;"> 수정<span></i>
+									<button class="btn btn-outline-primary-nb review_delete_btn" value="${review.REVIEW_NO}"><i class="bi bi-trash"><span style="font-size:10px; font-weight: bold;"> 삭제<span></i>
 								</td>
 								<input type="hidden" value="${review.REVIEW_CONTENT}"/>								
 							</tr>
@@ -144,7 +144,6 @@ $(document).on("click", "button.paging_btn", function(e) {
 				
 	let pageNum = e.currentTarget.value	
 
-	// 페이지 이동시 검색조건,검색키워드 유지됨
 
 	reviewList(pageNum)
 })

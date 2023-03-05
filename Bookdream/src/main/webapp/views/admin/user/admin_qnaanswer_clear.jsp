@@ -50,13 +50,15 @@
 								<p class="ans_main_content">답변한 내역이 없습니다.</p>
 							</c:when>
 							<c:when test="${!empty qnaAllList }">
-								<table class="table">
-									<tr>
+								<table class="table qna-table">
+									<tr class="table-header">
 										<th width="10%">문의 일자</th>
 										<th width="20%">문의한 유저</th>
 										<th width="70%">문의 제목</th>
 									</tr>
 								</table>
+								<div class="bot-table">
+									<div class="bot-table-in">
 								<c:forEach var="list" items="${ qnaAllList}" varStatus="vs">
 									<div>
 										<div>
@@ -107,10 +109,22 @@
 										<div class="card card-body" id="qna_content" name="qna_content">
 											${list.getQna_content() }
 										</div>
+										<br>
+										<%-- <div class="card card-body" id="ans_content" name="ans_content">
+											<c:forEach var="anslist" items="${ansMyList }">
+												<c:choose>
+													<c:when test="${list.getQna_no() eq anslist.getQna_no() }">
+													${anslist.getAns_content() }
+													</c:when>
+												</c:choose>
+											</c:forEach>
+										</div> --%>
 										<hr>
 									</div>
 								</c:forEach>
-								
+								</div>
+								</div>
+								<br>
 								<nav aria-label="Page navigation example">
 									<ul class="pagination justify-content-center">
 										<c:forEach begin="1" end="${ pageNum }" var="num">

@@ -19,29 +19,36 @@ function mainBookList(){
 			   console.log(Object);
 			   let bestSellerHtml = "";
 			   let col = "";
+			   let main_html = "";
 			   for(var key in Object){
 				
 				   /*베스트 셀러 상품 5개 가져오기*/
 				   if(key == 1 ){
 					   html();
 					   document.getElementById('bestBook').innerHTML = bestSellerHtml;
+					   document.getElementById('bestMain').innerHTML = main_html;
 					   //변수 reset
 					   bestSellerHtml = "";
 					   col = "";
+					   main_html = "";
 
 					/*리뷰 많은 상품 5개 가져오기*/	   
 				   }else if(key == 2){
 					   html();
 					   document.getElementById('bestBookByReviewCount').innerHTML = bestSellerHtml;
+					   document.getElementById('besReviewtMain').innerHTML = main_html;
 					   bestSellerHtml = ""
 					   col = "";
+					   main_html = "";
 					 
 					 /*평점 높은 상품 5개 가져오기*/
 				   }else if(key == 3 ){
 					   html();
 					   document.getElementById('bestBookByReviewGrade').innerHTML = bestSellerHtml;
+					   document.getElementById('bestGradeMain').innerHTML = main_html;
 					   bestSellerHtml = ""
-					   col = "";   
+					   col = ""; 
+					   main_html = "";
 				   }
 				 
 			   }
@@ -49,24 +56,67 @@ function mainBookList(){
 			   function html(){
 				  	 $.each(Object[key] , function(idx, val) {
 				  		 console.log(idx+1 + " " + val.book_no + " " + val.book_img);
-				  		  col += `<div class="col"><div class="h2 mb-2"><span class="badge bg-danger">`+ (idx+1) + `</span></div>`
-				  		  + `<div class="card h-100 shadow-sm d-flex align-items-center back" style="background-color: #F4F3F5">
-				  		   	  <img src="`+val.book_img+`" class=" mt-3 card-img-top"  style="width: 200px; height: 300px;">
-				  		   	  <div class="card-body">
-				  		   	   <div class="clearfix mb-3">
-				  		   	   <span class="float-start badge rounded-pill bg-primary mt-4">`+val.book_category+`</span></div>
-				  		   	   <h5 class="card-title h5" id="main_title">`+val.title+`</h5>
-				  		   	   <div class="text-center my-4">
-				  		   	   <a onclick="location.href='/getBook?book_no=` +val.book_no + `'"class="btn btn-warning">구매하러 가기</a> </div></div></div></div>`
-				  		   	   
+				  		  
+				  		 if(idx == 0){
+				  			 main_html +=
+				  			 `
+					 
+								 <div class="col-3" >
+								 	<a class=" col " href="/getBook?book_no=` +val.book_no+ `">
+									 	<img class="rounded shadow-lg " src="`+val.book_img+`"
+									 		data-aos="fade-right" 
+									 		data-aos-offset="200"
+								 			data-aos-duration="1500"
+								 			data-aos-easing="ease-out-back">
+								 	</a>
+								 </div>
+								 <div class="col-5  d-flex align-items-end  flex-column ">
+								 	<a class="p-1 mt-auto mb-3" href="/" 
+								 		 data-aos="fade-left"
+								 		 data-aos-offset="200"
+								 		 data-aos-duration="1000">
+									 	<span class="h1 lh-base text-break">`+val.title+`</span>
+								 	</a>
+								 	<a class="p-1 mt-auto" href="/"
+								 		 data-aos="fade-up-left"
+								 		 data-aos-offset="250"
+								 		 data-aos-duration="1000">
+									 	<span class="h5 lh-lg text-break">`+val.book_content+`</span>
+								 	</a>
+								 	<a class="p-1 mb-auto text-muted" href="/"
+								 		 data-aos="fade-up-left"
+								 		 data-aos-offset="250"
+								 		 data-aos-duration="1000">
+									 	<span class="h5 lh-lg text-break"> - `+val.author+`</span>
+								 	</a>
+								 </div>	`
+							  			 
+				  		 }
+				  		 
+				  		 col +=` <div class="card col-2 border-0 rounded shadow-lg" style="width: 18rem;" 
+										  	onclick="location.href='/getBook?book_no=` +val.book_no + `'">
+										<img  class="rounded p-3 card-img-top" src="`+val.book_img+`">
+										  <div class="card-body">
+										    <p class="card-title h5  ">`+val.title+`</p>
+										    <p class="card-text">`+val.author+`</p> 
+										  </div>
+									</div>
+								
+						`
+						
 				  	   });
+				  	 
+				  	 
+				  	
 				  	   
-				  	   
-				  	 bestSellerHtml +=  `<div class="container-fluid bg-trasparent my-4 p-3" style="position: relative;"> 
-				  		   					<div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-5 g-3">`; 
+				  	bestSellerHtml +=  `<div class="m-4 p-3 d-flex justify-content-between "
+								      		data-aos="zoom-in-down"
+								      		data-aos-offset="200"
+											 data-aos-duration="1000"
+											 data-aos-easing="ease-out-back"> `; 
 				  	   
 				  	 bestSellerHtml +=  col ;
-				  	 bestSellerHtml += `</div></div>`;
+				  	 bestSellerHtml += `</div>`;
 				   }
 			   
 			}, error : function(){

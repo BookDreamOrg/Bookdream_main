@@ -42,3 +42,43 @@
 .drop_btn {
 	font-size: 2rem;
 }
+.table-header{
+	display:flex;
+	align-content: center;
+	background-color: #F7F7F7;
+	font-weight: bold;
+	border: 1px solid;
+	height: 60px;
+	padding-top: 10px;
+}
+.table-header-text{
+}
+.qna-table{
+	
+}
+
+.ans-btn{
+	color: #484877;
+	border-color: #484877;
+}
+
+.ans-btn:hover{
+	background-color: #484877;
+}
+
+.bot-table{
+	border: 1px solid;
+	margin-top: -18px;
+}
+
+.bot-table-in{
+}
+
+.qna-card{
+	width: 90%;
+}
+
+.table-div{
+	display: flex;
+	justify-content: center;
+}

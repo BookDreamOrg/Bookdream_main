@@ -2,6 +2,7 @@ package com.spring.bookdream.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,5 +104,11 @@ public class BookDAO {
 		public void chkBookUpd(ArrayList<BookVO> voList) {
 			System.out.println("---> JDBC로 chkBookUpd() 처리");
 			mybatis.update("BookDAO.chkBookUpd", voList);
+		}
+
+		// 신간도서 10권
+		public List<Map<String, Object>> newBookList() {
+
+			return mybatis.selectList("BookDAO.newBookList");
 		}
 }

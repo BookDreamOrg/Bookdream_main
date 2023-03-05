@@ -124,6 +124,7 @@ textarea#review_content{
     border-radius: 0.375rem;
     resize: none;
     padding: 8px;
+    width: 96%
     
 }
 

@@ -1,5 +1,6 @@
 $(function(){
 	
+	
 });
 
 
@@ -8,7 +9,6 @@ $(function(){
 
 /* ------------------------ [페이징] ----------------------------*/
 function adminSearch(val){
-
 	/*페이지 검색을 위한 데이터*/
 	let title = document.getElementById('title').value;
 	let author = document.getElementById('author').value;
@@ -74,7 +74,7 @@ function next(num){
 function page (data){
 let result_html ="";	  // 10개씩 담아온 도서 리스트
 let page_result = ""; 	  //페이지 값
-console.log("data" + data);
+console.log("data" + data.num);
 
 $.ajax({
 	type: 'get',
@@ -90,8 +90,10 @@ $.ajax({
 /*도서 리스트 */		
 	var startIndex = 0;
 	var endIndex = 0; 
+	var index = data.num;
 	for(let idx  = 0; idx <Object.length; idx++){
 		let temp_html = "";
+		temp_html += `<input  type="hidden" id="page_index" value="`+Object[idx].index+`">`;
 		temp_html += `<ul class="list-group list-group-horizontal">`;
 		temp_html+=`<li class="list-group-item list-group-item-action list-group-item-warning " id="check">
 							<input type="checkbox" name="item" value="`+Object[idx].book_no+`"/></li>`;	
@@ -135,9 +137,16 @@ $.ajax({
 	
 	for (let page  = startIndex ; page <= endIndex ; page++){
 		let temp_html= "";
-		temp_html	 += `<li class="page-item">
-						<a class="page-link" id="page-link" onclick='adminSearch(`+page+`)'>`+ page + `</a>	
-						</li>`;
+		if(index == page){
+			temp_html	 += `<li class="page-item">
+				<a class="page-link active" id="page-link-`+page+`" onclick='adminSearch(`+page+`)'>`+ page + `</a>	
+				</li>`;
+		}else{
+			temp_html	 += `<li class="page-item">
+				<a class="page-link" id="page-link-`+page+`" onclick='adminSearch(`+page+`)'>`+ page + `</a>	
+				</li>`;
+		}
+		
 		page_result += temp_html;
 	} 									
 	
@@ -161,9 +170,6 @@ $.ajax({
 }); //end ajax
 
 }// end page(data)
-
-
-
 
 /* ------------------------ [페이징] 이전 버튼 ----------------------------*/
 function prev(num){	
