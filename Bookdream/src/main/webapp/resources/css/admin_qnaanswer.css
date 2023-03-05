@@ -44,4 +44,17 @@
 }
 .table-header{
 	background-color: #F7F7F7;
+	font-weight: bold;
+}
+.qna-table{
+	
+}
+
+.ans-btn{
+	color: #484877;
+	border-color: #484877;
+}
+
+.ans-btn:hover{
+	background-color: #484877;
 }

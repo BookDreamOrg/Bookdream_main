@@ -50,7 +50,7 @@
 								<p class="ans_main_content">답변한 내역이 없습니다.</p>
 							</c:when>
 							<c:when test="${!empty qnaAllList }">
-								<table class="table">
+								<table class="table qna-table">
 									<tr class="table-header">
 										<th width="10%">문의 일자</th>
 										<th width="20%">문의한 유저</th>
