@@ -115,6 +115,7 @@ public class Admin_BookController {
 		int startIndex = tempBook.getStartIndex();
 		int endIndex = tempBook.getEndIndex();
 		int finalIndex = tempBook.getFinalIndex();
+		int index = tempBook.getIndex();
 		
 		System.out.println(startIndex + " : " +  endIndex + " : " + finalIndex);
 		//모든 리스트
@@ -137,6 +138,7 @@ public class Admin_BookController {
 				all_book_list.get(i-1).setStartIndex(startIndex);
 				all_book_list.get(i-1).setEndIndex(endIndex);
 				all_book_list.get(i-1).setFinalIndex(finalIndex);
+				all_book_list.get(i-1).setIndex(index);
 				book.add(all_book_list.get(i-1));
 			}else {
 				break; 

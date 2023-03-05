@@ -7,7 +7,9 @@
 	margin-bottom: 10px;
 	
 }
-
+div#searchList_div{
+	width: 100%
+}
 
 #search_result{
 	display: flex;
@@ -78,6 +80,9 @@ background-color : var(--main-color-tint2);
 color: 	white;
 font: bold;
 border-radius: 0;
+display: flex;
+text-align: center;
+
 
 }
 
@@ -100,6 +105,7 @@ height: auto;
 background-color: #F7F7FA;
 border-bottom: 1px solid #ced4da;
 border-radius: 0;
+
  
 }
 
@@ -135,25 +141,25 @@ font-weight: 800;
 
 
 #check,#sale_rate {
-width: 4em;
+width: 4%;
 }
 
 #book_title {
-width: 35em;
+width: 35%;
 }
 #book_author{
-width:15em;
+width:15%;
 }
 #category, #bookNo {
-width: 7em;
+width: 7%;
 }
 
 #stock, #delete,#org_price{ 
-width: 6em;
+width: 6%;
 }
 
 #sale_price{ 
-width: 7em;
+width: 7%;
 }
 
 #delete_btn{
