@@ -21,22 +21,6 @@ $(function() {
 	defaultSrch(loadStatus)	
 	
 })
-
-/* 공통 FUNCTION */
-
-
-/***************************** getElementById function *****************************/
-function ById(id) {
-	return document.getElementById(id);
-}
-
-/***************************** comma function *****************************/
-function comma(value) {
-	
-	let comma = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-	return comma;
-}
 	
 /***************************** switch case function *****************************/
 function switchCase(data) {
@@ -92,9 +76,6 @@ function getItemSession() {
 
 	orderMngmn(pageNum, srchCrtr, srchKey, status, start_date, end_date)
 }
-
-/* 공통 FUNCTON 끝 */
-
 
 /***************************** 상단 배송상태별 조회 버튼 *****************************/
 $(document).on("click", "label.orderclsfc_btn", function(e) {	 
@@ -191,6 +172,8 @@ $(document).on("click", "#reset_btn", function(e) {
   
 	// 초기 검색 값
 	defaultSrch()	
+	
+	toast('검색값 초기화')
 })
 
 
@@ -229,6 +212,8 @@ function srchOrders() {
 	removeSession()
 	
 	orderMngmn(pageNum, srchCrtr, srchKey, status, start_date, end_date)	
+	
+	toast('설정한 조건으로 검색합니다.')
 }
 
 /***************************** 주문 총 관리 function *****************************/
@@ -293,30 +278,29 @@ function orderMngmn(pageNum, srchCrtr, srchKey, status, start_date, end_date) {
 			    /* 페이징 */	
 				let paging	
 				
-				paging  = `<div class="text-center paging_btn">
-							<ul class="pagination justify-content-left">`
-							
-							if(data.page.prev) {
-				paging +=		`<li class="page-item paginate_button previous">
-									<button class="page-link paging_btn" value="${data.page.startPage-1}" ><</button>
-								</li>`							
-							}
+				let prevDisabled = data.page.prev == true ? '' : 'disabled'
+				let nextDisabled = data.page.next == true ? '' : 'disabled'
+					
+				paging = `<div class="text-center paging_btn">
+							<ul class="pagination justify-content-left">
+								
+							<li class="page-item paginate_button previous">
+								<button class="page-link paging_btn ${prevDisabled}" value="${data.page.startPage-1}" ><i class="fas fa-angle-left"></i></button>
+							</li>`							
+
 							for (let i = data.page.startPage; i<=data.page.endPage; i++) {
 								let active = pageNum == i ? 'active' : ''
 				paging +=		`<li class="page-item paginate_button ${active} " >								
 									<button class="page-link paging_btn " value="${i}" >${i}</button>
 								</li>`							 
-								 
-							}	
-							if(data.page.next) {
+									 
+								}	
 				paging +=		`<li class="page-item paginate_button next">
-									<button class="page-link paging_btn" value="${data.page.endPage+1}">></button>
-								</li>`						
-							}																		
-	
-								
-				paging +=	`</ul>
-						</div>`					    	
+									<button class="page-link paging_btn ${nextDisabled}" value="${data.page.endPage+1}"><i class="fas fa-angle-right"></i></button>
+								</li>						
+
+							 </ul>
+						</div>`						    	
 				    	
 			ById('order_mngmn').innerHTML = html
 			ById('paging').innerHTML = paging
@@ -540,30 +524,14 @@ $(document).on("click", "a.aprvl_btn", function(e) {
 	let user_no = ById('user_no').value
 	let status = ById('order_status').value	
 	
-	 Swal.fire({
-	      title: '취소 & 반품',
-	      text: "해당 요청을 승인하시겠습니까?",
-	      icon: 'warning',
-	      showCancelButton: true,
-	      confirmButtonColor: '#3085d6',
-	      cancelButtonColor: '#d33',
-	      confirmButtonText: '승인',
-	      cancelButtonText: '취소',
-	      reverseButtons: true, // 버튼 순서 거꾸로
-	      
-	    }).then((result) => {
-	      if (result.isConfirmed) {
-	        Swal.fire(
-	  	      
-	          orderAprvl(order_no, status, user_no),	        
-	          '정상처리 되었습니다.',
-	          'success'
-
-	        )
-	      }
-	    })
-
+	let title = '취소 & 반품'
+	let text = '해당 요청을 승인하시겠어요?'
+	let icon = 'question'
+	let msg = '해당 요청을 승인하였습니다.'
 	
+	confirmed(title, text, icon, msg, function() {
+		 orderAprvl(order_no, status, user_no)  
+    })    
 	
 })
 
@@ -636,29 +604,24 @@ $(document).on("click", "#invoice_no", function(e) {
 
 /***************************** 배송 등록 버튼 클릭*****************************/
 $(document).on("click", "#dlvy_btn", function(e) {	 
-	
-    const Toast = Swal.mixin({
-        toast: true,
-        position: 'center-center',
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer)
-          toast.addEventListener('mouseleave', Swal.resumeTimer)
-        }
-      })
 
-      Toast.fire({
-        icon: 'success',
-        title: '배송처리가 정상적으로 완료되었습니다.'
-      })
-    
-	let order_no = ById('order_no').value
-	let invoice_no = ById('invoice_no').innerHTML
-	let courier = ById('courier_select').value
+	let check = ById('invoice_no').innerHTML
+	
+	if (check == '등록') {
+		console.log("안되는이유가 뭐니?")
+		alert('송장번호 누락', '송장번호를 입력하세요.','error')
+		return false
 		
-	insertDlvy(order_no, invoice_no, courier)
+	} else {
+		toast('배송처리가 정상적으로 완료되었습니다.')			
+		let order_no = ById('order_no').value
+		let invoice_no = ById('invoice_no').innerHTML
+		let courier = ById('courier_select').value
+			
+		insertDlvy(order_no, invoice_no, courier)		
+	}
+	
+
 })
 
 

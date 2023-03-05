@@ -146,7 +146,7 @@ function bookList_buy(val){
 	
 	}else{
 		alert('바로구매');
-		location.replace("/detail/cart/orderitem?book_no="+val+"&user_id="+user_id+"&product_count=1&buy_now=Y");
+		location.replace("/detail/cart/orderitemBuyNow?book_no="+val+"&user_id="+user_id+"&product_count=1&buy_now=Y");
 	}
 }
 

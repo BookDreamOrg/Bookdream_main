@@ -775,10 +775,10 @@ function address_list() {
 								</td>
 								
 								<td class="address_list_table_col3"> 
-									<div><button class="btn btn-outline-primary address_list_table_update" id="address_list_table_update" value=${result[i].address_no}><i class="bi bi-pen"></i></button></div>` 
+									<div><button class="btn btn-outline-primary-nb address_list_table_update" id="address_list_table_update" value=${result[i].address_no}><i class="bi bi-pen"></i></button></div>` 
 								
 									if(i!=0) {
-				html +=				`<div><button class="btn btn-outline-primary address_list_table_delete" id="address_list_table_delete" value=${result[i].address_no}><i class="bi bi-trash"></i></button></div>` 										
+				html +=				`<div><button class="btn btn-outline-primary-nb address_list_table_delete" id="address_list_table_delete" value=${result[i].address_no}><i class="bi bi-trash"></i></button></div>` 										
 									}
 				html +=			`</td>
 							</tr>` 

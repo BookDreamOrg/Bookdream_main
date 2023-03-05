@@ -106,14 +106,14 @@
 .center {
 	margin: auto;
 	width: 1240px;	
-	height: 350px;	
+	height: 320px;	
 	margin-top: 30px;
 	
 }
 
 .order_chartbox, .pay_chartbox {
 	width: 605px;
-	height: 350px;
+	height: 320px;
 	border: 1px solid #ccc;		
 	padding: 20px 10px 10px 10px;
 	float: left;	
@@ -122,7 +122,7 @@
 
 .order_charbox_shbr, .pay_charbox_shbr {
 	width: 605px;
-	height: 350px;
+	height: 320px;
 	border: 1px solid #ccc;		
 	margin-left: 30px;
 	padding: 20px 30px 10px 10px;
@@ -213,14 +213,14 @@
 						  <label class="btn btn-outline-secondary chart_btn" for="mly_chart_btn">월간</label>
 						</div>				
 					</div>
-				<div style="padding: 0px 50px;">
+				<div style="padding: 0px 50px; height: 200px;">
 					<canvas class="myChart" id="orderChart"></canvas>
 				</div>
 			</div>
 			
 			<div class="order_charbox_shbr">
 			<span class="chart_title">주문당 도서수 비율</span>
-			<div style="width: 380px; height:330px; float: right;">
+			<div style="width: 380px; height:300px; float: right;">
 				<canvas class="myChart" id="rateChart"></canvas>
 			</div>
 			</div>
@@ -239,14 +239,14 @@
 					  <label class="btn btn-outline-secondary chart_btn" for="mly_paychart_btn">월간</label>
 					</div>					
 				</div>	
-				<div style="padding: 0px 50px;">				
+				<div style="padding: 0px 50px; height: 200px;">				
 					<canvas class="myChart" id="myChart"></canvas>
 				</div>				
 			</div>			
 
 			<div class="pay_charbox_shbr">
 			<span class="chart_title">결제수단 비율</span>
-			<div style="width: 380px; height:330px; float: right;">
+			<div style="width: 380px; height:300px; float: right;">
 				<canvas class="myChart" id="paymethodChart"></canvas>
 			</div>
 			</div>
