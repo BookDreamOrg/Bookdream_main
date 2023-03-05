@@ -358,29 +358,6 @@ public class MypageController {
 		}
 		model.addAttribute("answerCnt", answerCnt);
 		
-		
-//		String user_id = (String) session.getAttribute("user_id");
-//		cri.setUser_id(user_id);
-//		
-//		// 한 페이지의 표시 개수
-//		cri.setAmount(3);	
-//		
-//		// 페이지 블록의 개수
-//		int pageBlcok = 3;		
-//		
-//		// 문의 목록
-//		List<QnAVO> list = qnaMyList;
-//		
-//		// 문의개수 추출
-//		int count = list.size();	
-//			
-//		PageVO pageMaker = new PageVO(cri, count, pageBlcok);		//cri, 11, 3
-//				
-//		QnAVO qna = new QnAVO();
-//		
-//		qna.setPageNum(count);
-//		qna.setPage(pageMaker);
-		
 		return "mypage/qna";
 	}
 	
