@@ -19,11 +19,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.spring.bookdream.service.BookService;
 import com.spring.bookdream.service.DeliveryService;
 import com.spring.bookdream.service.OrderService;
 import com.spring.bookdream.service.OrderitemService;
 import com.spring.bookdream.service.PayService;
 import com.spring.bookdream.service.PurchaseService;
+import com.spring.bookdream.vo.BookVO;
 import com.spring.bookdream.vo.DeliveryVO;
 import com.spring.bookdream.vo.OrderVO;
 import com.spring.bookdream.vo.OrderitemVO;
@@ -49,6 +51,9 @@ public class PayController {
 
 	@Autowired
 	private DeliveryService deliveryService;	
+	
+	@Autowired
+	private BookService bookService;
 	
 	@Autowired
 	private HttpSession session;	
@@ -208,6 +213,9 @@ public class PayController {
 
 			model.addAttribute("purchase", PurchaseService.getPurchaseList(purchase));
 			model.addAttribute("order_name", order.getOrder_name());
+			
+			// 신간도서
+			model.addAttribute("newBook", bookService.newBookList());
 			
 			return "main/success";
 			

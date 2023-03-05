@@ -229,12 +229,27 @@
 												
 											<script>
 												$(".delete${cart.cart_no}btn").click(function(){
-													let confirm_val = confirm("정말 삭제하시겠습니까?");
-													if(confirm_val) {
-														let checkArr = [];
-														checkArr.push($(this).attr("data-cartNo"));
-														console.log("checkArr : " + checkArr)
-														$.ajax({
+													
+													const Toast = Swal.mixin({
+							         				    toast: true,
+							         				    position: 'center-center',
+							         				    showConfirmButton: false,
+							         				    timer: 2000,
+							         				    timerProgressBar: true,
+							         				    didOpen: (toast) => {
+							         				        toast.addEventListener('mouseenter', Swal.stopTimer)
+							         				        toast.addEventListener('mouseleave', Swal.resumeTimer)
+							         				    }
+							         				});
+													
+													let checkArr = [];
+													
+													checkArr.push($(this).attr("data-cartNo"));
+													console.log("checkArr : " + checkArr)
+													
+													
+													
+													$.ajax({
 															url : "/itemorder/cart/delete",
 															type : "POST",
 															data : { chbox : checkArr },
@@ -242,11 +257,27 @@
 																if(result == 1) {          
 																	location.href = "/itemorder/cart/list";
 																} else {
-																   alert("삭제 실패");
+																	Toast.fire({
+									    							    icon: 'error',
+									    							    title: '삭제 실패'
+									    							});
 																}
-															}		
-														});
-													}
+															},complete: function(){
+								    							Toast.fire({
+								    							    icon: 'success',
+								    							    title: '삭제되었습니다!'
+								    							});
+								    							    location.href = "/itemorder/cart/list";
+								    							
+								    						},error : function(){
+								    							Toast.fire({
+								    							    icon: 'error',
+								    							    title: 'error : 삭제 실패'
+								    							});
+								    						}	
+													});
+													
+													
 													});
 											</script>
 										</td>
@@ -274,12 +305,87 @@
 																let product_count = $(".product_cnt${cart.cart_no}").val(); // input 수량값
 																let price = $("input[class='book_pirce${cart.cart_no}']").val(); // bookPrice값
 																
+																const Toast = Swal.mixin({
+										         				    toast: true,
+										         				    position: 'center-center',
+										         				    showConfirmButton: false,
+										         				    timer: 2000,
+										         				    timerProgressBar: true,
+										         				    didOpen: (toast) => {
+										         				        toast.addEventListener('mouseenter', Swal.stopTimer)
+										         				        toast.addEventListener('mouseleave', Swal.resumeTimer)
+										         				    }
+										         				});
 													
-																	if (product_count > 1) {
+																if (product_count > 1) {
 																		$(".product_cnt${cart.cart_no}").val(--product_count);
 																		<%@include file="/resources/js/modifyCart.js"%>
 																		   
-																	} else {
+																} else {
+																	
+																	let checkArr = [];
+																	
+																	checkArr.push($(this).attr("data-cartNo"));
+																	console.log("checkArr : " + checkArr)
+																	
+																	
+																	Swal.fire({
+															         	      title: '장바구니에서 삭제할까요??',
+															         	      text: '책 한 권 이하로 담을 수 없어요..',
+															         	      icon: 'warning',
+															         	      showCancelButton: true,
+															         	      confirmButtonColor: '#3085d6',
+															         	      cancelButtonColor: '#d33',
+															         	      confirmButtonText: '삭제하기',
+															         	      cancelButtonText: '취소',
+															         	      reverseButtons: true, // 버튼 순서 거꾸로
+															         	    
+																			
+															          }).then((result) =>{
+															         	    	if (result.value) { 
+															         	    		
+															         	    		let checkArr = [];
+															         	    		
+															         	    		const Toast = Swal.mixin({
+															         				    toast: true,
+															         				    position: 'center-center',
+															         				    showConfirmButton: false,
+															         				    timer: 2000,
+															         				    timerProgressBar: true,
+															         				    didOpen: (toast) => {
+															         				        toast.addEventListener('mouseenter', Swal.stopTimer)
+															         				        toast.addEventListener('mouseleave', Swal.resumeTimer)
+															         				    }
+															         				});
+															         													  	    
+															    					$.ajax({
+															    						url : "/itemorder/cart/delete",
+															    						type : "POST",
+															    						data : { chbox : checkArr },
+															    						success : function(result){
+															    							if(result != 1) { 
+															    								Toast.fire({
+															    									icon: 'error',
+																    							    title: '삭제 실패'
+															    								});
+															    							    ("삭제 실패");
+															    							}
+															    						},complete: function(){
+															    							Toast.fire({
+															    							    icon: 'success',
+															    							    title: '삭제되었습니다!'
+															    							});
+															    							    location.href = "/itemorder/cart/list";
+															    							
+															    						},error : function(){
+															    							Toast.fire({
+															    							    icon: 'error',
+															    							    title: 'error : 삭제 실패'
+															    							});
+															    						}
+															    					});
+															         	    	}
+																		
 																		let del = confirm("책 1권 이하로 담을 수 없어요...\n>> 장바구니에서 삭제할까요?");
 																		
 																		if(del) {
@@ -301,7 +407,6 @@
 																				}
 																			});
 																		}
-																	}
 															}); 
 															</script>
 															
@@ -313,7 +418,23 @@
 																let stock = $(".stock${cart.cart_no}").val(); // bookPrice값
 																
 																	if (product_count === stock) {
-																		alert("[재고] : "+stock +"권\n재고가  부족합니다.");
+																		const Toast = Swal.mixin({
+												         				    toast: true,
+												         				    position: 'center-center',
+												         				    showConfirmButton: false,
+												         				    timer: 2000,
+												         				    timerProgressBar: true,
+												         				    didOpen: (toast) => {
+												         				        toast.addEventListener('mouseenter', Swal.stopTimer)
+												         				        toast.addEventListener('mouseleave', Swal.resumeTimer)
+												         				    }
+												         				});
+																		
+																		Toast.fire({
+										    							    icon: 'warning',
+										    							    title: "[재고] : "+stock +"권\n재고가  부족합니다."
+										    							});
+																		
 																	} else {
 																		$(".product_cnt${cart.cart_no}").val(++product_count);
 																		<%@include file="/resources/js/modifyCart.js"%>
@@ -442,65 +563,7 @@
 	<!-- ---------------------------<footer> footer-------------------------- -->
 	<jsp:include page="/views/inc/footer.jsp" />
 	</div>
-	
-	<script type="text/javascript">
-	$(".chBox${cart.cart_no}").change(function(){
-		 var checked = $(this).prop('checked');
-		 if (checked) {
-			
-			let deliveryFee = ${deliveryFee};
-			let discountRate = ${discountRate};
-		 	let costPrice = ${costPrice};
-		 	let salePrice = ${salePrice};
-		 	let cnt =  ${cnt};
-		 	let sum = 0;
-		 	let discountSum = 0;
-		 	let totalPrice = 0;
-		 	
-			$('input:checkbox[name="chBox[]"]').each(function() {
-				if($(this).is(":checked")==true){
-					discountRate=	$(this).attr("data-discountRate");
-					costPrice=		$(this).attr("data-costPrice");
-					salePrice=		$(this).attr("data-salePrice");
-					cnt=			$(this).attr("data-cnt");
-										
-					sum +=  (cnt*salePrice);
-					if (discountRate != 0) {
-						discountSum += (discountRate*costPrice*cnt);
-					}
-					
-					totalPrice = (sum - discountSum + deliveryFee);
-			    }
-				console.log("\n discountRate : "+ discountRate + 
-			 			"\n costPrice : "+ costPrice + 
-			 			"\n cnt : "+ cnt + 
-			 			"\n sum : "+ sum + 
-			 			"\n discountSum : "+ discountSum + 
-		 				"\n totalPrice : "+ totalPrice );
-			});
-			
 
-			console.log("\n discountRate : "+ discountRate + 
-			 			"\n costPrice : "+ costPrice + 
-			 			"\n cnt : "+ cnt + 
-			 			"\n sum : "+ sum + 
-			 			"\n discountSum : "+ discountSum + 
-		 				"\n totalPrice : "+ totalPrice );
-			
-		 	
-			$('.reload').load(location.href+' .reload');
-			console.log($(this).attr("data-cartNo"));
-			console.log(checked);
-			
-		} else {
-				
-			$('.reload').load(location.href+' .reload');
-			console.log($(this).attr("data-cartNo"));
-		  	console.log(checked);
-		}
-			$('.reload').load(location.href+' .reload');
-	});
-	</script>
 
 	<!-- ------------------------장바구니 선택(체크) 삭제------------------------------- -->
 	<script type="text/javascript">/* 장바구니  삭제 */

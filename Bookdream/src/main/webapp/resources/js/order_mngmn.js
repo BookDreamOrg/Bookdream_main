@@ -1,18 +1,23 @@
 /*  */
 $(function() {
 	
+	// 기본 100
+	// 대시보드에서 결제완료/취소요청/반품요청 누른 버튼에 따라 값 설정
 	let loadStatus = ById('load_status').value;
 		
-	if (loadStatus == 100) {
-		ById('all').checked = true		
-	} else if (loadStatus == 0) {
-		ById('pymntCmplt').checked = true			
-	} else if (loadStatus == 10) {
-		ById('pymcnRqst').checked = true			
-	} else if (loadStatus == 12) {
-		ById('rqstRtrn').checked = true			
+	// 해당버튼이 checked = true 설정
+	buttonChecked('all', 100, loadStatus)
+	buttonChecked('pymntCmplt', 0, loadStatus)
+	buttonChecked('pymcnRqst', 10, loadStatus)
+	buttonChecked('rqstRtrn', 12, loadStatus)
+	
+	function buttonChecked(id, checkStatus, loadStatus) {	
+		if (loadStatus == checkStatus) {
+			ById(id).checked = true				
+		}		
 	}
-
+	
+	// 해당 값에 따른 조회 값
 	defaultSrch(loadStatus)	
 	
 })
@@ -98,31 +103,9 @@ $(document).on("click", "label.orderclsfc_btn", function(e) {
 
 	let status = e.target.control.value
 	
-	/*
-	ById('srch_crtr').selectedIndex = 0
-	ById('srch_key').value = null
-	*/
-		
-	/* 
-	let pageNum = 1
-	let srchCrtr = 'all'
-	let srchKey = ''
-			
-	// 기존세션 삭제
-	sessionStorage.removeItem("pageNum");
-	sessionStorage.removeItem("srch_crtr");
-	sessionStorage.removeItem("srch_key");
-	sessionStorage.removeItem("order_no");
-	sessionStorage.removeItem("start_date");
-	sessionStorage.removeItem("end_date");
-	
-	console.log("status : " + status)
-	*/
-	
 	let pageNum = 1
 	let srchCrtr = sessionStorage.getItem("srchCrtr");	
 	let srchKey = sessionStorage.getItem("srchKey");
-	//let status = sessionStorage.getItem("status");
 	let start_date = sessionStorage.getItem("start_date");
 	let end_date = sessionStorage.getItem("end_date");
 

@@ -231,6 +231,34 @@
 	
 	</update>
 	
+	<!-- 마지막에 등록한 신간도서 10권 추려서 5권 랜덤 -->
+	<select id="newBookList" resultType="HashMap">
+	<![CDATA[ 	
+		 SELECT  title, 
+		         book_content, 
+		         book_price, 
+		         book_img
+		         
+		 FROM   (SELECT title, 
+		                book_content, 
+		                book_price, 
+		                book_img
+		                
+		         FROM   (SELECT title, 
+		                        book_content, 
+		                        book_price,
+		                        book_img,
+		                        ROW_NUMBER() OVER (ORDER BY book_no DESC) AS rn
+		                        
+		                 FROM   book)
+		                
+		        WHERE rn <= 10
+		        ORDER BY DBMS_RANDOM.VALUE)
+		        
+		WHERE   rownum <= 5
+	]]>
+	</select>
+	
 	
 </mapper>
 

@@ -2,6 +2,7 @@ package com.spring.bookdream.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -78,6 +79,12 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public void chkBookUpd(ArrayList<BookVO> voList) {
 		bookDAO.chkBookUpd(voList);
+	}
+
+	// 신간도서 10권
+	@Override
+	public List<Map<String, Object>> newBookList() {
+		return bookDAO.newBookList();
 	}
 
 

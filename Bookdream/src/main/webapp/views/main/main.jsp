@@ -32,7 +32,15 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
       rel="stylesheet"
     />
-
+    
+    <!-- Animate.css -->
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+ 	 />
+ 	 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+ 	 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+ 	
     <!-- Favicon -->
     <link
       rel="apple-touch-icon"
@@ -59,7 +67,7 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
       <link rel="stylesheet" href="/resources/css/banner.css" />
 	
-    <title>Insert title here</title>
+    <title>북드림  | BookDream </title>
   </head>
   <body>
     <div class="wrapper">
@@ -155,40 +163,115 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
           </div>
         </div>
 
-	<ul class="nav nav-tabs book-section-nav">
+	<!-- <ul class="nav nav-tabs book-section-nav">
 			<li class="nav-item"><a class="nav-link active"
 				aria-current="page" href="#">베스트</a></li>
 			<li class="nav-item"><a class="nav-link" href="#">신상품</a></li>
-		</ul>
- 	<main>
-	<div class="book-section">
+	</ul> -->
+ 	<main >
+			
 	
+	 <!---------------------------베스트 셀러 상품 5개------------------------------
+      -->
+	<div class=" d-flex align-items-center flex-column ">
+		
+		<div style="height: 200px">
+		</div>
 
+			<span class="h1" data-aos="fade-down"
+				data-aos-offset="0"
+				data-aos-duration="1500"> 베스트 셀러 상품 </span>
 
-      <!---------------------------베스트 셀러 상품 5개-------------------------------->
-      <div class="mt-5">
-        <span class="h1">베스트셀러</span>
-      </div>
-      <div id="bestBook" class="mt-3"></div>
+		<div style="height: 50px">
+		</div>
+		
+	<section class="row d-flex justify-content-around align-items-center" id="bestMain" >
+	</section>	
+		
+		
+		<div style="height: 100px">
+		</div> 
+		
+		<section class="m-3 row " id="bestBook">
+		</section>
+     
+    </div>
+     
+     <div style="height: 100px">
+			</div> 
+      
+      <!---------------------------리뷰 많은 상품 5개------------------------------
+      -->
+	<div class=" d-flex align-items-center flex-column ">
+			
+			<div style="height: 200px">
+			</div>
+	
+				<span class="h1" data-aos="fade-down"
+					data-aos-offset="0"
+					data-aos-duration="1500"> 리뷰 많은 상품 </span>
+	
+			<div style="height: 50px">
+			</div>
+			
+		<section class="row d-flex justify-content-around align-items-center" id="besReviewtMain" >
+		</section>	
+			
+			
+			<div style="height: 100px">
+			</div> 
+			
+			<section class="m-3 row " id="bestBookByReviewCount">
+			</section>
+	     
+	    </div>
+	    
+	    
+	    <div style="height: 100px">
+			</div> 
 
-      <!---------------------------리뷰 많은 상품 5개-------------------------------->
-      <div class="mt-5">
-        <span class="h1">리뷰 많은 도서</span>
-      </div>
-      <div id="bestBookByReviewCount" class="mt-3"></div>
-
-
-       <!---------------------------평점 높은 상품 5개-------------------------------->
-          <div class="mt-5">
-            <span class="h1">평점 높은 도서</span>
-          </div>
-          <div id="bestBookByReviewGrade" class="mt-3"></div>
-        </div>
+	    
+       <!---------------------------평점 높은 상품 5개------------------------------
+       -->
+       <div class=" d-flex align-items-center flex-column ">
+			
+			<div style="height: 200px">
+			</div>
+	
+				<span class="h1" data-aos="fade-down"
+					data-aos-offset="0"
+					data-aos-duration="1500"> 평점 높은 상품  </span>
+	
+			<div style="height: 50px">
+			</div>
+			
+		<section class="row d-flex justify-content-around align-items-center" id="bestGradeMain" >
+		</section>	
+			
+			
+			<div style="height: 100px">
+			</div> 
+			
+			<section class="m-3 row " id="bestBookByReviewGrade">
+			</section>
+			
+	     
+	    </div>
+        
+       <div style="height: 100px">
+			</div> 
       </main>
 
+
+	<!-- ----------------------footer---------------------- -->
       <jsp:include page="/views/inc/footer.jsp" />
+    
     </div>
 
+	<script>
+	  AOS.init();
+	</script>
+	
     <script type="text/javascript" src="/resources/js/main.js"></script>
 
     <!-- Script Bootstrap, jqurey-3.6.3 -->
@@ -210,6 +293,9 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
       src="https://kit.fontawesome.com/4bf42f841a.js"
       crossorigin="anonymous"
     ></script>
+
+	<!-- aniview 로드 -->
+  	<script src="https://unpkg.com/jquery-aniview/dist/jquery.aniview.js"></script>
 
     <script>
          let user_no = <%=session.getAttribute("user_no")%>;
