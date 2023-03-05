@@ -12,8 +12,9 @@
 	width: 1240px;
 	margin: auto;
 	margin-top: 30px;
-	margin-bottom: 10px;
-	border-bottom: 1px solid #ccc;
+	margin-bottom: 30px;
+	border-bottom: 1px solid #DFDFDF;
+	
 }
 
 .orderclsfc_btn {
@@ -104,16 +105,15 @@
 .mngmn_table {
 	margin: 0 auto;
 	width: 1240px;	
-	border: 1px solid black;
+	border: 1px solid #DFDFDF;
 }
-
 
 
 .mngmn_table th {
 	height: 50px;
-	text-align:center;
-	vertical-align:middle;	
-	border-bottom: 1px solid black;
+	text-align: center;
+	vertical-align: middle;	
+	border-bottom: 1px solid #DFDFDF;
 	background-color: #f7f7f7;
 	font-size: 14px;
 	font-weight: bold;
@@ -122,7 +122,7 @@
 .mngmn_table td {
 	height: 70px;
 	font-size: 12px;
-	text-align: center;
+	padding: 10px;
 	vertical-align: middle;
 	cursor: pointer;
 }
@@ -135,20 +135,18 @@ tr:hover {
 	background-color: #ececec;	
 }
 
-.mngmn_table_th1 {
-	width: 70px;
-}
-
-.mngmn_table_th2 {
-	width: 140px;
-}
-
 .mngmn_table_th3 {
-	width: 470px;
+	width: 40%;
+	text-align: left;
 }
 
-.mngmn_table_th4, .mngmn_table_th5, .mngmn_table_th6, .mngmn_table_th7 {
-	width: 140px;
+.mngmn_table_th1, .mngmn_table_th2, .mngmn_table_th4, .mngmn_table_th5, .mngmn_table_th6, .mngmn_table_th7 {
+	width: 10%;
+
+}
+
+.mngmn_table_col1, .mngmn_table_col2, .mngmn_table_col4, .mngmn_table_col5, .mngmn_table_col6, .mngmn_table_col7 {
+	text-align: center;
 }
 
 .mngmn_table_col3 {
@@ -176,7 +174,7 @@ tr:hover {
 .info-box {
 	width: 700px;
 	height: 320px;
-	border: 1px solid black;
+	border: 1px solid #DFDFDF;
 	display: inline-block;
 	float: left;
 }
@@ -188,7 +186,7 @@ tr:hover {
 	font-size: 12px;
 	padding-top: 14px;
 	font-weight: bold;
-	border-bottom: 1px solid black;
+	border-bottom: 1px solid #DFDFDF;
 }
 
 .info-box_ul1 {
@@ -276,7 +274,7 @@ tr:hover {
 	width: 500px;    	
 	max-height: 200px;
     padding-top: 40px;  
-    border: 1px solid black;
+    border: 1px solid #DFDFDF;
 
 }
 .table-box-wrap .table-box {
@@ -310,7 +308,7 @@ tr:hover {
     font-weight: bold;
     vertical-align: middle;
     text-align: center;	
-    border-bottom: 1px solid black;    
+    border-bottom: 1px solid #DFDFDF;    
 }
 
 .table-box-wrap .table-box table thead tr th:nth-child(1) {
@@ -366,7 +364,7 @@ tr:hover {
 
 .dlvy-box_table {
 	width: 500px;
-	border: 1px solid black;	
+	border: 1px solid #DFDFDF;	
 }
 
 .dlvy-box_table th, .dlvy-box_table td {

@@ -112,9 +112,9 @@ function address_list() {
 								     <span>${result[i].detail_add}</span><label>
 								</td>
 								<td class="addresslist_table_col3">
-									<div><button class="btn btn-outline-primary address_update" value=${result[i].address_no}><i class="bi bi-pen"><span style="font-size:12px; font-weight: bold;"> 수정</span></i></button></div>`
+									<div><button class="btn btn-outline-primary-nb address_update" value=${result[i].address_no}><i class="bi bi-pen"><span style="font-size:12px; font-weight: bold;"> 수정</span></i></button></div>`
 								if (i!=0) {
-				html +=				`<br><div><button type="button" class="btn btn-outline-primary address_delete" value=${result[i].address_no}><i class="bi bi-trash"><span style="font-size:12px; font-weight: bold;"> 삭제</span></i></button></div>`
+				html +=				`<br><div><button type="button" class="btn btn-outline-primary-nb address_delete" value=${result[i].address_no}><i class="bi bi-trash"><span style="font-size:12px; font-weight: bold;"> 삭제</span></i></button></div>`
 								}	
 				html +=			`</td>
 							</tr>

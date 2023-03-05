@@ -7,53 +7,55 @@
 <meta charset="UTF-8">
 <title>테스트페이지</title>
 
+
+
+<!-- Owl Carousel CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+
+<!-- Owl Carousel Theme Default CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
 <!-- jQuery -->
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!-- Owl Carousel JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+
+<style type="text/css">
+		.my-slider, .item img{
+			max-width:300px; /* 사진 크기 조절 */
+			height:auto;
+		}
+</style>
+
 
 </head>
-<body>
+<body>	
 
-	<h1>
-		<a href="/itemorder/cart/list">장바구니</a>
-	</h1>
+<div class="owl-carousel owl-theme my-slide">
+  <div class="item"><img src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791190313186.jpg"></div>
+  <div class="item"><img src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9788937460289.jpg"></div>
+  <div class="item"><img src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791161571188.jpg"></div>
+  <div class="item"><img src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791190538510.jpg"></div>
+  <div class="item"><img src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9788936434267.jpg"></div>
+</div>
 
-	<h1>
-		<a href="/detail/cart/orderitem">결제/주문</a>
-	</h1>
-
-	<h1>
-		<a href="/admin/order">관리자</a>
-	</h1>
-
-
-	<button id="cart">배열넘기기~</button>
-	
-	<input type="hidden" id="test" name="test[]" value="" />
-
+<div class="owl-carousel owl-theme thumbnail-carousel">
+  <div class="item active"><img src="https://contents.kyobobook.co.kr/sih/fit-in/120x120/pdt/9791190313186.jpg"></div>
+  <div class="item"><img src="https://contents.kyobobook.co.kr/sih/fit-in/120x120/pdt/9788937460289.jpg"></div>
+  <div class="item"><img src="https://contents.kyobobook.co.kr/sih/fit-in/120x120/pdt/9791161571188.jpg"></div>
+  <div class="item"><img src="https://contents.kyobobook.co.kr/sih/fit-in/120x120/pdt/9791190538510.jpg"></div>
+  <div class="item"><img src="https://contents.kyobobook.co.kr/sih/fit-in/120x120/pdt/9788936434267.jpg"></div>
+</div>
 
 
-<script type="text/javascript">
-/* */
-function ById(id) {
-	return document.getElementById(id);
-}
 
-/* */
-$(document).on("click", "#cart", function(e) {
-	//var aaa = document.getElementsByName("abc[]")[0].value;
-	
-	for (var i=0; i<50; i++) {
-		$("input[name='test[]']").eq(i).val(100)	
+  <script type="text/javascript">
 
-	}
-	
-	aaa = document.getElementsByName("test[]").value;
-	
-	console.log(document.getElementsByName("test[]").length)
 
-})
+  </script>
 
-</script>
 
 
 </body>

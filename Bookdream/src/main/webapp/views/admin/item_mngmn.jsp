@@ -78,7 +78,7 @@
   				<option value="해외도서">해외도서</option> 
   			</select>
   		</div>
-
+	
   		<div class="col-md-2 mt-2" id="search">출판사</div>
   		<div class="col-md-4 mt-2"><input type="search" name="publisher" id="publisher"> </div>
 		</div>
@@ -91,9 +91,9 @@
 		</form>
 		</section>
 	<!----------------------검색 결과 리스트 ------------------------->
-		<section class="mt-5">
+		<section class="mt-5" >
 		<button class="btn btn-outline-primary mb-2" id="updateChk"  > 일괄수정 </button>
-		
+		<div class="row" id="searchList_div">
 		<div id="bookList_title" class="text-center">
 		<ul class="list-group list-group-horizontal">
 			<li class="list-group-item" id="check"><span class="h7" >선택</span></li>
@@ -110,6 +110,7 @@
 	  	</div>
 	  	<div id="bookList" class="text-center mb-5">
 			
+		</div>
 		</div>
 		</section>
 		
