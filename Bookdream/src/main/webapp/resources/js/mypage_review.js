@@ -25,15 +25,15 @@ function reviewList(pageNum) {
 			sessionStorage.setItem("pageNum", pageNum);
 			
 			// 데이터가 있어야 계산
-			if (data.cnt.AVG_STAR != undefined) {
+			console.log(data)
 				
 		    // 채워진 별점의 백분율 계산
-		    let percentage = (data.cnt.AVG_STAR / 5) * 100;
+		    let percentage = data.cnt.AVG_STAR == undefined ? 0 : (data.cnt.AVG_STAR / 5) * 100;
 		    
-			// 별점 수소점 2자리까지 표시
-			let num = data.cnt.AVG_STAR
-			let roundedNum = num.toFixed(2);
-			
+			// 별점 수소점 2자리까지 표시			
+			let sum_rcmnd = data.cnt.SUM_RCMND == undefined ? 0 : data.cnt.SUM_RCMND
+			let roundedNum = data.cnt.AVG_STAR == undefined ? 0 : data.cnt.AVG_STAR.toFixed(2)	
+
 		    // 별점을 채울 요소 선택
 		    let starsInner = ById('stars-inner')
 	   	   
@@ -43,9 +43,9 @@ function reviewList(pageNum) {
 		    // 별점 텍스트 업데이트
 		    ById('number-rating').innerHTML = '(' + roundedNum + ')'	    
 		    ById('review_cnt').innerHTML = data.cnt.CNT
-		    ById('review_rcmnd').innerHTML = data.cnt.SUM_RCMND
+		    ById('review_rcmnd').innerHTML = sum_rcmnd
 		    
-			}
+
 		    
 		    /* 리뷰 목록 */
 	    
@@ -201,8 +201,8 @@ $(document).on("click", "button.review_update_btn", function(e) {
     
     let html = `<textarea class="review_content" style="width:100%; height:90%; min-height: 100px; max-height: 300px;">${review_content}</textarea>`
     		
-    let btns = `<button class="btn btn-outline-primary review_submit_btn" value="${review_no}"><i class="bi bi-check"><span style="font-size:10px; font-weight: bold;"> 등록<span></i>
-			    <button class="btn btn-outline-primary review_cancel_btn" value="${review_no}"><i class="bi bi-x"><span style="font-size:10px; font-weight: bold;"> 취소<span></i>`
+    let btns = `<button class="btn btn-outline-primary-nb review_submit_btn" value="${review_no}"><i class="bi bi-check"><span style="font-size:10px; font-weight: bold;"> 등록<span></i>
+			    <button class="btn btn-outline-primary-nb review_cancel_btn" value="${review_no}"><i class="bi bi-x"><span style="font-size:10px; font-weight: bold;"> 취소<span></i>`
     
     e.target.closest('tr').querySelector('td:first-child').innerHTML = html
     e.target.closest('tr').querySelector('td:nth-child(2)').innerHTML = btns
@@ -221,8 +221,8 @@ $(document).on("click", "button.review_cancel_btn", function(e) {
   
     confirmed(title, text, icon, msg, function() {
 		
-	    let	btns = `<button class="btn btn-outline-primary review_update_btn" value="${review_no}"><i class="bi bi-pen"><span style="font-size:10px; font-weight: bold;"> 수정<span></i>
-					<button class="btn btn-outline-primary review_delete_btn" value="${review_no}"><i class="bi bi-trash"><span style="font-size:10px; font-weight: bold;"> 삭제<span></i>`
+	    let	btns = `<button class="btn btn-outline-primary-nb review_update_btn" value="${review_no}"><i class="bi bi-pen"><span style="font-size:10px; font-weight: bold;"> 수정<span></i>
+					<button class="btn btn-outline-primary-nb review_delete_btn" value="${review_no}"><i class="bi bi-trash"><span style="font-size:10px; font-weight: bold;"> 삭제<span></i>`
 
 	    e.target.closest('tr').querySelector('td:first-child').innerHTML = review_content	
 	    e.target.closest('tr').querySelector('td:nth-child(2)').innerHTML = btns   
