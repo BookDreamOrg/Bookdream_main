@@ -7,7 +7,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <!-- alert -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 	<!-- jQuery -->
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	
@@ -19,7 +21,7 @@
     
 </head>
 
-    <body class="text-center">
+    <body class="text-center">p
         <main class="form-signin">
            <form action="insertUser.do" method="post" id="frm">
               <img class="mb-4" src="/resources/images/bookdream_img.png" alt="" width="160" height="70">
@@ -79,7 +81,7 @@
 			<span id="mail-check-warn"></span>
 		
              <div>
-             	<button class="join-submit w-70 btn btn-lg btn-outline-primary" id="join-btn" disabled="disabled" type="submit">회원가입 완료</button>
+             	<button class="join-submit w-70 btn btn-lg btn-outline-primary" onclick="joinsubmit()" id="join-btn" disabled="disabled" type="submit">회원가입 완료</button>
              </div> 
               
            </form>
