@@ -1,7 +1,8 @@
 header {
   width: 100%;
-  padding: 0.5rem 10rem 1.5rem 10rem;
-  border-bottom: 4px solid var(--main-color);
+  padding: 0rem 10rem 1.5rem 10rem;
+  border-bottom: 2px solid var(--main-color);
+  height : 200px;
 }
 .nav-link {
   color: black;
@@ -26,6 +27,7 @@ header {
   display: flex;
   align-items: center;
   width: 100%;
+  flex-wrap: nowrap;
 }
 
 .header-col-home {
@@ -35,11 +37,11 @@ header {
 }
 
 .header-row-logo {
-  width: 5rem;
+  width: 4rem;
 }
 
 .header-row-logo_text {
-  width: 7rem;
+  width: 6rem;
 }
 
 .search-toggle {
@@ -50,7 +52,6 @@ header {
 .header-col-btn {
   display: flex;
   justify-content: flex-end;
-  align-items: center;
   width: 9rem;
 }
 
@@ -72,7 +73,9 @@ header {
 
 .header-menu {
   display: flex;
+  justify-content : flex-end;
   align-items: center;
+  margin-top : 8px;
 }
 
 .btn-circle-tint {
@@ -90,15 +93,20 @@ header {
   align-items: center;
 }
 
-.dot {
-  width: 0.6rem;
-  height: 0.6rem;
-  border-radius: 50%;
-  background-color: var(--main-color);
-}
-
 .book-section {
   padding: 0.5rem 10rem 1.5rem 10rem;
 }
 
+.header_search {
+	width : 800px;
+}
+
+#keyword_text {
+	height : 3.5rem;
+}
+
+.no-cart-header {
+	display: flex;
+	align-items: center;
+}
 
