@@ -31,26 +31,29 @@
 	background-color: var(- -main-color-tint1);
 }
 
+
+#block_row{
+padding-left: 10%;
+}
 #block {
 	border: 1px #6768ab;
 	padding: 0 5px;
 	height: 22px;
 	overflow: hidden;
 	background: #fff;
-	width: 300px;
 	font-size: 18px;
 }
 
 #block ul, #block li {
 	border-color: white;
-	margin: 0;
 	padding: 0;
+	width: 101%;
+	margin-right: 20px;
 	list-style: none;
 	font-size: 18px;
 	text-overflow: ellipsis;
 	display: -webkit-box;
 	-webkit-line-clamp: 1;
-	-webkit-box-orient: vertical;
 }
 
 #block li a {
@@ -82,7 +85,7 @@
 
 
 #go-top{
-	display:scroll;position:fixed;bottom:20px;right:25px;
+	display:scroll;position:fixed;bottom:100px;right:25px;
 	width: 50px;
 	height: 50px;
 	background: white;	
@@ -266,15 +269,17 @@
 						}
 					%>
 
-					<div
-						class="header-menu mb-1 flex-lg-row flex-sm-column">
+					<div 
+						class="row" id="block_row">
 						<!---------------------------검색 상위 키워드 10개-------------------------------->
-						<div class="flex-sm">
+						<div class="col-1"></div>
+						<div class="col-10">
 							<span class="small">인기 검색어 </span>
 							<div class="mt-1" id="block">
 								<ul class="list-group" id="bestKeyword"></ul>
 							</div>
 						</div>
+						<div class="col-1"></div>
 					</div>
 
 
