@@ -71,6 +71,10 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 	.mainTitle{
 		width:80%;
 	}
+	
+	body {
+	  overflow-x: hidden;
+	}	
 	</style>
     <title>북드림  | BookDream </title>
   </head>
