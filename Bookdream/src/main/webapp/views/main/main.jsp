@@ -65,15 +65,20 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 
      <!-- Swiper -->
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
-      <link rel="stylesheet" href="/resources/css/banner.css" />
+     <link rel="stylesheet" href="/resources/css/banner.css" />
 	
+	<style type="text/css">
+	.mainTitle{
+		width:80%;
+	}
+	</style>
     <title>북드림  | BookDream </title>
   </head>
   <body>
     <div class="wrapper">
       <jsp:include page="/views/inc/header.jsp" />
       
-      <div class="banner">
+      <div class="banner shadow ">
           <!-- Slider main container -->
           <div class="swiper">
             <!-- Additional required wrapper -->
@@ -178,11 +183,11 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 		<div style="height: 200px">
 		</div>
 
-			<span class="h1" data-aos="fade-down"
+			<p class="row h1 mainTitle border-bottom p-3" data-aos="fade-down"
 				data-aos-offset="0"
-				data-aos-duration="1500"> 베스트 셀러 상품 </span>
+				data-aos-duration="1500"> 🏆 베스트 셀러 상품 </p>
 
-		<div style="height: 50px">
+		<div class="" style="height: 50px">
 		</div>
 		
 	<section class="row d-flex justify-content-around align-items-center" id="bestMain" >
@@ -192,9 +197,10 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 		<div style="height: 100px">
 		</div> 
 		
-		<section class="m-3 row " id="bestBook">
+		<section class="row " id="bestBook">
 		</section>
      
+
     </div>
      
      <div style="height: 100px">
@@ -202,33 +208,31 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
       
       <!---------------------------리뷰 많은 상품 5개------------------------------
       -->
-	<div class=" d-flex align-items-center flex-column ">
-			
-			<div style="height: 200px">
-			</div>
-	
-				<span class="h1" data-aos="fade-down"
+	<div class=" d-flex align-items-center flex-column">
+		<div style="height: 200px">
+		</div>
+		
+		<span class="row h1 mainTitle border-bottom p-3" data-aos="fade-down"
 					data-aos-offset="0"
-					data-aos-duration="1500"> 리뷰 많은 상품 </span>
-	
-			<div style="height: 50px">
-			</div>
+					data-aos-duration="1500"> ✍ 리뷰 많은 상품 </span>
+		<div style="height: 50px">
+		</div>
 			
 		<section class="row d-flex justify-content-around align-items-center" id="besReviewtMain" >
 		</section>	
-			
-			
-			<div style="height: 100px">
-			</div> 
-			
-			<section class="m-3 row " id="bestBookByReviewCount">
-			</section>
-	     
-	    </div>
+		
+		<div style="height: 100px">
+		</div> 
+		
+		<section class="row " id="bestBookByReviewCount">
+		</section>
+		
+	
+	</div>
 	    
 	    
-	    <div style="height: 100px">
-			</div> 
+	<div style="height: 100px">
+	</div> 
 
 	    
        <!---------------------------평점 높은 상품 5개------------------------------
@@ -238,9 +242,9 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 			<div style="height: 200px">
 			</div>
 	
-				<span class="h1" data-aos="fade-down"
+				<span class="row h1 mainTitle border-bottom p-3" data-aos="fade-down"
 					data-aos-offset="0"
-					data-aos-duration="1500"> 평점 높은 상품  </span>
+					data-aos-duration="1500"> 🌟 평점 높은 상품  </span>
 	
 			<div style="height: 50px">
 			</div>
@@ -249,11 +253,11 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 		</section>	
 			
 			
-			<div style="height: 100px">
-			</div> 
+		<div style="height: 100px">
+		</div> 
 			
-			<section class="m-3 row " id="bestBookByReviewGrade">
-			</section>
+		<section class="row" id="bestBookByReviewGrade">
+		</section>
 			
 	     
 	    </div>
@@ -261,7 +265,6 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
        <div style="height: 100px">
 			</div> 
       </main>
-
 
 	<!-- ----------------------footer---------------------- -->
       <jsp:include page="/views/inc/footer.jsp" />
