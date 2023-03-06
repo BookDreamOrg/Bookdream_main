@@ -53,7 +53,7 @@ public class UserController {
 		
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter w = response.getWriter();
-		w.write("<script>alert('회원가입 완료!');location.href='/views/user/join.jsp\'</script>");
+		w.write("<script>alert('회원가입 완료!');location.href='/views/user/login.jsp\'</script>");
 		w.flush();
 		w.close();
 		

@@ -42,10 +42,10 @@
  <!-- 유효성 검사  -->
  
               <div class="form-floating" id="pswd1Img">
-                <input type="password" class="form-control" id="user_password" name="user_password" onchange="PasswordCheck()" placeholder="비밀번호" class="int" title="비밀번호 입력" aria-describedby="pswd1Msg" maxlength="20">
+                <input type="password" class="form-control" id="user_password" name="user_password" placeholder="비밀번호" onchange="PasswordCheck()" class="int" title="비밀번호 입력" aria-describedby="pswd1Msg" maxlength="20">
                 <label for="pswd1">비밀번호</label>
              </div>
-           
+           	<div class="pw-info"><span>비밀번호는 영문자+숫자 조합으로 8~25자리 사용해야 합니다.</span></div>
              <div class="form-floating" id="pswd2Img">
                 <input type="password" class="form-control" id="user_passwordCheck" name="user_passwordCheck" onchange="PasswordCheck()" placeholder="비밀번호확인" class="int" title="비밀번호 재확인 입력" aria-describedby="pswd2Blind" maxlength="20">
                 <label for="pswd2">비밀번호 확인</label>
