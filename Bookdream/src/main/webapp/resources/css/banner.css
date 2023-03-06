@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Black+Han+Sans:400");
 @import url("https://fonts.googleapis.com/css2?family=Sunflower:wght@500&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap');
 
 .banner {
   position: relative;
@@ -73,6 +75,84 @@ img {
   color: black;
 }
 
+.amond {
+	right : 60px;
+	font-family: 'Nanum Myeongjo', serif;
+	color : white;
+}
+
+.amond h2 {
+	margin-top : 24px;
+	font-size : 3rem;
+	font-weight : 700;
+}
+
+.amond p {
+	color : black;
+	margin-top : 16px;
+	text-align : right;
+	font-size : 4rem;
+	font-weight : 700;
+}
+
+.smartphone {
+	right : -270px;
+	margin-top : 16px;
+	color : white;
+	font-family: 'East Sea Dokdo', cursive;
+}
+
+.smartphone h2 {
+	maragin-top : 24px;
+	font-size : 3rem;
+}
+
+.smartphone h2:nth-child(2) {
+	font-size : 5rem;
+	color : #993333;
+}
+
+.smartphone p {
+	margin-top : 16px;
+	text-align : right;
+	font-size : 2.5rem;
+}
+
+.poem {
+	margin-top : 20px;
+	right : -170px;
+	font-family: 'Nanum Myeongjo', serif;
+	color : black;
+	font-size : 1.5rem;
+	text-align : right;
+	line-height : 42px;
+}
+
+.poem {
+	margin-top : 8px;
+}
+
+.poem p {
+	font-weight : bold;
+}
+
+.life {
+	right : -170px;
+	font-family: 'Nanum Myeongjo', serif;
+	color : white;
+	font-size : 2.5rem;
+	text-align : right;
+	line-height : 40px;
+}
+
+.life h2 {
+	margin-top : 8px;
+}
+
+.life p {
+	margin-top : 45px;
+	color : black;
+}
 .swiper-pagination-bullet {
   width: 40px;
   height: 3px;
@@ -95,3 +175,4 @@ img {
   color: var(--main-color);
   opacity: 0.9;
 }
+
