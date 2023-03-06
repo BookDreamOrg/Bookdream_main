@@ -85,7 +85,7 @@ padding-left: 10%;
 
 
 #go-top{
-	display:scroll;position:fixed;bottom:20px;right:25px;
+	display:scroll;position:fixed;bottom:100px;right:25px;
 	width: 50px;
 	height: 50px;
 	background: white;	

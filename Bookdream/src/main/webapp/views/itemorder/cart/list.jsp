@@ -100,7 +100,7 @@
 				<c:if test="${cartListCount == 0 }">
 					<div class="d-flex flex-column align-self-center rounded p-3 fw-bold  ">
 							<span class=" p-3 text-center fs-5">
-								<p>당신 장바구니엔 아무것도 읎어,,</p></span>
+								<p>장바구니에 아무것도 없어요</p></span>
 							<span class=" p-3 text-center fs-1">
 								<p>🤔🤔🤔</p></span>
 					</div>
