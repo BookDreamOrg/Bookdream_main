@@ -47,6 +47,7 @@ padding-left: 10%;
 #block ul, #block li {
 	border-color: white;
 	padding: 0;
+	width: 101%;
 	margin-right: 20px;
 	list-style: none;
 	font-size: 18px;
@@ -272,7 +273,7 @@ padding-left: 10%;
 						class="row" id="block_row">
 						<!---------------------------검색 상위 키워드 10개-------------------------------->
 						<div class="col-1"></div>
-						<div class="col-10 mb-1">
+						<div class="col-10">
 							<span class="small">인기 검색어 </span>
 							<div class="mt-1" id="block">
 								<ul class="list-group" id="bestKeyword"></ul>
