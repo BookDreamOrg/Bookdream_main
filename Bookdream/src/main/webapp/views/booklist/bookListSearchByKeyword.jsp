@@ -49,7 +49,14 @@
 		<main>
 		<div class="book-section">
 			<c:if test="${empty book}"  >
-				<div class="text-center mt-5"> 검색된 책이 없습니다. </div>
+			<script type="text/javascript">
+				 Swal.fire(
+						 '검색된 책이 없습니다.',
+				          '',
+				          'info'
+				 )
+				</script>
+				<div class="text-center h5 mt-3 mb-5"> 검색된 책이 없습니다. </div>
 			</c:if>
 			<c:choose>
 			<c:when test="${empty search_keyword}">
@@ -77,15 +84,11 @@
 							<div class="mt-2">
 								${book.author } | 
 							<fmt:formatDate pattern="yyyy년 MM월 dd일" value="${book.pblic_date }"/>
-							
-							
 							</div>
-							
-							
 							<div id="book_content"> ${book.book_content }</div>
 						</div>
 						</div>
-						<div class="col-md-3  mt-5 pt-5">
+						<div class="col-md-3  mt-5 pt-5 text-center">
 						<div>
 							<button type="button" class="btn btn-outline-primary" onclick="bookList_cart(this.value)" value="${book.book_no}" >장바구니</button> 
 						</div>
@@ -104,7 +107,7 @@
 	<nav aria-label="Page navigation example" >
 		<ul class="pagination justify-content-center">
 			<li class="page-item">
-				<a class="page-link" onclick="prev()">Previous</a>
+				<a class="page-link" onclick="prev()"> &lt; </a>
 			</li>
 			<c:forEach begin="1" end="${ lastIndex }" var="num">
 			<input type="hidden" id="SearchKeyword" value="${search_keyword}">
@@ -114,10 +117,10 @@
 			</c:forEach>
 				
 			<li class="page-item">
-				<a class="page-link" onclick="next()" >Next</a>
+				<a class="page-link" onclick="next()" > &gt; </a>
 			</li>
 		</ul>
-	</nav>
+	</nav> 
 </div>
 </c:if>
 
