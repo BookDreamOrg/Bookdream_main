@@ -1,4 +1,4 @@
-![header](https://capsule-render.vercel.app/api?type=wave&color=auto&height=300&section=header&text=BookDream&fontSize=90)
+![header](https://capsule-render.vercel.app/api?type=wave&color=_6768ab&height=300&section=header&text=BookDream&fontSize=90)
 
 
 # BookDream
