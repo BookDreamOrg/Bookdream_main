@@ -215,7 +215,9 @@ uri="http://java.sun.com/jsp/jstl/fmt"%>
               	</c:when>
               	<c:otherwise>
               		<c:forEach items="${qnaAllList }" var="list" varStatus="vs">
-                  <div class="qna-Alllist">
+              		<c:choose>
+              			 <c:when test="${vs.index <= 5 }">
+              		<div class="qna-Alllist">
                     <div class="qna-dashboardList">
                       <span
                         class="list-group-item-qna list-group-item-action"
@@ -265,6 +267,8 @@ uri="http://java.sun.com/jsp/jstl/fmt"%>
                       </c:choose>
                     </div>
                   </div>
+              			 </c:when>
+              		</c:choose>
                 </c:forEach>
               	</c:otherwise>
               </c:choose>
