@@ -150,7 +150,8 @@ function countChart(data) {
 		      					    
 		    // ⑩차트의 설정(Object)
 		    options: {	
-		    	
+		    	maintainAspectRatio :false,
+		    		
 		    	plugins: {
 		    		
 		    	    legend: {
@@ -272,7 +273,7 @@ function payChart(data) {
 		    },
 		    	  
 		    options: {
-		    	
+		    	maintainAspectRatio :false,		    	
 		    	plugins: {
 		    	    legend: {
 		    	      position: 'bottom',

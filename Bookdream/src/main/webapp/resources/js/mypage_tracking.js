@@ -114,7 +114,7 @@ function order_list(pageNum, status, start_date, end_date) {
 						     									<button type="button" class="btn btn-outline-success btns return_request"><i class="fas fa-undo"></i>&nbsp; 반품신청</button>` : ''
 					
 					// 취소 / 반품 중인 상품에 대해서는 배송조회 불가
-				    let dlvry_check = ((status == 10) || (status == 11) || (status == 12) || (status == 13)) ? '' : `<button type="button" class="btn btn-outline-primary btns dlvry_check" value="${order.ORDER_NO}">
+				    let dlvry_check = ((status == 10) || (status == 11) || (status == 12) || (status == 13)) ? '' : `<button type="button" class="btn btn-outline-primary-nb btns dlvry_check" value="${order.ORDER_NO}">
 																										    			<i class="fas fa-truck"></i> 배송조회
 																											      	 </button>`
 	
@@ -222,30 +222,41 @@ function orderHistory() {
 			
 		success : function(data) {
 			
-			var num = 0
-						
+			let purchs = 0
+			let cancels = 0
+	
 			for(order of data) {
-						
-				if (order.ORDER_STATUS == 10 || order.ORDER_STATUS == 11 ||
-					order.ORDER_STATUS == 12 || order.ORDER_STATUS == 13 ) {
+				
+				let status = order.ORDER_STATUS
+				let count = order.STATUSCOUNT
 					
-					order.ORDER_STATUS = 10
-					num += Number(order.STATUSCOUNT)
+				// 배송완료/구매확정 묶어서 처리
+				if(status == 2 || status == 3) {
+					status = 2
+					purchs += Number(count)
+				}
+								
+				// 취소/반품 묶어서 처리
+				if (status == 10 || status == 11 ||
+					status == 12 || status == 13 ) {
+					
+					status = 10
+					cancels += Number(count)
 
 				} 
 				
-				switch (order.ORDER_STATUS) {
+				switch (status) {
 
-		            case  0: ById('order_count0').innerHTML = order.STATUSCOUNT
+		            case  0: ById('order_count0').innerHTML = count
 		                     break;
 		            	            
-		            case  1: ById('order_count1').innerHTML = order.STATUSCOUNT
+		            case  1: ById('order_count1').innerHTML = count
 	        				 break;		            
 	        				
-		            case  2: ById('order_count2').innerHTML = order.STATUSCOUNT
+		            case  2: ById('order_count2').innerHTML = purchs
 		            		 break;		            		
 		           
-		            case 10: ById('order_count10').innerHTML = num
+		            case 10: ById('order_count10').innerHTML = cancels
 	        				 break;
 
 				}
@@ -415,7 +426,7 @@ function order_detail(order_no) {
 			}
 			
 			html += `<div class="tracking_detail_title">배송정보
-						<button type="button" class="btn btn-outline-primary btns dlvry_check" value="${result[0].ORDER_NO}">
+						<button type="button" class="btn btn-outline-primary-nb btns dlvry_check" value="${result[0].ORDER_NO}">
 							<i class="fas fa-truck"></i> 배송조회
 						</button>					
 					</div>
@@ -624,7 +635,7 @@ function getDelivery(order_no) {
 										<th>주문번호</td>
 										<td>
 											${data.ORDER_NO}
-											<button type="button" style="float:right; margin-right:10px;" class="btn btn-outline-primary btns trackinglist_table_detail_btn" data-bs-dismiss="modal" value="${data.ORDER_NO}">
+											<button type="button" style="float:right; margin-right:10px;" class="btn btn-outline-primary-nb btns trackinglist_table_detail_btn" data-bs-dismiss="modal" value="${data.ORDER_NO}">
 												<i class="fas fa-search"></i> 주문상세
 											</button>											
 										</td>

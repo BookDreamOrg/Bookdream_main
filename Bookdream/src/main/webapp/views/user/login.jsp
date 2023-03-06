@@ -38,10 +38,11 @@
           <div class="save_id_box">
           	<span class="form_chk">
           		<label class="formSaveId">
-          			<input class="form-check-input" type="checkbox" value="remember-me" id="saveId"> <span class="btn_text_link">아이디 저장</span>
+          			<input class="form-check-input" type="checkbox" value="remember-me" id="saveId">
+          			<span class="btn_text_link">아이디 저장</span>
           		</label>
           	</span>
-          	<a href="idfind.jsp" class="btn_text_link">아이디 비밀번호 찾기</a>
+          	<span><a href="idfind.jsp" class="btn_text_link">아이디·비밀번호 찾기</a></span>
           </div>
           
         

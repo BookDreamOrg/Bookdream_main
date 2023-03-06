@@ -45,8 +45,8 @@
 									id="searchUserKeyword" placeholder="Search" aria-label="Search"
 									onkeypress="show_name(event)" /> <input type="text"
 									style="display: none;">
-								<button class="btn btn-outline-primary bookdream_btn" type="button"
-									onclick="searchUser()">
+								<button class="btn btn-outline-primary bookdream_btn"
+									type="button" onclick="searchUser()">
 									<i class="bi bi-search"></i>
 								</button>
 							</form>
@@ -84,8 +84,9 @@
 											<td>${ userList.flatform_type }</td>
 											<td>
 												<!-- Button trigger modal -->
-												<button type="button" class="btn btn-outline-primary bookdream_btn" data-bs-toggle="modal"
-													data-bs-target="#getUserModal">더보기</button>
+												<button type="button"
+													class="btn btn-outline-primary bookdream_btn"
+													data-bs-toggle="modal" data-bs-target="#getUserModal">더보기</button>
 											</td>
 										</tr>
 									</c:forEach>
@@ -142,30 +143,16 @@
 												</div>
 											</div>
 											<nav class="nav nav-tabs" id="nav-tab" role="tablist">
-												<a class="nav-link active" id="nav-home-tab"
-													data-bs-toggle="tab" href="#nav-home" role="tab"
-													aria-controls="nav-home" aria-selected="true">회원이 쓴 글</a> <a
-													class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
-													href="#nav-profile" role="tab" aria-controls="nav-profile"
-													aria-selected="false">블랙리스트</a>
+												<a class="nav-link active" id="nav-profile-tab"
+													data-bs-toggle="tab" href="#nav-profile" role="tab"
+													aria-controls="nav-profile" aria-selected="false">블랙리스트</a>
 											</nav>
-											<div class="tab-content admin-user-modal-nav"
-												id="nav-tabContent">
-												<div
-													class="tab-pane fade show active adimn-user-modal-nav-content"
-													id="nav-home" role="tabpanel"
-													aria-labelledby="nav-home-tab">@유저 댓글 리뷰 확인</div>
-												<div class="tab-pane fade adimn-user-modal-nav-content"
-													id="nav-profile" role="tabpanel"
-													aria-labelledby="nav-profile-tab">
-													<div class="blacklist-content">
-														<span>해당 유저를 블랙리스트로 등록 또는 해제 하시겠습니까?</span> <span>'블랙리스트'는
-															리뷰, 댓글 등 본사가 제공하는 서비스를 이용할 수 없습니다.</span>
-														<div>
-															<button type="button" id="blackListChange"
-																class="btn btn-danger">블랙리스트 수정</button>
-														</div>
-													</div>
+											<div class="blacklist-content">
+												<span>해당 유저를 블랙리스트로 등록 또는 해제 하시겠습니까?</span> <span>'블랙리스트'는
+													리뷰, 댓글 등 본사가 제공하는 서비스를 이용할 수 없습니다.</span>
+												<div>
+													<button type="button" id="blackListChange"
+														class="btn btn-danger">블랙리스트 수정</button>
 												</div>
 											</div>
 										</div>
