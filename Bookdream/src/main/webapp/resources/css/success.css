@@ -51,6 +51,10 @@
     border: 1px solid #DFDFDF;
 }
 
+.orderlist_table th {
+	border-bottom: 1px solid #DFDFDF;	
+}
+
 .orderlist_table_th1 {
 	width: 680px;
 	height: 80px;
@@ -60,7 +64,7 @@
 	font-size: 16px;	
 	font-weight: bold;
 
-	border-bottom: 1px solid #DFDFDF;	
+
 }
 
 .orderlist_table_th2 {
