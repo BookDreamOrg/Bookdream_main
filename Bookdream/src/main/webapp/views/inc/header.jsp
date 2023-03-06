@@ -79,13 +79,41 @@ margin-right:3px;
 }
 
 
+#go-top{
+	display:scroll;position:fixed;bottom:20px;right:25px;
+	width: 50px;
+	height: 50px;
+	background: white;	
+	color: var(--main-color);
+	box-shadow: var(--main-color-shadow1);
+	font-weight: 600;	
+	z-index: 100;
+}
+#go-top:hover{
+    animation:circlemove 1.5s  infinite linear;
+    width: 50px;
+	height: 50px;
+}
 
-
+@keyframes circlemove{
+    0%,100%{
+        transform:translate(0%,-10%);
+    }
+    50%{
+        transform:translate(0%,0%);
+}
 
 </style>
 
 
 <body>
+<a id="go-top" class="d-flex justify-content-center align-items-center flex-column
+						  rounded-circle shadow-lg " href="#" >
+	<i class="col bi bi-chevron-up bi-bold text-center						
+		d-flex align-items-center justify-content-center flex-column">
+	 	<span class="small text-center">TOP</span>
+	</i>
+</a>
    <% 
       int book_no = (int) (Math.random() * 100) + 1;
    %>
@@ -97,6 +125,7 @@ margin-right:3px;
       UserVO user = (UserVO)session.getAttribute("authUser");
       if(user == null){      
    %>
+	
       <div class="wrapper">
       <header>
          <div class="header-nav-list">
@@ -245,7 +274,6 @@ margin-right:3px;
       </div>
       
       
-
 
 
 <!-- 자동검색 기능 -->
