@@ -223,6 +223,9 @@ create table BOOK (
 
 alter table BOOK add discount  number(10) DEFAULT 0;
 
+
+alter table REVIEW add constraint FK_REVIEW_BOOK_NO foreign key (book_no) references book (book_no) on delete cascade;
+
 select * from BOOK;
 select count(*) from BOOK;
 commit;

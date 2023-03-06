@@ -1,10 +1,10 @@
 package com.spring.bookdream.controller;
 
 import java.io.PrintWriter;
-import java.util.Arrays;
+
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -45,13 +45,13 @@ public class OrderitemController {
 	public String orderitemList(@RequestParam(value="chBox[]") List<Integer> arrCart, 
 								OrderitemVO orderitem, PayVO pay, UserVO user,
 								Model model, HttpServletResponse response, PurchaseVO purchase) {
-				
+		
 		// 로그인해야 진입됨
 		if (session.getAttribute("user_no") == null) {
 			String msg = "로그인 후 이용해주세요";
 			String url ="/views/user/login.jsp";	
 		    try {
-		    	response.setContentType("text/html; charset=utf-8");
+		        response.setContentType("text/html; charset=utf-8");
 		        PrintWriter w = response.getWriter();
 		        w.write("<script>alert('"+msg+"');location.href='"+url+"';</script>");
 		        w.flush();
@@ -59,7 +59,7 @@ public class OrderitemController {
 		    } catch(Exception e) {
 		        e.printStackTrace();
 		    }
-					
+					    
 		}
 
 		int user_no = (int) session.getAttribute("user_no");		
@@ -92,8 +92,24 @@ public class OrderitemController {
 	
 	// 바로구매
 	@RequestMapping(value="/orderitemBuyNow")
-	public String orderitemListBuyNow(OrderitemVO orderitem, PayVO pay, UserVO user, Model model) { 
+	public String orderitemListBuyNow(OrderitemVO orderitem, PayVO pay, UserVO user, Model model, HttpServletResponse response) { 
 
+		// 로그인해야 진입됨
+		if (session.getAttribute("user_no") == null) {
+			String msg = "로그인 후 이용해주세요";
+			String url ="/views/user/login.jsp";	
+		    try {
+		        response.setContentType("text/html; charset=utf-8");
+		        PrintWriter w = response.getWriter();
+		        w.write("<script>alert('"+msg+"');location.href='"+url+"';</script>");
+		        w.flush();
+		        w.close();
+		    } catch(Exception e) {
+		        e.printStackTrace();
+		    }
+					    
+		}
+		
 		// 세션등록
 		session.setAttribute("product_count", orderitem.getProduct_count());
 		session.setAttribute("book_no", orderitem.getBook_no());
