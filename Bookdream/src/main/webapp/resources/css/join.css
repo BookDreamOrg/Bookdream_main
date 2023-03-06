@@ -93,3 +93,8 @@ html, body{
         .join-submit:hover{
         	background-color: #484877;
         }
+        .pw-info{
+        	margin-bottom: 5px;
+        	margin-top: 10px;
+        	color: #008000;
+        }
