@@ -103,7 +103,7 @@ public class AdminLoginController {
 		System.out.println("관리자 시작 ");
 
 		System.out.println("QnADashBoard실행");
-		List<QnAVO> qnaWaitList = qnaService.getWaitQnAList(); //답변 대기 문의 리스트
+		List<QnAVO> qnaWaitList = qnaService.getAllQnAList(); //답변 대기 문의 리스트
 		
 			int count = qnaWaitList.size();
 			int num = 1;

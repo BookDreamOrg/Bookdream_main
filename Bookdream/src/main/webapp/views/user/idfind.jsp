@@ -62,7 +62,7 @@
 				                <label for="tel">이메일</label>
 		              		</div>
 		              		<div class="form-floating">
-				                <input type="text" class="form-control" value="@" id="user_email2" name="user_email2" placeholder="이메일 입력...">
+				                <input type="text" class="form-control" value="@" id="user_email2_2" name="user_email2" placeholder="이메일 입력...">
 				                <label for="email">도메인</label>
               				</div>
 				       
