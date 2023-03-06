@@ -39,7 +39,7 @@
 <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
 <link rel="stylesheet" href="/resources/css/styles.css" />
 
-<title>Insert title here</title>
+<title>검색 결과</title>
 </head>
 <body>
 	

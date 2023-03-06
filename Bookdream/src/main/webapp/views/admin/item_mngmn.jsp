@@ -50,7 +50,7 @@
     <link rel="stylesheet" href="/resources/css/styles.css" />
     <link rel="stylesheet" href="/resources/css/admin_screen.css" />
    
-<title>Admin Page</title>
+<title>[관리자]도서 정보</title>
 </head>
 <body class="admin_body">
 	<jsp:include page="/views/inc/admin_aside.jsp"/>
