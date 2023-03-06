@@ -45,6 +45,7 @@
  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=JavaScript&logoColor=white" />
  <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=flat&logo=Bootstrap&logoColor=white" />
  <img src="https://img.shields.io/badge/Ajax-2280c2?style=flat&logo=Ajax&logoColor=white" />
+ <img src="https://img.shields.io/badge/Chartjs-fe777b?style=flat&logo=Chartjs&logoColor=white" />
  <br>
  <img src="https://img.shields.io/badge/Tomcat-F8DC75?style=flat&logo=ApacheTomcat&logoColor=white" />
  <img src="https://img.shields.io/badge/Java-007396?style=flat&logo=Java&logoColor=white" />
