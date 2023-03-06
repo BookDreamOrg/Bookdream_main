@@ -88,6 +88,31 @@ function checkId(){
  }
  
 
- 
+ function joinsubmit(){
+
+	 var id = $('#user_id').val();
+	 var pw = $('#user_password').val();
+     var pwCheck = $('#user_passwordCheck').val(); 
+     var name = $('#user_name').val();
+	 var email1 = $('#user_email').val()
+	 var email2 = $('#user_email2').val();
+     var email = email1 + email2;
+     
+     if(id == "" || pw == "" || pwCheck == "" || name == "" || email1 == "" || email2 == "") {
+    	 alert("빈칸이 있습니다!");
+    	 return false;
+     }
+     
+//     비밀번호는 영문자+숫자 조합으로 8~25자리 사용해야 합니다
+     var reg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+     if( pw.match(reg) == null ) {
+         alert("비밀번호는 영문자+숫자 조합으로 8~25자리 사용해야 합니다.");
+         document.getElementById('user_password').value = "";
+         return false;
+     }
+
+     	
+     	return true;
+ }
  
  

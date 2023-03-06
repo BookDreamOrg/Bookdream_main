@@ -52,17 +52,18 @@
 							</c:when>
 							<c:when test="${!empty qnaAllList }">
 								<table class="table">
-									<tr>
-										<th width="10%">문의 일자</th>
-										<th width="20%">문의한 유저</th>
-										<th width="70%">문의 제목</th>
+									<tr class="table-header">
+										<th width="10%" class="table-header-text">문의 일자</th>
+										<th width="20%" class="table-header-text">문의한 유저</th>
+										<th width="65%" class="table-header-text">문의 제목</th>
 									</tr>
 								</table>
+								<div class="bot-table">
+									<div class="bot-table-in">
 								<c:forEach var="list" items="${ qnaAllList}" varStatus="vs">
 									<div>
 										<div>
-											<table class="table">
-												
+											<table class="table qna-table">
 												<tr>
 													<td width="10%">
 														${list.getReg_date() }
@@ -99,13 +100,13 @@
 											
 										</div>
 									</div>
-
-									<div class="collapse" id="collapseEx${list.getQna_no() }">
+									<div class="table-div">
+									<div class="collapse qna-card" id="collapseEx${list.getQna_no() }">
 										<div class="card card-body" id="qna_content"
 											name="qna_content">${list.getQna_content() }</div>
 										<div class="qna_sumbmit">
 											<div class="qna_submit_btn">
-												<button type="button" class="btn btn-primary"
+												<button type="button" class="btn btn-outline-primary ans-btn"
 													data-bs-toggle="modal"
 													data-bs-target="#ModalQnA${vs.index }">답변</button>
 												<input class="qna_nocls" type="hidden" value="${list.getQna_no() }">
@@ -125,10 +126,10 @@
 															<div class="modal-body">
 																<textarea class="form_textarea" id="ans_content${vs.index }"
 																	name="ans_content" maxlength="500"
-																	style="width: 465px; height: 246px"></textarea>
+																	style="width: 465px; height: 246px; resize: none;" ></textarea>
 															</div>
 															<div class="modal-footer">
-																<button type="button" class="btn btn-primary" id="ans_btn${list.getQna_no() }"
+																<button type="button" class="btn btn-outline-primary ans-btn" id="ans_btn${list.getQna_no() }"
 																	data-bs-dismiss="modal" onclick='answer_btn(${list.getUser_no() },${vs.index })'>답변</button>
 															</div>
 														</div>
@@ -139,9 +140,11 @@
 										</div>
 										<hr>
 									</div>
-
+								</div>
 								</c:forEach>
-								
+								</div>
+								</div>
+								<br>
 								<nav aria-label="Page navigation example">
 									<ul class="pagination justify-content-center">
 										<c:forEach begin="1" end="${ pageNum }" var="num">
