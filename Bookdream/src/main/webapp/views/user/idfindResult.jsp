@@ -28,7 +28,7 @@
           </div>	
           <br>
           <div class="form-floating">
-          <button class="btn btn-light" onclick="location.href='pwfind.jsp'">비밀번호 찾기</button>
+          <button class="btn btn-light" onclick="location.href='idfind.jsp'">비밀번호 찾기</button>
           <button class="btn btn-secondary" onclick="location.href='login.jsp'">로그인</button>
           </div>
           

@@ -131,7 +131,15 @@ public class UserController {
 			System.out.println("비밀번호가 없습니다.");
 			return pw;
 		} else {
-			session.setAttribute("pwfind", pw);
+			String pwfind = "";
+	    	for(int i=0; i<pw.length(); i++){
+	    		if(i<4){
+	    			pwfind += pw.charAt(i);
+	    		} else{
+	    			pwfind += '*';
+	    		}
+	    	}
+			session.setAttribute("pwfind", pwfind);
 			return pw;
 		}
 		

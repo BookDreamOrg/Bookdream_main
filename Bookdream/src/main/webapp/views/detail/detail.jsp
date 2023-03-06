@@ -67,11 +67,10 @@
 				 <div class="display-6 mt-5 mb-2" id="book_title">${book.title }</div>
 				
 				<ul class=" list-group-horizontal">
-					<li class="mt-3 book_info"><span class="h5">${book.author } | ${book.publisher} | ${strdate} </span> </li>
-					<li class="mt-3"><span class="mb-5 fw-bold text" >⭐ 평균 별점</span><span class="fw-bold">  ${avgStar} </span> /  <small class="text-muted">  5.0 </small></li>
-					
 					<c:choose>
 					<c:when test="${book.stock > 0 }">
+					<li class="mt-3 book_info"><span class="h5">${book.author } | ${book.publisher} | ${strdate} </span> </li>
+					<li class="mt-3"><span class="mb-5 fw-bold text" >⭐ 평균 별점</span><span class="fw-bold">  ${avgStar} </span> /  <small class="text-muted">  5.0 </small></li>
 					<c:choose>
 						<c:when test="${ book.discount eq 0 }">
 							<li class="mt-4" ><span class="h3" style="color: red;" id="price_org" ><fmt:formatNumber value="${book.book_price}" pattern="###,###,###원" /></span></li>
@@ -89,7 +88,7 @@
 				
 						</c:when>
 						<c:otherwise>
-						<div class="h1 mt-5"> 품&nbsp;&nbsp;절  </div>					
+						<div class="h5 mt-5 pl-5" style="color: red;"> 품절 상품입니다.</div>					
 						</c:otherwise>
 				</c:choose>	 
 				</ul>		 
@@ -188,8 +187,8 @@
 				
 						<div>
 						<i class="bi bi-person-circle fs-2"></i>
-						   ID : ${review.user_id} <br>
-						   등록 날짜 | <fmt:formatDate value="${review.review_date}" pattern="yyyy년 MM월 dd일" type="date"/> 
+						  <span class="font-weight-bold"> ${review.user_id}</span>  <span> &nbsp;님</span><br>
+						 <span id="review_date" class="small">등록 날짜 | <fmt:formatDate value="${review.review_date}" pattern="yyyy년 MM월 dd일" type="date"/></span>   
 						</div>
 					
 				</div>
@@ -212,12 +211,14 @@
 				 ${review.review_content} 
 				</div>
 			</div>
-			<div class="mt-2 mb-5">
+			<c:if test="${review.user_id eq sessionScope.user_id }">
+			<div class="mt-2">
 						<input type="hidden" value="" name="review_no" >
 						<button id="btn_recommend" value="${review.review_no }"  onclick="review_recommend(this.value)" class="text-center btn btn-outline-dark flex-shrink-0 btn-xs" > <i class="bi bi-hand-thumbs-up"> </i> 추천하기 </button>
 					
 			</div>
-			<hr class="my-2">
+			</c:if>
+			<div class="border-bottom mt-3"></div>
 		</div>
 
 </c:forEach>

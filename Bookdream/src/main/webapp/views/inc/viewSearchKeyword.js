@@ -84,7 +84,7 @@ function slide(){
 	$(function() { 
 		 var ticker = function() {
 			 setTimeout(function(){ $('#block li:first').animate( {marginTop: '-20px'}, 400, function() {
-				$(this).detach().appendTo('ul#bestKeyword').removeAttr('style'); }); ticker(); }, 3000); }; ticker(); });
+				$(this).detach().appendTo('ul#bestKeyword').removeAttr('style'); }); ticker(); }, 2000); }; ticker(); });
 	  
 	  
 }
