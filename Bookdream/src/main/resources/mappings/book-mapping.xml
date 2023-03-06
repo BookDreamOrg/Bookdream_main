@@ -237,17 +237,20 @@
 		 SELECT  title, 
 		         book_content, 
 		         book_price, 
-		         book_img
+		         book_img,
+		         book_no
 		         
 		 FROM   (SELECT title, 
 		                book_content, 
 		                book_price, 
-		                book_img
+		                book_img,
+		                book_no
 		                
 		         FROM   (SELECT title, 
 		                        book_content, 
 		                        book_price,
 		                        book_img,
+		                        book_no,
 		                        ROW_NUMBER() OVER (ORDER BY book_no DESC) AS rn
 		                        
 		                 FROM   book)

@@ -64,8 +64,8 @@
 											</div>
 											<div class="col_box">
 												<div class="box_area">
-													<textarea class="form_textarea" id="qna_content" name="qna_content" maxlength="500" style="height: 246px"
-													placeholder="빠른 답변을 위해  10자 이상의 문의 내용을 입력해주세요" >${getQnA.getQna_content() }</textarea>
+													<textarea class="form_textarea" id="qna_content" name="qna_content" maxlength="500" style="height: 246px; resize: none;"
+													placeholder="빠른 답변을 위해  10자 이상의 문의 내용을 입력해주세요">${getQnA.getQna_content() }</textarea>
 												</div>
 											</div>
 										</div>

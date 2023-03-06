@@ -206,6 +206,14 @@ public class AdminUserController {
 				
 			List<UserVO> user = qnaService.getQnAUser();
 			
+			List<AnswerVO> ansMyList = qnaService.getAnswer(qnaVO);
+			System.out.println("ans리스트");
+			for(int i=0; i<ansMyList.size(); i++) {
+				System.out.println(ansMyList.get(i));
+			}
+			
+			model.addAttribute("ansMyList",ansMyList);
+			
 			model.addAttribute("userList", user);
 			model.addAttribute("qnaAllList", qnaAllList2);
 			model.addAttribute("pageNum", pageNum);

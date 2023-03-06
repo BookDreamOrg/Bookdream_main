@@ -38,17 +38,25 @@ public class UserController {
 		String name = userVO.getUser_name();
 		String email = userVO.getUser_email();
 		String email2 = userVO.getUser_email2();
+		System.out.println(id);
+		System.out.println(pw);
+		System.out.println(name);
+		System.out.println(email);
+		System.out.println(email2);
 		
 		if(id == "" || pw == "" || name == "" || email == "" || email2 == "") {
-			response.setContentType("text/html; charset=utf-8");
-			PrintWriter w = response.getWriter();
-			w.write("<script>alert('빈칸이 있어요!');location.href='/views/user/join.jsp\'</script>");
-			w.flush();
-			w.close();
 			return "/user/join";
 		}
 		
+		
 		userService.insertUser(userVO);
+		
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter w = response.getWriter();
+		w.write("<script>alert('회원가입 완료!');location.href='/views/user/login.jsp\'</script>");
+		w.flush();
+		w.close();
+		
 		return "/user/login"; 
 	}
 	
@@ -123,7 +131,15 @@ public class UserController {
 			System.out.println("비밀번호가 없습니다.");
 			return pw;
 		} else {
-			session.setAttribute("pwfind", pw);
+			String pwfind = "";
+	    	for(int i=0; i<pw.length(); i++){
+	    		if(i<4){
+	    			pwfind += pw.charAt(i);
+	    		} else{
+	    			pwfind += '*';
+	    		}
+	    	}
+			session.setAttribute("pwfind", pwfind);
 			return pw;
 		}
 		
