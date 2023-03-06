@@ -71,19 +71,19 @@ function mainBookList(){
 								 	</a>
 								 </div>
 								 <div class="col-5  d-flex align-items-end  flex-column ">
-								 	<a class="p-1 mt-auto mb-3" href="/" 
+								 	<a class="p-1 mt-auto mb-3" href="/getBook?book_no=` +val.book_no+ `" 
 								 		 data-aos="fade-left"
 								 		 data-aos-offset="200"
 								 		 data-aos-duration="1000">
 									 	<span class="h1 lh-base text-break">`+val.title+`</span>
 								 	</a>
-								 	<a class="p-1 mt-auto" href="/"
+								 	<a class="p-1 mt-auto" href="/getBook?book_no=` +val.book_no+ `"
 								 		 data-aos="fade-up-left"
 								 		 data-aos-offset="250"
 								 		 data-aos-duration="1000">
 									 	<span class="h5 lh-lg text-break">`+val.book_content+`</span>
 								 	</a>
-								 	<a class="p-1 mb-auto text-muted" href="/"
+								 	<a class="p-1 mb-auto text-muted" href="/getBook?book_no=` +val.book_no+ `"
 								 		 data-aos="fade-up-left"
 								 		 data-aos-offset="250"
 								 		 data-aos-duration="1000">
@@ -93,27 +93,24 @@ function mainBookList(){
 							  			 
 				  		 }
 				  		 
-				  		 col +=` <div class="card col-2 border-0 rounded shadow-lg" style="width: 18rem;" 
+				  		 col +=` <div class="col-2 m-2 card border-0 rounded shadow-lg" style="width: 13rem;" 
 										  	onclick="location.href='/getBook?book_no=` +val.book_no + `'">
-										<img  class="rounded p-3 card-img-top" src="`+val.book_img+`">
-										  <div class="card-body">
-										    <p class="card-title h5  ">`+val.title+`</p>
-										    <p class="card-text">`+val.author+`</p> 
-										  </div>
-									</div>
-								
-						`
-						
+									  <img class="border-0 rounded pt-3 card-img-top" src="`+val.book_img+`">
+									  <div class="card-body mt-auto">
+									    <p class="card-title h5 mt-auto text-truncate">`+val.title+`</p>
+									    <p class="card-text h6"> -`+val.author+`</p> 
+									  </div>
+								</div>`
 				  	   });
 				  	 
 				  	 
 				  	
 				  	   
-				  	bestSellerHtml +=  `<div class="m-4 p-3 d-flex justify-content-between "
+				  	bestSellerHtml +=  `<div class="m-4 row d-flex justify-content-around"
 								      		data-aos="zoom-in-down"
 								      		data-aos-offset="200"
-											 data-aos-duration="1000"
-											 data-aos-easing="ease-out-back"> `; 
+											data-aos-duration="1000"
+											data-aos-easing="ease-out-back"> `; 
 				  	   
 				  	 bestSellerHtml +=  col ;
 				  	 bestSellerHtml += `</div>`;

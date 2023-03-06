@@ -37,10 +37,14 @@
 }
 
 .user_delete_info_list{
+	display : flex;
+	align-items : center;
+	justify-content : flex-end;
 	margin-top: 10px;
 }
 
 .user_delete_title{
+	margin-right : 8px;
 	font-size: 14px;
 }
 

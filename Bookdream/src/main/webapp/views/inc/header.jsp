@@ -25,9 +25,7 @@
 	width: 50%;
 }
 
-.ui-menu-item-wrapper {
-	
-}
+
 
 .ui-menu-item-wrapper:hover, .ui-state-active {
 	background-color: var(- -main-color-tint1);
@@ -81,10 +79,43 @@
 	border-radius: 10px;
 	border: 3px solid #c2c2dd;
 }
+
+
+#go-top{
+	display:scroll;position:fixed;bottom:20px;right:25px;
+	width: 50px;
+	height: 50px;
+	background: white;	
+	color: var(--main-color);
+	box-shadow: var(--main-color-shadow1);
+	font-weight: 600;	
+	z-index: 100;
+}
+#go-top:hover{
+    animation:circlemove 1.5s  infinite linear;
+    width: 50px;
+	height: 50px;
+}
+
+@keyframes circlemove{
+    0%,100%{
+        transform:translate(0%,-10%);
+    }
+    50%{
+        transform:translate(0%,0%);
+}
+
 </style>
 
 
 <body>
+	<a id="go-top" class="d-flex justify-content-center align-items-center flex-column
+						  rounded-circle shadow-lg " href="#" >
+	<i class="col bi bi-chevron-up bi-bold text-center						
+		d-flex align-items-center justify-content-center flex-column">
+	 	<span class="small text-center">TOP</span>
+	</i>
+	</a>	
 	<%
 		int book_no = (int) (Math.random() * 100) + 1;
 	%>
@@ -260,7 +291,7 @@
 			<!-- 자동검색 기능 -->
 			<script type="text/javascript" charset="UTF-8">
 				
-			<%@include file="/views/inc/viewSearchKeyword.js"%>
+				<%@include file="/views/inc/viewSearchKeyword.js"%>
 				
 			</script>
 

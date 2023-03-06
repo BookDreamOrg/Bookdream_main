@@ -187,7 +187,7 @@ uri="http://java.sun.com/jsp/jstl/fmt"%>
         </section>
         <section class="calandar">
           <div class="card">
-            <div class="card-header">유저 방문 수(주간)</div>
+            <div class="card-header">유저 방문자 수(주간)</div>
             <div class="card-body">
              <div class="container visitChart_container">
 					<canvas id="visitChart"></canvas>
