@@ -7,7 +7,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <!-- alert -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 	<!-- jQuery -->
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	
@@ -19,7 +21,7 @@
     
 </head>
 
-    <body class="text-center">
+    <body class="text-center">p
         <main class="form-signin">
            <form action="insertUser.do" method="post" id="frm">
               <img class="mb-4" src="/resources/images/bookdream_img.png" alt="" width="160" height="70">
@@ -40,10 +42,10 @@
  <!-- 유효성 검사  -->
  
               <div class="form-floating" id="pswd1Img">
-                <input type="password" class="form-control" id="user_password" name="user_password" onchange="PasswordCheck()" placeholder="비밀번호" class="int" title="비밀번호 입력" aria-describedby="pswd1Msg" maxlength="20">
+                <input type="password" class="form-control" id="user_password" name="user_password" placeholder="비밀번호" onchange="PasswordCheck()" class="int" title="비밀번호 입력" aria-describedby="pswd1Msg" maxlength="20">
                 <label for="pswd1">비밀번호</label>
              </div>
-           
+           	<div class="pw-info"><span>비밀번호는 영문자+숫자 조합으로 8~25자리 사용해야 합니다.</span></div>
              <div class="form-floating" id="pswd2Img">
                 <input type="password" class="form-control" id="user_passwordCheck" name="user_passwordCheck" onchange="PasswordCheck()" placeholder="비밀번호확인" class="int" title="비밀번호 재확인 입력" aria-describedby="pswd2Blind" maxlength="20">
                 <label for="pswd2">비밀번호 확인</label>
@@ -79,7 +81,7 @@
 			<span id="mail-check-warn"></span>
 		
              <div>
-             	<button class="join-submit w-70 btn btn-lg btn-outline-primary" id="join-btn" disabled="disabled" type="submit">회원가입 완료</button>
+             	<button class="join-submit w-70 btn btn-lg btn-outline-primary" onclick="joinsubmit()" id="join-btn" disabled="disabled" type="submit">회원가입 완료</button>
              </div> 
               
            </form>
