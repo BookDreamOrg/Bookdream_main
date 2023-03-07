@@ -62,7 +62,7 @@
 					
 	<div class="row">
 		<div class="col-6 text-center mt-5 ">
-			<img id="detail-img" alt="${book.title }" src="${book.book_img }" class="img-thumbnail animate__animated animate__fadeInLeft" />
+			<img id="detail-img" alt="${book.title }" src="${book.book_img }" class="img-thumbnail rounded shadow-lg animate__animated animate__fadeInLeft" />
 		</div>
 		<div class="col-6 mt-5 animate__animated animate__fadeInRight">
 				 <div class="display-6 mt-5 mb-2" id="book_title">${book.title }</div>

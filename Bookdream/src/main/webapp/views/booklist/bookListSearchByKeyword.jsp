@@ -74,10 +74,10 @@
 					<div class="container-fluid mt-3">
 						<div class="row" id="book_row" >
 							<div class="col-md-3">
-								<span><img alt="${book.title }" src="${book.book_img }" /></span>
+								<span><img class="rounded shadow-lg" alt="${book.title }" src="${book.book_img }" /></span>
 							</div>
 						<div class="col-md-6 mt-5 pt-2" onclick="location.href='/getBook?book_no=${book.book_no}'" style="cursor:pointer">
-							<span  id="detail-badge" >${book.book_category }</span> 
+							<span  id="detail-badge" class="small">${book.book_category }</span> 
 							<span id ="reviewAVG"> </span>
 							<span id="book_title"> ${book.title }</span>
 						<div class="row">
@@ -90,10 +90,10 @@
 						</div>
 						<div class="col-md-3  mt-5 pt-5 text-center">
 						<div>
-							<button type="button" class="btn btn-outline-primary" onclick="bookList_cart(this.value)" value="${book.book_no}" >장바구니</button> 
+							<button type="button" class="btn btn-outline-primary shadow" onclick="bookList_cart(this.value)" value="${book.book_no}" >장바구니</button> 
 						</div>
 						<div class="mt-1">
-							<button type="button" class="btn btn-outline-primary" onclick="bookList_buy(this.value)" value="${book.book_no}">바로구매</button>
+							<button type="button" class="btn btn-outline-primary shadow" onclick="bookList_buy(this.value)" value="${book.book_no}">바로구매</button>
 						</div>
 						</div>
 					</div>
