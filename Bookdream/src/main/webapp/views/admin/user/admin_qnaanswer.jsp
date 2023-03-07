@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="/resources/css/admin_screen.css" />
     <link rel="stylesheet" href="/resources/css/admin_qnaanswer.css" />
     
-<title>Admin Page</title>
+<title>관리자 - 1:1문의 대기</title>
 </head>
 <body class="admin_body">
 		<jsp:include page="/views/inc/admin_aside.jsp"/>
