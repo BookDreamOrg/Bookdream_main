@@ -24,7 +24,7 @@
 <link rel="icon" type="/image/png" sizes="16x16" href="/resources/images/favicon/favicon-16x16.png" />
 <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
 <link rel="stylesheet" href="/resources/css/styles.css" />
-<title>마이페이지 - 주소록</title>
+<title>북드림 | 배송지 관리</title>
 
 <!-- Script Bootstrap, jqurey-3.6.3 -->
 <script src="/resources/bootstrap/js/jquery-3.6.3.min.js"></script>

@@ -45,7 +45,7 @@
 <!-- jQuery UI -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<title>마이페이지 - 메인</title>
+<title>북드림 | 마이페이지</title>
 
 <style>
     

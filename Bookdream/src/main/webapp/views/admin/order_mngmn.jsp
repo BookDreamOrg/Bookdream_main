@@ -48,7 +48,7 @@
 <!-- 달력 -->
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />      
       
-<title>주문 관리</title>
+<title>북드림 | 주문 관리</title>
 
 <style type="text/css">
 
