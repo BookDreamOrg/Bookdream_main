@@ -411,7 +411,10 @@ function order_detail(order_no) {
 			
 				
 			for (let order of result)	{
-				let status = switchCase(order.ORDER_STATUS) 				
+				
+				let status = switchCase(order.ORDER_STATUS) 	
+
+							 		
 
 			html += 	`<table class="tracking_detail_table">
 							<tr>
@@ -424,11 +427,15 @@ function order_detail(order_no) {
 							</tr>							
 						</table>`
 			}
+
 			
+			let dlvryBtn = (result[0].ORDER_STATUS == 0  || result[0].ORDER_STATUS == 1 || result[0].ORDER_STATUS == 2 || result[0].ORDER_STATUS == 3) ? 
+					`<button type="button" class="btn btn-outline-primary-nb btns dlvry_check" value="${result[0].ORDER_NO}">
+						<i class="fas fa-truck"></i> 배송조회
+					 </button>` : ''
+						 
 			html += `<div class="tracking_detail_title">배송정보
-						<button type="button" class="btn btn-outline-primary-nb btns dlvry_check" value="${result[0].ORDER_NO}">
-							<i class="fas fa-truck"></i> 배송조회
-						</button>					
+						${dlvryBtn}
 					</div>
 					
 					<hr>

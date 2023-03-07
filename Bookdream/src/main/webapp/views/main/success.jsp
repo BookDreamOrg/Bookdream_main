@@ -22,7 +22,7 @@
 <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
 <link rel="stylesheet" href="/resources/css/styles.css" />
 
-<title>주문완료 페이지</title>
+<title>북드림 | 결제완료</title>
 
 <!-- jQuery -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -47,8 +47,9 @@
 	<div class="container">
 		
 			<!-- dummy box -->
-			<div style="height: 100px">
-				<!-- dummy -->
+			<div style="height: 150px; display: flex; align-items: center; margin-top: 0px;">
+			<jsp:include page="/views/inc/topbar.jsp" />
+			  <!-- dummy -->
 			</div>
 
 		<!-- -----------------------top_bar-------------------- -->

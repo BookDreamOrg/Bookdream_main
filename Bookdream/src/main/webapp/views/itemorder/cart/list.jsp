@@ -80,13 +80,18 @@
 	
 
 	<div class="container"><main>
-		<!-- dummy box -->
-		<div style="height: 100px">
-				<!-- dummy -->
+		 <!-- dummy -->
+			<div style="height: 150px; display: flex; align-items: center; margin-top: 0px;">
+			<jsp:include page="/views/inc/topbar.jsp" />
+			  <!-- dummy -->
 			</div>
+
+
+
 
 		<!-- ---------------------------top-------------------------  -->
 		<div class="top py-3 text-center fw-bold fs-1">
+
 		</div>
 
 		<form class="row g-4 justify-content-md-evenly" method="POST" action="/detail/cart/orderitem" >
