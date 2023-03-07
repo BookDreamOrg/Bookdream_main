@@ -226,7 +226,7 @@ public class AdminOrderController {
 		deliveryService.cmpltDelivery(delivery);
 			
 		// 한 페이지의 표시 개수
-		cri.setAmount(5);	
+		cri.setAmount(4);	
 		
 		// 페이징 블럭 개수
 		int pageBlcok = 5;

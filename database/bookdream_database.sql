@@ -50,15 +50,37 @@ insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USE
 -- BookDream admin 로그인 insert
 insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_LEVEL, FLATFORM_TYPE, USER_EMAIL) 
    values(user_seq.nextval,'admin','admin','admin',1,'BD','test@test.com');
-   
-insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
-   values(user_seq.nextval,'sycha11','test','차승윤','BD','sycha112@naver.com');
 
+----------- Dummy Test DB ---------------
+insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_TEL, BLACKLIST_YN, FLATFORM_TYPE, USER_EMAIL) 
+   values(user_seq.nextval,'hong','1324','홍길동', '010-1234-4567', 'N', 'BD','hong@naver.com');
+insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_TEL, BLACKLIST_YN, FLATFORM_TYPE, USER_EMAIL) 
+   values(user_seq.nextval,'kim011','4567','김철수', '010-7650-1234', 'Y', 'BD','kim01@kakao.com');
+insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_TEL, BLACKLIST_YN, FLATFORM_TYPE, USER_EMAIL) 
+   values(user_seq.nextval,'park326','5234','박명수', '010-1286-3326', 'N', 'BD','park326@naver.com');
+insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_TEL, BLACKLIST_YN, FLATFORM_TYPE, USER_EMAIL) 
+   values(user_seq.nextval,'yoon03','264899','김윤', '010-1123-8974', 'N', 'BD','yoon03@naver.com');
+insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_TEL, BLACKLIST_YN, FLATFORM_TYPE, USER_EMAIL) 
+   values(user_seq.nextval,'yonghue23','0349a','주영희', '010-8532-1235', 'N', 'BD','yonghue23@naver.com');
+insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_TEL, BLACKLIST_YN, FLATFORM_TYPE, USER_EMAIL) 
+   values(user_seq.nextval,'caldown','1123a','이말년', '010-2344-5699', 'N', 'BD','calmdown@naver.com');
+insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_TEL, BLACKLIST_YN, FLATFORM_TYPE, USER_EMAIL) 
+   values(user_seq.nextval,'joop369','026889a','주호민', '010-8932-2699', 'N', 'BD','joo99@naver.com');
+insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_TEL, BLACKLIST_YN, FLATFORM_TYPE, USER_EMAIL) 
+   values(user_seq.nextval,'zoowooze','16915','주우재', '010-8735-1186', 'N', 'BD','zoo@naver.com');
 
-insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
-   values(user_seq.nextval,'test8151','tes434','차윤','BD','cy@naver.com');
 
 select * from users;
+select * from purchase where book_no = 24;
+
+
+select * from book 
+        inner join (select book_no,sum(product_count) ,rank()over (order by sum(product_count) desc) rank 
+                     from purchase 
+                     group by book_no) order_item
+         on book.book_no =  order_item.book_no
+         where rank <=5 and rownum <=5
+         order by rank ;
 
 commit;
 
@@ -100,6 +122,9 @@ CREATE TABLE PAY (
     USE_POINT      number(10)   DEFAULT 0,
     constraint PK_PAY primary key(PAY_NO)  
 );
+
+ALTER TABLE PAY MODIFY (PAY_METHOD varchar2(30));
+
 alter table pay add USE_POINT  number(10) DEFAULT 0;
 
 select * from pay;  
@@ -223,6 +248,9 @@ create table BOOK (
 
 alter table BOOK add discount  number(10) DEFAULT 0;
 
+
+alter table REVIEW add constraint FK_REVIEW_BOOK_NO foreign key (book_no) references book (book_no) on delete cascade;
+
 select * from BOOK;
 select count(*) from BOOK;
 commit;
@@ -344,7 +372,6 @@ select * from qna;
 rollback;
 commit; 
 
-select * from qna order by reg_date desc;
 ------------------------- ANSWER ----------------------
 drop table answer;
 create table ANSWER(
@@ -369,13 +396,13 @@ select * from answer;
 DROP TABLE VISIT;
 CREATE TABLE VISIT (V_DATE DATE NOT NULL);
 
-INSERT INTO VISIT (V_DATE) VALUES ( TO_DATE('02-25-2023','MM-DD-YYYY') );
-INSERT INTO VISIT (V_DATE) VALUES ( TO_DATE('02-26-2023','MM-DD-YYYY') );
-INSERT INTO VISIT (V_DATE) VALUES ( TO_DATE('02-24-2023','MM-DD-YYYY') );
-INSERT INTO VISIT (V_DATE) VALUES ( TO_DATE('02-23-2023','MM-DD-YYYY') );
-INSERT INTO VISIT (V_DATE) VALUES ( TO_DATE('02-22-2023','MM-DD-YYYY') );
-INSERT INTO VISIT (V_DATE) VALUES ( TO_DATE('02-21-2023','MM-DD-YYYY') );
-INSERT INTO VISIT (V_DATE) VALUES ( TO_DATE('02-20-2023','MM-DD-YYYY') );
+INSERT INTO VISIT (V_DATE) VALUES ( TO_DATE('02-27-2023','MM-DD-YYYY') );
+INSERT INTO VISIT (V_DATE) VALUES ( TO_DATE('02-28-2023','MM-DD-YYYY') );
+INSERT INTO VISIT (V_DATE) VALUES ( TO_DATE('03-01-2023','MM-DD-YYYY') );
+INSERT INTO VISIT (V_DATE) VALUES ( TO_DATE('03-02-2023','MM-DD-YYYY') );
+INSERT INTO VISIT (V_DATE) VALUES ( TO_DATE('03-03-2023','MM-DD-YYYY') );
+INSERT INTO VISIT (V_DATE) VALUES ( TO_DATE('03-04-2023','MM-DD-YYYY') );
+INSERT INTO VISIT (V_DATE) VALUES ( TO_DATE('03-05-2023','MM-DD-YYYY') );
 INSERT INTO VISIT (v_date) VALUES (SYSDATE);
 
 SELECT

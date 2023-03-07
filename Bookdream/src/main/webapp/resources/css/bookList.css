@@ -30,7 +30,7 @@ overflow: hidden;
 display: -webkit-box;
 -webkit-line-clamp:1;
 -webkit-box-orient:vertical;
-color: #f52e7f;
+color: var(--main-color);
 }
 
 li.list-group-item{
@@ -38,7 +38,7 @@ li.list-group-item{
 }
 
 span#detail-badge{
-	color: var(--main-color-shadow1);
+	color: graytext;
 }
 
 .btn.btn-outline-primary{

@@ -45,7 +45,7 @@
 <!-- jQuery UI -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<title>마이페이지 - 메인</title>
+<title>북드림 | 마이페이지</title>
 
 <style>
     
@@ -176,7 +176,7 @@ hr {
 /*                         */
 .mypage_recent_pur_table {
 	border-left: 5px solid white;
-	width: 100%;
+	width: 870px;
 }
 
 .mypage_recent_pur_table td:nth-child(1) img {
@@ -216,7 +216,7 @@ hr {
 /*                   */
 
 .mypage_recent_qna_table {
-	width: 100%;
+	width: 870px;
 	border-left: 5px solid white;	
 }
 

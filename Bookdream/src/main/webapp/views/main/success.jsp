@@ -22,7 +22,7 @@
 <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
 <link rel="stylesheet" href="/resources/css/styles.css" />
 
-<title>주문완료 페이지</title>
+<title>북드림 | 결제완료</title>
 
 <!-- jQuery -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -47,8 +47,9 @@
 	<div class="container">
 		
 			<!-- dummy box -->
-			<div style="height: 100px">
-				<!-- dummy -->
+			<div style="height: 150px; display: flex; align-items: center; margin-top: 0px;">
+			<jsp:include page="/views/inc/topbar.jsp" />
+			  <!-- dummy -->
 			</div>
 
 		<!-- -----------------------top_bar-------------------- -->
@@ -59,43 +60,36 @@
 		<!-- ----------------------- main -------------------- -->
 			<div class="main">
 
-		<div class="newBook_carousel">
-
-			<div style="font-weight: bold;">금주 신간도서</div>
-			<hr>
-					<div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
-					  					  
-					  <div class="carousel-inner" id="carousel-inner">
-						<c:forEach items="${newBook}" var="book" varStatus="bookIdx">
-						
-						<c:set var="active" value="${bookIdx.first eq true ? 'active' : '' }"></c:set>
-										  
-						    <div class="carousel-item ${active}" data-bs-interval="1000">
-						    
-								<div class="card d-block newBookCard">
-								  <img class="newBookCard_img" src="${book.BOOK_IMG }" class="card-img-top" alt="...">
-								  <div class="card-body">
-								    <h5 class="card-title newBookCard_title">${book.TITLE}</h5>
-								  </div>
-								  
-								</div>
-						    </div>
-						    
-						</c:forEach> 
-
-					  </div>
-					  
-					  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-					    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-					    <span class="visually-hidden">Previous</span>
-					  </button>
-					  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-					    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-					    <span class="visually-hidden">Next</span>
-					  </button>
-					</div>			
-		</div>
+		<!-- ----------------------- carousel ---------------- -->
+				<div class="newBook_carousel">
 		
+					<div style="font-weight: bold;">금주 신간도서</div>
+					<hr>
+					
+					<div id="carouselExampleDark" class="carousel carousel-dark carousel-fade" data-bs-ride="carousel">
+							  					  
+						<div class="carousel-inner" id="carousel-inner">
+							
+							<c:forEach items="${newBook}" var="book" varStatus="bookIdx">
+							<c:set var="active" value="${bookIdx.first eq true ? 'active' : '' }"/>
+								
+								<div class="carousel-item ${active}" data-bs-interval="5000">
+									<div class="card d-block newBookCard">
+										<a href="/getBook?book_no=${book.BOOK_NO}">
+											<img class="newBookCard_img" src="${book.BOOK_IMG }" class="card-img-top" alt="...">
+										</a>
+										
+										<div class="card-body"><h5 class="card-title newBookCard_title">${book.TITLE}</h5></div>
+										  
+									</div>
+								</div>
+								    
+							</c:forEach> 
+		
+						</div>
+					</div>			
+				</div>
+								
 		<!-- ----------------------- orderlist -------------------- -->
 				<div class="orderlist">
 				

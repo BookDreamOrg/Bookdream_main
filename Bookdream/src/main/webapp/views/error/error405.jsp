@@ -15,7 +15,7 @@
 		<div class="erro_content error_sub_content">불편을 드려 죄송합니다.</div>
 		<div class="error_line"></div>
 		<div class="error_btn">
-			<button class="btn btn-outline-primary">홈으로 가기</button>
+			<button class="btn btn-outline-primary" onclick="location.href=`/views/main/main.jsp`">홈으로 가기</button>
 		</div>
 	</div>
 </body>

@@ -45,7 +45,7 @@
   
   
   
-<title>마이페이지 - 메인</title>
+<title>북드림 | 내가 작성한 리뷰</title>
 
 <style>
 

@@ -28,7 +28,7 @@
 <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
 <link rel="stylesheet" href="/resources/css/styles.css" />
 
-<title>마이페이지 - 배송조회</title>
+<title>북드림 | 배송조회</title>
 
 <!-- CSS -->
 <link rel="stylesheet" type="text/css" href="/resources/css/mypage_tracking.css">

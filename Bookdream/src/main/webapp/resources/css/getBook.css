@@ -15,6 +15,10 @@ background-color: white;
 .book_info{
 	color: graytext;
 }
+.bi-person-circle::before {
+    content: "\f4d7";
+    color: var(--main-color);
+}
 
 input#product_cnt{
   width : 10em;
@@ -29,6 +33,7 @@ span#stock_box{
 	float : right;
 	margin-top: 10px;
 	margin-right: 10px;
+	
 }
 
 input[type="number"]::-webkit-outer-spin-button,
@@ -85,8 +90,22 @@ section{
 	background-color: #ced4da;
 	padding-top: 1em;
 	padding-bottom : 1em; 
+	margin-left: 0;
 }
 
+
+#review_date{
+	color:graytext;
+}
+textarea#modal-text{
+resize: none;
+width: 100%
+	}
+	
+div.border-bottom.mt-3{
+	color:var(--main-color-tint4);
+	border-color: var(--main-color-tint4);
+}
 
 #detail-bookinfo{
 	font-size:  20px;
@@ -101,7 +120,7 @@ section{
 
 #book_title{
 	font-weight: 400;
-	color: #f52e7f;
+	color: var(--main-color);
 }
 
 

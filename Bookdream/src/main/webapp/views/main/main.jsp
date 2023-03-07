@@ -65,15 +65,24 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 
      <!-- Swiper -->
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
-      <link rel="stylesheet" href="/resources/css/banner.css" />
+     <link rel="stylesheet" href="/resources/css/banner.css" />
 	
+	<style type="text/css">
+	.mainTitle{
+		width:80%;
+	}
+	
+	body {
+	  overflow-x: hidden;
+	}	
+	</style>
     <title>북드림  | BookDream </title>
   </head>
   <body>
     <div class="wrapper">
       <jsp:include page="/views/inc/header.jsp" />
       
-      <div class="banner">
+      <div class="banner shadow ">
           <!-- Slider main container -->
           <div class="swiper">
             <!-- Additional required wrapper -->
@@ -84,7 +93,7 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
                   <div class="text-wrap slamdunk">
                     <h2>영감님의 영광의</h2>
                     <h2>시대는 언제였죠?</h2>
-                    <p>SLAMDUNK</p>
+                    <p>『SLAMDUNK』</p>
                   </div>
                   <img
                     src="/resources/images/banner/banner_slamdunk.png"
@@ -97,7 +106,7 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
                   <div class="text-wrap trend">
                     <h2>#2023 #계묘년</h2>
                     <h2>무엇을 준비할 것인가?</h2>
-                    <p>트렌드코리아2023</p>
+                    <p>『트렌드코리아2023』</p>
                   </div>
                   <img
                     src="/resources/images/banner/banner_trend.png"
@@ -107,9 +116,10 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
               </div>
               <div class="swiper-slide">
                 <a href="/getBook?book_no=990">
-                  <div class="text-wrap knowledge">
-                    <h2>나는</h2>
-                    <h2>웃지 않는 아이였다.</h2>
+                  <div class="text-wrap amond">
+                    <h2>나에게는 아몬드가 있다.</h2>
+                    <h2>당신에게도.</h2>
+                    <p>『아몬드』</p>
                   </div>
                   <img
                     src="/resources/images/banner/banner_amond.png"
@@ -119,9 +129,10 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
               </div>
               <div class="swiper-slide">
                 <a href="/getBook?book_no=992">
-                  <div class="text-wrap economy">
-                    <h2>넷플릭스 영화 원작소설</h2>
+                  <div class="text-wrap smartphone">
+                    <h2>"넷플릭스 영화" 원작소설</h2>
                     <h2>나는 덫에 걸렸다</h2>
+                    <p>『스마트폰을 떨어트렸을 뿐인데』</p>
                   </div>
                   <img
                     src="/resources/images/banner/banner_phone.png"
@@ -131,9 +142,13 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
               </div>
               <div class="swiper-slide">
                 <a href="/getBook?book_no=993">
-                  <div class="text-wrap life">
-                    <h2>나는 오래된 풍경처럼</h2>
-                    <h2>너를 바라보고</h2>
+                  <div class="text-wrap poem">
+                    <h2>나는 오래된 거리처럼 너를 사랑하고</h2>
+                    <h2>별들은 별들처럼 웅성거리고</h2>
+                    <h2>여름에는 작은 음색 드럼을 치는 것처럼</h2>
+                    <h2>네 손바닥을 두드리는 비를 줄게</h2>
+                    <h2>과거에게 그랬듯 미래에게도 아첨하지 않을게...</h2>
+                    <p>『나는 오래된 거치러럼 너를 사랑하고』</p>
                   </div>
                   <img
                     src="/resources/images/banner/banner_poem.png"
@@ -144,8 +159,9 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
               <div class="swiper-slide">
                 <a href="/getBook?book_no=991">
                   <div class="text-wrap life">
-                    <h2>더 이상 고민하지 말고</h2>
-                    <h2>그냥 재미있게 살아라!</h2>
+                    <h2>하나의 문이 닫히면</h2>
+                    <h2>또 하나의 문이 열린다.</h2>
+                    <p>『만일 내가 인생을 다시 산다면』</p>
                   </div>
                   <img
                     src="/resources/images/banner/banner_life.png"
@@ -178,11 +194,11 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 		<div style="height: 200px">
 		</div>
 
-			<span class="h1" data-aos="fade-down"
+			<p class="row h1 mainTitle border-bottom p-3" data-aos="fade-down"
 				data-aos-offset="0"
-				data-aos-duration="1500"> 베스트 셀러 상품 </span>
+				data-aos-duration="1500"> 🏆 베스트 셀러 상품 </p>
 
-		<div style="height: 50px">
+		<div class="" style="height: 50px">
 		</div>
 		
 	<section class="row d-flex justify-content-around align-items-center" id="bestMain" >
@@ -192,9 +208,10 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 		<div style="height: 100px">
 		</div> 
 		
-		<section class="m-3 row " id="bestBook">
+		<section class="row " id="bestBook">
 		</section>
      
+
     </div>
      
      <div style="height: 100px">
@@ -202,33 +219,31 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
       
       <!---------------------------리뷰 많은 상품 5개------------------------------
       -->
-	<div class=" d-flex align-items-center flex-column ">
-			
-			<div style="height: 200px">
-			</div>
-	
-				<span class="h1" data-aos="fade-down"
+	<div class=" d-flex align-items-center flex-column">
+		<div style="height: 200px">
+		</div>
+		
+		<span class="row h1 mainTitle border-bottom p-3" data-aos="fade-down"
 					data-aos-offset="0"
-					data-aos-duration="1500"> 리뷰 많은 상품 </span>
-	
-			<div style="height: 50px">
-			</div>
+					data-aos-duration="1500"> ✍ 리뷰 많은 상품 </span>
+		<div style="height: 50px">
+		</div>
 			
 		<section class="row d-flex justify-content-around align-items-center" id="besReviewtMain" >
 		</section>	
-			
-			
-			<div style="height: 100px">
-			</div> 
-			
-			<section class="m-3 row " id="bestBookByReviewCount">
-			</section>
-	     
-	    </div>
+		
+		<div style="height: 100px">
+		</div> 
+		
+		<section class="row " id="bestBookByReviewCount">
+		</section>
+		
+	
+	</div>
 	    
 	    
-	    <div style="height: 100px">
-			</div> 
+	<div style="height: 100px">
+	</div> 
 
 	    
        <!---------------------------평점 높은 상품 5개------------------------------
@@ -238,9 +253,9 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 			<div style="height: 200px">
 			</div>
 	
-				<span class="h1" data-aos="fade-down"
+				<span class="row h1 mainTitle border-bottom p-3" data-aos="fade-down"
 					data-aos-offset="0"
-					data-aos-duration="1500"> 평점 높은 상품  </span>
+					data-aos-duration="1500"> 🌟 평점 높은 상품  </span>
 	
 			<div style="height: 50px">
 			</div>
@@ -249,11 +264,11 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 		</section>	
 			
 			
-			<div style="height: 100px">
-			</div> 
+		<div style="height: 100px">
+		</div> 
 			
-			<section class="m-3 row " id="bestBookByReviewGrade">
-			</section>
+		<section class="row" id="bestBookByReviewGrade">
+		</section>
 			
 	     
 	    </div>
@@ -261,7 +276,6 @@ prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
        <div style="height: 100px">
 			</div> 
       </main>
-
 
 	<!-- ----------------------footer---------------------- -->
       <jsp:include page="/views/inc/footer.jsp" />

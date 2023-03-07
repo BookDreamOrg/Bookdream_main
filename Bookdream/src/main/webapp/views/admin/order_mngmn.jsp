@@ -48,7 +48,7 @@
 <!-- 달력 -->
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />      
       
-<title>주문 관리</title>
+<title>북드림 | 주문 관리</title>
 
 <style type="text/css">
 
@@ -74,45 +74,34 @@
 		<div class="test">
 			<div class="btn-group " role="group" aria-label="Basic radio toggle button group">
 			  <input type="radio" class="btn-check " name="orderclsfc_btn" id="all" value="100" autocomplete="off" >
-			  <label class="btn btn-outline-primary orderclsfc_btn" for="all">전체</label>
+			  <label class="btn btn-outline-primary-nb orderclsfc_btn" for="all">전체</label>
 			
 			  <input type="radio" class="btn-check" name="orderclsfc_btn" id="pymntCmplt" value="0" autocomplete="off">
-			  <label class="btn btn-outline-primary orderclsfc_btn" for="pymntCmplt">결제완료</label>
+			  <label class="btn btn-outline-primary-nb orderclsfc_btn" for="pymntCmplt">결제완료</label>
 			
 			  <input type="radio" class="btn-check" name="orderclsfc_btn" id="delivery" value="1" autocomplete="off">
-			  <label class="btn btn-outline-primary orderclsfc_btn" for="delivery">배송중</label>
+			  <label class="btn btn-outline-primary-nb orderclsfc_btn" for="delivery">배송중</label>
 			  
 			  <input type="radio" class="btn-check" name="orderclsfc_btn" id="cmpltDlvry" value="2" autocomplete="off">
-			  <label class="btn btn-outline-primary orderclsfc_btn" for="cmpltDlvry">배송완료</label>
+			  <label class="btn btn-outline-primary-nb orderclsfc_btn" for="cmpltDlvry">배송완료</label>
 			  
 			  <input type="radio" class="btn-check" name="orderclsfc_btn" id="test" value="3" autocomplete="off">
-			  <label class="btn btn-outline-primary orderclsfc_btn" for="test">구매확정</label>
+			  <label class="btn btn-outline-primary-nb orderclsfc_btn" for="test">구매확정</label>
 			  
 			  <input type="radio" class="btn-check" name="orderclsfc_btn" id="pymcnRqst" value="10" autocomplete="off">
-			  <label class="btn btn-outline-primary orderclsfc_btn" for="pymcnRqst">결제취소요청</label>
+			  <label class="btn btn-outline-primary-nb orderclsfc_btn" for="pymcnRqst">결제취소요청</label>
 	
 			  <input type="radio" class="btn-check" name="orderclsfc_btn" id="cnclPymnt" value="11" autocomplete="off">
-			  <label class="btn btn-outline-primary orderclsfc_btn" for="cnclPymnt">결제취소</label>
+			  <label class="btn btn-outline-primary-nb orderclsfc_btn" for="cnclPymnt">결제취소</label>
 			  			  
 			  <input type="radio" class="btn-check" name="orderclsfc_btn" id="rqstRtrn" value="12" autocomplete="off">
-			  <label class="btn btn-outline-primary orderclsfc_btn" for="rqstRtrn">반품요청</label>
+			  <label class="btn btn-outline-primary-nb orderclsfc_btn" for="rqstRtrn">반품요청</label>
 			  
 			  <input type="radio" class="btn-check" name="orderclsfc_btn" id="cmpltRtrn" value="13" autocomplete="off">
-			  <label class="btn btn-outline-primary orderclsfc_btn" for="cmpltRtrn">반품완료</label>
+			  <label class="btn btn-outline-primary-nb orderclsfc_btn" for="cmpltRtrn">반품완료</label>
 			</div>
 		</div>
 		<br>
-
-			<div style="text-align: right; width: 1240px; height:30px; margin: auto;">
-				<button class="btn btn-outline-secondary reset_btn" id="reset_btn">
-				<i class="fas fa-undo"></i></button>
-
-				<!-- 달력 -->
-				<div class="srch_date" id="reportrange">
-					<i class="fa fa-calendar" style="float: left;"></i>&nbsp;
-					<span id="scrh_date"></span> <i class="fa fa-caret-down" style="float: right;"></i>
-				</div>
-			</div>
 					
 		<div class="btn_box">
 							
@@ -120,7 +109,13 @@
 												
 			<div class="right">
 
-	
+				<button class="btn btn-outline-secondary reset_btn" id="reset_btn">
+				<i class="fas fa-undo"></i></button>
+
+				<div class="srch_date" id="reportrange">
+					<i class="fa fa-calendar" style="float: left;"></i>&nbsp;
+					<span id="scrh_date"></span> <i class="fa fa-caret-down" style="float: right;"></i>
+				</div>
 			
 				<select class="form-select srch_crtr" id="srch_crtr" aria-label="Default select example">
 				  <option selected value="all">전체</option>
@@ -162,6 +157,7 @@
 
 
 	<script type="text/javascript" src="/resources/js/order_mngmn.js"></script>
+	<script type="text/javascript" src="/resources/js/commonFunction.js"></script>
 
 
 

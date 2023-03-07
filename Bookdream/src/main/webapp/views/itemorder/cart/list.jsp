@@ -80,13 +80,18 @@
 	
 
 	<div class="container"><main>
-		<!-- dummy box -->
-		<div style="height: 100px">
-				<!-- dummy -->
+		 <!-- dummy -->
+			<div style="height: 150px; display: flex; align-items: center; margin-top: 0px;">
+			<jsp:include page="/views/inc/topbar.jsp" />
+			  <!-- dummy -->
 			</div>
+
+
+
 
 		<!-- ---------------------------top-------------------------  -->
 		<div class="top py-3 text-center fw-bold fs-1">
+
 		</div>
 
 		<form class="row g-4 justify-content-md-evenly" method="POST" action="/detail/cart/orderitem" >
@@ -98,9 +103,9 @@
 			<div class=" d-flex align-items-stretch justify-content-center 
 						col-md-8 col-lg-8 order-md-first">
 				<c:if test="${cartListCount == 0 }">
-					<div class="d-flex flex-column border align-self-center rounded p-3 fw-bold  ">
+					<div class="d-flex flex-column align-self-center rounded p-3 fw-bold  ">
 							<span class=" p-3 text-center fs-5">
-								<p>당신 장바구니엔 아무것도 읎어,,</p></span>
+								<p>장바구니에 아무것도 없어요</p></span>
 							<span class=" p-3 text-center fs-1">
 								<p>🤔🤔🤔</p></span>
 					</div>
@@ -386,25 +391,6 @@
 															    					});
 															         	    	}
 																		
-																		let del = confirm("책 1권 이하로 담을 수 없어요...\n>> 장바구니에서 삭제할까요?");
-																		
-																		if(del) {
-																			let checkArr = [];
-																			checkArr.push($(this).attr("data-cartNo"));
-																			
-																			console.log("checkArr : " + checkArr)
-																												  	    
-																			$.ajax({
-																				url : "/itemorder/cart/delete",
-																				type : "POST",
-																				data : { chbox : checkArr },
-																				success : function(result){
-																					if(result == 1) {          
-																						location.href = "/itemorder/cart/list";
-																					} else {
-																					   alert("삭제 실패");
-																					}
-																				}
 																			});
 																		}
 															}); 

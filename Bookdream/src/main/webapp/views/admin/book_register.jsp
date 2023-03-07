@@ -43,7 +43,7 @@
     <link rel="stylesheet" href="/resources/css/admin_screen.css" />
 
 
-<title>Insert title here</title>
+<title>[관리자]도서 등록</title>
 </head>
 
 <body class="admin_body">
@@ -56,8 +56,7 @@
 		<div class="h3 mb-3" id="section_title1"  >도서 등록</div>
 		<hr>
 		</section>
-		
-<section>
+<div class="container">	
 		<div class="row mt-3">
 			<div class="col-3">
 				<span> 도서 제목 </span> <span id="star"> * </span>
@@ -152,22 +151,17 @@
 				<input type="text" name="book_img" id="book_img" oninput="readURL(this.value)" placeholder="이미지URL은 필수입니다. " >
 			</div>
 		</div>
-			
 		
-		
+	
 		
 		<div class="text-center mt-5">
 			<button type="button" class="btn btn-primary mb-5" id ="Upload">도서 등록</button>
 			<button type="reset" class="btn btn-primary mb-5">초기화</button>
 		</div>
-		
-		<div>
-		
-		</div>
-</section>
-		
+	</div>	
+	
 		</main>
-
+	
 </body>
 
   <!-- JavaScript  -->
