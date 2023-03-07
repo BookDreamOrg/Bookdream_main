@@ -13,7 +13,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
    <link rel="stylesheet" href="/resources/css/login.css">
    <link rel="stylesheet" href="/resources/css/styles.css" />
-    <title>북드림 로그인 페이지</title>
+    <title>북드림 아이디/비밀번호 찾기 페이지</title>
+
     
 </head>
 <body class="text-center">
