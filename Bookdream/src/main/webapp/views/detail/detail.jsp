@@ -212,7 +212,7 @@
 				 ${review.review_content} 
 				</div>
 			</div>
-			<c:if test="${review.user_id eq sessionScope.user_id }">
+			<c:if test="${not empty sessionScope.user_id  }">
 			<div class="mt-2">
 						<input type="hidden" value="" name="review_no" >
 						<button id="btn_recommend" value="${review.review_no }"  onclick="review_recommend(this.value)" class="text-center btn btn-outline-dark flex-shrink-0 btn-xs" > <i class="bi bi-hand-thumbs-up"> </i> 추천하기 </button>
