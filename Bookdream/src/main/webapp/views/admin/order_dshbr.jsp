@@ -38,7 +38,7 @@
 <!-- CSS  -->
 <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap_icon.css">
     
-<title>주문 현황</title>
+<title>북드림 | 주문 현황</title>
 
 <style type="text/css">
 

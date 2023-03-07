@@ -71,8 +71,16 @@ insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_TEL, BLACKLIS
 
 
 select * from users;
+select * from purchase where book_no = 24;
 
-delete from users where user_no = 4;
+
+select * from book 
+        inner join (select book_no,sum(product_count) ,rank()over (order by sum(product_count) desc) rank 
+                     from purchase 
+                     group by book_no) order_item
+         on book.book_no =  order_item.book_no
+         where rank <=5 and rownum <=5
+         order by rank ;
 
 commit;
 
@@ -114,6 +122,9 @@ CREATE TABLE PAY (
     USE_POINT      number(10)   DEFAULT 0,
     constraint PK_PAY primary key(PAY_NO)  
 );
+
+ALTER TABLE PAY MODIFY (PAY_METHOD varchar2(30));
+
 alter table pay add USE_POINT  number(10) DEFAULT 0;
 
 select * from pay;  
