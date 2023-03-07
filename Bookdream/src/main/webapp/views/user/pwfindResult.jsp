@@ -11,6 +11,15 @@
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Favicon -->
+<link rel="apple-touch-icon" sizes="180x180"
+	href="/resources/images/favicon/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32"
+	href="/resources/images/favicon/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16"
+	href="/resources/images/favicon/favicon-16x16.png" />
+<link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
+  
    <link rel="stylesheet" href="/resources/css/login.css">
   <title>북드림 아이디/비밀번호 찾기 페이지</title>
     

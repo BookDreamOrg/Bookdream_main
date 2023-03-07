@@ -22,7 +22,7 @@
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link rel="stylesheet" href="/resources/css/qna_write.css" />
 
-<title>1:1문의</title>
+<title>마이페이지 - 1:1문의</title>
 </head> 
 <body>
 <div class="wrapper">
