@@ -69,6 +69,12 @@
 <img src="https://img.shields.io/badge/Toss-003AE9?style=flat&logo=Toss&logoColor=white" />	
 </div>
 <br>
+<div align=center>
+  <h2>📰 요약정리</h2>
+  <a href="https://docs.google.com/viewer?url=https://github.com/BookDreamOrg/Bookdream_main/blob/main/document/bookdream(KH_teamproject).pdf?raw=True">
+  Bookdream(KH_teamproject).pdf
+ </a>
+</div>
 <br>
 <br>
 <div align=center>

@@ -39,7 +39,7 @@
 <link rel="manifest" href="/resources/images/favicon/site.webmanifest" />
 <link rel="stylesheet" href="/resources/css/styles.css" />
 
-<title>Insert title here</title>
+<title>${search_keyword} 검색 결과</title>
 </head>
 <body>
 	
@@ -74,10 +74,10 @@
 					<div class="container-fluid mt-3">
 						<div class="row" id="book_row" >
 							<div class="col-md-3">
-								<span><img alt="${book.title }" src="${book.book_img }" /></span>
+								<span><img class="rounded shadow-lg" alt="${book.title }" src="${book.book_img }" /></span>
 							</div>
 						<div class="col-md-6 mt-5 pt-2" onclick="location.href='/getBook?book_no=${book.book_no}'" style="cursor:pointer">
-							<span  id="detail-badge" >${book.book_category }</span> 
+							<span  id="detail-badge" class="small">${book.book_category }</span> 
 							<span id ="reviewAVG"> </span>
 							<span id="book_title"> ${book.title }</span>
 						<div class="row">
@@ -90,10 +90,10 @@
 						</div>
 						<div class="col-md-3  mt-5 pt-5 text-center">
 						<div>
-							<button type="button" class="btn btn-outline-primary" onclick="bookList_cart(this.value)" value="${book.book_no}" >장바구니</button> 
+							<button type="button" class="btn btn-outline-primary shadow" onclick="bookList_cart(this.value)" value="${book.book_no}" >장바구니</button> 
 						</div>
 						<div class="mt-1">
-							<button type="button" class="btn btn-outline-primary" onclick="bookList_buy(this.value)" value="${book.book_no}">바로구매</button>
+							<button type="button" class="btn btn-outline-primary shadow" onclick="bookList_buy(this.value)" value="${book.book_no}">바로구매</button>
 						</div>
 						</div>
 					</div>
@@ -154,16 +154,66 @@ function bookList_buy(val){
 }
 
 function bookList_cart(val){
-	alert('장바구니');
-	let user_no = '<%=session.getAttribute("user_no")%>';
-	console.log("book_no : " + val + "user_no :  " + user_no )
-	if(user_no === null ||user_no === "" || user_no === "null"){
-		alert('로그인 페이지로 이동합니다.');
-		location.replace("views/user/login.jsp");
-	}else{
-		alert('장바구니');
-		location.replace("/itemorder/cart/list?book_no="+val+"&user_no="+user_no+"&product_count=1");
-	}
+	
+	let book_no = val;
+	let product_count = 1;
+	
+	let data = {
+	           book_no :  book_no,
+	           product_count :product_count
+	         };
+	      
+	   console.log(data);
+	     
+	   $.ajax({
+	      url : "/itemorder/cart/add",
+	      type : "POST",
+	      data : data,
+	      success : function(result){
+	         
+	         if(result == 1) { // 1 : 장바구니 추가 성공, 0 : 장바구니 추가 실패
+	         	$("#product_cnt").val(1);
+	            // 카트 리스트 갯수 뱃지 recount
+	               
+	               Swal.fire({
+	         	      title: '장바구니에 담았어요!',
+	         	      text: '장바구니로 이동할까요?',
+	         	      icon: 'success',
+	         	      showCancelButton: true,
+	         	      confirmButtonColor: '#3085d6',
+	         	      cancelButtonColor: '#d33',
+	         	      confirmButtonText: '장바구니 이동',
+	         	      cancelButtonText: '계속 쇼핑하기',
+	         	      reverseButtons: true, // 버튼 순서 거꾸로
+	         	      
+	         	    }).then((result) =>{
+	         	    	if (result.value) { location.href = "/itemorder/cart/list"; }
+	         	    });
+	         	    
+	         } else if(result == 0) {
+	        	  
+	               Swal.fire({
+	         	      title: '로그인을 해주세요',
+	         	      text: '로그인 페이지로 이동할까요?',
+	         	      icon: 'warning',
+	         	      showCancelButton: true,
+	         	      confirmButtonColor: '#3085d6',
+	         	      cancelButtonColor: '#d33',
+	         	      confirmButtonText: '로그인 하기',
+	         	      cancelButtonText: '계속 쇼핑하기',
+	         	      
+	         	    }).then((result)  =>{
+	         	    	if (result.value) { location.href = "/views/user/login.jsp"; }
+	         	    });
+	               
+	        	  $("#product_cnt").val(1);
+	         }
+	         
+	      }, error : function(){
+	           alert("error : 카트 담기 실패");
+	          }      
+	    });
+	  
 }
 
 

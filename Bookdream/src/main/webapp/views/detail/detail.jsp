@@ -45,6 +45,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+<title>상세페이지</title>
 </head>
 <body class="mt-3">
 
@@ -61,7 +62,7 @@
 					
 	<div class="row">
 		<div class="col-6 text-center mt-5 ">
-			<img id="detail-img" alt="${book.title }" src="${book.book_img }" class="img-thumbnail animate__animated animate__fadeInLeft" />
+			<img id="detail-img" alt="${book.title }" src="${book.book_img }" class="img-thumbnail rounded shadow-lg animate__animated animate__fadeInLeft" />
 		</div>
 		<div class="col-6 mt-5 animate__animated animate__fadeInRight">
 				 <div class="display-6 mt-5 mb-2" id="book_title">${book.title }</div>
@@ -211,7 +212,7 @@
 				 ${review.review_content} 
 				</div>
 			</div>
-			<c:if test="${review.user_id eq sessionScope.user_id }">
+			<c:if test="${not empty sessionScope.user_id  }">
 			<div class="mt-2">
 						<input type="hidden" value="" name="review_no" >
 						<button id="btn_recommend" value="${review.review_no }"  onclick="review_recommend(this.value)" class="text-center btn btn-outline-dark flex-shrink-0 btn-xs" > <i class="bi bi-hand-thumbs-up"> </i> 추천하기 </button>

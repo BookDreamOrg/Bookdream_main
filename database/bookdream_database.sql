@@ -50,12 +50,6 @@ insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USE
 -- BookDream admin 로그인 insert
 insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_LEVEL, FLATFORM_TYPE, USER_EMAIL) 
    values(user_seq.nextval,'admin','admin','admin',1,'BD','test@test.com');
-   
-insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
-   values(user_seq.nextval,'sycha11','test','차승윤','BD','sycha112@naver.com');
-
-insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, FLATFORM_TYPE, USER_EMAIL) 
-   values(user_seq.nextval,'test8151','tes434','차윤','BD','cy@naver.com');
 
 ----------- Dummy Test DB ---------------
 insert into users(USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_TEL, BLACKLIST_YN, FLATFORM_TYPE, USER_EMAIL) 
@@ -378,7 +372,6 @@ select * from qna;
 rollback;
 commit; 
 
-select * from qna order by reg_date desc;
 ------------------------- ANSWER ----------------------
 drop table answer;
 create table ANSWER(

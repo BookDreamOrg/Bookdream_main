@@ -464,8 +464,8 @@ function purchaseBookRatio() {
 
 function purchaseBookRatioChart(data) {
 	
-	let radio = [data.PQ1, data.PQ2, data.PQ3, data.PQ3]
-	const labels = ['1개', '2개', '3개', '4개 이상              ']
+	let radio = [data.PQ1, data.PQ2, data.PQ3, data.PQ4MORE]
+	const labels = ['1개', '2개', '3개', '4개 이상']
 	const backgroundColors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']
 	
 	var chartArea = document.getElementById('rateChart').getContext('2d');
