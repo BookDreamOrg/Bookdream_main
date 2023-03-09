@@ -319,7 +319,7 @@ $(document).on("click", "#side_pay_now_btn", function(e) {
 		success : function() {	
 			
 			console.log("세션 저장 완료")
-			const clientKey = 'test_ck_OALnQvDd2VJn771bMENVMj7X41mN';
+			const clientKey = '';
 			var tossPayments = TossPayments(clientKey);		
 			
 			// 랜덤 OrderId 생성
